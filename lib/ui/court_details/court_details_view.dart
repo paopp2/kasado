@@ -5,8 +5,12 @@ class CourtDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
+    return LayoutBuilder(
+      builder: (constraints, context) {
+        return Scaffold(
+          body: Container(color: Colors.blue),
+        );
+      },
     );
   }
 }

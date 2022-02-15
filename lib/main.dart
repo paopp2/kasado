@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
-import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/firebase_options.dart';
 
 Future<void> main() async {
@@ -12,13 +11,12 @@ Future<void> main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends HookConsumerWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final isLoggedIn = ref.watch(authStateChangesProvider).value != null;
-    final appRouter = AppRouter(isLoggedIn).router;
+  Widget build(BuildContext context) {
+    final appRouter = AppRouter.instance.router;
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
