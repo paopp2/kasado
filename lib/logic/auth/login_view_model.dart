@@ -27,6 +27,4 @@ class LoginViewModel extends ViewModel {
       ),
     );
   }
-
-  Future<void> signOut() async => await authService.signOutGoogle();
 }

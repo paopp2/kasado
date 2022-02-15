@@ -19,8 +19,8 @@ class LoginView extends HookConsumerWidget {
               child: const Text('Sign in with Google'),
             ),
             TextButton(
-              onPressed: model.signOut,
-              child: const Text('Sign Out'),
+              onPressed: () {},
+              child: const Text('Sign in with Facebook'),
             ),
           ],
         ),
