@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/data/services/core/core_providers.dart';
+import 'package:kasado/data/core/core_providers.dart';
 
 final authServiceProvider = Provider.autoDispose(
   (ref) => AuthService(
