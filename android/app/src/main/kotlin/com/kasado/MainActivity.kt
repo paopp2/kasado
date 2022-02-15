@@ -1,4 +1,4 @@
-package com.example.kasado
+package com.kasado
 
 import io.flutter.embedding.android.FlutterActivity
 
