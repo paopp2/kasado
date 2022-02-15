@@ -1,10 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/app_router.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/firebase_options.dart';
-import 'package:kasado/root_view.dart';
-import 'package:kasado/ui/auth/login_view.dart';
-import 'package:kasado/ui/home/home_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,20 +12,20 @@ Future<void> main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isLoggedIn = ref.watch(authStateChangesProvider).value != null;
+    final appRouter = AppRouter(isLoggedIn).router;
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: RootView(
-        loggedInBuilder: (_) => const HomeView(),
-        loggedOutBuilder: (_) => const LoginView(),
-      ),
+      routeInformationParser: appRouter.routeInformationParser,
+      routerDelegate: appRouter.routerDelegate,
     );
   }
 }
