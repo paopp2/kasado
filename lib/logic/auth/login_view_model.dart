@@ -23,7 +23,7 @@ class LoginViewModel extends ViewModel {
     authCreds.fold(
       (error) => Fluttertoast.showToast(msg: error.toString()),
       (creds) => Fluttertoast.showToast(
-        msg: 'Signed in successfully: ${creds.toString()}',
+        msg: 'Signed in successfully',
       ),
     );
   }
