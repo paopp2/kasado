@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:kasado/ui/auth/login_view.dart';
+import 'package:kasado/ui/court_details/court_details_view.dart';
 import 'package:kasado/ui/home/home_view.dart';
 
 class AppRouter {
@@ -17,6 +18,11 @@ class AppRouter {
         name: Routes.loginView,
         path: '/login',
         builder: (context, state) => const LoginView(),
+      ),
+      GoRoute(
+        name: Routes.courtDetailsView,
+        path: '/court-details',
+        builder: (context, state) => const CourtDetailsView(),
       ),
     ],
     redirect: (state) {
@@ -38,4 +44,5 @@ class AppRouter {
 class Routes {
   static const homeView = 'home_view';
   static const loginView = 'login_view';
+  static const courtDetailsView = 'court_details_view';
 }

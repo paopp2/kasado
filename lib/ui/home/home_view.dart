@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 
 class HomeView extends HookConsumerWidget {
@@ -15,7 +17,7 @@ class HomeView extends HookConsumerWidget {
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.menu),
-              onPressed: () {},
+              onPressed: () => context.pushNamed(Routes.courtDetailsView),
             ),
             actions: [
               IconButton(
