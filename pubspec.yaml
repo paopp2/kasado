@@ -23,6 +23,8 @@ dependencies:
   firebase_auth: ^3.3.7
   # Google-related
   google_sign_in: ^5.2.3
+  # Design
+  syncfusion_flutter_calendar: ^19.4.52
   # Utils
   dartz: ^0.10.1
   fluttertoast: ^8.0.8
