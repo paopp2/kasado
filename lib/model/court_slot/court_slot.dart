@@ -16,6 +16,8 @@ class CourtSlot with _$CourtSlot {
   }) = _CourtSlot;
 
   int get playerCount => players.length;
+  String get getSlotId =>
+      "${timeRange.startsAt.toIso8601String()}-${timeRange.endsAt.toIso8601String()}";
 
   factory CourtSlot.fromJson(Map<String, dynamic> json) =>
       _$CourtSlotFromJson(json);

@@ -50,6 +50,7 @@ class CourtDetailsView extends HookConsumerWidget {
                     CourtSchedulePanel(
                       constraints: constraints,
                       isAdmin: isAdmin,
+                      court: court,
                     ),
                     const CourtAdminsPanel(),
                   ],
