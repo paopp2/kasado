@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kasado/model/court/court.dart';
+import 'package:kasado/ui/court_details/components/court_slot_details_dialog.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class CourtDetailsView extends StatelessWidget {
@@ -56,7 +57,16 @@ class CourtDetailsView extends StatelessWidget {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CourtSlotDetailsDialog(
+                                      constraints: constraints,
+                                    );
+                                  },
+                                );
+                              },
                               child: ListTile(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
