@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/logic/home/states/home_tab_state.dart';
-import 'package:kasado/ui/home/tabs/home/components/court_slot_card.dart';
+import 'package:kasado/ui/home/tabs/home/components/next_court_slot_card.dart';
 
 class HomeTab extends HookConsumerWidget {
   const HomeTab({
@@ -26,7 +26,7 @@ class HomeTab extends HookConsumerWidget {
             itemCount: courtList.length,
             itemBuilder: (context, i) {
               final court = courtList[i];
-              return CourtSlotCard(
+              return NextCourtSlotCard(
                 constraints: constraints,
                 court: court,
                 nextCourtSlot: court.nextAvailableSlot,

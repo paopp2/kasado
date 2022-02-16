@@ -6,8 +6,8 @@ import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 
-class CourtSlotCard extends StatelessWidget {
-  const CourtSlotCard({
+class NextCourtSlotCard extends StatelessWidget {
+  const NextCourtSlotCard({
     Key? key,
     required this.constraints,
     required this.court,
