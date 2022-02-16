@@ -5,6 +5,7 @@ import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/model/time_range/time_range.dart';
 import 'package:kasado/ui/courts_owned/components/new_court_input_dialog.dart';
 
 class CourtsOwnedView extends HookConsumerWidget {
@@ -34,8 +35,10 @@ class CourtsOwnedView extends HookConsumerWidget {
                     nextAvailableSlot: CourtSlot(
                       courtId: '',
                       players: [],
-                      startsAt: DateTime.now(),
-                      endsAt: DateTime.now(),
+                      timeRange: TimeRange(
+                        startsAt: DateTime.now(),
+                        endsAt: DateTime.now(),
+                      ),
                     ),
                   ),
                   "isAdmin": true,

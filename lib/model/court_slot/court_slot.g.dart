@@ -11,14 +11,12 @@ _$_CourtSlot _$$_CourtSlotFromJson(Map<String, dynamic> json) => _$_CourtSlot(
       players: (json['players'] as List<dynamic>)
           .map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
           .toList(),
-      startsAt: DateTime.parse(json['startsAt'] as String),
-      endsAt: DateTime.parse(json['endsAt'] as String),
+      timeRange: TimeRange.fromJson(json['timeRange'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
     <String, dynamic>{
       'courtId': instance.courtId,
       'players': instance.players.map((e) => e.toJson()).toList(),
-      'startsAt': instance.startsAt.toIso8601String(),
-      'endsAt': instance.endsAt.toIso8601String(),
+      'timeRange': instance.timeRange.toJson(),
     };

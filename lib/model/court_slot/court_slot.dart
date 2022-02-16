@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:kasado/model/time_range/time_range.dart';
 
 part 'court_slot.freezed.dart';
 part 'court_slot.g.dart';
@@ -11,8 +12,7 @@ class CourtSlot with _$CourtSlot {
   const factory CourtSlot({
     required String courtId,
     required List<KasadoUser> players,
-    required DateTime startsAt,
-    required DateTime endsAt,
+    required TimeRange timeRange,
   }) = _CourtSlot;
 
   int get playerCount => players.length;

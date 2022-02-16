@@ -25,13 +25,11 @@ class _$CourtSlotTearOff {
   _CourtSlot call(
       {required String courtId,
       required List<KasadoUser> players,
-      required DateTime startsAt,
-      required DateTime endsAt}) {
+      required TimeRange timeRange}) {
     return _CourtSlot(
       courtId: courtId,
       players: players,
-      startsAt: startsAt,
-      endsAt: endsAt,
+      timeRange: timeRange,
     );
   }
 
@@ -47,8 +45,7 @@ const $CourtSlot = _$CourtSlotTearOff();
 mixin _$CourtSlot {
   String get courtId => throw _privateConstructorUsedError;
   List<KasadoUser> get players => throw _privateConstructorUsedError;
-  DateTime get startsAt => throw _privateConstructorUsedError;
-  DateTime get endsAt => throw _privateConstructorUsedError;
+  TimeRange get timeRange => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -60,11 +57,9 @@ mixin _$CourtSlot {
 abstract class $CourtSlotCopyWith<$Res> {
   factory $CourtSlotCopyWith(CourtSlot value, $Res Function(CourtSlot) then) =
       _$CourtSlotCopyWithImpl<$Res>;
-  $Res call(
-      {String courtId,
-      List<KasadoUser> players,
-      DateTime startsAt,
-      DateTime endsAt});
+  $Res call({String courtId, List<KasadoUser> players, TimeRange timeRange});
+
+  $TimeRangeCopyWith<$Res> get timeRange;
 }
 
 /// @nodoc
@@ -79,8 +74,7 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
   $Res call({
     Object? courtId = freezed,
     Object? players = freezed,
-    Object? startsAt = freezed,
-    Object? endsAt = freezed,
+    Object? timeRange = freezed,
   }) {
     return _then(_value.copyWith(
       courtId: courtId == freezed
@@ -91,15 +85,18 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>,
-      startsAt: startsAt == freezed
-          ? _value.startsAt
-          : startsAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      endsAt: endsAt == freezed
-          ? _value.endsAt
-          : endsAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      timeRange: timeRange == freezed
+          ? _value.timeRange
+          : timeRange // ignore: cast_nullable_to_non_nullable
+              as TimeRange,
     ));
+  }
+
+  @override
+  $TimeRangeCopyWith<$Res> get timeRange {
+    return $TimeRangeCopyWith<$Res>(_value.timeRange, (value) {
+      return _then(_value.copyWith(timeRange: value));
+    });
   }
 }
 
@@ -109,11 +106,10 @@ abstract class _$CourtSlotCopyWith<$Res> implements $CourtSlotCopyWith<$Res> {
           _CourtSlot value, $Res Function(_CourtSlot) then) =
       __$CourtSlotCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String courtId,
-      List<KasadoUser> players,
-      DateTime startsAt,
-      DateTime endsAt});
+  $Res call({String courtId, List<KasadoUser> players, TimeRange timeRange});
+
+  @override
+  $TimeRangeCopyWith<$Res> get timeRange;
 }
 
 /// @nodoc
@@ -129,8 +125,7 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
   $Res call({
     Object? courtId = freezed,
     Object? players = freezed,
-    Object? startsAt = freezed,
-    Object? endsAt = freezed,
+    Object? timeRange = freezed,
   }) {
     return _then(_CourtSlot(
       courtId: courtId == freezed
@@ -141,14 +136,10 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>,
-      startsAt: startsAt == freezed
-          ? _value.startsAt
-          : startsAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      endsAt: endsAt == freezed
-          ? _value.endsAt
-          : endsAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      timeRange: timeRange == freezed
+          ? _value.timeRange
+          : timeRange // ignore: cast_nullable_to_non_nullable
+              as TimeRange,
     ));
   }
 }
@@ -157,10 +148,7 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   const _$_CourtSlot(
-      {required this.courtId,
-      required this.players,
-      required this.startsAt,
-      required this.endsAt})
+      {required this.courtId, required this.players, required this.timeRange})
       : super._();
 
   factory _$_CourtSlot.fromJson(Map<String, dynamic> json) =>
@@ -171,13 +159,11 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   @override
   final List<KasadoUser> players;
   @override
-  final DateTime startsAt;
-  @override
-  final DateTime endsAt;
+  final TimeRange timeRange;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CourtSlot(courtId: $courtId, players: $players, startsAt: $startsAt, endsAt: $endsAt)';
+    return 'CourtSlot(courtId: $courtId, players: $players, timeRange: $timeRange)';
   }
 
   @override
@@ -187,8 +173,7 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'CourtSlot'))
       ..add(DiagnosticsProperty('courtId', courtId))
       ..add(DiagnosticsProperty('players', players))
-      ..add(DiagnosticsProperty('startsAt', startsAt))
-      ..add(DiagnosticsProperty('endsAt', endsAt));
+      ..add(DiagnosticsProperty('timeRange', timeRange));
   }
 
   @override
@@ -198,8 +183,7 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
             other is _CourtSlot &&
             const DeepCollectionEquality().equals(other.courtId, courtId) &&
             const DeepCollectionEquality().equals(other.players, players) &&
-            const DeepCollectionEquality().equals(other.startsAt, startsAt) &&
-            const DeepCollectionEquality().equals(other.endsAt, endsAt));
+            const DeepCollectionEquality().equals(other.timeRange, timeRange));
   }
 
   @override
@@ -207,8 +191,7 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       runtimeType,
       const DeepCollectionEquality().hash(courtId),
       const DeepCollectionEquality().hash(players),
-      const DeepCollectionEquality().hash(startsAt),
-      const DeepCollectionEquality().hash(endsAt));
+      const DeepCollectionEquality().hash(timeRange));
 
   @JsonKey(ignore: true)
   @override
@@ -225,8 +208,7 @@ abstract class _CourtSlot extends CourtSlot {
   const factory _CourtSlot(
       {required String courtId,
       required List<KasadoUser> players,
-      required DateTime startsAt,
-      required DateTime endsAt}) = _$_CourtSlot;
+      required TimeRange timeRange}) = _$_CourtSlot;
   const _CourtSlot._() : super._();
 
   factory _CourtSlot.fromJson(Map<String, dynamic> json) =
@@ -237,9 +219,7 @@ abstract class _CourtSlot extends CourtSlot {
   @override
   List<KasadoUser> get players;
   @override
-  DateTime get startsAt;
-  @override
-  DateTime get endsAt;
+  TimeRange get timeRange;
   @override
   @JsonKey(ignore: true)
   _$CourtSlotCopyWith<_CourtSlot> get copyWith =>

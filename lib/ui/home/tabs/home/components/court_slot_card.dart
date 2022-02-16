@@ -5,6 +5,7 @@ import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/model/time_range/time_range.dart';
 
 class CourtSlotCard extends StatelessWidget {
   const CourtSlotCard({
@@ -47,8 +48,10 @@ class CourtSlotCard extends StatelessWidget {
                   nextAvailableSlot: CourtSlot(
                     courtId: '',
                     players: [],
-                    startsAt: DateTime.now(),
-                    endsAt: DateTime.now(),
+                    timeRange: TimeRange(
+                      startsAt: DateTime.now(),
+                      endsAt: DateTime.now(),
+                    ),
                   ),
                 ),
               },
@@ -96,7 +99,7 @@ class CourtSlotCard extends StatelessWidget {
                               width: constraints.maxWidth * 0.05,
                             ),
                             Text(
-                                "${DateFormat('MMM d / h:mm').format(courtSlot.startsAt)} - ${DateFormat('h:mm').format(courtSlot.endsAt)}")
+                                "${DateFormat('MMM d / h:mm').format(courtSlot.timeRange.startsAt)} - ${DateFormat('h:mm').format(courtSlot.timeRange.endsAt)}")
                           ],
                         ),
                         Row(
