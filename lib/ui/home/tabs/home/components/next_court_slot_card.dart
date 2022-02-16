@@ -64,8 +64,8 @@ class NextCourtSlotCard extends StatelessWidget {
                   ),
                   const Divider(),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 80.0,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: constraints.maxWidth * 0.15,
                     ),
                     child: Column(
                       children: [
@@ -83,7 +83,7 @@ class NextCourtSlotCard extends StatelessWidget {
                               width: constraints.maxWidth * 0.05,
                             ),
                             Text(
-                                "${DateFormat('MMM d / h:mm').format(nextCourtSlot.timeRange.startsAt)} - ${DateFormat('h:mm').format(nextCourtSlot.timeRange.endsAt)}")
+                                "${DateFormat('MMM d / h:mm').format(nextCourtSlot.timeRange.startsAt)} - ${DateFormat('h:mm a').format(nextCourtSlot.timeRange.endsAt)}")
                           ],
                         ),
                         Row(
