@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 
 class CourtSlotCard extends StatelessWidget {
@@ -65,7 +66,8 @@ class CourtSlotCard extends StatelessWidget {
                           SizedBox(
                             width: constraints.maxWidth * 0.05,
                           ),
-                          const Text('Feb 15 / 3:00 - 4:00')
+                          Text(
+                              "${DateFormat('MMM d / h:mm').format(courtSlot.startsAt)} - ${DateFormat('h:mm').format(courtSlot.endsAt)}")
                         ],
                       ),
                       Row(
