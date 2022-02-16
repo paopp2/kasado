@@ -7,7 +7,7 @@ part of 'court_slot.dart';
 // **************************************************************************
 
 _$_CourtSlot _$$_CourtSlotFromJson(Map<String, dynamic> json) => _$_CourtSlot(
-      court: Court.fromJson(json['court'] as Map<String, dynamic>),
+      courtId: json['courtId'] as String,
       players: (json['players'] as List<dynamic>)
           .map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -17,7 +17,7 @@ _$_CourtSlot _$$_CourtSlotFromJson(Map<String, dynamic> json) => _$_CourtSlot(
 
 Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
     <String, dynamic>{
-      'court': instance.court.toJson(),
+      'courtId': instance.courtId,
       'players': instance.players.map((e) => e.toJson()).toList(),
       'startsAt': instance.startsAt.toIso8601String(),
       'endsAt': instance.endsAt.toIso8601String(),

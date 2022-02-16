@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_tec_mixin.dart';
 import 'package:kasado/logic/shared/view_model.dart';
-import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 
 final courtsOwnedViewModel = Provider.autoDispose(
@@ -34,15 +34,33 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
     final List<int> selectedIndices = read(selectedChipIndicesProvider);
     final List<TimeRange> allowedTimeSlots =
         selectedIndices.map((i) => allowedTimeRanges[i]).toList();
-    print(
-      Court(
-        id: 'Court ID',
-        name: tecCourtName.text,
-        photoUrl: tecCourtPhotoUrl.text,
-        ticketPrice: double.parse(tecTicketPrice.text),
-        allowedTimeSlots: allowedTimeSlots,
-      ),
-    );
+    final now = DateTime.now();
+    final TimeRange nextNearestTimeSlot = allowedTimeSlots.reduce((a, b) {
+      final TimeOfDay aStart = a.startTime;
+      final TimeOfDay bStart = b.startTime;
+      final aStartDateTime =
+          DateTime(now.year, now.month, aStart.hour, aStart.minute);
+      final bStartDateTime =
+          DateTime(now.year, now.month, bStart.hour, bStart.minute);
+      return aStartDateTime.difference(now) < bStartDateTime.difference(now)
+          ? a
+          : b;
+    });
+    print(nextNearestTimeSlot);
+    // print(
+    //   Court(
+    //     id: 'Court ID',
+    //     name: tecCourtName.text,
+    //     photoUrl: tecCourtPhotoUrl.text,
+    //     ticketPrice: double.parse(tecTicketPrice.text),
+    //     allowedTimeSlots: allowedTimeSlots,
+    //     nextAvailableSlot: CourtSlot(
+    //       courtId: 'Court ID',
+    //       players: [],
+    //       startsAt:
+    //     ),
+    //   ),
+    // );
   }
 }
 

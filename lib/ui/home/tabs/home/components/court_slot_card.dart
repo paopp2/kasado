@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
+import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 
 class CourtSlotCard extends StatelessWidget {
@@ -35,7 +36,22 @@ class CourtSlotCard extends StatelessWidget {
           child: InkWell(
             onTap: () => context.pushNamed(
               Routes.courtDetailsView,
-              extra: {'court': courtSlot.court},
+              extra: {
+                'court': Court(
+                  id: 'court2',
+                  name: 'Pitogo Basketball Court',
+                  photoUrl:
+                      "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
+                  ticketPrice: 50,
+                  allowedTimeSlots: [],
+                  nextAvailableSlot: CourtSlot(
+                    courtId: '',
+                    players: [],
+                    startsAt: DateTime.now(),
+                    endsAt: DateTime.now(),
+                  ),
+                ),
+              },
             ),
             customBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
@@ -49,15 +65,15 @@ class CourtSlotCard extends StatelessWidget {
                       height: constraints.maxHeight * 0.2,
                       width: constraints.maxWidth,
                       child: Image.network(
-                        courtSlot.court.photoUrl,
+                        "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   SizedBox(height: constraints.maxHeight * 0.02),
-                  Text(
-                    courtSlot.court.name.toUpperCase(),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  const Text(
+                    'Name',
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Divider(),
                   Padding(
@@ -89,7 +105,7 @@ class CourtSlotCard extends StatelessWidget {
                             SizedBox(
                               width: constraints.maxWidth * 0.05,
                             ),
-                            Text('₱ ${courtSlot.court.ticketPrice}')
+                            const Text('₱ 50')
                           ],
                         ),
                         TextButton(
