@@ -3,6 +3,7 @@ import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 final courtRepositoryProvider = Provider.autoDispose(
   (ref) => CourtRepository(firestoreHelper: FirestoreHelper.instance),
@@ -24,6 +25,17 @@ class CourtRepository {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colCourts(),
       builder: (data, docId) => Court.fromJson(data),
+    );
+  }
+
+  Future<void> addPlayerForCourtSlot({
+    required KasadoUser player,
+    required String courtId,
+    required CourtSlot courtSlot,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docCourtSlot(courtId, courtSlot.slotId),
+      data: courtSlot.copyWith(players: [player]).toJson(),
     );
   }
 

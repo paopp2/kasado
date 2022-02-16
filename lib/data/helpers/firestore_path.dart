@@ -7,4 +7,6 @@ class FirestorePath {
 
   // DOCUMENT paths
   static String docCourt(String courtId) => 'courts/$courtId';
+  static String docCourtSlot(String courtId, String slotId) =>
+      'courts/$courtId/court_slots/$slotId';
 }

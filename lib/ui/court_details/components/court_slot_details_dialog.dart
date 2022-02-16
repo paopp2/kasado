@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
 
 class CourtSlotDetailsDialog extends StatelessWidget {
   const CourtSlotDetailsDialog({
     Key? key,
     required this.constraints,
+    required this.model,
     required this.isAdmin,
+    required this.courtSlot,
   }) : super(key: key);
 
   final BoxConstraints constraints;
   final bool isAdmin;
+  final CourtDetailsViewModel model;
+  final CourtSlot courtSlot;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +58,10 @@ class CourtSlotDetailsDialog extends StatelessWidget {
               ),
               ElevatedButton(
                 child: const Text('JOIN GAME'),
-                onPressed: () {},
+                onPressed: () => model.joinCourtSlot(
+                  courtId: courtSlot.courtId,
+                  courtSlot: courtSlot,
+                ),
               ),
             ],
           ),
