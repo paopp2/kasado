@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/model/court/court.dart';
-import 'package:kasado/ui/shared/data_entry_field.dart';
+import 'package:kasado/ui/courts_owned/components/new_court_input_dialog.dart';
 
 class CourtsOwnedView extends StatelessWidget {
   const CourtsOwnedView({Key? key}) : super(key: key);
@@ -33,23 +33,11 @@ class CourtsOwnedView extends StatelessWidget {
           }),
           floatingActionButton: FloatingActionButton(
             onPressed: () => showDialog(
-                context: context,
-                builder: (context) {
-                  return Dialog(
-                    child: Column(
-                      children: [
-                        const DataEntryField(hint: 'Court Name'),
-                        const DataEntryField(hint: 'Court Photo URL'),
-                        const DataEntryField(hint: 'Address'),
-                        const DataEntryField(hint: 'Ticket Price'),
-                        TextButton(
-                          child: const Text('Add Court'),
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  );
-                }),
+              context: context,
+              builder: (context) {
+                return const NewCourtInputDialog();
+              },
+            ),
             child: const Icon(
               Icons.add,
               color: Colors.white,
