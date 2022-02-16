@@ -40,9 +40,11 @@ class CourtDetailsView extends StatelessWidget {
                     return Column(
                       children: details.appointments.map((a) {
                         a as Appointment;
+                        final isDone = a.startTime.isBefore(DateTime.now());
                         return Container(
                           decoration: BoxDecoration(
-                            color: Colors.green,
+                            color:
+                                (isDone) ? Colors.grey.shade400 : Colors.green,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Material(
@@ -56,14 +58,14 @@ class CourtDetailsView extends StatelessWidget {
                                 textColor: Colors.white,
                                 title: const Text('Available'),
                                 subtitle: Text(
-                                    "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm').format(a.endTime)}"),
+                                    "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm a').format(a.endTime)}"),
                                 trailing: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: const [
                                     Text('Players'),
                                     Text(
-                                      '8 / 15',
+                                      '0 / 15',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 25,
@@ -92,40 +94,29 @@ _AppointmentDataSource _getCalendarDataSource() {
   List<Appointment> appointments = <Appointment>[];
   appointments.addAll([
     Appointment(
-      startTime: DateTime(2022, 2, 16, 8, 0),
-      endTime: DateTime(2022, 2, 16, 9, 0),
-      subject: 'Players: 8 / 15',
-      color: Colors.green,
+      startTime: DateTime(2015, 1, 1, 7, 0),
+      endTime: DateTime(2015, 1, 1, 8, 0),
+      recurrenceRule: SfCalendar.generateRRule(
+        RecurrenceProperties(
+          recurrenceType: RecurrenceType.daily,
+          startDate: DateTime.now(),
+        ),
+        DateTime(2015, 1, 1, 7, 0),
+        DateTime(2015, 1, 1, 8, 0),
+      ),
     ),
     Appointment(
-      startTime: DateTime(2022, 2, 16, 9, 0),
-      endTime: DateTime(2022, 2, 16, 10, 0),
-      subject: 'Players: 12 / 15',
-      color: Colors.green,
-    ),
-    Appointment(
-      startTime: DateTime(2022, 2, 16, 11, 0),
-      endTime: DateTime(2022, 2, 16, 12, 0),
-      subject: 'Players: 15 / 15',
-      color: Colors.red,
-    ),
-    Appointment(
-      startTime: DateTime(2022, 2, 17, 8, 0),
-      endTime: DateTime(2022, 2, 16, 9, 0),
-      subject: 'Players: 8 / 15',
-      color: Colors.green,
-    ),
-    Appointment(
-      startTime: DateTime(2022, 2, 17, 9, 0),
-      endTime: DateTime(2022, 2, 17, 10, 0),
-      subject: 'Players: 15 / 15',
-      color: Colors.red,
-    ),
-    Appointment(
-      startTime: DateTime(2022, 2, 17, 10, 0),
-      endTime: DateTime(2022, 2, 17, 11, 0),
-      subject: 'Players: 8 / 15',
-      color: Colors.green,
+      startTime: DateTime(2015, 1, 1, 14, 0),
+      endTime: DateTime(2015, 1, 1, 15, 0),
+      subject: 'Players: 0 / 15',
+      recurrenceRule: SfCalendar.generateRRule(
+        RecurrenceProperties(
+          recurrenceType: RecurrenceType.daily,
+          startDate: DateTime.now(),
+        ),
+        DateTime(2015, 1, 1, 14, 0),
+        DateTime(2015, 1, 1, 15, 0),
+      ),
     ),
   ]);
 
