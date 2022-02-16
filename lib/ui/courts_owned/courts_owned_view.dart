@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
+import 'package:kasado/logic/courts_owned/courts_owned_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/courts_owned/components/new_court_input_dialog.dart';
 
-class CourtsOwnedView extends StatelessWidget {
+class CourtsOwnedView extends HookConsumerWidget {
   const CourtsOwnedView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final model = ref.watch(courtsOwnedViewModel);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
@@ -35,7 +39,7 @@ class CourtsOwnedView extends StatelessWidget {
             onPressed: () => showDialog(
               context: context,
               builder: (context) {
-                return const NewCourtInputDialog();
+                return NewCourtInputDialog(model: model);
               },
             ),
             child: const Icon(
