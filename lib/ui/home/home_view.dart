@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/home/components/court_slot_card.dart';
@@ -19,7 +17,7 @@ class HomeView extends HookConsumerWidget {
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.menu),
-              onPressed: () => context.pushNamed(Routes.courtDetailsView),
+              onPressed: () {},
             ),
             actions: [
               IconButton(
@@ -33,6 +31,7 @@ class HomeView extends HookConsumerWidget {
               children: [
                 const SizedBox(height: 50),
                 CourtSlotCard(
+                  model: model,
                   constraints: constraints,
                   courtSlot: CourtSlot(
                     id: 'court1',
@@ -46,6 +45,7 @@ class HomeView extends HookConsumerWidget {
                   ),
                 ),
                 CourtSlotCard(
+                  model: model,
                   constraints: constraints,
                   courtSlot: CourtSlot(
                     id: 'court2',

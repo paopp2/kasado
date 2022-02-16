@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:kasado/app_router.dart';
+import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 
 class CourtSlotCard extends StatelessWidget {
@@ -7,10 +10,12 @@ class CourtSlotCard extends StatelessWidget {
     Key? key,
     required this.constraints,
     required this.courtSlot,
+    required this.model,
   }) : super(key: key);
 
   final BoxConstraints constraints;
   final CourtSlot courtSlot;
+  final HomeViewModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -27,62 +32,68 @@ class CourtSlotCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          child: Center(
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: SizedBox(
-                    height: constraints.maxHeight * 0.2,
-                    width: constraints.maxWidth,
-                    child: Image.network(
-                      courtSlot.photoUrl,
-                      fit: BoxFit.cover,
+          child: InkWell(
+            onTap: () => context.pushNamed(Routes.courtDetailsView),
+            customBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Center(
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: SizedBox(
+                      height: constraints.maxHeight * 0.2,
+                      width: constraints.maxWidth,
+                      child: Image.network(
+                        courtSlot.photoUrl,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: constraints.maxHeight * 0.02),
-                Text(
-                  courtSlot.name.toUpperCase(),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const Divider(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 80.0,
+                  SizedBox(height: constraints.maxHeight * 0.02),
+                  Text(
+                    courtSlot.name.toUpperCase(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.people),
-                          SizedBox(width: constraints.maxWidth * 0.05),
-                          Text('${courtSlot.playerCount} / 15')
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Icon(Icons.calendar_today),
-                          SizedBox(
-                            width: constraints.maxWidth * 0.05,
-                          ),
-                          Text(
-                              "${DateFormat('MMM d / h:mm').format(courtSlot.startsAt)} - ${DateFormat('h:mm').format(courtSlot.endsAt)}")
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Icon(Icons.money),
-                          SizedBox(
-                            width: constraints.maxWidth * 0.05,
-                          ),
-                          Text('₱ ${courtSlot.ticketPrice}')
-                        ],
-                      ),
-                    ],
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 80.0,
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.people),
+                            SizedBox(width: constraints.maxWidth * 0.05),
+                            Text('${courtSlot.playerCount} / 15')
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.calendar_today),
+                            SizedBox(
+                              width: constraints.maxWidth * 0.05,
+                            ),
+                            Text(
+                                "${DateFormat('MMM d / h:mm').format(courtSlot.startsAt)} - ${DateFormat('h:mm').format(courtSlot.endsAt)}")
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.money),
+                            SizedBox(
+                              width: constraints.maxWidth * 0.05,
+                            ),
+                            Text('₱ ${courtSlot.ticketPrice}')
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
