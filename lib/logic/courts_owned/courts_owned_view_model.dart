@@ -1,6 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
+import 'package:kasado/logic/courts_owned/courts_owned_tec_mixin.dart';
 import 'package:kasado/logic/shared/view_model.dart';
+import 'package:kasado/model/court/court.dart';
+import 'package:kasado/model/time_range/time_range.dart';
 
 final courtsOwnedViewModel = Provider.autoDispose(
   (ref) => CourtsOwnedViewModel(
@@ -8,7 +11,7 @@ final courtsOwnedViewModel = Provider.autoDispose(
   ),
 );
 
-class CourtsOwnedViewModel extends ViewModel {
+class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
   CourtsOwnedViewModel({
     required Reader read,
   }) : super(read);
@@ -26,4 +29,50 @@ class CourtsOwnedViewModel extends ViewModel {
   bool isSchedIndexSelected(int index) {
     return read(selectedChipIndicesProvider).contains(index);
   }
+
+  Future<void> addNewCourt() async {
+    final List<int> selectedIndices = read(selectedChipIndicesProvider);
+    final List<TimeRange> chosenSchedules =
+        selectedIndices.map((i) => allowedTimeRanges[i]).toList();
+    print(chosenSchedules);
+    print(
+      Court(
+        id: 'Court ID',
+        name: tecCourtName.text,
+        photoUrl: tecCourtPhotoUrl.text,
+        ticketPrice: double.parse(tecTicketPrice.text),
+      ),
+    );
+  }
 }
+
+final allowedTimeRanges = [
+  TimeRange(
+    startsAt: DateTime(2022, 1, 1, 8, 0),
+    endsAt: DateTime(2022, 1, 1, 10, 0),
+  ),
+  TimeRange(
+    startsAt: DateTime(2022, 1, 1, 10, 0),
+    endsAt: DateTime(2022, 1, 1, 12, 0),
+  ),
+  TimeRange(
+    startsAt: DateTime(2022, 1, 1, 12, 0),
+    endsAt: DateTime(2022, 1, 1, 14, 0),
+  ),
+  TimeRange(
+    startsAt: DateTime(2022, 1, 1, 14, 0),
+    endsAt: DateTime(2022, 1, 1, 16, 0),
+  ),
+  TimeRange(
+    startsAt: DateTime(2022, 1, 1, 16, 0),
+    endsAt: DateTime(2022, 1, 1, 18, 0),
+  ),
+  TimeRange(
+    startsAt: DateTime(2022, 1, 1, 18, 0),
+    endsAt: DateTime(2022, 1, 1, 20, 0),
+  ),
+  TimeRange(
+    startsAt: DateTime(2022, 1, 1, 20, 0),
+    endsAt: DateTime(2022, 1, 1, 22, 0),
+  ),
+];

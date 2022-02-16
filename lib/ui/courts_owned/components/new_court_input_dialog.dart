@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_view_model.dart';
-import 'package:kasado/model/time_range/time_range.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
 
 class NewCourtInputDialog extends HookConsumerWidget {
@@ -20,10 +19,14 @@ class NewCourtInputDialog extends HookConsumerWidget {
     return Dialog(
       child: ListView(
         children: [
-          const DataEntryField(hint: 'Court Name'),
-          const DataEntryField(hint: 'Court Photo URL'),
-          const DataEntryField(hint: 'Address'),
-          const DataEntryField(hint: 'Ticket Price'),
+          DataEntryField(hint: 'Court Name', tec: model.tecCourtName),
+          DataEntryField(hint: 'Court Photo URL', tec: model.tecCourtPhotoUrl),
+          DataEntryField(hint: 'Address', tec: model.tecCourtAddress),
+          DataEntryField(
+            hint: 'Ticket Price',
+            isMoney: true,
+            tec: model.tecTicketPrice,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -81,41 +84,10 @@ class NewCourtInputDialog extends HookConsumerWidget {
           ),
           TextButton(
             child: const Text('Add Court'),
-            onPressed: () {},
+            onPressed: model.addNewCourt,
           ),
         ],
       ),
     );
   }
 }
-
-final allowedTimeRanges = [
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 8, 0),
-    endsAt: DateTime(2022, 1, 1, 10, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 10, 0),
-    endsAt: DateTime(2022, 1, 1, 12, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 12, 0),
-    endsAt: DateTime(2022, 1, 1, 14, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 14, 0),
-    endsAt: DateTime(2022, 1, 1, 16, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 16, 0),
-    endsAt: DateTime(2022, 1, 1, 18, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 18, 0),
-    endsAt: DateTime(2022, 1, 1, 20, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 20, 0),
-    endsAt: DateTime(2022, 1, 1, 22, 0),
-  ),
-];
