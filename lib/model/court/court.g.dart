@@ -14,6 +14,9 @@ _$_Court _$$_CourtFromJson(Map<String, dynamic> json) => _$_Court(
       allowedTimeSlots: (json['allowedTimeSlots'] as List<dynamic>)
           .map((e) => TimeRange.fromJson(e as Map<String, dynamic>))
           .toList(),
+      admins: (json['admins'] as List<dynamic>)
+          .map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
+          .toList(),
       nextAvailableSlot:
           CourtSlot.fromJson(json['nextAvailableSlot'] as Map<String, dynamic>),
     );
@@ -25,5 +28,6 @@ Map<String, dynamic> _$$_CourtToJson(_$_Court instance) => <String, dynamic>{
       'ticketPrice': instance.ticketPrice,
       'allowedTimeSlots':
           instance.allowedTimeSlots.map((e) => e.toJson()).toList(),
+      'admins': instance.admins.map((e) => e.toJson()).toList(),
       'nextAvailableSlot': instance.nextAvailableSlot.toJson(),
     };

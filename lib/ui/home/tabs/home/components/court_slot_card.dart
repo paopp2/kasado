@@ -53,6 +53,7 @@ class CourtSlotCard extends StatelessWidget {
                       endsAt: DateTime.now(),
                     ),
                   ),
+                  admins: [],
                 ),
               },
             ),

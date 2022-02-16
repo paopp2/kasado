@@ -32,6 +32,7 @@ class CourtsOwnedView extends HookConsumerWidget {
                         "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
                     ticketPrice: 50,
                     allowedTimeSlots: [],
+                    admins: [],
                     nextAvailableSlot: CourtSlot(
                       courtId: '',
                       players: [],
