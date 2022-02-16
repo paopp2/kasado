@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/allowed_time_ranges.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_tec_mixin.dart';
@@ -69,34 +70,3 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
     );
   }
 }
-
-final allowedTimeRanges = [
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 8, 0),
-    endsAt: DateTime(2022, 1, 1, 10, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 10, 0),
-    endsAt: DateTime(2022, 1, 1, 12, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 12, 0),
-    endsAt: DateTime(2022, 1, 1, 14, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 14, 0),
-    endsAt: DateTime(2022, 1, 1, 16, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 16, 0),
-    endsAt: DateTime(2022, 1, 1, 18, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 18, 0),
-    endsAt: DateTime(2022, 1, 1, 20, 0),
-  ),
-  TimeRange(
-    startsAt: DateTime(2022, 1, 1, 20, 0),
-    endsAt: DateTime(2022, 1, 1, 22, 0),
-  ),
-];
