@@ -25,7 +25,7 @@ class CourtSlotCard extends StatelessWidget {
         vertical: 10,
       ),
       child: SizedBox(
-        height: constraints.maxHeight * 0.38,
+        height: constraints.maxHeight * 0.45,
         width: constraints.maxWidth * 0.85,
         child: Card(
           elevation: 20,
@@ -91,6 +91,10 @@ class CourtSlotCard extends StatelessWidget {
                             ),
                             Text('₱ ${courtSlot.court.ticketPrice}')
                           ],
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text("JOIN GAME"),
                         ),
                       ],
                     ),
