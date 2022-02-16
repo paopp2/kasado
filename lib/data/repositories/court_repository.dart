@@ -14,7 +14,7 @@ class CourtRepository {
 
   Future<void> pushCourt(Court court) async {
     await firestoreHelper.setData(
-      path: FirestorePath.docCourt('trial'),
+      path: FirestorePath.docCourt(court.id),
       data: court.toJson(),
     );
   }

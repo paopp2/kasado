@@ -8,6 +8,7 @@ import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/time_range/time_range.dart';
+import 'package:uuid/uuid.dart';
 
 final courtsOwnedViewModel = Provider.autoDispose(
   (ref) => CourtsOwnedViewModel(
@@ -54,15 +55,16 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
           ? a
           : b;
     });
+    final courtId = const Uuid().v4();
     await courtRepo.pushCourt(
       Court(
-        id: 'Court ID',
+        id: courtId,
         name: tecCourtName.text,
         photoUrl: tecCourtPhotoUrl.text,
         ticketPrice: double.parse(tecTicketPrice.text),
         allowedTimeSlots: allowedTimeSlots,
         nextAvailableSlot: CourtSlot(
-          courtId: 'Court ID',
+          courtId: courtId,
           players: [],
           timeRange: nextNearestTimeSlot,
         ),
