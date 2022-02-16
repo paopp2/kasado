@@ -3,6 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_tec_mixin.dart';
 import 'package:kasado/logic/shared/view_model.dart';
+import 'package:kasado/model/court/court.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 
 final courtsOwnedViewModel = Provider.autoDispose(
@@ -46,21 +48,20 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
           ? a
           : b;
     });
-    print(nextNearestTimeSlot);
-    // print(
-    //   Court(
-    //     id: 'Court ID',
-    //     name: tecCourtName.text,
-    //     photoUrl: tecCourtPhotoUrl.text,
-    //     ticketPrice: double.parse(tecTicketPrice.text),
-    //     allowedTimeSlots: allowedTimeSlots,
-    //     nextAvailableSlot: CourtSlot(
-    //       courtId: 'Court ID',
-    //       players: [],
-    //       startsAt:
-    //     ),
-    //   ),
-    // );
+    print(
+      Court(
+        id: 'Court ID',
+        name: tecCourtName.text,
+        photoUrl: tecCourtPhotoUrl.text,
+        ticketPrice: double.parse(tecTicketPrice.text),
+        allowedTimeSlots: allowedTimeSlots,
+        nextAvailableSlot: CourtSlot(
+          courtId: 'Court ID',
+          players: [],
+          timeRange: nextNearestTimeSlot,
+        ),
+      ),
+    );
   }
 }
 
