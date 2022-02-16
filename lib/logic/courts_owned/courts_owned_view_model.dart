@@ -52,20 +52,27 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
     // TODO: Move this to utils, when having to use more than once
     final TimeRange nextNearestTimeSlot = allowedTimeSlots.reduce((a, b) {
       final TimeOfDay aStart = a.startTime;
+      final TimeOfDay aEnd = a.endTime;
       final TimeOfDay bStart = b.startTime;
+      final TimeOfDay bEnd = b.endTime;
       final aStartDateTime =
           DateTime(now.year, now.month, aStart.hour, aStart.minute);
+      final aEndDateTime =
+          DateTime(now.year, now.month, aEnd.hour, aEnd.minute);
       final bStartDateTime =
           DateTime(now.year, now.month, bStart.hour, bStart.minute);
+      final bEndDateTime =
+          DateTime(now.year, now.month, bEnd.hour, bEnd.minute);
       return aStartDateTime.difference(now) < bStartDateTime.difference(now)
-          ? a
-          : b;
+          ? TimeRange(startsAt: aStartDateTime, endsAt: aEndDateTime)
+          : TimeRange(startsAt: bStartDateTime, endsAt: bEndDateTime);
     });
     final courtId = const Uuid().v4();
     await courtRepo.pushCourt(
       Court(
         id: courtId,
         name: tecCourtName.text,
+        address: tecCourtAddress.text,
         photoUrl: tecCourtPhotoUrl.text,
         ticketPrice: double.parse(tecTicketPrice.text),
         allowedTimeSlots: allowedTimeSlots,

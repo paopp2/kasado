@@ -28,6 +28,7 @@ class CourtsOwnedView extends HookConsumerWidget {
                   "court": Court(
                     id: 'court2',
                     name: 'Pitogo Basketball Court',
+                    address: 'Pitogo Consolacion Cebu',
                     photoUrl:
                         "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
                     ticketPrice: 50,

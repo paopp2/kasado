@@ -12,6 +12,7 @@ class Court with _$Court {
   const factory Court({
     required String id,
     required String name,
+    required String address,
     required String photoUrl,
     required double ticketPrice,
     required List<TimeRange> allowedTimeSlots,
