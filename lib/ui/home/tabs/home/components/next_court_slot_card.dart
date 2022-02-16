@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:kasado/app_router.dart';
-import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 
@@ -12,13 +11,11 @@ class NextCourtSlotCard extends StatelessWidget {
     required this.constraints,
     required this.court,
     required this.nextCourtSlot,
-    required this.model,
   }) : super(key: key);
 
   final BoxConstraints constraints;
   final Court court;
   final CourtSlot nextCourtSlot;
-  final HomeViewModel model;
 
   @override
   Widget build(BuildContext context) {

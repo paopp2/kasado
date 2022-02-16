@@ -30,7 +30,6 @@ class HomeTab extends HookConsumerWidget {
                 constraints: constraints,
                 court: court,
                 nextCourtSlot: court.nextAvailableSlot,
-                model: model,
               );
             },
           );
