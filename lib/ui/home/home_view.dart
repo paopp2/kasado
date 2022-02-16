@@ -36,8 +36,8 @@ class HomeView extends HookConsumerWidget {
                   model: model,
                   constraints: constraints,
                 ),
-                const TicketsTab(),
-                const ProfileTab(),
+                TicketsTab(constraints: constraints),
+                ProfileTab(constraints: constraints),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
