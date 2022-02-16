@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
+import 'package:kasado/ui/courts_owned/courts_owned_view.dart';
 import 'package:kasado/ui/home/home_view.dart';
 
 class AppRouter {
@@ -15,15 +16,18 @@ class AppRouter {
         name: Routes.homeView,
         path: '/',
         builder: (context, state) => const HomeView(),
-        routes: [
-          GoRoute(
-            name: Routes.courtDetailsView,
-            path: 'court-details',
-            builder: (context, state) => CourtDetailsView(
-              court: state.extra! as Court,
-            ),
-          ),
-        ],
+      ),
+      GoRoute(
+        name: Routes.courtsOwnedView,
+        path: '/courts-owned',
+        builder: (context, state) => const CourtsOwnedView(),
+      ),
+      GoRoute(
+        name: Routes.courtDetailsView,
+        path: '/court-details',
+        builder: (context, state) => CourtDetailsView(
+          court: state.extra! as Court,
+        ),
       ),
       GoRoute(
         name: Routes.loginView,
@@ -56,4 +60,5 @@ class Routes {
   static const homeView = 'home_view';
   static const loginView = 'login_view';
   static const courtDetailsView = 'court_details_view';
+  static const courtsOwnedView = 'courts_owned_view';
 }

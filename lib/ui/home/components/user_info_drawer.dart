@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/app_router.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 
@@ -63,7 +65,7 @@ class UserInfoDrawer extends HookConsumerWidget {
                 const Spacer(),
                 TextButton(
                   onPressed: null,
-                  onLongPress: () => print("Okay"),
+                  onLongPress: () => context.pushNamed(Routes.courtsOwnedView),
                   child: const Text('.'),
                 ),
               ],
