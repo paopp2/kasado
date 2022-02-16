@@ -44,11 +44,12 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
     return read(selectedChipIndicesProvider).contains(index);
   }
 
-  Future<void> addNewCourt() async {
+  Future<void> addNewCourt(BuildContext context) async {
     final List<int> selectedIndices = read(selectedChipIndicesProvider);
     final List<TimeRange> allowedTimeSlots =
         selectedIndices.map((i) => allowedTimeRanges[i]).toList();
     final now = DateTime.now();
+    // TODO: Move this to utils, when having to use more than once
     final TimeRange nextNearestTimeSlot = allowedTimeSlots.reduce((a, b) {
       final TimeOfDay aStart = a.startTime;
       final TimeOfDay bStart = b.startTime;
@@ -76,5 +77,7 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
         ),
       ),
     );
+    // TODO: Implement better routing on NewCourtInput through GoRouter
+    Navigator.pop(context);
   }
 }

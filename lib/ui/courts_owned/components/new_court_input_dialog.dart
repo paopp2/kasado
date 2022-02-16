@@ -84,7 +84,7 @@ class NewCourtInputDialog extends HookConsumerWidget {
           ),
           TextButton(
             child: const Text('Add Court'),
-            onPressed: model.addNewCourt,
+            onPressed: () => model.addNewCourt(context),
           ),
         ],
       ),
