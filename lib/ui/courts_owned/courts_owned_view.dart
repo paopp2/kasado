@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/model/court/court.dart';
+import 'package:kasado/ui/shared/data_entry_field.dart';
 
 class CourtsOwnedView extends StatelessWidget {
   const CourtsOwnedView({Key? key}) : super(key: key);
@@ -11,13 +12,6 @@ class CourtsOwnedView extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-          ),
           body: ListView.builder(itemBuilder: (context, index) {
             return ListTile(
               title: Text('Pitogo Basketball Court $index'),
@@ -37,6 +31,30 @@ class CourtsOwnedView extends StatelessWidget {
               ),
             );
           }),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => showDialog(
+                context: context,
+                builder: (context) {
+                  return Dialog(
+                    child: Column(
+                      children: [
+                        const DataEntryField(hint: 'Court Name'),
+                        const DataEntryField(hint: 'Court Photo URL'),
+                        const DataEntryField(hint: 'Address'),
+                        const DataEntryField(hint: 'Ticket Price'),
+                        TextButton(
+                          child: const Text('Add Court'),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+          ),
         );
       },
     );
