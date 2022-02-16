@@ -5,18 +5,19 @@ import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
-import 'package:kasado/model/time_range/time_range.dart';
 
 class CourtSlotCard extends StatelessWidget {
   const CourtSlotCard({
     Key? key,
     required this.constraints,
-    required this.courtSlot,
+    required this.court,
+    required this.nextCourtSlot,
     required this.model,
   }) : super(key: key);
 
   final BoxConstraints constraints;
-  final CourtSlot courtSlot;
+  final Court court;
+  final CourtSlot nextCourtSlot;
   final HomeViewModel model;
 
   @override
@@ -37,25 +38,7 @@ class CourtSlotCard extends StatelessWidget {
           child: InkWell(
             onTap: () => context.pushNamed(
               Routes.courtDetailsView,
-              extra: {
-                'court': Court(
-                  id: 'court2',
-                  name: 'Pitogo Basketball Court',
-                  photoUrl:
-                      "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
-                  ticketPrice: 50,
-                  allowedTimeSlots: [],
-                  nextAvailableSlot: CourtSlot(
-                    courtId: '',
-                    players: [],
-                    timeRange: TimeRange(
-                      startsAt: DateTime.now(),
-                      endsAt: DateTime.now(),
-                    ),
-                  ),
-                  admins: [],
-                ),
-              },
+              extra: {'court': court},
             ),
             customBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
@@ -69,15 +52,15 @@ class CourtSlotCard extends StatelessWidget {
                       height: constraints.maxHeight * 0.2,
                       width: constraints.maxWidth,
                       child: Image.network(
-                        "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
+                        court.photoUrl,
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   SizedBox(height: constraints.maxHeight * 0.02),
-                  const Text(
-                    'Name',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text(
+                    court.name.toUpperCase(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Divider(),
                   Padding(
@@ -90,7 +73,7 @@ class CourtSlotCard extends StatelessWidget {
                           children: [
                             const Icon(Icons.people),
                             SizedBox(width: constraints.maxWidth * 0.05),
-                            Text('${courtSlot.playerCount} / 15')
+                            Text('${nextCourtSlot.playerCount} / 15')
                           ],
                         ),
                         Row(
@@ -100,7 +83,7 @@ class CourtSlotCard extends StatelessWidget {
                               width: constraints.maxWidth * 0.05,
                             ),
                             Text(
-                                "${DateFormat('MMM d / h:mm').format(courtSlot.timeRange.startsAt)} - ${DateFormat('h:mm').format(courtSlot.timeRange.endsAt)}")
+                                "${DateFormat('MMM d / h:mm').format(nextCourtSlot.timeRange.startsAt)} - ${DateFormat('h:mm').format(nextCourtSlot.timeRange.endsAt)}")
                           ],
                         ),
                         Row(
@@ -109,7 +92,7 @@ class CourtSlotCard extends StatelessWidget {
                             SizedBox(
                               width: constraints.maxWidth * 0.05,
                             ),
-                            const Text('₱ 50')
+                            Text('₱ ${court.ticketPrice}')
                           ],
                         ),
                         TextButton(

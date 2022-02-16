@@ -18,4 +18,11 @@ class CourtRepository {
       data: court.toJson(),
     );
   }
+
+  Stream<List<Court>> getCourtsStream() {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colCourts(),
+      builder: (data, docId) => Court.fromJson(data),
+    );
+  }
 }
