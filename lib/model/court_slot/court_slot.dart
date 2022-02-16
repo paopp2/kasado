@@ -7,13 +7,18 @@ part 'court_slot.g.dart';
 
 @freezed
 class CourtSlot with _$CourtSlot {
+  const CourtSlot._();
   const factory CourtSlot({
-    required String courtId,
-    required String courtName,
-    required String courtPhotoUrl,
+    required String id,
+    required String name,
+    required String photoUrl,
     required List<KasadoUser> players,
     required double ticketPrice,
+    required DateTime startsAt,
+    required DateTime endsAt,
   }) = _CourtSlot;
+
+  int get playerCount => players.length;
 
   factory CourtSlot.fromJson(Map<String, dynamic> json) =>
       _$CourtSlotFromJson(json);

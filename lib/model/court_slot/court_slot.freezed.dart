@@ -23,17 +23,21 @@ class _$CourtSlotTearOff {
   const _$CourtSlotTearOff();
 
   _CourtSlot call(
-      {required String courtId,
-      required String courtName,
-      required String courtPhotoUrl,
+      {required String id,
+      required String name,
+      required String photoUrl,
       required List<KasadoUser> players,
-      required double ticketPrice}) {
+      required double ticketPrice,
+      required DateTime startsAt,
+      required DateTime endsAt}) {
     return _CourtSlot(
-      courtId: courtId,
-      courtName: courtName,
-      courtPhotoUrl: courtPhotoUrl,
+      id: id,
+      name: name,
+      photoUrl: photoUrl,
       players: players,
       ticketPrice: ticketPrice,
+      startsAt: startsAt,
+      endsAt: endsAt,
     );
   }
 
@@ -47,11 +51,13 @@ const $CourtSlot = _$CourtSlotTearOff();
 
 /// @nodoc
 mixin _$CourtSlot {
-  String get courtId => throw _privateConstructorUsedError;
-  String get courtName => throw _privateConstructorUsedError;
-  String get courtPhotoUrl => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get photoUrl => throw _privateConstructorUsedError;
   List<KasadoUser> get players => throw _privateConstructorUsedError;
   double get ticketPrice => throw _privateConstructorUsedError;
+  DateTime get startsAt => throw _privateConstructorUsedError;
+  DateTime get endsAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -64,11 +70,13 @@ abstract class $CourtSlotCopyWith<$Res> {
   factory $CourtSlotCopyWith(CourtSlot value, $Res Function(CourtSlot) then) =
       _$CourtSlotCopyWithImpl<$Res>;
   $Res call(
-      {String courtId,
-      String courtName,
-      String courtPhotoUrl,
+      {String id,
+      String name,
+      String photoUrl,
       List<KasadoUser> players,
-      double ticketPrice});
+      double ticketPrice,
+      DateTime startsAt,
+      DateTime endsAt});
 }
 
 /// @nodoc
@@ -81,24 +89,26 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? courtId = freezed,
-    Object? courtName = freezed,
-    Object? courtPhotoUrl = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? photoUrl = freezed,
     Object? players = freezed,
     Object? ticketPrice = freezed,
+    Object? startsAt = freezed,
+    Object? endsAt = freezed,
   }) {
     return _then(_value.copyWith(
-      courtId: courtId == freezed
-          ? _value.courtId
-          : courtId // ignore: cast_nullable_to_non_nullable
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      courtName: courtName == freezed
-          ? _value.courtName
-          : courtName // ignore: cast_nullable_to_non_nullable
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      courtPhotoUrl: courtPhotoUrl == freezed
-          ? _value.courtPhotoUrl
-          : courtPhotoUrl // ignore: cast_nullable_to_non_nullable
+      photoUrl: photoUrl == freezed
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
       players: players == freezed
           ? _value.players
@@ -108,6 +118,14 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
           ? _value.ticketPrice
           : ticketPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      startsAt: startsAt == freezed
+          ? _value.startsAt
+          : startsAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endsAt: endsAt == freezed
+          ? _value.endsAt
+          : endsAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -119,11 +137,13 @@ abstract class _$CourtSlotCopyWith<$Res> implements $CourtSlotCopyWith<$Res> {
       __$CourtSlotCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String courtId,
-      String courtName,
-      String courtPhotoUrl,
+      {String id,
+      String name,
+      String photoUrl,
       List<KasadoUser> players,
-      double ticketPrice});
+      double ticketPrice,
+      DateTime startsAt,
+      DateTime endsAt});
 }
 
 /// @nodoc
@@ -137,24 +157,26 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? courtId = freezed,
-    Object? courtName = freezed,
-    Object? courtPhotoUrl = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? photoUrl = freezed,
     Object? players = freezed,
     Object? ticketPrice = freezed,
+    Object? startsAt = freezed,
+    Object? endsAt = freezed,
   }) {
     return _then(_CourtSlot(
-      courtId: courtId == freezed
-          ? _value.courtId
-          : courtId // ignore: cast_nullable_to_non_nullable
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      courtName: courtName == freezed
-          ? _value.courtName
-          : courtName // ignore: cast_nullable_to_non_nullable
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
-      courtPhotoUrl: courtPhotoUrl == freezed
-          ? _value.courtPhotoUrl
-          : courtPhotoUrl // ignore: cast_nullable_to_non_nullable
+      photoUrl: photoUrl == freezed
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
       players: players == freezed
           ? _value.players
@@ -164,37 +186,52 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
           ? _value.ticketPrice
           : ticketPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      startsAt: startsAt == freezed
+          ? _value.startsAt
+          : startsAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      endsAt: endsAt == freezed
+          ? _value.endsAt
+          : endsAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_CourtSlot with DiagnosticableTreeMixin implements _CourtSlot {
+class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   const _$_CourtSlot(
-      {required this.courtId,
-      required this.courtName,
-      required this.courtPhotoUrl,
+      {required this.id,
+      required this.name,
+      required this.photoUrl,
       required this.players,
-      required this.ticketPrice});
+      required this.ticketPrice,
+      required this.startsAt,
+      required this.endsAt})
+      : super._();
 
   factory _$_CourtSlot.fromJson(Map<String, dynamic> json) =>
       _$$_CourtSlotFromJson(json);
 
   @override
-  final String courtId;
+  final String id;
   @override
-  final String courtName;
+  final String name;
   @override
-  final String courtPhotoUrl;
+  final String photoUrl;
   @override
   final List<KasadoUser> players;
   @override
   final double ticketPrice;
+  @override
+  final DateTime startsAt;
+  @override
+  final DateTime endsAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CourtSlot(courtId: $courtId, courtName: $courtName, courtPhotoUrl: $courtPhotoUrl, players: $players, ticketPrice: $ticketPrice)';
+    return 'CourtSlot(id: $id, name: $name, photoUrl: $photoUrl, players: $players, ticketPrice: $ticketPrice, startsAt: $startsAt, endsAt: $endsAt)';
   }
 
   @override
@@ -202,11 +239,13 @@ class _$_CourtSlot with DiagnosticableTreeMixin implements _CourtSlot {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'CourtSlot'))
-      ..add(DiagnosticsProperty('courtId', courtId))
-      ..add(DiagnosticsProperty('courtName', courtName))
-      ..add(DiagnosticsProperty('courtPhotoUrl', courtPhotoUrl))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('photoUrl', photoUrl))
       ..add(DiagnosticsProperty('players', players))
-      ..add(DiagnosticsProperty('ticketPrice', ticketPrice));
+      ..add(DiagnosticsProperty('ticketPrice', ticketPrice))
+      ..add(DiagnosticsProperty('startsAt', startsAt))
+      ..add(DiagnosticsProperty('endsAt', endsAt));
   }
 
   @override
@@ -214,23 +253,26 @@ class _$_CourtSlot with DiagnosticableTreeMixin implements _CourtSlot {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _CourtSlot &&
-            const DeepCollectionEquality().equals(other.courtId, courtId) &&
-            const DeepCollectionEquality().equals(other.courtName, courtName) &&
-            const DeepCollectionEquality()
-                .equals(other.courtPhotoUrl, courtPhotoUrl) &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.photoUrl, photoUrl) &&
             const DeepCollectionEquality().equals(other.players, players) &&
             const DeepCollectionEquality()
-                .equals(other.ticketPrice, ticketPrice));
+                .equals(other.ticketPrice, ticketPrice) &&
+            const DeepCollectionEquality().equals(other.startsAt, startsAt) &&
+            const DeepCollectionEquality().equals(other.endsAt, endsAt));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(courtId),
-      const DeepCollectionEquality().hash(courtName),
-      const DeepCollectionEquality().hash(courtPhotoUrl),
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(photoUrl),
       const DeepCollectionEquality().hash(players),
-      const DeepCollectionEquality().hash(ticketPrice));
+      const DeepCollectionEquality().hash(ticketPrice),
+      const DeepCollectionEquality().hash(startsAt),
+      const DeepCollectionEquality().hash(endsAt));
 
   @JsonKey(ignore: true)
   @override
@@ -243,27 +285,34 @@ class _$_CourtSlot with DiagnosticableTreeMixin implements _CourtSlot {
   }
 }
 
-abstract class _CourtSlot implements CourtSlot {
+abstract class _CourtSlot extends CourtSlot {
   const factory _CourtSlot(
-      {required String courtId,
-      required String courtName,
-      required String courtPhotoUrl,
+      {required String id,
+      required String name,
+      required String photoUrl,
       required List<KasadoUser> players,
-      required double ticketPrice}) = _$_CourtSlot;
+      required double ticketPrice,
+      required DateTime startsAt,
+      required DateTime endsAt}) = _$_CourtSlot;
+  const _CourtSlot._() : super._();
 
   factory _CourtSlot.fromJson(Map<String, dynamic> json) =
       _$_CourtSlot.fromJson;
 
   @override
-  String get courtId;
+  String get id;
   @override
-  String get courtName;
+  String get name;
   @override
-  String get courtPhotoUrl;
+  String get photoUrl;
   @override
   List<KasadoUser> get players;
   @override
   double get ticketPrice;
+  @override
+  DateTime get startsAt;
+  @override
+  DateTime get endsAt;
   @override
   @JsonKey(ignore: true)
   _$CourtSlotCopyWith<_CourtSlot> get copyWith =>
