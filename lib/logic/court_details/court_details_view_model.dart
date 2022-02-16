@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
@@ -23,14 +25,21 @@ class CourtDetailsViewModel extends ViewModel {
   final CourtRepository courtRepo;
   final KasadoUser currentUser;
 
-  Future<void> joinCourtSlot({
-    required String courtId,
-    required CourtSlot courtSlot,
-  }) async {
-    await courtRepo.addPlayerForCourtSlot(
-      player: currentUser,
-      courtId: courtId,
-      courtSlot: courtSlot,
-    );
+  Future<void> joinCourtSlot(
+    BuildContext context,
+    CourtSlot baseCourtSlot,
+  ) async {
+    if (baseCourtSlot.isFull) {
+      Fluttertoast.showToast(msg: 'Slot is full');
+    } else if (baseCourtSlot.hasPlayer(currentUser)) {
+      Fluttertoast.showToast(msg: 'Player already reserved');
+    } else {
+      await courtRepo.pushCourtSlot(
+        courtSlot: baseCourtSlot.copyWith(
+          players: baseCourtSlot.players..add(currentUser),
+        ),
+      );
+      Navigator.pop(context);
+    }
   }
 }

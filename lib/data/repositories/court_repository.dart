@@ -28,14 +28,19 @@ class CourtRepository {
     );
   }
 
-  Future<void> addPlayerForCourtSlot({
-    required KasadoUser player,
-    required String courtId,
+  Future<void> pushCourtSlot({
     required CourtSlot courtSlot,
   }) async {
     await firestoreHelper.setData(
-      path: FirestorePath.docCourtSlot(courtId, courtSlot.slotId),
-      data: courtSlot.copyWith(players: [player]).toJson(),
+      path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
+      data: courtSlot.toJson(),
+    );
+  }
+
+  Future<CourtSlot?> getCourtSlot(String courtId, String slotId) async {
+    return await firestoreHelper.getData(
+      path: FirestorePath.docCourtSlot(courtId, slotId),
+      builder: (data, docId) => CourtSlot.fromJson(data),
     );
   }
 

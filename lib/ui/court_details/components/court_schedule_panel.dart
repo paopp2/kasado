@@ -42,14 +42,22 @@ class CourtSchedulePanel extends HookConsumerWidget {
                 children: details.appointments.map((a) {
                   a as Appointment;
                   final isDone = a.startTime.isBefore(DateTime.now());
-                  final courtSlot = CourtSlot(
-                    courtId: court.id,
-                    players: [],
-                    timeRange: TimeRange(
-                      startsAt: a.startTime,
-                      endsAt: a.endTime,
-                    ),
-                  );
+                  final appSlotId =
+                      "${a.startTime.toIso8601String()}-${a.endTime.toIso8601String()}";
+
+                  CourtSlot baseCourtSlot =
+                      (courtSlots.any((slot) => slot.slotId == appSlotId))
+                          ? courtSlots.singleWhere(
+                              (slot) => slot.slotId == appSlotId,
+                            )
+                          : CourtSlot(
+                              courtId: court.id,
+                              players: [],
+                              timeRange: TimeRange(
+                                startsAt: a.startTime,
+                                endsAt: a.endTime,
+                              ),
+                            );
 
                   return Center(
                     child: Container(
@@ -69,7 +77,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                                   constraints: constraints,
                                   model: model,
                                   isAdmin: isAdmin,
-                                  courtSlot: courtSlot,
+                                  courtSlot: baseCourtSlot,
                                 );
                               },
                             );
@@ -86,11 +94,11 @@ class CourtSchedulePanel extends HookConsumerWidget {
                               trailing: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                children: const [
-                                  Text('Players'),
+                                children: [
+                                  const Text('Players'),
                                   Text(
-                                    '1 / 25',
-                                    style: TextStyle(
+                                    '${baseCourtSlot.playerCount} / 25',
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 25,
                                     ),

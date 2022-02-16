@@ -18,6 +18,8 @@ class CourtSlotDetailsDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final players = courtSlot.players;
+
     return Dialog(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -31,15 +33,15 @@ class CourtSlotDetailsDialog extends StatelessWidget {
               const Text('Players'),
               Expanded(
                 child: ListView.builder(
+                  itemCount: players.length,
                   itemBuilder: (context, index) {
+                    final player = players[index];
                     return ListTile(
                       onLongPress: (isAdmin) ? () {} : null,
-                      title: Text('Player $index'),
-                      leading: const CircleAvatar(
+                      title: Text(player.displayName!),
+                      leading: CircleAvatar(
                         radius: 25,
-                        backgroundImage: NetworkImage(
-                          "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTY2Njc5NDYzOTQ4NDYxNDA4/michael-jordan.jpg",
-                        ),
+                        backgroundImage: NetworkImage(player.photoUrl!),
                       ),
                       trailing: const Icon(
                         Icons.check,
@@ -58,10 +60,7 @@ class CourtSlotDetailsDialog extends StatelessWidget {
               ),
               ElevatedButton(
                 child: const Text('JOIN GAME'),
-                onPressed: () => model.joinCourtSlot(
-                  courtId: courtSlot.courtId,
-                  courtSlot: courtSlot,
-                ),
+                onPressed: () => model.joinCourtSlot(context, courtSlot),
               ),
             ],
           ),

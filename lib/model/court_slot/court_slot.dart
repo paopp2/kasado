@@ -18,6 +18,8 @@ class CourtSlot with _$CourtSlot {
   int get playerCount => players.length;
   String get slotId =>
       "${timeRange.startsAt.toIso8601String()}-${timeRange.endsAt.toIso8601String()}";
+  bool get isFull => (playerCount == 25);
+  bool hasPlayer(KasadoUser user) => players.contains(user);
 
   factory CourtSlot.fromJson(Map<String, dynamic> json) =>
       _$CourtSlotFromJson(json);
