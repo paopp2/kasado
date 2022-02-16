@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
 import 'package:kasado/ui/home/home_view.dart';
@@ -18,7 +19,9 @@ class AppRouter {
           GoRoute(
             name: Routes.courtDetailsView,
             path: 'court-details',
-            builder: (context, state) => const CourtDetailsView(),
+            builder: (context, state) => CourtDetailsView(
+              court: state.extra! as Court,
+            ),
           ),
         ],
       ),

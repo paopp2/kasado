@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kasado/model/court/court.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class CourtDetailsView extends StatelessWidget {
-  const CourtDetailsView({Key? key}) : super(key: key);
+  const CourtDetailsView({
+    Key? key,
+    required this.court,
+  }) : super(key: key);
+
+  final Court court;
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +27,13 @@ class CourtDetailsView extends StatelessWidget {
                 child: SizedBox(
                   height: constraints.maxHeight * 0.3,
                   child: Image.network(
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHonQRDPCLA0zXvTzoThs-Q2hQ9s5lg3RBmA&usqp=CAU",
+                    court.photoUrl,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               const SizedBox(height: 30),
-              Text('Skina Japan Basketball Court'.toUpperCase()),
+              Text(court.name.toUpperCase()),
               const SizedBox(height: 30),
               Expanded(
                 child: SfCalendar(
