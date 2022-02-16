@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_tec_mixin.dart';
 import 'package:kasado/logic/shared/view_model.dart';
@@ -10,13 +11,17 @@ import 'package:kasado/model/time_range/time_range.dart';
 final courtsOwnedViewModel = Provider.autoDispose(
   (ref) => CourtsOwnedViewModel(
     read: ref.read,
+    courtRepo: ref.watch(courtRepositoryProvider),
   ),
 );
 
 class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
   CourtsOwnedViewModel({
     required Reader read,
+    required this.courtRepo,
   }) : super(read);
+
+  final CourtRepository courtRepo;
 
   void selectSchedChip(bool isSelected, int index) {
     read(selectedChipIndicesProvider.notifier).update((s) {
@@ -48,7 +53,7 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
           ? a
           : b;
     });
-    print(
+    await courtRepo.pushCourt(
       Court(
         id: 'Court ID',
         name: tecCourtName.text,
