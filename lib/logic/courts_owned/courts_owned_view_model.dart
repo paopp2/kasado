@@ -56,13 +56,13 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
       final TimeOfDay bStart = b.startTime;
       final TimeOfDay bEnd = b.endTime;
       final aStartDateTime =
-          DateTime(now.year, now.month, aStart.hour, aStart.minute);
+          DateTime(now.year, now.month, now.day, aStart.hour, aStart.minute);
       final aEndDateTime =
-          DateTime(now.year, now.month, aEnd.hour, aEnd.minute);
+          DateTime(now.year, now.month, now.day, aEnd.hour, aEnd.minute);
       final bStartDateTime =
-          DateTime(now.year, now.month, bStart.hour, bStart.minute);
+          DateTime(now.year, now.month, now.day, bStart.hour, bStart.minute);
       final bEndDateTime =
-          DateTime(now.year, now.month, bEnd.hour, bEnd.minute);
+          DateTime(now.year, now.month, now.day, bEnd.hour, bEnd.minute);
       return aStartDateTime.difference(now) < bStartDateTime.difference(now)
           ? TimeRange(startsAt: aStartDateTime, endsAt: aEndDateTime)
           : TimeRange(startsAt: bStartDateTime, endsAt: bEndDateTime);
