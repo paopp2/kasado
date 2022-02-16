@@ -4,6 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/ui/home/components/user_info_drawer.dart';
 import 'package:kasado/ui/home/tabs/home/home_tab.dart';
+import 'package:kasado/ui/home/tabs/profile/profile_tab.dart';
+import 'package:kasado/ui/home/tabs/tickets/tickets_tab.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -34,8 +36,8 @@ class HomeView extends HookConsumerWidget {
                   model: model,
                   constraints: constraints,
                 ),
-                Container(color: Colors.amber),
-                Container(color: Colors.blue),
+                const TicketsTab(),
+                const ProfileTab(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
