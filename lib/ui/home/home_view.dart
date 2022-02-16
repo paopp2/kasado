@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/ui/home/components/court_slot_card.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -30,157 +32,30 @@ class HomeView extends HookConsumerWidget {
             child: ListView(
               children: [
                 const SizedBox(height: 50),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                    vertical: 10,
-                  ),
-                  child: SizedBox(
-                    height: constraints.maxHeight * 0.4,
-                    width: constraints.maxWidth * 0.85,
-                    child: Card(
-                      elevation: 20,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: SizedBox(
-                                  height: constraints.maxHeight * 0.2,
-                                  width: constraints.maxWidth,
-                                  child: Image.network(
-                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHonQRDPCLA0zXvTzoThs-Q2hQ9s5lg3RBmA&usqp=CAU",
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: constraints.maxHeight * 0.02),
-                              const Text(
-                                'SKINA JAPAN BASKETBALL COURT',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              const Divider(),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 50.0,
-                                ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.people),
-                                        SizedBox(
-                                            width: constraints.maxWidth * 0.05),
-                                        const Text('8 / 15')
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.calendar_today),
-                                        SizedBox(
-                                          width: constraints.maxWidth * 0.05,
-                                        ),
-                                        const Text('Feb 15 / 3:00 - 4:00')
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.money),
-                                        SizedBox(
-                                          width: constraints.maxWidth * 0.05,
-                                        ),
-                                        const Text('₱ 50')
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                CourtSlotCard(
+                  constraints: constraints,
+                  courtSlot: CourtSlot(
+                    id: 'court1',
+                    name: 'Skina Japan Basketball Court',
+                    photoUrl:
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHonQRDPCLA0zXvTzoThs-Q2hQ9s5lg3RBmA&usqp=CAU",
+                    players: [],
+                    ticketPrice: 50,
+                    startsAt: DateTime(2022, 2, 16, 9, 0),
+                    endsAt: DateTime(2022, 2, 16, 10, 0),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                    vertical: 10,
-                  ),
-                  child: SizedBox(
-                    height: constraints.maxHeight * 0.4,
-                    width: constraints.maxWidth * 0.85,
-                    child: Card(
-                      elevation: 20,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: SizedBox(
-                                  height: constraints.maxHeight * 0.2,
-                                  width: constraints.maxWidth,
-                                  child: Image.network(
-                                    "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: constraints.maxHeight * 0.02),
-                              const Text(
-                                'SKINA CHINA BASKETBALL COURT',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              const Divider(),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 50.0,
-                                ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.people),
-                                        SizedBox(
-                                            width: constraints.maxWidth * 0.05),
-                                        const Text('12 / 15')
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.calendar_today),
-                                        SizedBox(
-                                          width: constraints.maxWidth * 0.05,
-                                        ),
-                                        const Text('Feb 15 / 4:00 - 5:00')
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.money),
-                                        SizedBox(
-                                          width: constraints.maxWidth * 0.05,
-                                        ),
-                                        const Text('₱ 20')
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                CourtSlotCard(
+                  constraints: constraints,
+                  courtSlot: CourtSlot(
+                    id: 'court2',
+                    name: 'Skina China Basketball Court',
+                    photoUrl:
+                        "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
+                    players: [],
+                    ticketPrice: 15,
+                    startsAt: DateTime(2022, 2, 16, 8, 0),
+                    endsAt: DateTime(2022, 2, 16, 9, 0),
                   ),
                 ),
               ],
