@@ -25,9 +25,13 @@ class AppRouter {
       GoRoute(
         name: Routes.courtDetailsView,
         path: '/court-details',
-        builder: (context, state) => CourtDetailsView(
-          court: state.extra! as Court,
-        ),
+        builder: (context, state) {
+          final extraMap = state.extra as Map<String, Object?>;
+          return CourtDetailsView(
+            court: extraMap['court'] as Court,
+            isAdmin: (extraMap['isAdmin'] as bool?) ?? false,
+          );
+        },
       ),
       GoRoute(
         name: Routes.loginView,

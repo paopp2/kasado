@@ -4,9 +4,11 @@ class CourtSlotDetailsDialog extends StatelessWidget {
   const CourtSlotDetailsDialog({
     Key? key,
     required this.constraints,
+    required this.isAdmin,
   }) : super(key: key);
 
   final BoxConstraints constraints;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +27,27 @@ class CourtSlotDetailsDialog extends StatelessWidget {
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     return ListTile(
+                      onLongPress: (isAdmin) ? () {} : null,
+                      title: Text('Player $index'),
                       leading: const CircleAvatar(
                         radius: 25,
                         backgroundImage: NetworkImage(
                           "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTY2Njc5NDYzOTQ4NDYxNDA4/michael-jordan.jpg",
                         ),
                       ),
-                      title: Text('Player $index'),
+                      trailing: const Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      ),
                     );
                   },
+                ),
+              ),
+              Visibility(
+                visible: isAdmin,
+                child: ElevatedButton(
+                  child: const Text('FREE SCHEDULE'),
+                  onPressed: () {},
                 ),
               ),
               ElevatedButton(

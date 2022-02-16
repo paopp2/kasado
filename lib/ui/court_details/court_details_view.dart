@@ -8,9 +8,11 @@ class CourtDetailsView extends StatelessWidget {
   const CourtDetailsView({
     Key? key,
     required this.court,
+    required this.isAdmin,
   }) : super(key: key);
 
   final Court court;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class CourtDetailsView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              Text(court.name.toUpperCase()),
+              Text(court.name.toUpperCase() + ((isAdmin) ? ' (ADMIN)' : '')),
               const SizedBox(height: 30),
               Expanded(
                 child: SfCalendar(
@@ -63,6 +65,7 @@ class CourtDetailsView extends StatelessWidget {
                                   builder: (context) {
                                     return CourtSlotDetailsDialog(
                                       constraints: constraints,
+                                      isAdmin: isAdmin,
                                     );
                                   },
                                 );

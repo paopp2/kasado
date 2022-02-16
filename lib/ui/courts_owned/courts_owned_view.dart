@@ -24,13 +24,16 @@ class CourtsOwnedView extends StatelessWidget {
               subtitle: const Text('Pitogo Consolacion Cebu, Philippines'),
               onTap: () => context.pushNamed(
                 Routes.courtDetailsView,
-                extra: const Court(
-                  id: 'court2',
-                  name: 'Pitogo Basketball Court',
-                  photoUrl:
-                      "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
-                  ticketPrice: 50,
-                ),
+                extra: {
+                  "court": const Court(
+                    id: 'court2',
+                    name: 'Pitogo Basketball Court',
+                    photoUrl:
+                        "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
+                    ticketPrice: 50,
+                  ),
+                  "isAdmin": true,
+                },
               ),
             );
           }),
