@@ -46,14 +46,14 @@ class CourtSlotCard extends StatelessWidget {
                       height: constraints.maxHeight * 0.2,
                       width: constraints.maxWidth,
                       child: Image.network(
-                        courtSlot.photoUrl,
+                        courtSlot.court.photoUrl,
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   SizedBox(height: constraints.maxHeight * 0.02),
                   Text(
-                    courtSlot.name.toUpperCase(),
+                    courtSlot.court.name.toUpperCase(),
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Divider(),
@@ -86,7 +86,7 @@ class CourtSlotCard extends StatelessWidget {
                             SizedBox(
                               width: constraints.maxWidth * 0.05,
                             ),
-                            Text('₱ ${courtSlot.ticketPrice}')
+                            Text('₱ ${courtSlot.court.ticketPrice}')
                           ],
                         ),
                       ],
