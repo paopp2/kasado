@@ -2,6 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court/court.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
 
 final courtRepositoryProvider = Provider.autoDispose(
   (ref) => CourtRepository(firestoreHelper: FirestoreHelper.instance),
@@ -23,6 +24,13 @@ class CourtRepository {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colCourts(),
       builder: (data, docId) => Court.fromJson(data),
+    );
+  }
+
+  Stream<List<CourtSlot>> getCourtSlots(String courtId) {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colCourtSlots(courtId),
+      builder: (data, docId) => CourtSlot.fromJson(data),
     );
   }
 }
