@@ -26,12 +26,14 @@ class _$CourtTearOff {
       {required String id,
       required String name,
       required String photoUrl,
-      required double ticketPrice}) {
+      required double ticketPrice,
+      required List<TimeRange> allowedTimeSlots}) {
     return _Court(
       id: id,
       name: name,
       photoUrl: photoUrl,
       ticketPrice: ticketPrice,
+      allowedTimeSlots: allowedTimeSlots,
     );
   }
 
@@ -49,6 +51,7 @@ mixin _$Court {
   String get name => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
   double get ticketPrice => throw _privateConstructorUsedError;
+  List<TimeRange> get allowedTimeSlots => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -59,7 +62,12 @@ mixin _$Court {
 abstract class $CourtCopyWith<$Res> {
   factory $CourtCopyWith(Court value, $Res Function(Court) then) =
       _$CourtCopyWithImpl<$Res>;
-  $Res call({String id, String name, String photoUrl, double ticketPrice});
+  $Res call(
+      {String id,
+      String name,
+      String photoUrl,
+      double ticketPrice,
+      List<TimeRange> allowedTimeSlots});
 }
 
 /// @nodoc
@@ -76,6 +84,7 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
     Object? name = freezed,
     Object? photoUrl = freezed,
     Object? ticketPrice = freezed,
+    Object? allowedTimeSlots = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -94,6 +103,10 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
           ? _value.ticketPrice
           : ticketPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      allowedTimeSlots: allowedTimeSlots == freezed
+          ? _value.allowedTimeSlots
+          : allowedTimeSlots // ignore: cast_nullable_to_non_nullable
+              as List<TimeRange>,
     ));
   }
 }
@@ -103,7 +116,12 @@ abstract class _$CourtCopyWith<$Res> implements $CourtCopyWith<$Res> {
   factory _$CourtCopyWith(_Court value, $Res Function(_Court) then) =
       __$CourtCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name, String photoUrl, double ticketPrice});
+  $Res call(
+      {String id,
+      String name,
+      String photoUrl,
+      double ticketPrice,
+      List<TimeRange> allowedTimeSlots});
 }
 
 /// @nodoc
@@ -121,6 +139,7 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
     Object? name = freezed,
     Object? photoUrl = freezed,
     Object? ticketPrice = freezed,
+    Object? allowedTimeSlots = freezed,
   }) {
     return _then(_Court(
       id: id == freezed
@@ -139,6 +158,10 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
           ? _value.ticketPrice
           : ticketPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      allowedTimeSlots: allowedTimeSlots == freezed
+          ? _value.allowedTimeSlots
+          : allowedTimeSlots // ignore: cast_nullable_to_non_nullable
+              as List<TimeRange>,
     ));
   }
 }
@@ -150,7 +173,8 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       {required this.id,
       required this.name,
       required this.photoUrl,
-      required this.ticketPrice});
+      required this.ticketPrice,
+      required this.allowedTimeSlots});
 
   factory _$_Court.fromJson(Map<String, dynamic> json) =>
       _$$_CourtFromJson(json);
@@ -163,10 +187,12 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
   final String photoUrl;
   @override
   final double ticketPrice;
+  @override
+  final List<TimeRange> allowedTimeSlots;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Court(id: $id, name: $name, photoUrl: $photoUrl, ticketPrice: $ticketPrice)';
+    return 'Court(id: $id, name: $name, photoUrl: $photoUrl, ticketPrice: $ticketPrice, allowedTimeSlots: $allowedTimeSlots)';
   }
 
   @override
@@ -177,7 +203,8 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('photoUrl', photoUrl))
-      ..add(DiagnosticsProperty('ticketPrice', ticketPrice));
+      ..add(DiagnosticsProperty('ticketPrice', ticketPrice))
+      ..add(DiagnosticsProperty('allowedTimeSlots', allowedTimeSlots));
   }
 
   @override
@@ -189,7 +216,9 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.photoUrl, photoUrl) &&
             const DeepCollectionEquality()
-                .equals(other.ticketPrice, ticketPrice));
+                .equals(other.ticketPrice, ticketPrice) &&
+            const DeepCollectionEquality()
+                .equals(other.allowedTimeSlots, allowedTimeSlots));
   }
 
   @override
@@ -198,7 +227,8 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(photoUrl),
-      const DeepCollectionEquality().hash(ticketPrice));
+      const DeepCollectionEquality().hash(ticketPrice),
+      const DeepCollectionEquality().hash(allowedTimeSlots));
 
   @JsonKey(ignore: true)
   @override
@@ -216,7 +246,8 @@ abstract class _Court implements Court {
       {required String id,
       required String name,
       required String photoUrl,
-      required double ticketPrice}) = _$_Court;
+      required double ticketPrice,
+      required List<TimeRange> allowedTimeSlots}) = _$_Court;
 
   factory _Court.fromJson(Map<String, dynamic> json) = _$_Court.fromJson;
 
@@ -228,6 +259,8 @@ abstract class _Court implements Court {
   String get photoUrl;
   @override
   double get ticketPrice;
+  @override
+  List<TimeRange> get allowedTimeSlots;
   @override
   @JsonKey(ignore: true)
   _$CourtCopyWith<_Court> get copyWith => throw _privateConstructorUsedError;
