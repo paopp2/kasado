@@ -16,55 +16,55 @@ class CourtSchedulePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SfCalendar(
-      view: CalendarView.schedule,
       dataSource: _getCalendarDataSource(),
-      scheduleViewSettings: ScheduleViewSettings(
-        appointmentItemHeight: constraints.maxHeight * 0.1,
-      ),
+      timeSlotViewSettings: const TimeSlotViewSettings(timeIntervalHeight: 80),
       appointmentBuilder: (context, details) {
         return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: details.appointments.map((a) {
             a as Appointment;
             final isDone = a.startTime.isBefore(DateTime.now());
-            return Container(
-              decoration: BoxDecoration(
-                color: (isDone) ? Colors.grey.shade400 : Colors.green,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return CourtSlotDetailsDialog(
-                          constraints: constraints,
-                          isAdmin: isAdmin,
-                        );
-                      },
-                    );
-                  },
-                  child: ListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    textColor: Colors.white,
-                    title: const Text('Available'),
-                    subtitle: Text(
-                        "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm a').format(a.endTime)}"),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Text('Players'),
-                        Text(
-                          '0 / 15',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
+            return Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: (isDone) ? Colors.grey.shade400 : Colors.green,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CourtSlotDetailsDialog(
+                            constraints: constraints,
+                            isAdmin: isAdmin,
+                          );
+                        },
+                      );
+                    },
+                    child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      textColor: Colors.white,
+                      title: const Text('Available'),
+                      subtitle: Text(
+                          "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm a').format(a.endTime)}"),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: const [
+                          Text('Players'),
+                          Text(
+                            '0 / 15',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -93,16 +93,16 @@ _AppointmentDataSource _getCalendarDataSource() {
       ),
     ),
     Appointment(
-      startTime: DateTime(2015, 1, 1, 14, 0),
-      endTime: DateTime(2015, 1, 1, 15, 0),
+      startTime: DateTime(2015, 1, 1, 8, 0),
+      endTime: DateTime(2015, 1, 1, 9, 0),
       subject: 'Players: 0 / 15',
       recurrenceRule: SfCalendar.generateRRule(
         RecurrenceProperties(
           recurrenceType: RecurrenceType.daily,
           startDate: DateTime.now(),
         ),
-        DateTime(2015, 1, 1, 14, 0),
-        DateTime(2015, 1, 1, 15, 0),
+        DateTime(2015, 1, 1, 8, 0),
+        DateTime(2015, 1, 1, 9, 0),
       ),
     ),
   ]);
