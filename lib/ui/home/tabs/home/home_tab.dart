@@ -29,6 +29,7 @@ class HomeTab extends StatelessWidget {
                 photoUrl:
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHonQRDPCLA0zXvTzoThs-Q2hQ9s5lg3RBmA&usqp=CAU",
                 ticketPrice: 50,
+                allowedTimeSlots: [],
               ),
               players: [],
               startsAt: DateTime(2022, 2, 16, 9, 0),
@@ -45,6 +46,7 @@ class HomeTab extends StatelessWidget {
                 photoUrl:
                     "https://i.pinimg.com/originals/80/9f/af/809faf105f55a2830918b9d859bd3958.jpg",
                 ticketPrice: 15,
+                allowedTimeSlots: [],
               ),
               players: [],
               startsAt: DateTime(2022, 2, 16, 8, 0),

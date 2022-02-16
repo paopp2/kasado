@@ -32,15 +32,15 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
 
   Future<void> addNewCourt() async {
     final List<int> selectedIndices = read(selectedChipIndicesProvider);
-    final List<TimeRange> chosenSchedules =
+    final List<TimeRange> allowedTimeSlots =
         selectedIndices.map((i) => allowedTimeRanges[i]).toList();
-    print(chosenSchedules);
     print(
       Court(
         id: 'Court ID',
         name: tecCourtName.text,
         photoUrl: tecCourtPhotoUrl.text,
         ticketPrice: double.parse(tecTicketPrice.text),
+        allowedTimeSlots: allowedTimeSlots,
       ),
     );
   }
