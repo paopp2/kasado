@@ -60,6 +60,12 @@ class UserInfoDrawer extends HookConsumerWidget {
                   title: const Text('Logout'),
                   leading: const Icon(Icons.logout),
                 ),
+                const Spacer(),
+                TextButton(
+                  onPressed: null,
+                  onLongPress: () => print("Okay"),
+                  child: const Text('.'),
+                ),
               ],
             ),
     );
