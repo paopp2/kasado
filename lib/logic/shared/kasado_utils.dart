@@ -47,6 +47,12 @@ class KasadoUtils {
     });
   }
 
+  bool isCurrentSlotClosed(TimeRange timeRange) {
+    final now = DateTime.now();
+    return timeRange.startsAt.difference(now).abs() >
+        timeRange.endsAt.difference(now).abs();
+  }
+
   String getSlotIdFromTimeSlot(TimeRange timeRange) {
     return "${timeRange.startsAt.toIso8601String()}-${timeRange.endsAt.toIso8601String()}";
   }

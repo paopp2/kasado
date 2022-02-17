@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/time_range/time_range.dart';
@@ -26,6 +27,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final utils = ref.watch(kasadoUtilsProvider);
     final courtSlotsStream = ref.watch(courtSlotsStreamProvider(court.id));
     final currentUser = ref.watch(currentUserProvider)!;
 
@@ -43,7 +45,9 @@ class CourtSchedulePanel extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: details.appointments.map((a) {
                   a as Appointment;
-                  final isDone = a.endTime.isBefore(DateTime.now());
+                  final isSlotClosed = utils.isCurrentSlotClosed(
+                    TimeRange(startsAt: a.startTime, endsAt: a.endTime),
+                  );
                   final appSlotId =
                       "${a.startTime.toIso8601String()}-${a.endTime.toIso8601String()}";
 
@@ -68,7 +72,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                     child: Container(
                       height: constraints.maxHeight * 0.15,
                       decoration: BoxDecoration(
-                        color: (isDone)
+                        color: (isSlotClosed)
                             ? Colors.grey.shade300
                             : (currentUserIsReserved)
                                 ? Colors.green.shade200
@@ -88,7 +92,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                                   isAdmin: isAdmin,
                                   court: court,
                                   courtSlot: baseCourtSlot,
-                                  isDone: isDone,
+                                  isDone: isSlotClosed,
                                 );
                               },
                             );
