@@ -5,6 +5,7 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_tec_mixin.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -17,6 +18,7 @@ final courtsOwnedViewModel = Provider.autoDispose(
     read: ref.read,
     courtRepo: ref.watch(courtRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
+    utils: ref.watch(kasadoUtilsProvider),
   ),
 );
 
@@ -25,10 +27,12 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
     required Reader read,
     required this.courtRepo,
     required this.currentUser,
+    required this.utils,
   }) : super(read);
 
   final CourtRepository courtRepo;
   final KasadoUser currentUser;
+  final KasadoUtils utils;
 
   void selectSchedChip(bool isSelected, int index) {
     read(selectedChipIndicesProvider.notifier).update((s) {
@@ -48,39 +52,10 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
     final List<int> selectedIndices = read(selectedChipIndicesProvider);
     final List<TimeRange> allowedTimeSlots =
         selectedIndices.map((i) => allowedTimeRanges[i]).toList();
-    final now = DateTime.now();
-    // TODO: Move this to utils, when having to use more than once
-    final TimeRange nextNearestTimeSlot = allowedTimeSlots.reduce((a, b) {
-      final TimeOfDay aStart = a.startTime;
-      final TimeOfDay aEnd = a.endTime;
-      final TimeOfDay bStart = b.startTime;
-      final TimeOfDay bEnd = b.endTime;
-
-      final aStartDateTime =
-          DateTime(now.year, now.month, now.day, aStart.hour, aStart.minute);
-      final aEndDateTime =
-          DateTime(now.year, now.month, now.day, aEnd.hour, aEnd.minute);
-      final bStartDateTime =
-          DateTime(now.year, now.month, now.day, bStart.hour, bStart.minute);
-      final bEndDateTime =
-          DateTime(now.year, now.month, now.day, bEnd.hour, bEnd.minute);
-
-      final aAdjustedTimeRange = TimeRange(
-        startsAt: aStartDateTime,
-        endsAt: aEndDateTime,
-      );
-      final bAdjustedTimeRange = TimeRange(
-        startsAt: bStartDateTime,
-        endsAt: bEndDateTime,
-      );
-
-      if (aStartDateTime.isBefore(now)) return bAdjustedTimeRange;
-
-      return (aStartDateTime.isBefore(bStartDateTime))
-          ? aAdjustedTimeRange
-          : bAdjustedTimeRange;
-    });
+    final TimeRange nextNearestTimeSlot =
+        utils.getNextNearestTimeSlot(allowedTimeSlots);
     final courtId = const Uuid().v4();
+
     await courtRepo.pushCourt(
       Court(
         id: courtId,

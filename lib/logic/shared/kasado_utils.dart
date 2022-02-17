@@ -1,0 +1,47 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/model/time_range/time_range.dart';
+
+final kasadoUtilsProvider = Provider.autoDispose(
+  (ref) => KasadoUtils(ref.read),
+);
+
+class KasadoUtils {
+  KasadoUtils(this.read);
+
+  final Reader read;
+
+  TimeRange getNextNearestTimeSlot(List<TimeRange> timeSlots) {
+    final now = DateTime.now();
+    return timeSlots.reduce((a, b) {
+      final TimeOfDay aStart = a.startTime;
+      final TimeOfDay aEnd = a.endTime;
+      final TimeOfDay bStart = b.startTime;
+      final TimeOfDay bEnd = b.endTime;
+
+      final aStartDateTime =
+          DateTime(now.year, now.month, now.day, aStart.hour, aStart.minute);
+      final aEndDateTime =
+          DateTime(now.year, now.month, now.day, aEnd.hour, aEnd.minute);
+      final bStartDateTime =
+          DateTime(now.year, now.month, now.day, bStart.hour, bStart.minute);
+      final bEndDateTime =
+          DateTime(now.year, now.month, now.day, bEnd.hour, bEnd.minute);
+
+      final aAdjustedTimeRange = TimeRange(
+        startsAt: aStartDateTime,
+        endsAt: aEndDateTime,
+      );
+      final bAdjustedTimeRange = TimeRange(
+        startsAt: bStartDateTime,
+        endsAt: bEndDateTime,
+      );
+
+      if (aStartDateTime.isBefore(now)) return bAdjustedTimeRange;
+
+      return (aStartDateTime.isBefore(bStartDateTime))
+          ? aAdjustedTimeRange
+          : bAdjustedTimeRange;
+    });
+  }
+}
