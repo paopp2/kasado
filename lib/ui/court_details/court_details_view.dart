@@ -65,8 +65,10 @@ class CourtDetailsView extends HookConsumerWidget {
             visible: isAdmin,
             child: FloatingActionButton.extended(
               onPressed: () {},
-              label: const Text('Add Admin'),
-              icon: const Icon(Icons.person),
+              label: Text(
+                tabIndex.value == 0 ? 'Edit Court' : 'Add Admin',
+              ),
+              icon: Icon(tabIndex.value == 0 ? Icons.edit : Icons.person),
             ),
           ),
           bottomNavigationBar: Visibility(
