@@ -39,7 +39,6 @@ class AppRouter {
         builder: (context, state) => const LoginView(),
       ),
     ],
-    debugLogDiagnostics: true,
     redirect: (state) {
       final isLoggedIn = fireAuthInstance.currentUser != null;
       final loggingIn = state.subloc == '/login';
