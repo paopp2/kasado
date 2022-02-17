@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:kasado/app_router.dart';
-import 'package:kasado/logic/court_details/court_details_state.dart';
-import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/ui/home/tabs/home/components/next_court_slot_details.dart';
 
-class NextCourtSlotCard extends HookConsumerWidget {
+class NextCourtSlotCard extends StatelessWidget {
   const NextCourtSlotCard({
     Key? key,
     required this.constraints,
@@ -21,10 +18,7 @@ class NextCourtSlotCard extends HookConsumerWidget {
   final CourtSlot nextCourtSlot;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(courtDetailsViewModel);
-    final courtSlotsStream = ref.watch(courtSlotsStreamProvider(court.id));
-
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 25,
@@ -66,44 +60,10 @@ class NextCourtSlotCard extends HookConsumerWidget {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Divider(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: constraints.maxWidth * 0.15,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.people),
-                            SizedBox(width: constraints.maxWidth * 0.05),
-                            Text('${nextCourtSlot.playerCount} / 15')
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Icon(Icons.calendar_today),
-                            SizedBox(
-                              width: constraints.maxWidth * 0.05,
-                            ),
-                            Text(
-                                "${DateFormat('MMM d / h:mm').format(nextCourtSlot.timeRange.startsAt)} - ${DateFormat('h:mm a').format(nextCourtSlot.timeRange.endsAt)}")
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Icon(Icons.money),
-                            SizedBox(
-                              width: constraints.maxWidth * 0.05,
-                            ),
-                            Text('₱ ${court.ticketPrice}')
-                          ],
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text("JOIN GAME"),
-                        ),
-                      ],
-                    ),
+                  NextCourtSlotDetails(
+                    constraints: constraints,
+                    nextCourtSlot: nextCourtSlot,
+                    court: court,
                   ),
                 ],
               ),

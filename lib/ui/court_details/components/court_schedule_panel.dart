@@ -41,7 +41,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: details.appointments.map((a) {
                   a as Appointment;
-                  final isDone = a.startTime.isBefore(DateTime.now());
+                  final isDone = a.endTime.isBefore(DateTime.now());
                   final appSlotId =
                       "${a.startTime.toIso8601String()}-${a.endTime.toIso8601String()}";
 
@@ -63,25 +63,29 @@ class CourtSchedulePanel extends HookConsumerWidget {
                     child: Container(
                       height: constraints.maxHeight * 0.15,
                       decoration: BoxDecoration(
-                        color: (isDone) ? Colors.grey.shade400 : Colors.green,
+                        color: (isDone)
+                            ? Colors.grey.shade300
+                            : Colors.green.shade400,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CourtSlotDetailsDialog(
-                                  constraints: constraints,
-                                  model: model,
-                                  isAdmin: isAdmin,
-                                  courtSlot: baseCourtSlot,
-                                );
-                              },
-                            );
-                          },
+                          onTap: (isDone)
+                              ? null
+                              : () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return CourtSlotDetailsDialog(
+                                        constraints: constraints,
+                                        model: model,
+                                        isAdmin: isAdmin,
+                                        courtSlot: baseCourtSlot,
+                                      );
+                                    },
+                                  );
+                                },
                           child: Center(
                             child: ListTile(
                               shape: RoundedRectangleBorder(

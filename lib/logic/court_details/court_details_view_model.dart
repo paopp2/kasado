@@ -26,9 +26,9 @@ class CourtDetailsViewModel extends ViewModel {
   final KasadoUser currentUser;
 
   Future<void> joinCourtSlot(
-    BuildContext context,
-    CourtSlot baseCourtSlot,
-  ) async {
+    CourtSlot baseCourtSlot, [
+    BuildContext? context,
+  ]) async {
     if (baseCourtSlot.isFull) {
       Fluttertoast.showToast(msg: 'Slot is full');
     } else if (baseCourtSlot.hasPlayer(currentUser)) {
@@ -39,7 +39,7 @@ class CourtDetailsViewModel extends ViewModel {
           players: baseCourtSlot.players..add(currentUser),
         ),
       );
-      Navigator.pop(context);
+      if (context != null) Navigator.pop(context);
     }
   }
 }

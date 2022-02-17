@@ -60,7 +60,7 @@ class CourtSlotDetailsDialog extends StatelessWidget {
               ),
               ElevatedButton(
                 child: const Text('JOIN GAME'),
-                onPressed: () => model.joinCourtSlot(context, courtSlot),
+                onPressed: () => model.joinCourtSlot(courtSlot, context),
               ),
             ],
           ),

@@ -3,7 +3,6 @@ import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
-import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 final courtRepositoryProvider = Provider.autoDispose(
   (ref) => CourtRepository(firestoreHelper: FirestoreHelper.instance),
@@ -37,8 +36,8 @@ class CourtRepository {
     );
   }
 
-  Future<CourtSlot?> getCourtSlot(String courtId, String slotId) async {
-    return await firestoreHelper.getData(
+  Stream<CourtSlot?> getCourtSlotStream(String courtId, String slotId) {
+    return firestoreHelper.documentStream(
       path: FirestorePath.docCourtSlot(courtId, slotId),
       builder: (data, docId) => CourtSlot.fromJson(data),
     );
