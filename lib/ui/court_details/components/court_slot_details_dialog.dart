@@ -15,6 +15,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
     required this.isAdmin,
     required this.court,
     required this.courtSlot,
+    required this.isDone,
   }) : super(key: key);
 
   final BoxConstraints constraints;
@@ -22,6 +23,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
   final CourtDetailsViewModel model;
   final Court court;
   final CourtSlot courtSlot;
+  final bool isDone;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -83,15 +85,19 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                   onPressed: () {},
                 ),
               ),
-              (courtSlot.hasPlayer(currentUser))
-                  ? ElevatedButton(
-                      child: const Text('LEAVE GAME'),
-                      onPressed: () => model.leaveCourtSlot(courtSlot, context),
-                    )
-                  : ElevatedButton(
-                      child: const Text('JOIN GAME'),
-                      onPressed: () => model.joinCourtSlot(courtSlot, context),
-                    ),
+              if (!isDone) ...[
+                (courtSlot.hasPlayer(currentUser))
+                    ? ElevatedButton(
+                        child: const Text('LEAVE GAME'),
+                        onPressed: () =>
+                            model.leaveCourtSlot(courtSlot, context),
+                      )
+                    : ElevatedButton(
+                        child: const Text('JOIN GAME'),
+                        onPressed: () =>
+                            model.joinCourtSlot(courtSlot, context),
+                      ),
+              ],
             ],
           ),
         ),

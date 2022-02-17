@@ -78,22 +78,21 @@ class CourtSchedulePanel extends HookConsumerWidget {
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          onTap: (isDone)
-                              ? null
-                              : () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return CourtSlotDetailsDialog(
-                                        constraints: constraints,
-                                        model: model,
-                                        isAdmin: isAdmin,
-                                        court: court,
-                                        courtSlot: baseCourtSlot,
-                                      );
-                                    },
-                                  );
-                                },
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return CourtSlotDetailsDialog(
+                                  constraints: constraints,
+                                  model: model,
+                                  isAdmin: isAdmin,
+                                  court: court,
+                                  courtSlot: baseCourtSlot,
+                                  isDone: isDone,
+                                );
+                              },
+                            );
+                          },
                           child: Center(
                             child: ListTile(
                               shape: RoundedRectangleBorder(
