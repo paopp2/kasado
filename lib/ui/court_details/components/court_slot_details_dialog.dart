@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
+import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
+import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 
 class CourtSlotDetailsDialog extends HookConsumerWidget {
@@ -10,17 +13,23 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
     required this.constraints,
     required this.model,
     required this.isAdmin,
+    required this.court,
     required this.courtSlot,
   }) : super(key: key);
 
   final BoxConstraints constraints;
   final bool isAdmin;
   final CourtDetailsViewModel model;
+  final Court court;
   final CourtSlot courtSlot;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final courtSlotStream = ref.watch(
+      courtSlotStreamProvider('${court.id}|${courtSlot.slotId}'),
+    );
     final currentUser = ref.watch(currentUserProvider)!;
+    final utils = ref.watch(kasadoUtilsProvider);
     final players = courtSlot.players;
 
     return Dialog(
@@ -31,27 +40,30 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
           width: constraints.maxWidth * 0.8,
           child: Column(
             children: [
-              const Text('Skina Japan Basketball Gym'),
-              const Text('7:00 - 8:00 AM'),
-              const Text('Players'),
+              Text(court.name),
+              Text(utils.getTimeRangeFormat(courtSlot.timeRange)),
               Expanded(
-                child: ListView.builder(
-                  itemCount: players.length,
-                  itemBuilder: (context, index) {
-                    final player = players[index];
-                    return ListTile(
-                      onLongPress: (isAdmin) ? () {} : null,
-                      title: Text(player.displayName!),
-                      leading: CircleAvatar(
-                        radius: 25,
-                        backgroundImage: NetworkImage(player.photoUrl!),
-                      ),
-                      trailing: const Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ),
-                    );
-                  },
+                child: courtSlotStream.when(
+                  error: (e, _) => Text(e.toString()),
+                  loading: () => const CircularProgressIndicator(),
+                  data: (courtSlot) => ListView.builder(
+                    itemCount: players.length,
+                    itemBuilder: (context, index) {
+                      final player = players[index];
+                      return ListTile(
+                        onLongPress: (isAdmin) ? () {} : null,
+                        title: Text(player.displayName!),
+                        leading: CircleAvatar(
+                          radius: 25,
+                          backgroundImage: NetworkImage(player.photoUrl!),
+                        ),
+                        trailing: const Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               Visibility(

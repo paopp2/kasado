@@ -81,6 +81,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                                         constraints: constraints,
                                         model: model,
                                         isAdmin: isAdmin,
+                                        court: court,
                                         courtSlot: baseCourtSlot,
                                       );
                                     },
