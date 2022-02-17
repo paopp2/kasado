@@ -40,7 +40,8 @@ class KasadoUtils {
 
       if (aEndDateTime.isBefore(now)) return bAdjustedTimeRange;
 
-      return (aStartDateTime.isBefore(bStartDateTime))
+      return (now.difference(aStartDateTime).abs() <
+              now.difference(bStartDateTime).abs())
           ? aAdjustedTimeRange
           : bAdjustedTimeRange;
     });
