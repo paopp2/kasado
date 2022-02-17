@@ -55,7 +55,7 @@ class CourtDetailsView extends HookConsumerWidget {
                       isAdmin: isAdmin,
                       court: court,
                     ),
-                    const CourtAdminsPanel(),
+                    CourtAdminsPanel(court: court),
                   ],
                 ),
               ),

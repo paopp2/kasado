@@ -3,6 +3,7 @@ import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 final courtRepositoryProvider = Provider.autoDispose(
   (ref) => CourtRepository(firestoreHelper: FirestoreHelper.instance),
@@ -20,10 +21,13 @@ class CourtRepository {
     );
   }
 
-  Stream<List<Court>> getCourtsStream() {
+  Stream<List<Court>> getCourtsStream({KasadoUser? admin}) {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colCourts(),
       builder: (data, docId) => Court.fromJson(data),
+      queryBuilder: (admin != null)
+          ? (query) => query.where('admins', arrayContains: admin.toJson())
+          : null,
     );
   }
 
