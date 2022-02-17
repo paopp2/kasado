@@ -58,9 +58,12 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                             radius: 25,
                             backgroundImage: NetworkImage(player.photoUrl!),
                           ),
-                          trailing: const Icon(
-                            Icons.check,
-                            color: Colors.green,
+                          trailing: Visibility(
+                            visible: player.hasPaid,
+                            child: const Icon(
+                              Icons.check,
+                              color: Colors.green,
+                            ),
                           ),
                         );
                       },
