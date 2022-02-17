@@ -64,7 +64,8 @@ class CourtDetailsViewModel extends ViewModel {
     assert(baseCourtSlot.hasPlayer(currentUser));
     await courtRepo.pushCourtSlot(
       courtSlot: baseCourtSlot.copyWith(
-        players: baseCourtSlot.players..remove(currentUser),
+        players: baseCourtSlot.players
+          ..removeWhere((p) => (currentUser.id == p.id)),
       ),
     );
     if (context != null) Navigator.pop(context);
