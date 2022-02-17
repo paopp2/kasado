@@ -30,7 +30,6 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
     );
     final currentUser = ref.watch(currentUserProvider)!;
     final utils = ref.watch(kasadoUtilsProvider);
-    final players = courtSlot.players;
 
     return Dialog(
       child: Padding(
@@ -46,24 +45,27 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                 child: courtSlotStream.when(
                   error: (e, _) => Text(e.toString()),
                   loading: () => const CircularProgressIndicator(),
-                  data: (courtSlot) => ListView.builder(
-                    itemCount: players.length,
-                    itemBuilder: (context, index) {
-                      final player = players[index];
-                      return ListTile(
-                        onLongPress: (isAdmin) ? () {} : null,
-                        title: Text(player.displayName!),
-                        leading: CircleAvatar(
-                          radius: 25,
-                          backgroundImage: NetworkImage(player.photoUrl!),
-                        ),
-                        trailing: const Icon(
-                          Icons.check,
-                          color: Colors.green,
-                        ),
-                      );
-                    },
-                  ),
+                  data: (courtSlot) {
+                    final players = courtSlot?.players ?? [];
+                    return ListView.builder(
+                      itemCount: players.length,
+                      itemBuilder: (context, index) {
+                        final player = players[index];
+                        return ListTile(
+                          onLongPress: (isAdmin) ? () {} : null,
+                          title: Text(player.displayName!),
+                          leading: CircleAvatar(
+                            radius: 25,
+                            backgroundImage: NetworkImage(player.photoUrl!),
+                          ),
+                          trailing: const Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
               Visibility(
