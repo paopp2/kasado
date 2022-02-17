@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/model/court/court.dart';
@@ -26,6 +27,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courtSlotsStream = ref.watch(courtSlotsStreamProvider(court.id));
+    final currentUser = ref.watch(currentUserProvider)!;
 
     return SfCalendar(
       dataSource: _getCalendarDataSource(court),
@@ -59,13 +61,18 @@ class CourtSchedulePanel extends HookConsumerWidget {
                               ),
                             );
 
+                  final currentUserIsReserved =
+                      baseCourtSlot.hasPlayer(currentUser);
+
                   return Center(
                     child: Container(
                       height: constraints.maxHeight * 0.15,
                       decoration: BoxDecoration(
                         color: (isDone)
                             ? Colors.grey.shade300
-                            : Colors.green.shade400,
+                            : (currentUserIsReserved)
+                                ? Colors.green.shade200
+                                : Colors.green.shade400,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Material(
@@ -93,7 +100,9 @@ class CourtSchedulePanel extends HookConsumerWidget {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               textColor: Colors.white,
-                              title: const Text('Available'),
+                              title: Text(
+                                currentUserIsReserved ? 'Joined' : 'Available',
+                              ),
                               subtitle: Text(
                                   "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm a').format(a.endTime)}"),
                               trailing: Column(
