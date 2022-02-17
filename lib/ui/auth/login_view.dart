@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/auth/login_view_model.dart';
@@ -10,33 +11,53 @@ class LoginView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(loginViewModel);
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'KASADO',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'KASADO',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(width: 200, child: Divider()),
-            TextButton(
-              onPressed: model.signInWithGoogle,
-              child: const Text('Sign in with Google'),
-            ),
-            TextButton(
-              onPressed: () => Fluttertoast.showToast(
-                msg:
-                    'Google lng say gamita pre, butngan ra nya nako nig para FB pramis',
+              const SizedBox(width: 200, child: Divider()),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 50,
+                width: constraints.maxWidth * 0.7,
+                child: SignInButton(
+                  Buttons.Google,
+                  onPressed: model.signInWithGoogle,
+                  elevation: 10,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  padding: const EdgeInsets.all(5.0),
+                ),
               ),
-              child: const Text('Sign in with Facebook'),
-            ),
-          ],
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 50,
+                width: constraints.maxWidth * 0.7,
+                child: SignInButton(
+                  Buttons.FacebookNew,
+                  onPressed: () => Fluttertoast.showToast(
+                    msg:
+                        'Google lng say gamita pre, butngan ra nya nako nig para FB pramis',
+                  ),
+                  elevation: 10,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  padding: const EdgeInsets.all(8.0),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
