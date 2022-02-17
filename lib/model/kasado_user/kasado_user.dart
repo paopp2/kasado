@@ -12,6 +12,7 @@ class KasadoUser with _$KasadoUser {
     String? email,
     String? phoneNumber,
     String? photoUrl,
+    @Default(false) bool hasPaid,
   }) = _KasadoUser;
 
   factory KasadoUser.fromJson(Map<String, dynamic> json) =>

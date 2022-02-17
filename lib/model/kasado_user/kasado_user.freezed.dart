@@ -27,13 +27,15 @@ class _$KasadoUserTearOff {
       String? displayName,
       String? email,
       String? phoneNumber,
-      String? photoUrl}) {
+      String? photoUrl,
+      bool hasPaid = false}) {
     return _KasadoUser(
       id: id,
       displayName: displayName,
       email: email,
       phoneNumber: phoneNumber,
       photoUrl: photoUrl,
+      hasPaid: hasPaid,
     );
   }
 
@@ -52,6 +54,7 @@ mixin _$KasadoUser {
   String? get email => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get photoUrl => throw _privateConstructorUsedError;
+  bool get hasPaid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -69,7 +72,8 @@ abstract class $KasadoUserCopyWith<$Res> {
       String? displayName,
       String? email,
       String? phoneNumber,
-      String? photoUrl});
+      String? photoUrl,
+      bool hasPaid});
 }
 
 /// @nodoc
@@ -87,6 +91,7 @@ class _$KasadoUserCopyWithImpl<$Res> implements $KasadoUserCopyWith<$Res> {
     Object? email = freezed,
     Object? phoneNumber = freezed,
     Object? photoUrl = freezed,
+    Object? hasPaid = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -109,6 +114,10 @@ class _$KasadoUserCopyWithImpl<$Res> implements $KasadoUserCopyWith<$Res> {
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      hasPaid: hasPaid == freezed
+          ? _value.hasPaid
+          : hasPaid // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -124,7 +133,8 @@ abstract class _$KasadoUserCopyWith<$Res> implements $KasadoUserCopyWith<$Res> {
       String? displayName,
       String? email,
       String? phoneNumber,
-      String? photoUrl});
+      String? photoUrl,
+      bool hasPaid});
 }
 
 /// @nodoc
@@ -144,6 +154,7 @@ class __$KasadoUserCopyWithImpl<$Res> extends _$KasadoUserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? phoneNumber = freezed,
     Object? photoUrl = freezed,
+    Object? hasPaid = freezed,
   }) {
     return _then(_KasadoUser(
       id: id == freezed
@@ -166,6 +177,10 @@ class __$KasadoUserCopyWithImpl<$Res> extends _$KasadoUserCopyWithImpl<$Res>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      hasPaid: hasPaid == freezed
+          ? _value.hasPaid
+          : hasPaid // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -178,7 +193,8 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
       this.displayName,
       this.email,
       this.phoneNumber,
-      this.photoUrl});
+      this.photoUrl,
+      this.hasPaid = false});
 
   factory _$_KasadoUser.fromJson(Map<String, dynamic> json) =>
       _$$_KasadoUserFromJson(json);
@@ -193,10 +209,13 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
   final String? phoneNumber;
   @override
   final String? photoUrl;
+  @JsonKey()
+  @override
+  final bool hasPaid;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUser(id: $id, displayName: $displayName, email: $email, phoneNumber: $phoneNumber, photoUrl: $photoUrl)';
+    return 'KasadoUser(id: $id, displayName: $displayName, email: $email, phoneNumber: $phoneNumber, photoUrl: $photoUrl, hasPaid: $hasPaid)';
   }
 
   @override
@@ -208,7 +227,8 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('phoneNumber', phoneNumber))
-      ..add(DiagnosticsProperty('photoUrl', photoUrl));
+      ..add(DiagnosticsProperty('photoUrl', photoUrl))
+      ..add(DiagnosticsProperty('hasPaid', hasPaid));
   }
 
   @override
@@ -222,7 +242,8 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
             const DeepCollectionEquality().equals(other.email, email) &&
             const DeepCollectionEquality()
                 .equals(other.phoneNumber, phoneNumber) &&
-            const DeepCollectionEquality().equals(other.photoUrl, photoUrl));
+            const DeepCollectionEquality().equals(other.photoUrl, photoUrl) &&
+            const DeepCollectionEquality().equals(other.hasPaid, hasPaid));
   }
 
   @override
@@ -232,7 +253,8 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
       const DeepCollectionEquality().hash(displayName),
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(phoneNumber),
-      const DeepCollectionEquality().hash(photoUrl));
+      const DeepCollectionEquality().hash(photoUrl),
+      const DeepCollectionEquality().hash(hasPaid));
 
   @JsonKey(ignore: true)
   @override
@@ -251,7 +273,8 @@ abstract class _KasadoUser implements KasadoUser {
       String? displayName,
       String? email,
       String? phoneNumber,
-      String? photoUrl}) = _$_KasadoUser;
+      String? photoUrl,
+      bool hasPaid}) = _$_KasadoUser;
 
   factory _KasadoUser.fromJson(Map<String, dynamic> json) =
       _$_KasadoUser.fromJson;
@@ -266,6 +289,8 @@ abstract class _KasadoUser implements KasadoUser {
   String? get phoneNumber;
   @override
   String? get photoUrl;
+  @override
+  bool get hasPaid;
   @override
   @JsonKey(ignore: true)
   _$KasadoUserCopyWith<_KasadoUser> get copyWith =>
