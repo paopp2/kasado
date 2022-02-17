@@ -74,9 +74,11 @@ class CourtSchedulePanel extends HookConsumerWidget {
                       decoration: BoxDecoration(
                         color: (isSlotClosed)
                             ? Colors.grey.shade300
-                            : (currentUserIsReserved)
-                                ? Colors.green.shade200
-                                : Colors.green.shade400,
+                            : (baseCourtSlot.isFull)
+                                ? Colors.red
+                                : (currentUserIsReserved)
+                                    ? Colors.green.shade200
+                                    : Colors.green.shade400,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Material(
@@ -104,7 +106,11 @@ class CourtSchedulePanel extends HookConsumerWidget {
                               ),
                               textColor: Colors.white,
                               title: Text(
-                                currentUserIsReserved ? 'Joined' : 'Available',
+                                (baseCourtSlot.isFull)
+                                    ? 'Full'
+                                    : currentUserIsReserved
+                                        ? 'Joined'
+                                        : 'Available',
                               ),
                               subtitle: Text(
                                   "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm a').format(a.endTime)}"),

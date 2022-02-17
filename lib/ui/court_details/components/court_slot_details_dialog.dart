@@ -94,8 +94,9 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                       )
                     : ElevatedButton(
                         child: const Text('JOIN GAME'),
-                        onPressed: () =>
-                            model.joinCourtSlot(courtSlot, context),
+                        onPressed: (courtSlot.isFull)
+                            ? null
+                            : () => model.joinCourtSlot(courtSlot, context),
                       ),
               ],
             ],
