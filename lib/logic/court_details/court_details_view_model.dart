@@ -42,4 +42,17 @@ class CourtDetailsViewModel extends ViewModel {
       if (context != null) Navigator.pop(context);
     }
   }
+
+  Future<void> leaveCourtSlot(
+    CourtSlot baseCourtSlot, [
+    BuildContext? context,
+  ]) async {
+    assert(baseCourtSlot.hasPlayer(currentUser));
+    await courtRepo.pushCourtSlot(
+      courtSlot: baseCourtSlot.copyWith(
+        players: baseCourtSlot.players..remove(currentUser),
+      ),
+    );
+    if (context != null) Navigator.pop(context);
+  }
 }

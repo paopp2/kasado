@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 
-class CourtSlotDetailsDialog extends StatelessWidget {
+class CourtSlotDetailsDialog extends HookConsumerWidget {
   const CourtSlotDetailsDialog({
     Key? key,
     required this.constraints,
@@ -17,7 +19,8 @@ class CourtSlotDetailsDialog extends StatelessWidget {
   final CourtSlot courtSlot;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = ref.watch(currentUserProvider)!;
     final players = courtSlot.players;
 
     return Dialog(
@@ -58,10 +61,15 @@ class CourtSlotDetailsDialog extends StatelessWidget {
                   onPressed: () {},
                 ),
               ),
-              ElevatedButton(
-                child: const Text('JOIN GAME'),
-                onPressed: () => model.joinCourtSlot(courtSlot, context),
-              ),
+              (courtSlot.hasPlayer(currentUser))
+                  ? ElevatedButton(
+                      child: const Text('LEAVE GAME'),
+                      onPressed: () => model.leaveCourtSlot(courtSlot, context),
+                    )
+                  : ElevatedButton(
+                      child: const Text('JOIN GAME'),
+                      onPressed: () => model.joinCourtSlot(courtSlot, context),
+                    ),
             ],
           ),
         ),

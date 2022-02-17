@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -19,6 +20,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = ref.watch(currentUserProvider)!;
     final model = ref.watch(courtDetailsViewModel);
     final utils = ref.watch(kasadoUtilsProvider);
     final nextTimeSlot = utils.getNextNearestTimeSlot(court.allowedTimeSlots);
@@ -75,10 +77,15 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   Text('₱ ${court.ticketPrice}')
                 ],
               ),
-              TextButton(
-                onPressed: () => model.joinCourtSlot(baseCourtSlot),
-                child: const Text("JOIN GAME"),
-              ),
+              (baseCourtSlot.hasPlayer(currentUser))
+                  ? TextButton(
+                      child: const Text('LEAVE GAME'),
+                      onPressed: () => model.leaveCourtSlot(baseCourtSlot),
+                    )
+                  : TextButton(
+                      child: const Text('JOIN GAME'),
+                      onPressed: () => model.joinCourtSlot(baseCourtSlot),
+                    ),
             ],
           ),
         );
