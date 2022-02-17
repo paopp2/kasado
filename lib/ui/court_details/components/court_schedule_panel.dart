@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
-import 'package:kasado/logic/home/states/home_tab_state.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/time_range/time_range.dart';

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:kasado/app_router.dart';
+import 'package:kasado/logic/court_details/court_details_state.dart';
+import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 
-class NextCourtSlotCard extends StatelessWidget {
+class NextCourtSlotCard extends HookConsumerWidget {
   const NextCourtSlotCard({
     Key? key,
     required this.constraints,
@@ -18,7 +21,10 @@ class NextCourtSlotCard extends StatelessWidget {
   final CourtSlot nextCourtSlot;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final model = ref.watch(courtDetailsViewModel);
+    final courtSlotsStream = ref.watch(courtSlotsStreamProvider(court.id));
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 25,
