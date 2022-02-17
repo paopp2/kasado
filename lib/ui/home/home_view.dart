@@ -5,7 +5,6 @@ import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/ui/home/components/user_info_drawer.dart';
 import 'package:kasado/ui/home/tabs/home/home_tab.dart';
 import 'package:kasado/ui/home/tabs/profile/profile_tab.dart';
-import 'package:kasado/ui/home/tabs/tickets/tickets_tab.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -13,7 +12,7 @@ class HomeView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: 3);
+    final tabController = useTabController(initialLength: 2);
     final model = ref.watch(homeViewModel);
 
     return SafeArea(
@@ -36,7 +35,6 @@ class HomeView extends HookConsumerWidget {
                   model: model,
                   constraints: constraints,
                 ),
-                TicketsTab(constraints: constraints),
                 ProfileTab(constraints: constraints),
               ],
             ),
@@ -51,10 +49,6 @@ class HomeView extends HookConsumerWidget {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.money),
-                  label: 'Tickets',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
