@@ -55,6 +55,7 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
       final TimeOfDay aEnd = a.endTime;
       final TimeOfDay bStart = b.startTime;
       final TimeOfDay bEnd = b.endTime;
+
       final aStartDateTime =
           DateTime(now.year, now.month, now.day, aStart.hour, aStart.minute);
       final aEndDateTime =
@@ -63,9 +64,21 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
           DateTime(now.year, now.month, now.day, bStart.hour, bStart.minute);
       final bEndDateTime =
           DateTime(now.year, now.month, now.day, bEnd.hour, bEnd.minute);
-      return aStartDateTime.difference(now) < bStartDateTime.difference(now)
-          ? TimeRange(startsAt: aStartDateTime, endsAt: aEndDateTime)
-          : TimeRange(startsAt: bStartDateTime, endsAt: bEndDateTime);
+
+      final aAdjustedTimeRange = TimeRange(
+        startsAt: aStartDateTime,
+        endsAt: aEndDateTime,
+      );
+      final bAdjustedTimeRange = TimeRange(
+        startsAt: bStartDateTime,
+        endsAt: bEndDateTime,
+      );
+
+      if (aStartDateTime.isBefore(now)) return bAdjustedTimeRange;
+
+      return (aStartDateTime.isBefore(bStartDateTime))
+          ? aAdjustedTimeRange
+          : bAdjustedTimeRange;
     });
     final courtId = const Uuid().v4();
     await courtRepo.pushCourt(
