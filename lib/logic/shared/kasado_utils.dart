@@ -14,7 +14,7 @@ class KasadoUtils {
 
   TimeRange getNextNearestTimeSlot(List<TimeRange> timeSlots) {
     final now = DateTime.now();
-    final nextNearestTimeSlot = timeSlots.reduce((a, b) {
+    return timeSlots.reduce((a, b) {
       final TimeOfDay aStart = a.startTime;
       final TimeOfDay aEnd = a.endTime;
       final TimeOfDay bStart = b.startTime;
@@ -45,28 +45,6 @@ class KasadoUtils {
           ? aAdjustedTimeRange
           : bAdjustedTimeRange;
     });
-    if (nextNearestTimeSlot.startsAt.difference(now).abs() >
-        const Duration(hours: 1)) {
-      final firstTimeSlot = timeSlots.first;
-      return TimeRange(
-        startsAt: DateTime(
-          now.year,
-          now.month,
-          now.day + 1,
-          firstTimeSlot.startTime.hour,
-          firstTimeSlot.startTime.minute,
-        ),
-        endsAt: DateTime(
-          now.year,
-          now.month,
-          now.day + 1,
-          firstTimeSlot.endTime.hour,
-          firstTimeSlot.endTime.minute,
-        ),
-      );
-    } else {
-      return nextNearestTimeSlot;
-    }
   }
 
   bool isCurrentSlotClosed(TimeRange timeRange) {
