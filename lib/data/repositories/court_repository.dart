@@ -53,4 +53,10 @@ class CourtRepository {
       builder: (data, docId) => CourtSlot.fromJson(data),
     );
   }
+
+  Future<void> removeCourtSlot(String courtId, String slotId) async {
+    await firestoreHelper.deleteData(
+      path: FirestorePath.docCourtSlot(courtId, slotId),
+    );
+  }
 }

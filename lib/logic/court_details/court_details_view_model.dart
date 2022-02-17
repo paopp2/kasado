@@ -62,12 +62,18 @@ class CourtDetailsViewModel extends ViewModel {
     BuildContext? context,
   ]) async {
     assert(baseCourtSlot.hasPlayer(currentUser));
+    final updatedPlayerList = baseCourtSlot.players
+      ..removeWhere((p) => (currentUser.id == p.id));
     await courtRepo.pushCourtSlot(
-      courtSlot: baseCourtSlot.copyWith(
-        players: baseCourtSlot.players
-          ..removeWhere((p) => (currentUser.id == p.id)),
-      ),
+      courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
     );
+    if (updatedPlayerList.isEmpty) {
+      await courtRepo.removeCourtSlot(
+        baseCourtSlot.courtId,
+        baseCourtSlot.slotId,
+      );
+    }
+
     if (context != null) Navigator.pop(context);
   }
 }
