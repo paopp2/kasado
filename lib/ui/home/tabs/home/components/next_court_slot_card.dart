@@ -62,7 +62,6 @@ class NextCourtSlotCard extends StatelessWidget {
                   const Divider(),
                   NextCourtSlotDetails(
                     constraints: constraints,
-                    nextCourtSlot: nextCourtSlot,
                     court: court,
                   ),
                 ],

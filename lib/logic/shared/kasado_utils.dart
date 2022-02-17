@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 
 final kasadoUtilsProvider = Provider.autoDispose(
@@ -37,11 +38,25 @@ class KasadoUtils {
         endsAt: bEndDateTime,
       );
 
-      if (aStartDateTime.isBefore(now)) return bAdjustedTimeRange;
+      if (aEndDateTime.isBefore(now)) return bAdjustedTimeRange;
 
       return (aStartDateTime.isBefore(bStartDateTime))
           ? aAdjustedTimeRange
           : bAdjustedTimeRange;
     });
+  }
+
+  String getSlotIdFromTimeSlot(TimeRange timeRange) {
+    return "${timeRange.startsAt.toIso8601String()}-${timeRange.endsAt.toIso8601String()}";
+  }
+
+  String getDateFormat(DateTime dateTime) {
+    return DateFormat('MMM d').format(dateTime);
+  }
+
+  String getTimeRangeFormat(TimeRange timeRange) {
+    final startTimeFormat = DateFormat('h:mm');
+    final endTimeFormat = DateFormat('h:mm a');
+    return "${startTimeFormat.format(timeRange.startsAt)} - ${endTimeFormat.format(timeRange.endsAt)}";
   }
 }

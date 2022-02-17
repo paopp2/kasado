@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/time_range/time_range.dart';
@@ -11,19 +11,21 @@ class NextCourtSlotDetails extends HookConsumerWidget {
   const NextCourtSlotDetails({
     Key? key,
     required this.constraints,
-    required this.nextCourtSlot,
     required this.court,
   }) : super(key: key);
 
   final BoxConstraints constraints;
-  final CourtSlot nextCourtSlot;
   final Court court;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(courtDetailsViewModel);
+    final utils = ref.watch(kasadoUtilsProvider);
+    final nextTimeSlot = utils.getNextNearestTimeSlot(court.allowedTimeSlots);
     final courtSlotStream = ref.watch(
-      courtSlotStreamProvider("${court.id}|${nextCourtSlot.slotId}"),
+      courtSlotStreamProvider(
+        "${court.id}|${utils.getSlotIdFromTimeSlot(nextTimeSlot)}",
+      ),
     );
 
     return courtSlotStream.when(
@@ -35,8 +37,8 @@ class NextCourtSlotDetails extends HookConsumerWidget {
               courtId: court.id,
               players: [],
               timeRange: TimeRange(
-                startsAt: nextCourtSlot.timeRange.startsAt,
-                endsAt: nextCourtSlot.timeRange.endsAt,
+                startsAt: nextTimeSlot.startsAt,
+                endsAt: nextTimeSlot.endsAt,
               ),
             );
 
@@ -60,7 +62,8 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                     width: constraints.maxWidth * 0.05,
                   ),
                   Text(
-                      "${DateFormat('MMM d / h:mm').format(nextCourtSlot.timeRange.startsAt)} - ${DateFormat('h:mm a').format(nextCourtSlot.timeRange.endsAt)}")
+                    "${utils.getDateFormat(nextTimeSlot.startsAt)} / ${utils.getTimeRangeFormat(nextTimeSlot)}",
+                  )
                 ],
               ),
               Row(
