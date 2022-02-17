@@ -52,7 +52,12 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                       itemBuilder: (context, index) {
                         final player = players[index];
                         return ListTile(
-                          onLongPress: (isAdmin) ? () {} : null,
+                          onLongPress: (isAdmin)
+                              ? () => model.togglePlayerPaymentStatus(
+                                    baseCourtSlot: courtSlot!,
+                                    player: player,
+                                  )
+                              : null,
                           title: Text(player.displayName!),
                           leading: CircleAvatar(
                             radius: 25,
