@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
@@ -23,12 +26,24 @@ class NextCourtSlotDetails extends HookConsumerWidget {
     final currentUser = ref.watch(currentUserProvider)!;
     final model = ref.watch(courtDetailsViewModel);
     final utils = ref.watch(kasadoUtilsProvider);
-    final nextTimeSlot = utils.getNextNearestTimeSlot(court.allowedTimeSlots);
+    final nextTimeSlotState =
+        useState(utils.getNextNearestTimeSlot(court.allowedTimeSlots));
+    final nextTimeSlot = nextTimeSlotState.value;
     final courtSlotStream = ref.watch(
       courtSlotStreamProvider(
         "${court.id}|${utils.getSlotIdFromTimeSlot(nextTimeSlot)}",
       ),
     );
+
+    useEffect(() {
+      // TODO: Improve performance for this feature
+      // Update nextTimeSlot every 5 minutes
+      Timer.periodic(const Duration(minutes: 5), (_) {
+        nextTimeSlotState.value =
+            utils.getNextNearestTimeSlot(court.allowedTimeSlots);
+      });
+      return;
+    }, []);
 
     return courtSlotStream.when(
       error: (e, _) => Text(e.toString()),
