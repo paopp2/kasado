@@ -100,4 +100,8 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
     // TODO: Implement better routing on NewCourtInput through GoRouter
     Navigator.pop(context);
   }
+
+  Future<void> deleteCourt(Court court) async {
+    await courtRepo.deleteCourt(court);
+  }
 }

@@ -34,6 +34,10 @@ class CourtsOwnedView extends HookConsumerWidget {
                       "isAdmin": true,
                     },
                   ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () => model.deleteCourt(court),
+                  ),
                 );
               },
             ),
@@ -41,9 +45,7 @@ class CourtsOwnedView extends HookConsumerWidget {
           floatingActionButton: FloatingActionButton(
             onPressed: () => showDialog(
               context: context,
-              builder: (context) {
-                return NewCourtInputDialog(model: model);
-              },
+              builder: (_) => NewCourtInputDialog(model: model),
             ),
             child: const Icon(
               Icons.add,

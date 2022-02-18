@@ -21,6 +21,10 @@ class CourtRepository {
     );
   }
 
+  Future<void> deleteCourt(Court court) async {
+    await firestoreHelper.deleteData(path: FirestorePath.docCourt(court.id));
+  }
+
   Stream<List<Court>> getCourtsStream({KasadoUser? admin}) {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colCourts(),
