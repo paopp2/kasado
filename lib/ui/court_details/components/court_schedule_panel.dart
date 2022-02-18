@@ -106,11 +106,13 @@ class CourtSchedulePanel extends HookConsumerWidget {
                               ),
                               textColor: Colors.white,
                               title: Text(
-                                (baseCourtSlot.isFull)
-                                    ? 'Full'
-                                    : currentUserIsReserved
-                                        ? 'Joined'
-                                        : 'Available',
+                                (isSlotClosed)
+                                    ? 'Closed'
+                                    : (baseCourtSlot.isFull)
+                                        ? 'Full'
+                                        : currentUserIsReserved
+                                            ? 'Joined'
+                                            : 'Available',
                               ),
                               subtitle: Text(
                                   "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm a').format(a.endTime)}"),
