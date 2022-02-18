@@ -152,8 +152,9 @@ _AppointmentDataSource _getCalendarDataSource(Court court) {
       endTime: tRange.endsAt,
       recurrenceRule: SfCalendar.generateRRule(
         RecurrenceProperties(
-          recurrenceType: RecurrenceType.daily,
+          recurrenceType: RecurrenceType.weekly,
           startDate: DateTime.now(),
+          weekDays: court.allowedWeekDays,
         ),
         DateTime(2015, 1, 1),
         DateTime(2015, 1, 1),
