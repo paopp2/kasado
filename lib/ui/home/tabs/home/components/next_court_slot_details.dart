@@ -69,7 +69,12 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                 children: [
                   const Icon(Icons.people),
                   SizedBox(width: constraints.maxWidth * 0.05),
-                  Text('${baseCourtSlot.playerCount} / 25')
+                  Text(
+                    '${baseCourtSlot.playerCount} / 25',
+                    style: TextStyle(
+                      color: (baseCourtSlot.isFull) ? Colors.red : Colors.green,
+                    ),
+                  )
                 ],
               ),
               Row(
@@ -99,7 +104,9 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                     )
                   : TextButton(
                       child: const Text('JOIN GAME'),
-                      onPressed: () => model.joinCourtSlot(baseCourtSlot),
+                      onPressed: (baseCourtSlot.isFull)
+                          ? null
+                          : () => model.joinCourtSlot(baseCourtSlot),
                     ),
             ],
           ),
