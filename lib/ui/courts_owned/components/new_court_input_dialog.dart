@@ -141,7 +141,7 @@ class NewCourtInputDialog extends HookConsumerWidget {
             ],
           ),
           TextButton(
-            child: const Text('Add Court'),
+            child: Text((courtToEdit != null) ? 'Update Court' : 'Add Court'),
             onPressed: () => model.pushCourt(
               context: context,
               isEdit: courtToEdit != null,
