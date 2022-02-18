@@ -34,15 +34,24 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
     final utils = ref.watch(kasadoUtilsProvider);
 
     return Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(15.0),
         child: SizedBox(
           height: constraints.maxHeight * 0.8,
           width: constraints.maxWidth * 0.8,
           child: Column(
             children: [
-              Text(court.name),
+              Text(
+                court.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              const SizedBox(height: 10),
               Text(utils.getTimeRangeFormat(courtSlot.timeRange)),
+              const Divider(thickness: 2),
               Expanded(
                 child: courtSlotStream.when(
                   error: (e, _) => Text(e.toString()),
@@ -87,12 +96,12 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
               ),
               if (!isDone) ...[
                 (courtSlot.hasPlayer(currentUser))
-                    ? ElevatedButton(
+                    ? TextButton(
                         child: const Text('LEAVE GAME'),
                         onPressed: () =>
                             model.leaveCourtSlot(courtSlot, context),
                       )
-                    : ElevatedButton(
+                    : TextButton(
                         child: const Text('JOIN GAME'),
                         onPressed: (courtSlot.isFull)
                             ? null
