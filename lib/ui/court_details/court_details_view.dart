@@ -8,6 +8,7 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/court_details/components/court_admins_panel.dart';
 import 'package:kasado/ui/court_details/components/court_schedule_panel.dart';
 import 'package:kasado/ui/courts_owned/components/new_court_input_dialog.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
 class CourtDetailsView extends HookConsumerWidget {
   const CourtDetailsView({
@@ -32,7 +33,7 @@ class CourtDetailsView extends HookConsumerWidget {
       builder: (context, constraints) {
         return courtStream.when(
           error: (e, _) => Text(e.toString()),
-          loading: () => const CircularProgressIndicator(),
+          loading: () => const LoadingWidget(),
           data: (court) {
             court!;
             return Scaffold(

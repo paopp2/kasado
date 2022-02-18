@@ -5,6 +5,7 @@ import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_view_model.dart';
 import 'package:kasado/ui/courts_owned/components/new_court_input_dialog.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
 class CourtsOwnedView extends HookConsumerWidget {
   const CourtsOwnedView({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class CourtsOwnedView extends HookConsumerWidget {
         return Scaffold(
           body: courtsOwnedList.when(
             error: (e, _) => Text(e.toString()),
-            loading: () => const CircularProgressIndicator(),
+            loading: () => const LoadingWidget(),
             data: (courtsList) => ListView.builder(
               itemCount: courtsList.length,
               itemBuilder: (context, i) {

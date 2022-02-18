@@ -6,6 +6,7 @@ import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
 class CourtSlotDetailsDialog extends HookConsumerWidget {
   const CourtSlotDetailsDialog({
@@ -55,7 +56,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
               Expanded(
                 child: courtSlotStream.when(
                   error: (e, _) => Text(e.toString()),
-                  loading: () => const CircularProgressIndicator(),
+                  loading: () => const LoadingWidget(),
                   data: (courtSlot) {
                     final players = courtSlot?.players ?? [];
                     return ListView.builder(

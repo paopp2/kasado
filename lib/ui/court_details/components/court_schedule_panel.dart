@@ -9,6 +9,7 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 import 'package:kasado/ui/court_details/components/court_slot_details_dialog.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class CourtSchedulePanel extends HookConsumerWidget {
@@ -38,107 +39,107 @@ class CourtSchedulePanel extends HookConsumerWidget {
       ),
       appointmentBuilder: (context, details) {
         return courtSlotsStream.when(
-            error: (e, _) => Text(e.toString()),
-            loading: () => const CircularProgressIndicator(),
-            data: (courtSlots) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: details.appointments.map((a) {
-                  a as Appointment;
-                  final isSlotClosed = utils.isCurrentSlotClosed(
-                    TimeRange(startsAt: a.startTime, endsAt: a.endTime),
-                  );
-                  final appSlotId =
-                      "${a.startTime.toIso8601String()}-${a.endTime.toIso8601String()}";
+          error: (e, _) => Text(e.toString()),
+          loading: () => const LoadingWidget(),
+          data: (courtSlots) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: details.appointments.map((a) {
+                a as Appointment;
+                final isSlotClosed = utils.isCurrentSlotClosed(
+                  TimeRange(startsAt: a.startTime, endsAt: a.endTime),
+                );
+                final appSlotId =
+                    "${a.startTime.toIso8601String()}-${a.endTime.toIso8601String()}";
 
-                  CourtSlot baseCourtSlot =
-                      (courtSlots.any((slot) => slot.slotId == appSlotId))
-                          ? courtSlots.singleWhere(
-                              (slot) => slot.slotId == appSlotId,
-                            )
-                          : CourtSlot(
-                              courtId: court.id,
-                              players: [],
-                              timeRange: TimeRange(
-                                startsAt: a.startTime,
-                                endsAt: a.endTime,
-                              ),
-                            );
+                CourtSlot baseCourtSlot =
+                    (courtSlots.any((slot) => slot.slotId == appSlotId))
+                        ? courtSlots.singleWhere(
+                            (slot) => slot.slotId == appSlotId,
+                          )
+                        : CourtSlot(
+                            courtId: court.id,
+                            players: [],
+                            timeRange: TimeRange(
+                              startsAt: a.startTime,
+                              endsAt: a.endTime,
+                            ),
+                          );
 
-                  final currentUserIsReserved =
-                      baseCourtSlot.hasPlayer(currentUser);
+                final currentUserIsReserved =
+                    baseCourtSlot.hasPlayer(currentUser);
 
-                  return Center(
-                    child: Container(
-                      height: constraints.maxHeight * 0.15,
-                      decoration: BoxDecoration(
-                        color: (isSlotClosed)
-                            ? Colors.grey.shade300
-                            : (baseCourtSlot.isFull)
-                                ? Colors.red
-                                : (currentUserIsReserved)
-                                    ? Colors.green.shade200
-                                    : Colors.green.shade400,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return CourtSlotDetailsDialog(
-                                  constraints: constraints,
-                                  model: model,
-                                  isAdmin: isAdmin,
-                                  court: court,
-                                  courtSlot: baseCourtSlot,
-                                  isDone: isSlotClosed,
-                                );
-                              },
-                            );
-                          },
-                          child: Center(
-                            child: ListTile(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              textColor: Colors.white,
-                              title: Text(
-                                (isSlotClosed)
-                                    ? 'Closed'
-                                    : (baseCourtSlot.isFull)
-                                        ? 'Full'
-                                        : currentUserIsReserved
-                                            ? 'Joined'
-                                            : 'Available',
-                              ),
-                              subtitle: Text(
-                                  "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm a').format(a.endTime)}"),
-                              trailing: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  const Text('Players'),
-                                  Text(
-                                    '${baseCourtSlot.playerCount} / 25',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                    ),
+                return Center(
+                  child: Container(
+                    height: constraints.maxHeight * 0.15,
+                    decoration: BoxDecoration(
+                      color: (isSlotClosed)
+                          ? Colors.grey.shade300
+                          : (baseCourtSlot.isFull)
+                              ? Colors.red
+                              : (currentUserIsReserved)
+                                  ? Colors.green.shade200
+                                  : Colors.green.shade400,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CourtSlotDetailsDialog(
+                                constraints: constraints,
+                                model: model,
+                                isAdmin: isAdmin,
+                                court: court,
+                                courtSlot: baseCourtSlot,
+                                isDone: isSlotClosed,
+                              );
+                            },
+                          );
+                        },
+                        child: Center(
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            textColor: Colors.white,
+                            title: Text(
+                              (isSlotClosed)
+                                  ? 'Closed'
+                                  : (baseCourtSlot.isFull)
+                                      ? 'Full'
+                                      : currentUserIsReserved
+                                          ? 'Joined'
+                                          : 'Available',
+                            ),
+                            subtitle: Text(
+                                "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm a').format(a.endTime)}"),
+                            trailing: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                const Text('Players'),
+                                Text(
+                                  '${baseCourtSlot.playerCount} / 25',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
                     ),
-                  );
-                }).toList(),
-              );
-            });
+                  ),
+                );
+              }).toList(),
+            );
+          },
+        );
       },
     );
   }

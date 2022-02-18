@@ -10,6 +10,7 @@ import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/time_range/time_range.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
 class NextCourtSlotDetails extends HookConsumerWidget {
   const NextCourtSlotDetails({
@@ -51,7 +52,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
 
     return courtSlotStream.when(
       error: (e, _) => Text(e.toString()),
-      loading: () => const CircularProgressIndicator(),
+      loading: () => const LoadingWidget(),
       data: (courtSlot) {
         final baseCourtSlot = (nextTimeSlot == null)
             ? null

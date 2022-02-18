@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/logic/home/states/home_tab_state.dart';
 import 'package:kasado/ui/home/tabs/home/components/next_court_slot_card.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
 class HomeTab extends HookConsumerWidget {
   const HomeTab({
@@ -30,7 +31,7 @@ class HomeTab extends HookConsumerWidget {
           child: Center(
             child: courtsStream.when(
               error: (e, __) => Text(e.toString()),
-              loading: () => const CircularProgressIndicator(),
+              loading: () => const LoadingWidget(),
               data: (courtList) {
                 return ListView.builder(
                   itemCount: courtList.length,
