@@ -25,7 +25,7 @@ class NextCourtSlotCard extends StatelessWidget {
         vertical: 10,
       ),
       child: SizedBox(
-        height: constraints.maxHeight * 0.47,
+        height: constraints.maxHeight * 0.52,
         width: constraints.maxWidth * 0.85,
         child: Card(
           elevation: 20,
@@ -46,7 +46,7 @@ class NextCourtSlotCard extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: SizedBox(
-                      height: constraints.maxHeight * 0.2,
+                      height: constraints.maxHeight * 0.25,
                       width: constraints.maxWidth,
                       child: Image.network(
                         court.photoUrl,

@@ -42,8 +42,21 @@ class CourtDetailsView extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              Text(court.name.toUpperCase() + ((isAdmin) ? ' (ADMIN)' : '')),
-              const SizedBox(height: 30),
+              Center(
+                child: Column(
+                  children: [
+                    Text(
+                      court.name.toUpperCase() + ((isAdmin) ? ' (ADMIN)' : ''),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(court.address),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
               Expanded(
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
