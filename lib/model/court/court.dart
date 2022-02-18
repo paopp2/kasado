@@ -24,7 +24,7 @@ class Court with _$Court {
     required List<WeekDays> allowedWeekDays,
     required List<TimeRange> allowedTimeSlots,
     required List<KasadoUser> admins,
-    required CourtSlot nextAvailableSlot,
+    required CourtSlot? nextAvailableSlot,
   }) = _Court;
 
   factory Court.fromJson(Map<String, dynamic> json) => _$CourtFromJson(json);

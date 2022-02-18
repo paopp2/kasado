@@ -31,7 +31,7 @@ class _$CourtTearOff {
       required List<WeekDays> allowedWeekDays,
       required List<TimeRange> allowedTimeSlots,
       required List<KasadoUser> admins,
-      required CourtSlot nextAvailableSlot}) {
+      required CourtSlot? nextAvailableSlot}) {
     return _Court(
       id: id,
       name: name,
@@ -63,7 +63,7 @@ mixin _$Court {
   List<WeekDays> get allowedWeekDays => throw _privateConstructorUsedError;
   List<TimeRange> get allowedTimeSlots => throw _privateConstructorUsedError;
   List<KasadoUser> get admins => throw _privateConstructorUsedError;
-  CourtSlot get nextAvailableSlot => throw _privateConstructorUsedError;
+  CourtSlot? get nextAvailableSlot => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -83,9 +83,9 @@ abstract class $CourtCopyWith<$Res> {
       List<WeekDays> allowedWeekDays,
       List<TimeRange> allowedTimeSlots,
       List<KasadoUser> admins,
-      CourtSlot nextAvailableSlot});
+      CourtSlot? nextAvailableSlot});
 
-  $CourtSlotCopyWith<$Res> get nextAvailableSlot;
+  $CourtSlotCopyWith<$Res>? get nextAvailableSlot;
 }
 
 /// @nodoc
@@ -144,13 +144,17 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
       nextAvailableSlot: nextAvailableSlot == freezed
           ? _value.nextAvailableSlot
           : nextAvailableSlot // ignore: cast_nullable_to_non_nullable
-              as CourtSlot,
+              as CourtSlot?,
     ));
   }
 
   @override
-  $CourtSlotCopyWith<$Res> get nextAvailableSlot {
-    return $CourtSlotCopyWith<$Res>(_value.nextAvailableSlot, (value) {
+  $CourtSlotCopyWith<$Res>? get nextAvailableSlot {
+    if (_value.nextAvailableSlot == null) {
+      return null;
+    }
+
+    return $CourtSlotCopyWith<$Res>(_value.nextAvailableSlot!, (value) {
       return _then(_value.copyWith(nextAvailableSlot: value));
     });
   }
@@ -170,10 +174,10 @@ abstract class _$CourtCopyWith<$Res> implements $CourtCopyWith<$Res> {
       List<WeekDays> allowedWeekDays,
       List<TimeRange> allowedTimeSlots,
       List<KasadoUser> admins,
-      CourtSlot nextAvailableSlot});
+      CourtSlot? nextAvailableSlot});
 
   @override
-  $CourtSlotCopyWith<$Res> get nextAvailableSlot;
+  $CourtSlotCopyWith<$Res>? get nextAvailableSlot;
 }
 
 /// @nodoc
@@ -233,7 +237,7 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
       nextAvailableSlot: nextAvailableSlot == freezed
           ? _value.nextAvailableSlot
           : nextAvailableSlot // ignore: cast_nullable_to_non_nullable
-              as CourtSlot,
+              as CourtSlot?,
     ));
   }
 }
@@ -272,7 +276,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
   @override
   final List<KasadoUser> admins;
   @override
-  final CourtSlot nextAvailableSlot;
+  final CourtSlot? nextAvailableSlot;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -349,7 +353,7 @@ abstract class _Court implements Court {
       required List<WeekDays> allowedWeekDays,
       required List<TimeRange> allowedTimeSlots,
       required List<KasadoUser> admins,
-      required CourtSlot nextAvailableSlot}) = _$_Court;
+      required CourtSlot? nextAvailableSlot}) = _$_Court;
 
   factory _Court.fromJson(Map<String, dynamic> json) = _$_Court.fromJson;
 
@@ -370,7 +374,7 @@ abstract class _Court implements Court {
   @override
   List<KasadoUser> get admins;
   @override
-  CourtSlot get nextAvailableSlot;
+  CourtSlot? get nextAvailableSlot;
   @override
   @JsonKey(ignore: true)
   _$CourtCopyWith<_Court> get copyWith => throw _privateConstructorUsedError;
