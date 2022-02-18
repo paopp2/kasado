@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final appRouter = AppRouter.instance.router;
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      title: 'Kasado',
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
