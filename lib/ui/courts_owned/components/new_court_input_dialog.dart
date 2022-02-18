@@ -14,7 +14,10 @@ class NewCourtInputDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedChipIndices = ref.watch(selectedChipIndicesProvider);
+    final selectedSchedChipIndices =
+        ref.watch(selectedSchedChipIndicesProvider);
+    final selectedWeekDayChipIndices =
+        ref.watch(selectedWeekDayChipIndicesProvider);
 
     return Dialog(
       child: ListView(
@@ -27,17 +30,69 @@ class NewCourtInputDialog extends HookConsumerWidget {
             isMoney: true,
             tec: model.tecTicketPrice,
           ),
+          const Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FilterChip(
+                label: const Text('SUN'),
+                selected: selectedWeekDayChipIndices.contains(0),
+                onSelected: (val) => model.selectWeekDayChip(val, 0),
+              ),
+              FilterChip(
+                label: const Text('MON'),
+                selected: selectedWeekDayChipIndices.contains(1),
+                onSelected: (val) => model.selectWeekDayChip(val, 1),
+              ),
+              FilterChip(
+                label: const Text('TUE'),
+                selected: selectedWeekDayChipIndices.contains(2),
+                onSelected: (val) => model.selectWeekDayChip(val, 2),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FilterChip(
+                label: const Text('WED'),
+                selected: selectedWeekDayChipIndices.contains(3),
+                onSelected: (val) => model.selectWeekDayChip(val, 3),
+              ),
+              FilterChip(
+                label: const Text('THU'),
+                selected: selectedWeekDayChipIndices.contains(4),
+                onSelected: (val) => model.selectWeekDayChip(val, 4),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FilterChip(
+                label: const Text('FRI'),
+                selected: selectedWeekDayChipIndices.contains(5),
+                onSelected: (val) => model.selectWeekDayChip(val, 5),
+              ),
+              FilterChip(
+                label: const Text('SAT'),
+                selected: selectedWeekDayChipIndices.contains(6),
+                onSelected: (val) => model.selectWeekDayChip(val, 6),
+              ),
+            ],
+          ),
+          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FilterChip(
                 label: const Text('8 - 10 AM'),
-                selected: selectedChipIndices.contains(0),
+                selected: selectedSchedChipIndices.contains(0),
                 onSelected: (val) => model.selectSchedChip(val, 0),
               ),
               FilterChip(
                 label: const Text('10 - 12 PM'),
-                selected: selectedChipIndices.contains(1),
+                selected: selectedSchedChipIndices.contains(1),
                 onSelected: (val) => model.selectSchedChip(val, 1),
               ),
             ],
@@ -47,12 +102,12 @@ class NewCourtInputDialog extends HookConsumerWidget {
             children: [
               FilterChip(
                 label: const Text('12 - 2 PM'),
-                selected: selectedChipIndices.contains(2),
+                selected: selectedSchedChipIndices.contains(2),
                 onSelected: (val) => model.selectSchedChip(val, 2),
               ),
               FilterChip(
                 label: const Text('2 - 4 PM'),
-                selected: selectedChipIndices.contains(3),
+                selected: selectedSchedChipIndices.contains(3),
                 onSelected: (val) => model.selectSchedChip(val, 3),
               ),
             ],
@@ -62,12 +117,12 @@ class NewCourtInputDialog extends HookConsumerWidget {
             children: [
               FilterChip(
                 label: const Text('4 - 6 PM'),
-                selected: selectedChipIndices.contains(4),
+                selected: selectedSchedChipIndices.contains(4),
                 onSelected: (val) => model.selectSchedChip(val, 4),
               ),
               FilterChip(
                 label: const Text('6 - 8 PM'),
-                selected: selectedChipIndices.contains(5),
+                selected: selectedSchedChipIndices.contains(5),
                 onSelected: (val) => model.selectSchedChip(val, 5),
               ),
             ],
@@ -77,7 +132,7 @@ class NewCourtInputDialog extends HookConsumerWidget {
             children: [
               FilterChip(
                 label: const Text('8 - 10 PM'),
-                selected: selectedChipIndices.contains(6),
+                selected: selectedSchedChipIndices.contains(6),
                 onSelected: (val) => model.selectSchedChip(val, 6),
               ),
             ],

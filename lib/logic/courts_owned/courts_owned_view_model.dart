@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/constants/allowed_time_ranges.dart';
+import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
@@ -11,6 +11,7 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/time_range/time_range.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:uuid/uuid.dart';
 
 final courtsOwnedViewModel = Provider.autoDispose(
@@ -35,7 +36,7 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
   final KasadoUtils utils;
 
   void selectSchedChip(bool isSelected, int index) {
-    read(selectedChipIndicesProvider.notifier).update((s) {
+    read(selectedSchedChipIndicesProvider.notifier).update((s) {
       if (isSelected) {
         return [...s, index];
       } else {
@@ -45,13 +46,32 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
   }
 
   bool isSchedIndexSelected(int index) {
-    return read(selectedChipIndicesProvider).contains(index);
+    return read(selectedSchedChipIndicesProvider).contains(index);
+  }
+
+  void selectWeekDayChip(bool isSelected, int index) {
+    read(selectedWeekDayChipIndicesProvider.notifier).update((s) {
+      if (isSelected) {
+        return [...s, index];
+      } else {
+        return [...s]..remove(index);
+      }
+    });
+  }
+
+  bool isWeekDayIndexSelected(int index) {
+    return read(selectedWeekDayChipIndicesProvider).contains(index);
   }
 
   Future<void> addNewCourt(BuildContext context) async {
-    final List<int> selectedIndices = read(selectedChipIndicesProvider);
+    final List<int> selectedSchedIndices =
+        read(selectedSchedChipIndicesProvider);
+    final List<int> selectedWeekDayIndices =
+        read(selectedWeekDayChipIndicesProvider);
     final List<TimeRange> allowedTimeSlots =
-        selectedIndices.map((i) => allowedTimeRanges[i]).toList();
+        selectedSchedIndices.map((si) => allowedTimeRanges[si]).toList();
+    final List<WeekDays> allowedWeekDays =
+        selectedWeekDayIndices.map((di) => indexToWeekDay[di]).toList();
     final TimeRange nextNearestTimeSlot =
         utils.getNextNearestTimeSlot(allowedTimeSlots);
     final courtId = const Uuid().v4();
@@ -70,6 +90,7 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
           players: [],
           timeRange: nextNearestTimeSlot,
         ),
+        allowedWeekDays: allowedWeekDays,
       ),
     );
     // TODO: Implement better routing on NewCourtInput through GoRouter

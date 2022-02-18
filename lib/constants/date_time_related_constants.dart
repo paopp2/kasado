@@ -1,4 +1,15 @@
 import 'package:kasado/model/time_range/time_range.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
+
+final indexToWeekDay = [
+  WeekDays.sunday,
+  WeekDays.monday,
+  WeekDays.tuesday,
+  WeekDays.wednesday,
+  WeekDays.thursday,
+  WeekDays.friday,
+  WeekDays.saturday,
+];
 
 final allowedTimeRanges = [
   TimeRange(
