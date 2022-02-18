@@ -46,7 +46,7 @@ class CourtsOwnedView extends HookConsumerWidget {
             onPressed: () => showDialog(
               context: context,
               builder: (_) => NewCourtInputDialog(model: model),
-            ),
+            ).then((_) => model.clearAllTecs()),
             child: const Icon(
               Icons.add,
               color: Colors.white,
