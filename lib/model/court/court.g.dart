@@ -12,6 +12,9 @@ _$_Court _$$_CourtFromJson(Map<String, dynamic> json) => _$_Court(
       address: json['address'] as String,
       photoUrl: json['photoUrl'] as String,
       ticketPrice: (json['ticketPrice'] as num).toDouble(),
+      allowedWeekDays: (json['allowedWeekDays'] as List<dynamic>)
+          .map((e) => $enumDecode(_$WeekDaysEnumMap, e))
+          .toList(),
       allowedTimeSlots: (json['allowedTimeSlots'] as List<dynamic>)
           .map((e) => TimeRange.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -28,8 +31,20 @@ Map<String, dynamic> _$$_CourtToJson(_$_Court instance) => <String, dynamic>{
       'address': instance.address,
       'photoUrl': instance.photoUrl,
       'ticketPrice': instance.ticketPrice,
+      'allowedWeekDays':
+          instance.allowedWeekDays.map((e) => _$WeekDaysEnumMap[e]).toList(),
       'allowedTimeSlots':
           instance.allowedTimeSlots.map((e) => e.toJson()).toList(),
       'admins': instance.admins.map((e) => e.toJson()).toList(),
       'nextAvailableSlot': instance.nextAvailableSlot.toJson(),
     };
+
+const _$WeekDaysEnumMap = {
+  WeekDays.sunday: 'sunday',
+  WeekDays.monday: 'monday',
+  WeekDays.tuesday: 'tuesday',
+  WeekDays.wednesday: 'wednesday',
+  WeekDays.thursday: 'thursday',
+  WeekDays.friday: 'friday',
+  WeekDays.saturday: 'saturday',
+};

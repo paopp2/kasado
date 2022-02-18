@@ -28,6 +28,7 @@ class _$CourtTearOff {
       required String address,
       required String photoUrl,
       required double ticketPrice,
+      required List<WeekDays> allowedWeekDays,
       required List<TimeRange> allowedTimeSlots,
       required List<KasadoUser> admins,
       required CourtSlot nextAvailableSlot}) {
@@ -37,6 +38,7 @@ class _$CourtTearOff {
       address: address,
       photoUrl: photoUrl,
       ticketPrice: ticketPrice,
+      allowedWeekDays: allowedWeekDays,
       allowedTimeSlots: allowedTimeSlots,
       admins: admins,
       nextAvailableSlot: nextAvailableSlot,
@@ -58,6 +60,7 @@ mixin _$Court {
   String get address => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
   double get ticketPrice => throw _privateConstructorUsedError;
+  List<WeekDays> get allowedWeekDays => throw _privateConstructorUsedError;
   List<TimeRange> get allowedTimeSlots => throw _privateConstructorUsedError;
   List<KasadoUser> get admins => throw _privateConstructorUsedError;
   CourtSlot get nextAvailableSlot => throw _privateConstructorUsedError;
@@ -77,6 +80,7 @@ abstract class $CourtCopyWith<$Res> {
       String address,
       String photoUrl,
       double ticketPrice,
+      List<WeekDays> allowedWeekDays,
       List<TimeRange> allowedTimeSlots,
       List<KasadoUser> admins,
       CourtSlot nextAvailableSlot});
@@ -99,6 +103,7 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
     Object? address = freezed,
     Object? photoUrl = freezed,
     Object? ticketPrice = freezed,
+    Object? allowedWeekDays = freezed,
     Object? allowedTimeSlots = freezed,
     Object? admins = freezed,
     Object? nextAvailableSlot = freezed,
@@ -124,6 +129,10 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
           ? _value.ticketPrice
           : ticketPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      allowedWeekDays: allowedWeekDays == freezed
+          ? _value.allowedWeekDays
+          : allowedWeekDays // ignore: cast_nullable_to_non_nullable
+              as List<WeekDays>,
       allowedTimeSlots: allowedTimeSlots == freezed
           ? _value.allowedTimeSlots
           : allowedTimeSlots // ignore: cast_nullable_to_non_nullable
@@ -158,6 +167,7 @@ abstract class _$CourtCopyWith<$Res> implements $CourtCopyWith<$Res> {
       String address,
       String photoUrl,
       double ticketPrice,
+      List<WeekDays> allowedWeekDays,
       List<TimeRange> allowedTimeSlots,
       List<KasadoUser> admins,
       CourtSlot nextAvailableSlot});
@@ -182,6 +192,7 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
     Object? address = freezed,
     Object? photoUrl = freezed,
     Object? ticketPrice = freezed,
+    Object? allowedWeekDays = freezed,
     Object? allowedTimeSlots = freezed,
     Object? admins = freezed,
     Object? nextAvailableSlot = freezed,
@@ -207,6 +218,10 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
           ? _value.ticketPrice
           : ticketPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      allowedWeekDays: allowedWeekDays == freezed
+          ? _value.allowedWeekDays
+          : allowedWeekDays // ignore: cast_nullable_to_non_nullable
+              as List<WeekDays>,
       allowedTimeSlots: allowedTimeSlots == freezed
           ? _value.allowedTimeSlots
           : allowedTimeSlots // ignore: cast_nullable_to_non_nullable
@@ -232,6 +247,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       required this.address,
       required this.photoUrl,
       required this.ticketPrice,
+      required this.allowedWeekDays,
       required this.allowedTimeSlots,
       required this.admins,
       required this.nextAvailableSlot});
@@ -250,6 +266,8 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
   @override
   final double ticketPrice;
   @override
+  final List<WeekDays> allowedWeekDays;
+  @override
   final List<TimeRange> allowedTimeSlots;
   @override
   final List<KasadoUser> admins;
@@ -258,7 +276,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Court(id: $id, name: $name, address: $address, photoUrl: $photoUrl, ticketPrice: $ticketPrice, allowedTimeSlots: $allowedTimeSlots, admins: $admins, nextAvailableSlot: $nextAvailableSlot)';
+    return 'Court(id: $id, name: $name, address: $address, photoUrl: $photoUrl, ticketPrice: $ticketPrice, allowedWeekDays: $allowedWeekDays, allowedTimeSlots: $allowedTimeSlots, admins: $admins, nextAvailableSlot: $nextAvailableSlot)';
   }
 
   @override
@@ -271,6 +289,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       ..add(DiagnosticsProperty('address', address))
       ..add(DiagnosticsProperty('photoUrl', photoUrl))
       ..add(DiagnosticsProperty('ticketPrice', ticketPrice))
+      ..add(DiagnosticsProperty('allowedWeekDays', allowedWeekDays))
       ..add(DiagnosticsProperty('allowedTimeSlots', allowedTimeSlots))
       ..add(DiagnosticsProperty('admins', admins))
       ..add(DiagnosticsProperty('nextAvailableSlot', nextAvailableSlot));
@@ -288,6 +307,8 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
             const DeepCollectionEquality()
                 .equals(other.ticketPrice, ticketPrice) &&
             const DeepCollectionEquality()
+                .equals(other.allowedWeekDays, allowedWeekDays) &&
+            const DeepCollectionEquality()
                 .equals(other.allowedTimeSlots, allowedTimeSlots) &&
             const DeepCollectionEquality().equals(other.admins, admins) &&
             const DeepCollectionEquality()
@@ -302,6 +323,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       const DeepCollectionEquality().hash(address),
       const DeepCollectionEquality().hash(photoUrl),
       const DeepCollectionEquality().hash(ticketPrice),
+      const DeepCollectionEquality().hash(allowedWeekDays),
       const DeepCollectionEquality().hash(allowedTimeSlots),
       const DeepCollectionEquality().hash(admins),
       const DeepCollectionEquality().hash(nextAvailableSlot));
@@ -324,6 +346,7 @@ abstract class _Court implements Court {
       required String address,
       required String photoUrl,
       required double ticketPrice,
+      required List<WeekDays> allowedWeekDays,
       required List<TimeRange> allowedTimeSlots,
       required List<KasadoUser> admins,
       required CourtSlot nextAvailableSlot}) = _$_Court;
@@ -340,6 +363,8 @@ abstract class _Court implements Court {
   String get photoUrl;
   @override
   double get ticketPrice;
+  @override
+  List<WeekDays> get allowedWeekDays;
   @override
   List<TimeRange> get allowedTimeSlots;
   @override
