@@ -39,8 +39,8 @@ class NextCourtSlotDetails extends HookConsumerWidget {
 
     useEffect(() {
       // TODO: Improve performance for this feature
-      // Update nextTimeSlot every 5 minutes
-      Timer.periodic(const Duration(minutes: 5), (_) {
+      // Update nextTimeSlot every 30 seconds
+      Timer.periodic(const Duration(seconds: 30), (_) {
         nextTimeSlotState.value = utils.getNextTimeSlotForToday(
           timeSlots: court.allowedTimeSlots,
           weekdays: court.allowedWeekDays,
