@@ -25,7 +25,7 @@ class NextCourtSlotCard extends StatelessWidget {
         vertical: 10,
       ),
       child: SizedBox(
-        height: constraints.maxHeight * 0.45,
+        height: constraints.maxHeight * 0.47,
         width: constraints.maxWidth * 0.85,
         child: Card(
           elevation: 20,
@@ -59,6 +59,7 @@ class NextCourtSlotCard extends StatelessWidget {
                     court.name.toUpperCase(),
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
+                  Text(court.address),
                   const Divider(),
                   NextCourtSlotDetails(
                     constraints: constraints,
