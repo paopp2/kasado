@@ -34,6 +34,13 @@ class NextCourtSlotDetails extends HookConsumerWidget {
         "${court.id}|${utils.getSlotIdFromTimeSlot(nextTimeSlot)}",
       ),
     );
+    // TODO: Remove this temp feature and replace with showing the next sched
+    // (or not, depending on user feedback)
+    //
+    // (Next available day and time for schedule based on allowed times/days)
+    // For now this feature is still based on the assumption that the next
+    // sched is the day after, which might not be true
+    final isToday = nextTimeSlot.startsAt.day == DateTime.now().day;
 
     useEffect(() {
       // TODO: Improve performance for this feature
@@ -70,7 +77,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   const Icon(Icons.people),
                   SizedBox(width: constraints.maxWidth * 0.05),
                   Text(
-                    '${baseCourtSlot.playerCount} / 25',
+                    (isToday) ? '${baseCourtSlot.playerCount} / 25' : '-',
                     style: TextStyle(
                       color: (baseCourtSlot.isFull) ? Colors.red : Colors.green,
                     ),
@@ -84,7 +91,9 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                     width: constraints.maxWidth * 0.05,
                   ),
                   Text(
-                    "${utils.getDateFormat(nextTimeSlot.startsAt)} / ${utils.getTimeRangeFormat(nextTimeSlot)}",
+                    (isToday)
+                        ? "${utils.getDateFormat(nextTimeSlot.startsAt)} / ${utils.getTimeRangeFormat(nextTimeSlot)}"
+                        : 'No more games for today',
                   )
                 ],
               ),
@@ -104,7 +113,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                     )
                   : TextButton(
                       child: const Text('JOIN GAME'),
-                      onPressed: (baseCourtSlot.isFull)
+                      onPressed: (baseCourtSlot.isFull || !isToday)
                           ? null
                           : () => model.joinCourtSlot(baseCourtSlot),
                     ),
