@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:kasado/logic/shared/extensions.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 
 final kasadoUtilsProvider = Provider.autoDispose(
@@ -13,38 +13,42 @@ class KasadoUtils {
   final Reader read;
 
   TimeRange getNextNearestTimeSlot(List<TimeRange> timeSlots) {
+    const hour = Duration(hours: 1);
     final now = DateTime.now();
-    return timeSlots.reduce((a, b) {
-      final TimeOfDay aStart = a.startTime;
-      final TimeOfDay aEnd = a.endTime;
-      final TimeOfDay bStart = b.startTime;
-      final TimeOfDay bEnd = b.endTime;
+    final sortedTimeSlots = timeSlots
+      ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 
-      final aStartDateTime =
-          DateTime(now.year, now.month, now.day, aStart.hour, aStart.minute);
-      final aEndDateTime =
-          DateTime(now.year, now.month, now.day, aEnd.hour, aEnd.minute);
-      final bStartDateTime =
-          DateTime(now.year, now.month, now.day, bStart.hour, bStart.minute);
-      final bEndDateTime =
-          DateTime(now.year, now.month, now.day, bEnd.hour, bEnd.minute);
+    for (final slot in sortedTimeSlots) {
+      final sStart = slot.startTime;
+      final sEnd = slot.endTime;
 
-      final aAdjustedTimeRange = TimeRange(
-        startsAt: aStartDateTime,
-        endsAt: aEndDateTime,
-      );
-      final bAdjustedTimeRange = TimeRange(
-        startsAt: bStartDateTime,
-        endsAt: bEndDateTime,
+      final sStartDateTime =
+          DateTime(now.year, now.month, now.day, sStart.hour, sStart.minute);
+      final sEndDateTime =
+          DateTime(now.year, now.month, now.day, sEnd.hour, sEnd.minute);
+
+      final sAdjustedTimeRange = TimeRange(
+        startsAt: sStartDateTime,
+        endsAt: sEndDateTime,
       );
 
-      if (aEndDateTime.isBefore(now)) return bAdjustedTimeRange;
+      // Get next slot if current slot's time range has ended
+      if (sEndDateTime.isBefore(now)) continue;
 
-      return (now.difference(aStartDateTime).abs() <
-              now.difference(bStartDateTime).abs())
-          ? aAdjustedTimeRange
-          : bAdjustedTimeRange;
-    });
+      // If slot's time range had not started yet OR
+      // If the slot has started but still within an hour ago, return the slot
+      if (sStartDateTime.isAfter(now) ||
+          now.difference(sStartDateTime) < hour) {
+        return sAdjustedTimeRange;
+      }
+    }
+
+    // If none in the list are viable then return the first slot the next day
+    final firstSlot = sortedTimeSlots.first;
+    return TimeRange(
+      startsAt: firstSlot.startsAt.copyWith(month: now.month, day: now.day + 1),
+      endsAt: firstSlot.endsAt.copyWith(month: now.month, day: now.day + 1),
+    );
   }
 
   bool isCurrentSlotClosed(TimeRange timeRange) {
