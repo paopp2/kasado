@@ -28,7 +28,7 @@ class AppRouter {
         builder: (context, state) {
           final extraMap = state.extra as Map<String, Object?>;
           return CourtDetailsView(
-            court: extraMap['court'] as Court,
+            baseCourt: extraMap['court'] as Court,
             isAdmin: (extraMap['isAdmin'] as bool?) ?? false,
           );
         },

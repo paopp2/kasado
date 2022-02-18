@@ -25,6 +25,13 @@ class CourtRepository {
     await firestoreHelper.deleteData(path: FirestorePath.docCourt(court.id));
   }
 
+  Stream<Court?> getCourtStream(String courtId) {
+    return firestoreHelper.documentStream(
+      path: FirestorePath.docCourt(courtId),
+      builder: (data, docId) => Court.fromJson(data),
+    );
+  }
+
   Stream<List<Court>> getCourtsStream({KasadoUser? admin}) {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colCourts(),
