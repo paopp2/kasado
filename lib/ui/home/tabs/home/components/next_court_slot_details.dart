@@ -67,7 +67,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
 
         return Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: constraints.maxWidth * 0.25,
+            horizontal: constraints.maxWidth * 0.16,
           ),
           child: Column(
             children: [
