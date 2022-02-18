@@ -17,24 +17,37 @@ class HomeTab extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courtsStream = ref.watch(courtsStreamProvider);
-    return Center(
-      child: courtsStream.when(
-        error: (e, __) => Text(e.toString()),
-        loading: () => const CircularProgressIndicator(),
-        data: (courtList) {
-          return ListView.builder(
-            itemCount: courtList.length,
-            itemBuilder: (context, i) {
-              final court = courtList[i];
-              return NextCourtSlotCard(
-                constraints: constraints,
-                court: court,
-                nextCourtSlot: court.nextAvailableSlot,
-              );
-            },
-          );
-        },
-      ),
+    return Column(
+      children: [
+        const Text(
+          'GAMES FOR TODAY',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
+        Expanded(
+          child: Center(
+            child: courtsStream.when(
+              error: (e, __) => Text(e.toString()),
+              loading: () => const CircularProgressIndicator(),
+              data: (courtList) {
+                return ListView.builder(
+                  itemCount: courtList.length,
+                  itemBuilder: (context, i) {
+                    final court = courtList[i];
+                    return NextCourtSlotCard(
+                      constraints: constraints,
+                      court: court,
+                      nextCourtSlot: court.nextAvailableSlot,
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
