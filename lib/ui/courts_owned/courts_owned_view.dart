@@ -43,10 +43,10 @@ class CourtsOwnedView extends HookConsumerWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => showDialog(
+            onPressed: () => model.openCourtInputDialog(
               context: context,
-              builder: (_) => NewCourtInputDialog(model: model),
-            ).then((_) => model.clearAllTecs()),
+              dialog: NewCourtInputDialog(model: model),
+            ),
             child: const Icon(
               Icons.add,
               color: Colors.white,

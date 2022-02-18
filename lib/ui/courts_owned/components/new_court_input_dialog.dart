@@ -2,22 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_view_model.dart';
+import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
 
 class NewCourtInputDialog extends HookConsumerWidget {
   const NewCourtInputDialog({
     Key? key,
     required this.model,
+    this.courtToEdit,
   }) : super(key: key);
 
   final CourtsOwnedViewModel model;
+  final Court? courtToEdit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedSchedChipIndices =
         ref.watch(selectedSchedChipIndicesProvider);
     final selectedWeekDayChipIndices =
-        ref.watch(selectedWeekDayChipIndicesProvider);
+        ref.watch(selectedDayChipIndicesProvider);
 
     return Dialog(
       child: ListView(
@@ -139,7 +142,11 @@ class NewCourtInputDialog extends HookConsumerWidget {
           ),
           TextButton(
             child: const Text('Add Court'),
-            onPressed: () => model.addNewCourt(context),
+            onPressed: () => model.pushCourt(
+              context: context,
+              isEdit: courtToEdit != null,
+              courtId: courtToEdit?.id,
+            ),
           ),
         ],
       ),

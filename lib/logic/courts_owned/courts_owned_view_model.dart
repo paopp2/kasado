@@ -50,7 +50,7 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
   }
 
   void selectWeekDayChip(bool isSelected, int index) {
-    read(selectedWeekDayChipIndicesProvider.notifier).update((s) {
+    read(selectedDayChipIndicesProvider.notifier).update((s) {
       if (isSelected) {
         return [...s, index];
       } else {
@@ -59,15 +59,46 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
     });
   }
 
-  bool isWeekDayIndexSelected(int index) {
-    return read(selectedWeekDayChipIndicesProvider).contains(index);
+  /// If (forEdit), courtId must not be null
+  Future<void> openCourtInputDialog({
+    required BuildContext context,
+    required Widget dialog,
+    bool forEdit = false,
+    Court? court,
+  }) async {
+    // assert that courtId != null when in 'edit mode'
+    assert(forEdit == (court != null));
+    if (forEdit) {
+      setupCourtToEdit(court!, (dayChipIndices, schedChipIndices) {
+        read(selectedSchedChipIndicesProvider.notifier).state =
+            schedChipIndices;
+        read(selectedDayChipIndicesProvider.notifier).state = dayChipIndices;
+      });
+    }
+    showDialog(
+      context: context,
+      builder: (_) => dialog,
+    ).then((_) {
+      read(selectedSchedChipIndicesProvider.notifier).state = [];
+      read(selectedDayChipIndicesProvider.notifier).state = [];
+      clearAllTecs();
+    });
   }
 
-  Future<void> addNewCourt(BuildContext context) async {
+  bool isWeekDayIndexSelected(int index) {
+    return read(selectedDayChipIndicesProvider).contains(index);
+  }
+
+  /// If (isEdit), courtId must not be null
+  Future<void> pushCourt({
+    required BuildContext context,
+    bool isEdit = false,
+    String? courtId,
+  }) async {
     final List<int> selectedSchedIndices =
         read(selectedSchedChipIndicesProvider);
     final List<int> selectedWeekDayIndices =
-        read(selectedWeekDayChipIndicesProvider);
+        read(selectedDayChipIndicesProvider);
     final List<TimeRange> allowedTimeSlots =
         selectedSchedIndices.map((si) => allowedTimeRanges[si]).toList();
     final List<WeekDays> allowedWeekDays =
@@ -76,11 +107,14 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
       timeSlots: allowedTimeSlots,
       weekdays: allowedWeekDays,
     );
-    final courtId = const Uuid().v4();
+
+    // assert that courtId != null when in 'edit mode'
+    assert(isEdit == (courtId != null));
+    final id = (isEdit) ? courtId! : const Uuid().v4();
 
     await courtRepo.pushCourt(
       Court(
-        id: courtId,
+        id: id,
         name: tecCourtName.text,
         address: tecCourtAddress.text,
         photoUrl: tecCourtPhotoUrl.text,
@@ -90,7 +124,7 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
         nextAvailableSlot: (nextNearestTimeSlot == null)
             ? null
             : CourtSlot(
-                courtId: courtId,
+                courtId: id,
                 players: [],
                 timeRange: nextNearestTimeSlot,
               ),
