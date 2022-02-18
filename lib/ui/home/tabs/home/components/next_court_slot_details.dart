@@ -26,28 +26,25 @@ class NextCourtSlotDetails extends HookConsumerWidget {
     final currentUser = ref.watch(currentUserProvider)!;
     final model = ref.watch(courtDetailsViewModel);
     final utils = ref.watch(kasadoUtilsProvider);
-    final nextTimeSlotState =
-        useState(utils.getNextNearestTimeSlot(court.allowedTimeSlots));
+    final nextTimeSlotState = useState(utils.getNextTimeSlotForToday(
+      timeSlots: court.allowedTimeSlots,
+      weekdays: court.allowedWeekDays,
+    ));
     final nextTimeSlot = nextTimeSlotState.value;
     final courtSlotStream = ref.watch(
       courtSlotStreamProvider(
         "${court.id}|${utils.getSlotIdFromTimeSlot(nextTimeSlot)}",
       ),
     );
-    // TODO: Remove this temp feature and replace with showing the next sched
-    // (or not, depending on user feedback)
-    //
-    // (Next available day and time for schedule based on allowed times/days)
-    // For now this feature is still based on the assumption that the next
-    // sched is the day after, which might not be true
-    final isToday = nextTimeSlot.startsAt.day == DateTime.now().day;
 
     useEffect(() {
       // TODO: Improve performance for this feature
       // Update nextTimeSlot every 5 minutes
       Timer.periodic(const Duration(minutes: 5), (_) {
-        nextTimeSlotState.value =
-            utils.getNextNearestTimeSlot(court.allowedTimeSlots);
+        nextTimeSlotState.value = utils.getNextTimeSlotForToday(
+          timeSlots: court.allowedTimeSlots,
+          weekdays: court.allowedWeekDays,
+        );
       });
       return;
     }, []);
@@ -56,19 +53,21 @@ class NextCourtSlotDetails extends HookConsumerWidget {
       error: (e, _) => Text(e.toString()),
       loading: () => const CircularProgressIndicator(),
       data: (courtSlot) {
-        final baseCourtSlot = courtSlot ??
-            CourtSlot(
-              courtId: court.id,
-              players: [],
-              timeRange: TimeRange(
-                startsAt: nextTimeSlot.startsAt,
-                endsAt: nextTimeSlot.endsAt,
-              ),
-            );
+        final baseCourtSlot = (nextTimeSlot == null)
+            ? null
+            : courtSlot ??
+                CourtSlot(
+                  courtId: court.id,
+                  players: [],
+                  timeRange: TimeRange(
+                    startsAt: nextTimeSlot.startsAt,
+                    endsAt: nextTimeSlot.endsAt,
+                  ),
+                );
 
         return Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: constraints.maxWidth * 0.15,
+            horizontal: constraints.maxWidth * 0.25,
           ),
           child: Column(
             children: [
@@ -77,9 +76,13 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   const Icon(Icons.people),
                   SizedBox(width: constraints.maxWidth * 0.05),
                   Text(
-                    (isToday) ? '${baseCourtSlot.playerCount} / 25' : '-',
+                    (baseCourtSlot != null)
+                        ? '${baseCourtSlot.playerCount} / 25'
+                        : '-',
                     style: TextStyle(
-                      color: (baseCourtSlot.isFull) ? Colors.red : Colors.green,
+                      color: (baseCourtSlot?.isFull ?? true)
+                          ? Colors.red
+                          : Colors.green,
                     ),
                   )
                 ],
@@ -91,8 +94,8 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                     width: constraints.maxWidth * 0.05,
                   ),
                   Text(
-                    (isToday)
-                        ? "${utils.getDateFormat(nextTimeSlot.startsAt)} / ${utils.getTimeRangeFormat(nextTimeSlot)}"
+                    (nextTimeSlot != null)
+                        ? utils.getTimeRangeFormat(nextTimeSlot)
                         : 'No more games for today',
                   )
                 ],
@@ -106,14 +109,14 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   Text('₱ ${court.ticketPrice}')
                 ],
               ),
-              (baseCourtSlot.hasPlayer(currentUser))
+              (baseCourtSlot?.hasPlayer(currentUser) ?? false)
                   ? TextButton(
                       child: const Text('LEAVE GAME'),
-                      onPressed: () => model.leaveCourtSlot(baseCourtSlot),
+                      onPressed: () => model.leaveCourtSlot(baseCourtSlot!),
                     )
                   : TextButton(
                       child: const Text('JOIN GAME'),
-                      onPressed: (baseCourtSlot.isFull || !isToday)
+                      onPressed: (baseCourtSlot == null || baseCourtSlot.isFull)
                           ? null
                           : () => model.joinCourtSlot(baseCourtSlot),
                     ),

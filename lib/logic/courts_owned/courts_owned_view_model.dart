@@ -72,8 +72,10 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
         selectedSchedIndices.map((si) => allowedTimeRanges[si]).toList();
     final List<WeekDays> allowedWeekDays =
         selectedWeekDayIndices.map((di) => indexToWeekDay[di]).toList();
-    final TimeRange nextNearestTimeSlot =
-        utils.getNextNearestTimeSlot(allowedTimeSlots);
+    final TimeRange? nextNearestTimeSlot = utils.getNextTimeSlotForToday(
+      timeSlots: allowedTimeSlots,
+      weekdays: allowedWeekDays,
+    );
     final courtId = const Uuid().v4();
 
     await courtRepo.pushCourt(
@@ -85,11 +87,13 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
         ticketPrice: double.parse(tecTicketPrice.text),
         allowedTimeSlots: allowedTimeSlots,
         admins: [currentUser],
-        nextAvailableSlot: CourtSlot(
-          courtId: courtId,
-          players: [],
-          timeRange: nextNearestTimeSlot,
-        ),
+        nextAvailableSlot: (nextNearestTimeSlot == null)
+            ? null
+            : CourtSlot(
+                courtId: courtId,
+                players: [],
+                timeRange: nextNearestTimeSlot,
+              ),
         allowedWeekDays: allowedWeekDays,
       ),
     );

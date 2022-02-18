@@ -39,7 +39,6 @@ class HomeTab extends HookConsumerWidget {
                     return NextCourtSlotCard(
                       constraints: constraints,
                       court: court,
-                      nextCourtSlot: court.nextAvailableSlot,
                     );
                   },
                 );

@@ -1,14 +1,17 @@
+import 'dart:core';
+
 import 'package:kasado/model/time_range/time_range.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+// In accordance with ISO 8601 wherein week starts with Monday
 final indexToWeekDay = [
-  WeekDays.sunday,
   WeekDays.monday,
   WeekDays.tuesday,
   WeekDays.wednesday,
   WeekDays.thursday,
   WeekDays.friday,
   WeekDays.saturday,
+  WeekDays.sunday,
 ];
 
 final allowedTimeRanges = [

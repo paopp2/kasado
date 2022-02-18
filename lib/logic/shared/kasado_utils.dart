@@ -1,7 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:kasado/logic/shared/extensions.dart';
+import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/model/time_range/time_range.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 final kasadoUtilsProvider = Provider.autoDispose(
   (ref) => KasadoUtils(ref.read),
@@ -12,11 +13,17 @@ class KasadoUtils {
 
   final Reader read;
 
-  TimeRange getNextNearestTimeSlot(List<TimeRange> timeSlots) {
+  TimeRange? getNextTimeSlotForToday({
+    required List<TimeRange> timeSlots,
+    required List<WeekDays> weekdays,
+  }) {
     const hour = Duration(hours: 1);
     final now = DateTime.now();
     final sortedTimeSlots = timeSlots
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+
+    // If today's WeekDay not permitted by Court, then there are no games today
+    if (!weekdays.contains(indexToWeekDay[now.weekday - 1])) return null;
 
     for (final slot in sortedTimeSlots) {
       final sStart = slot.startTime;
@@ -43,12 +50,8 @@ class KasadoUtils {
       }
     }
 
-    // If none in the list are viable then return the first slot the next day
-    final firstSlot = sortedTimeSlots.first;
-    return TimeRange(
-      startsAt: firstSlot.startsAt.copyWith(month: now.month, day: now.day + 1),
-      endsAt: firstSlot.endsAt.copyWith(month: now.month, day: now.day + 1),
-    );
+    // If none in the list are viable then there are no more games for today
+    return null;
   }
 
   bool isCurrentSlotClosed(TimeRange timeRange) {
@@ -57,7 +60,8 @@ class KasadoUtils {
         timeRange.endsAt.difference(now).abs();
   }
 
-  String getSlotIdFromTimeSlot(TimeRange timeRange) {
+  String getSlotIdFromTimeSlot(TimeRange? timeRange) {
+    if (timeRange == null) return 'paththatdoesntexist';
     return "${timeRange.startsAt.toIso8601String()}-${timeRange.endsAt.toIso8601String()}";
   }
 

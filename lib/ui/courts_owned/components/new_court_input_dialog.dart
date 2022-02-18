@@ -35,17 +35,17 @@ class NewCourtInputDialog extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FilterChip(
-                label: const Text('SUN'),
+                label: const Text('MON'),
                 selected: selectedWeekDayChipIndices.contains(0),
                 onSelected: (val) => model.selectWeekDayChip(val, 0),
               ),
               FilterChip(
-                label: const Text('MON'),
+                label: const Text('TUE'),
                 selected: selectedWeekDayChipIndices.contains(1),
                 onSelected: (val) => model.selectWeekDayChip(val, 1),
               ),
               FilterChip(
-                label: const Text('TUE'),
+                label: const Text('WED'),
                 selected: selectedWeekDayChipIndices.contains(2),
                 onSelected: (val) => model.selectWeekDayChip(val, 2),
               ),
@@ -55,12 +55,12 @@ class NewCourtInputDialog extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FilterChip(
-                label: const Text('WED'),
+                label: const Text('THU'),
                 selected: selectedWeekDayChipIndices.contains(3),
                 onSelected: (val) => model.selectWeekDayChip(val, 3),
               ),
               FilterChip(
-                label: const Text('THU'),
+                label: const Text('FRI'),
                 selected: selectedWeekDayChipIndices.contains(4),
                 onSelected: (val) => model.selectWeekDayChip(val, 4),
               ),
@@ -70,12 +70,12 @@ class NewCourtInputDialog extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FilterChip(
-                label: const Text('FRI'),
+                label: const Text('SAT'),
                 selected: selectedWeekDayChipIndices.contains(5),
                 onSelected: (val) => model.selectWeekDayChip(val, 5),
               ),
               FilterChip(
-                label: const Text('SAT'),
+                label: const Text('SUN'),
                 selected: selectedWeekDayChipIndices.contains(6),
                 onSelected: (val) => model.selectWeekDayChip(val, 6),
               ),
