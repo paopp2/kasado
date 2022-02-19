@@ -1,7 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:kasado/model/court/court.dart';
+import 'dart:convert';
 
-class CourtAdminsPanel extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
+import 'package:kasado/model/court/court.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
+
+class CourtAdminsPanel extends HookConsumerWidget {
   const CourtAdminsPanel({
     Key? key,
     required this.court,
@@ -10,20 +15,29 @@ class CourtAdminsPanel extends StatelessWidget {
   final Court court;
 
   @override
-  Widget build(BuildContext context) {
-    final admins = court.admins;
-    return ListView.builder(
-      itemCount: admins.length,
-      itemBuilder: (context, i) {
-        final admin = admins[i];
-        return ListTile(
-          leading: CircleAvatar(
-            radius: 25,
-            backgroundImage: NetworkImage(admin.photoUrl!),
-          ),
-          title: Text(admin.displayName!),
-        );
-      },
+  Widget build(BuildContext context, WidgetRef ref) {
+    // jsonEncode to pass object as String (Primitive data types only for
+    // provider's .family
+    final courtAdminsStream = ref.watch(
+      courtAdminsListProvider(jsonEncode(court.toJson())),
+    );
+
+    return courtAdminsStream.when(
+      error: (e, _) => Text(e.toString()),
+      loading: () => const LoadingWidget(),
+      data: (courtAdmins) => ListView.builder(
+        itemCount: courtAdmins.length,
+        itemBuilder: (context, i) {
+          final admin = courtAdmins[i];
+          return ListTile(
+            leading: CircleAvatar(
+              radius: 25,
+              backgroundImage: NetworkImage(admin.photoUrl!),
+            ),
+            title: Text(admin.displayName!),
+          );
+        },
+      ),
     );
   }
 }

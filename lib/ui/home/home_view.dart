@@ -15,6 +15,11 @@ class HomeView extends HookConsumerWidget {
     final tabController = useTabController(initialLength: 2);
     final model = ref.watch(homeViewModel);
 
+    useEffect(() {
+      model.initState();
+      return model.dispose;
+    }, []);
+
     return SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {

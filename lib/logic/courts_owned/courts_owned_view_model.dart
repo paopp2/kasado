@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
+import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_tec_mixin.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -18,6 +19,7 @@ final courtsOwnedViewModel = Provider.autoDispose(
   (ref) => CourtsOwnedViewModel(
     read: ref.read,
     courtRepo: ref.watch(courtRepositoryProvider),
+    userInfoRepo: ref.watch(userInfoRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
     utils: ref.watch(kasadoUtilsProvider),
   ),
@@ -29,9 +31,11 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
     required this.courtRepo,
     required this.currentUser,
     required this.utils,
+    required this.userInfoRepo,
   }) : super(read);
 
   final CourtRepository courtRepo;
+  final UserInfoRepository userInfoRepo;
   final KasadoUser currentUser;
   final KasadoUtils utils;
 
@@ -120,7 +124,7 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
         photoUrl: tecCourtPhotoUrl.text,
         ticketPrice: double.parse(tecTicketPrice.text),
         allowedTimeSlots: allowedTimeSlots,
-        admins: [currentUser],
+        adminIds: [currentUser.id],
         nextAvailableSlot: (nextNearestTimeSlot == null)
             ? null
             : CourtSlot(
@@ -131,6 +135,9 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
         allowedWeekDays: allowedWeekDays,
       ),
     );
+
+    await userInfoRepo.toggleUserAdminPrivileges(currentUser.id);
+
     // TODO: Implement better routing on NewCourtInput through GoRouter
     Navigator.pop(context);
   }

@@ -13,6 +13,13 @@ class FirestoreHelper {
     _docStreamSub?.cancel();
   }
 
+  Future<bool> docExists({
+    required String path,
+  }) async {
+    final DocumentReference reference = FirebaseFirestore.instance.doc(path);
+    return (await reference.get()).exists;
+  }
+
   Future<T> getData<T>({
     required String path,
     required T Function(Map<String, dynamic> data, String documentID) builder,

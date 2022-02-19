@@ -37,7 +37,7 @@ class CourtRepository {
       path: FirestorePath.colCourts(),
       builder: (data, docId) => Court.fromJson(data),
       queryBuilder: (admin != null)
-          ? (query) => query.where('admins', arrayContains: admin.toJson())
+          ? (query) => query.where('adminIds', arrayContains: admin.id)
           : null,
     );
   }
