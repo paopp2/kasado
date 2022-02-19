@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/logic/court_details/court_admin/court_admin_state.dart';
 import 'package:kasado/ui/courts_owned/components/new_court_input_dialog.dart';
@@ -12,6 +13,7 @@ class CourtsOwnedView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentUserInfo = ref.watch(currentUserInfoProvider).value;
     final adminController = ref.watch(courtDetailsViewModel).adminController;
     final courtsOwnedList = ref.watch(courtsOwnedListProvider);
 
@@ -43,14 +45,15 @@ class CourtsOwnedView extends HookConsumerWidget {
               },
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => adminController.openCourtInputDialog(
-              context: context,
-              dialog: NewCourtInputDialog(controller: adminController),
-            ),
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
+          floatingActionButton: Visibility(
+            visible: currentUserInfo?.isSuperAdmin ?? false,
+            child: FloatingActionButton.extended(
+              onPressed: () => adminController.openCourtInputDialog(
+                context: context,
+                dialog: NewCourtInputDialog(controller: adminController),
+              ),
+              label: const Text('Add Court'),
+              icon: const Icon(Icons.add),
             ),
           ),
         );
