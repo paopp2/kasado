@@ -52,6 +52,7 @@ class CourtDetailsViewModel extends ViewModel {
     } else if (userHasReserved && userReservationNotDone) {
       Fluttertoast.showToast(msg: 'Only 1 reservation allowed at a time');
     } else {
+      if (context != null) Navigator.pop(context);
       await courtRepo.pushCourtSlot(
         courtSlot: baseCourtSlot.copyWith(
           players: baseCourtSlot.players..add(currentUser),
@@ -61,7 +62,6 @@ class CourtDetailsViewModel extends ViewModel {
         userId: currentUser.id,
         reservedAt: baseCourtSlot.timeRange.endsAt,
       );
-      if (context != null) Navigator.pop(context);
     }
   }
 
@@ -69,6 +69,7 @@ class CourtDetailsViewModel extends ViewModel {
     CourtSlot baseCourtSlot, [
     BuildContext? context,
   ]) async {
+    if (context != null) Navigator.pop(context);
     assert(baseCourtSlot.hasPlayer(currentUser));
     final updatedPlayerList = baseCourtSlot.players
       ..removeWhere((p) => (currentUser.id == p.id));
@@ -85,7 +86,5 @@ class CourtDetailsViewModel extends ViewModel {
         baseCourtSlot.slotId,
       );
     }
-
-    if (context != null) Navigator.pop(context);
   }
 }
