@@ -9,7 +9,8 @@ final courtStreamProvider = StreamProvider.autoDispose.family<Court?, String>(
 
 final courtSlotsStreamProvider =
     StreamProvider.autoDispose.family<List<CourtSlot>, String>(
-  (ref, courtId) => ref.watch(courtRepositoryProvider).getCourtSlots(courtId),
+  (ref, courtId) =>
+      ref.watch(courtRepositoryProvider).getCourtSlotsStream(courtId),
 );
 
 /// For combinedPathIds, follow the following format: "[courtId]|[slotId]"

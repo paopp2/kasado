@@ -58,7 +58,7 @@ class CourtRepository {
     );
   }
 
-  Stream<List<CourtSlot>> getCourtSlots(String courtId) {
+  Stream<List<CourtSlot>> getCourtSlotsStream(String courtId) {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colCourtSlots(courtId),
       builder: (data, docId) => CourtSlot.fromJson(data),
