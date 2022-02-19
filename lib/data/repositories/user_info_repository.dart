@@ -29,15 +29,22 @@ class UserInfoRepository {
     }
   }
 
-  Future<KasadoUserInfo> getUserInfo(String userId) async {
+  Future<KasadoUserInfo?> getUserInfo(String userId) async {
     return await firestoreHelper.getData(
       path: FirestorePath.docUserInfo(userId),
       builder: (data, docId) => KasadoUserInfo.fromJson(data),
     );
   }
 
+  Stream<KasadoUserInfo?> getUserInfoStream(String userId) {
+    return firestoreHelper.documentStream(
+      path: FirestorePath.docUserInfo(userId),
+      builder: (data, docId) => KasadoUserInfo.fromJson(data),
+    );
+  }
+
   Future<void> toggleUserAdminPrivileges(String userId) async {
-    final KasadoUserInfo userInfoToUpdate = await getUserInfo(userId);
+    final KasadoUserInfo userInfoToUpdate = (await getUserInfo(userId))!;
     await firestoreHelper.setData(
         path: FirestorePath.docUserInfo(userId),
         data: userInfoToUpdate

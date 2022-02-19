@@ -18,6 +18,9 @@ class UserInfoDrawer extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUser = ref.watch(currentUserProvider);
+    final currentUserInfoStream = ref.watch(currentUserInfoProvider);
+    final isCurrentUserAdmin = currentUserInfoStream.value?.isAdmin ?? false;
+
     return Drawer(
       child: (currentUser == null)
           ? const Center(child: Text("No user"))
@@ -56,6 +59,14 @@ class UserInfoDrawer extends HookConsumerWidget {
                       ),
                       Text(currentUser.email!),
                     ],
+                  ),
+                ),
+                Visibility(
+                  visible: isCurrentUserAdmin,
+                  child: ListTile(
+                    onTap: () => context.pushNamed(Routes.courtsOwnedView),
+                    title: const Text('Manage courts'),
+                    leading: const Icon(Icons.settings),
                   ),
                 ),
                 ListTile(
