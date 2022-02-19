@@ -4,10 +4,9 @@ import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
-import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
-import 'package:kasado/logic/courts_owned/courts_owned_tec_mixin.dart';
+import 'package:kasado/logic/court_details/court_admin/court_admin_state.dart';
+import 'package:kasado/logic/court_details/court_admin/court_admin_tec_mixin.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
-import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
@@ -15,8 +14,8 @@ import 'package:kasado/model/time_range/time_range.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:uuid/uuid.dart';
 
-final courtsOwnedViewModel = Provider.autoDispose(
-  (ref) => CourtsOwnedViewModel(
+final courtAdminController = Provider.autoDispose(
+  (ref) => CourtAdminController(
     read: ref.read,
     courtRepo: ref.watch(courtRepositoryProvider),
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
@@ -25,15 +24,16 @@ final courtsOwnedViewModel = Provider.autoDispose(
   ),
 );
 
-class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
-  CourtsOwnedViewModel({
-    required Reader read,
+class CourtAdminController with CourtAdminTecMixin {
+  CourtAdminController({
+    required this.read,
     required this.courtRepo,
     required this.currentUser,
     required this.utils,
     required this.userInfoRepo,
-  }) : super(read);
+  });
 
+  final Reader read;
   final CourtRepository courtRepo;
   final UserInfoRepository userInfoRepo;
   final KasadoUser currentUser;

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
+import 'package:kasado/logic/court_details/court_admin/court_admin_state.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 

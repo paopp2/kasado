@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/strings.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
-import 'package:kasado/logic/courts_owned/courts_owned_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/court_details/components/court_admins_panel.dart';
 import 'package:kasado/ui/court_details/components/court_schedule_panel.dart';
@@ -23,8 +22,8 @@ class CourtDetailsView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final courtAdminModel = ref.watch(courtsOwnedViewModel);
     final courtDetailsModel = ref.watch(courtDetailsViewModel);
+    final adminController = courtDetailsModel.adminController;
 
     final courtStream = ref.watch(courtStreamProvider(baseCourt.id));
     final tabIndex = useState(0);
@@ -95,10 +94,10 @@ class CourtDetailsView extends HookConsumerWidget {
                 visible: isAdmin,
                 child: FloatingActionButton.extended(
                   onPressed: (tabIndex.value == 0)
-                      ? () => courtAdminModel.openCourtInputDialog(
+                      ? () => adminController.openCourtInputDialog(
                             context: context,
                             dialog: NewCourtInputDialog(
-                              model: courtAdminModel,
+                              controller: adminController,
                               courtToEdit: court,
                             ),
                             forEdit: true,

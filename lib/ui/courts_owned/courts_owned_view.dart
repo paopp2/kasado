@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
-import 'package:kasado/logic/courts_owned/courts_owned_state.dart';
-import 'package:kasado/logic/courts_owned/courts_owned_view_model.dart';
+import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/court_details/court_admin/court_admin_state.dart';
 import 'package:kasado/ui/courts_owned/components/new_court_input_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
@@ -12,7 +12,7 @@ class CourtsOwnedView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(courtsOwnedViewModel);
+    final adminController = ref.watch(courtDetailsViewModel).adminController;
     final courtsOwnedList = ref.watch(courtsOwnedListProvider);
 
     return LayoutBuilder(
@@ -37,16 +37,16 @@ class CourtsOwnedView extends HookConsumerWidget {
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
-                    onPressed: () => model.deleteCourt(court),
+                    onPressed: () => adminController.deleteCourt(court),
                   ),
                 );
               },
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => model.openCourtInputDialog(
+            onPressed: () => adminController.openCourtInputDialog(
               context: context,
-              dialog: NewCourtInputDialog(model: model),
+              dialog: NewCourtInputDialog(controller: adminController),
             ),
             child: const Icon(
               Icons.add,

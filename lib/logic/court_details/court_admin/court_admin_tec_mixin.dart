@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/model/court/court.dart';
 
-mixin CourtsOwnedTecMixin {
+mixin CourtAdminTecMixin {
   final tecCourtName = TextEditingController();
   final tecCourtPhotoUrl = TextEditingController();
   final tecCourtAddress = TextEditingController();
