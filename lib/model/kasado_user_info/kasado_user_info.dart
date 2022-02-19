@@ -11,6 +11,7 @@ class KasadoUserInfo with _$KasadoUserInfo {
     required String id,
     required KasadoUser user,
     @Default(false) bool isAdmin,
+    @Default(false) bool isReserved,
   }) = _KasadoUserInfo;
 
   factory KasadoUserInfo.fromJson(Map<String, dynamic> json) =>

@@ -23,11 +23,15 @@ class _$KasadoUserInfoTearOff {
   const _$KasadoUserInfoTearOff();
 
   _KasadoUserInfo call(
-      {required String id, required KasadoUser user, bool isAdmin = false}) {
+      {required String id,
+      required KasadoUser user,
+      bool isAdmin = false,
+      bool isReserved = false}) {
     return _KasadoUserInfo(
       id: id,
       user: user,
       isAdmin: isAdmin,
+      isReserved: isReserved,
     );
   }
 
@@ -44,6 +48,7 @@ mixin _$KasadoUserInfo {
   String get id => throw _privateConstructorUsedError;
   KasadoUser get user => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
+  bool get isReserved => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,7 +61,7 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
   factory $KasadoUserInfoCopyWith(
           KasadoUserInfo value, $Res Function(KasadoUserInfo) then) =
       _$KasadoUserInfoCopyWithImpl<$Res>;
-  $Res call({String id, KasadoUser user, bool isAdmin});
+  $Res call({String id, KasadoUser user, bool isAdmin, bool isReserved});
 
   $KasadoUserCopyWith<$Res> get user;
 }
@@ -75,6 +80,7 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
     Object? id = freezed,
     Object? user = freezed,
     Object? isAdmin = freezed,
+    Object? isReserved = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -88,6 +94,10 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
       isAdmin: isAdmin == freezed
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isReserved: isReserved == freezed
+          ? _value.isReserved
+          : isReserved // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -107,7 +117,7 @@ abstract class _$KasadoUserInfoCopyWith<$Res>
           _KasadoUserInfo value, $Res Function(_KasadoUserInfo) then) =
       __$KasadoUserInfoCopyWithImpl<$Res>;
   @override
-  $Res call({String id, KasadoUser user, bool isAdmin});
+  $Res call({String id, KasadoUser user, bool isAdmin, bool isReserved});
 
   @override
   $KasadoUserCopyWith<$Res> get user;
@@ -129,6 +139,7 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
     Object? id = freezed,
     Object? user = freezed,
     Object? isAdmin = freezed,
+    Object? isReserved = freezed,
   }) {
     return _then(_KasadoUserInfo(
       id: id == freezed
@@ -143,6 +154,10 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
+      isReserved: isReserved == freezed
+          ? _value.isReserved
+          : isReserved // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -153,7 +168,10 @@ class _$_KasadoUserInfo
     with DiagnosticableTreeMixin
     implements _KasadoUserInfo {
   const _$_KasadoUserInfo(
-      {required this.id, required this.user, this.isAdmin = false});
+      {required this.id,
+      required this.user,
+      this.isAdmin = false,
+      this.isReserved = false});
 
   factory _$_KasadoUserInfo.fromJson(Map<String, dynamic> json) =>
       _$$_KasadoUserInfoFromJson(json);
@@ -165,10 +183,13 @@ class _$_KasadoUserInfo
   @JsonKey()
   @override
   final bool isAdmin;
+  @JsonKey()
+  @override
+  final bool isReserved;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin)';
+    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isReserved: $isReserved)';
   }
 
   @override
@@ -178,7 +199,8 @@ class _$_KasadoUserInfo
       ..add(DiagnosticsProperty('type', 'KasadoUserInfo'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('user', user))
-      ..add(DiagnosticsProperty('isAdmin', isAdmin));
+      ..add(DiagnosticsProperty('isAdmin', isAdmin))
+      ..add(DiagnosticsProperty('isReserved', isReserved));
   }
 
   @override
@@ -188,7 +210,9 @@ class _$_KasadoUserInfo
             other is _KasadoUserInfo &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.user, user) &&
-            const DeepCollectionEquality().equals(other.isAdmin, isAdmin));
+            const DeepCollectionEquality().equals(other.isAdmin, isAdmin) &&
+            const DeepCollectionEquality()
+                .equals(other.isReserved, isReserved));
   }
 
   @override
@@ -196,7 +220,8 @@ class _$_KasadoUserInfo
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(user),
-      const DeepCollectionEquality().hash(isAdmin));
+      const DeepCollectionEquality().hash(isAdmin),
+      const DeepCollectionEquality().hash(isReserved));
 
   @JsonKey(ignore: true)
   @override
@@ -213,7 +238,8 @@ abstract class _KasadoUserInfo implements KasadoUserInfo {
   const factory _KasadoUserInfo(
       {required String id,
       required KasadoUser user,
-      bool isAdmin}) = _$_KasadoUserInfo;
+      bool isAdmin,
+      bool isReserved}) = _$_KasadoUserInfo;
 
   factory _KasadoUserInfo.fromJson(Map<String, dynamic> json) =
       _$_KasadoUserInfo.fromJson;
@@ -224,6 +250,8 @@ abstract class _KasadoUserInfo implements KasadoUserInfo {
   KasadoUser get user;
   @override
   bool get isAdmin;
+  @override
+  bool get isReserved;
   @override
   @JsonKey(ignore: true)
   _$KasadoUserInfoCopyWith<_KasadoUserInfo> get copyWith =>
