@@ -1,0 +1,45 @@
+name: kasado
+description: Basketball court booking app
+
+publish_to: 'none'
+
+version: 0.1.0+2
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  # Core (state management, data model generation, etc.)
+  hooks_riverpod: ^1.0.3
+  flutter_hooks: ^0.18.2+1
+  freezed_annotation: ^1.1.0
+  go_router: ^3.0.1
+  # Firebase-related
+  firebase_core: ^1.12.0
+  firebase_auth: ^3.3.7
+  cloud_firestore: ^3.1.8
+  # Google-related
+  google_sign_in: ^5.2.3
+  # Design
+  syncfusion_flutter_calendar: ^19.4.52
+  flutter_signin_button: ^2.0.0
+  # Utils
+  dartz: ^0.10.1
+  fluttertoast: ^8.0.8
+  intl: ^0.17.0
+  uuid: ^3.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+  freezed: ^1.1.1
+  build_runner: ^2.1.7
+  json_serializable: ^6.1.4
+
+flutter:
+  uses-material-design: true
