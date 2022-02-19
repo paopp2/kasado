@@ -18,9 +18,8 @@ _$_Court _$$_CourtFromJson(Map<String, dynamic> json) => _$_Court(
       allowedTimeSlots: (json['allowedTimeSlots'] as List<dynamic>)
           .map((e) => TimeRange.fromJson(e as Map<String, dynamic>))
           .toList(),
-      admins: (json['admins'] as List<dynamic>)
-          .map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      adminIds:
+          (json['adminIds'] as List<dynamic>).map((e) => e as String).toList(),
       nextAvailableSlot: json['nextAvailableSlot'] == null
           ? null
           : CourtSlot.fromJson(
@@ -37,7 +36,7 @@ Map<String, dynamic> _$$_CourtToJson(_$_Court instance) => <String, dynamic>{
           instance.allowedWeekDays.map((e) => _$WeekDaysEnumMap[e]).toList(),
       'allowedTimeSlots':
           instance.allowedTimeSlots.map((e) => e.toJson()).toList(),
-      'admins': instance.admins.map((e) => e.toJson()).toList(),
+      'adminIds': instance.adminIds,
       'nextAvailableSlot': instance.nextAvailableSlot?.toJson(),
     };
 

@@ -30,7 +30,7 @@ class _$CourtTearOff {
       required double ticketPrice,
       required List<WeekDays> allowedWeekDays,
       required List<TimeRange> allowedTimeSlots,
-      required List<KasadoUser> admins,
+      required List<String> adminIds,
       required CourtSlot? nextAvailableSlot}) {
     return _Court(
       id: id,
@@ -40,7 +40,7 @@ class _$CourtTearOff {
       ticketPrice: ticketPrice,
       allowedWeekDays: allowedWeekDays,
       allowedTimeSlots: allowedTimeSlots,
-      admins: admins,
+      adminIds: adminIds,
       nextAvailableSlot: nextAvailableSlot,
     );
   }
@@ -62,7 +62,7 @@ mixin _$Court {
   double get ticketPrice => throw _privateConstructorUsedError;
   List<WeekDays> get allowedWeekDays => throw _privateConstructorUsedError;
   List<TimeRange> get allowedTimeSlots => throw _privateConstructorUsedError;
-  List<KasadoUser> get admins => throw _privateConstructorUsedError;
+  List<String> get adminIds => throw _privateConstructorUsedError;
   CourtSlot? get nextAvailableSlot => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -82,7 +82,7 @@ abstract class $CourtCopyWith<$Res> {
       double ticketPrice,
       List<WeekDays> allowedWeekDays,
       List<TimeRange> allowedTimeSlots,
-      List<KasadoUser> admins,
+      List<String> adminIds,
       CourtSlot? nextAvailableSlot});
 
   $CourtSlotCopyWith<$Res>? get nextAvailableSlot;
@@ -105,7 +105,7 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
     Object? ticketPrice = freezed,
     Object? allowedWeekDays = freezed,
     Object? allowedTimeSlots = freezed,
-    Object? admins = freezed,
+    Object? adminIds = freezed,
     Object? nextAvailableSlot = freezed,
   }) {
     return _then(_value.copyWith(
@@ -137,10 +137,10 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
           ? _value.allowedTimeSlots
           : allowedTimeSlots // ignore: cast_nullable_to_non_nullable
               as List<TimeRange>,
-      admins: admins == freezed
-          ? _value.admins
-          : admins // ignore: cast_nullable_to_non_nullable
-              as List<KasadoUser>,
+      adminIds: adminIds == freezed
+          ? _value.adminIds
+          : adminIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       nextAvailableSlot: nextAvailableSlot == freezed
           ? _value.nextAvailableSlot
           : nextAvailableSlot // ignore: cast_nullable_to_non_nullable
@@ -173,7 +173,7 @@ abstract class _$CourtCopyWith<$Res> implements $CourtCopyWith<$Res> {
       double ticketPrice,
       List<WeekDays> allowedWeekDays,
       List<TimeRange> allowedTimeSlots,
-      List<KasadoUser> admins,
+      List<String> adminIds,
       CourtSlot? nextAvailableSlot});
 
   @override
@@ -198,7 +198,7 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
     Object? ticketPrice = freezed,
     Object? allowedWeekDays = freezed,
     Object? allowedTimeSlots = freezed,
-    Object? admins = freezed,
+    Object? adminIds = freezed,
     Object? nextAvailableSlot = freezed,
   }) {
     return _then(_Court(
@@ -230,10 +230,10 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
           ? _value.allowedTimeSlots
           : allowedTimeSlots // ignore: cast_nullable_to_non_nullable
               as List<TimeRange>,
-      admins: admins == freezed
-          ? _value.admins
-          : admins // ignore: cast_nullable_to_non_nullable
-              as List<KasadoUser>,
+      adminIds: adminIds == freezed
+          ? _value.adminIds
+          : adminIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       nextAvailableSlot: nextAvailableSlot == freezed
           ? _value.nextAvailableSlot
           : nextAvailableSlot // ignore: cast_nullable_to_non_nullable
@@ -253,7 +253,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       required this.ticketPrice,
       required this.allowedWeekDays,
       required this.allowedTimeSlots,
-      required this.admins,
+      required this.adminIds,
       required this.nextAvailableSlot});
 
   factory _$_Court.fromJson(Map<String, dynamic> json) =>
@@ -274,13 +274,13 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
   @override
   final List<TimeRange> allowedTimeSlots;
   @override
-  final List<KasadoUser> admins;
+  final List<String> adminIds;
   @override
   final CourtSlot? nextAvailableSlot;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Court(id: $id, name: $name, address: $address, photoUrl: $photoUrl, ticketPrice: $ticketPrice, allowedWeekDays: $allowedWeekDays, allowedTimeSlots: $allowedTimeSlots, admins: $admins, nextAvailableSlot: $nextAvailableSlot)';
+    return 'Court(id: $id, name: $name, address: $address, photoUrl: $photoUrl, ticketPrice: $ticketPrice, allowedWeekDays: $allowedWeekDays, allowedTimeSlots: $allowedTimeSlots, adminIds: $adminIds, nextAvailableSlot: $nextAvailableSlot)';
   }
 
   @override
@@ -295,7 +295,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       ..add(DiagnosticsProperty('ticketPrice', ticketPrice))
       ..add(DiagnosticsProperty('allowedWeekDays', allowedWeekDays))
       ..add(DiagnosticsProperty('allowedTimeSlots', allowedTimeSlots))
-      ..add(DiagnosticsProperty('admins', admins))
+      ..add(DiagnosticsProperty('adminIds', adminIds))
       ..add(DiagnosticsProperty('nextAvailableSlot', nextAvailableSlot));
   }
 
@@ -314,7 +314,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
                 .equals(other.allowedWeekDays, allowedWeekDays) &&
             const DeepCollectionEquality()
                 .equals(other.allowedTimeSlots, allowedTimeSlots) &&
-            const DeepCollectionEquality().equals(other.admins, admins) &&
+            const DeepCollectionEquality().equals(other.adminIds, adminIds) &&
             const DeepCollectionEquality()
                 .equals(other.nextAvailableSlot, nextAvailableSlot));
   }
@@ -329,7 +329,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       const DeepCollectionEquality().hash(ticketPrice),
       const DeepCollectionEquality().hash(allowedWeekDays),
       const DeepCollectionEquality().hash(allowedTimeSlots),
-      const DeepCollectionEquality().hash(admins),
+      const DeepCollectionEquality().hash(adminIds),
       const DeepCollectionEquality().hash(nextAvailableSlot));
 
   @JsonKey(ignore: true)
@@ -352,7 +352,7 @@ abstract class _Court implements Court {
       required double ticketPrice,
       required List<WeekDays> allowedWeekDays,
       required List<TimeRange> allowedTimeSlots,
-      required List<KasadoUser> admins,
+      required List<String> adminIds,
       required CourtSlot? nextAvailableSlot}) = _$_Court;
 
   factory _Court.fromJson(Map<String, dynamic> json) = _$_Court.fromJson;
@@ -372,7 +372,7 @@ abstract class _Court implements Court {
   @override
   List<TimeRange> get allowedTimeSlots;
   @override
-  List<KasadoUser> get admins;
+  List<String> get adminIds;
   @override
   CourtSlot? get nextAvailableSlot;
   @override
