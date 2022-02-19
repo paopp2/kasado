@@ -52,6 +52,11 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
               ),
               const SizedBox(height: 10),
               Text(utils.getTimeRangeFormat(courtSlot.timeRange)),
+              const SizedBox(height: 10),
+              Visibility(
+                visible: isAdmin,
+                child: const Text('ADMIN MODE'),
+              ),
               const Divider(thickness: 2),
               Expanded(
                 child: courtSlotStream.when(
@@ -86,13 +91,6 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                       },
                     );
                   },
-                ),
-              ),
-              Visibility(
-                visible: isAdmin,
-                child: ElevatedButton(
-                  child: const Text('FREE SCHEDULE'),
-                  onPressed: () {},
                 ),
               ),
               if (!isDone) ...[
