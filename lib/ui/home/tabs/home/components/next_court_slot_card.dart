@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/app_router.dart';
+import 'package:kasado/constants/strings.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/home/tabs/home/components/next_court_slot_details.dart';
 
@@ -40,14 +41,17 @@ class NextCourtSlotCard extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: SizedBox(
-                      height: constraints.maxHeight * 0.25,
-                      width: constraints.maxWidth,
-                      child: Image.network(
-                        court.photoUrl,
-                        fit: BoxFit.cover,
+                  Hero(
+                    tag: courtImageHeroTag,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: SizedBox(
+                        height: constraints.maxHeight * 0.25,
+                        width: constraints.maxWidth,
+                        child: Image.network(
+                          court.photoUrl,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),

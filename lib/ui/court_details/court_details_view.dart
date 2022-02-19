@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/strings.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/logic/courts_owned/courts_owned_view_model.dart';
@@ -40,16 +41,19 @@ class CourtDetailsView extends HookConsumerWidget {
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
-                    ),
-                    child: SizedBox(
-                      height: constraints.maxHeight * 0.3,
-                      child: Image.network(
-                        court.photoUrl,
-                        fit: BoxFit.cover,
+                  Hero(
+                    tag: courtImageHeroTag,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30),
+                      ),
+                      child: SizedBox(
+                        height: constraints.maxHeight * 0.3,
+                        child: Image.network(
+                          court.photoUrl,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
