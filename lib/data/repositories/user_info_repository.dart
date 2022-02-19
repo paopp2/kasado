@@ -43,13 +43,14 @@ class UserInfoRepository {
     );
   }
 
-  Future<void> toggleUserAdminPrivileges(String userId) async {
+  Future<void> setUserAdminPrivileges({
+    required String userId,
+    required bool isAdmin,
+  }) async {
     final KasadoUserInfo userInfoToUpdate = (await getUserInfo(userId))!;
     await firestoreHelper.setData(
         path: FirestorePath.docUserInfo(userId),
-        data: userInfoToUpdate
-            .copyWith(isAdmin: !userInfoToUpdate.isAdmin)
-            .toJson());
+        data: userInfoToUpdate.copyWith(isAdmin: isAdmin).toJson());
   }
 
   Future<void> toggleUserIsReservedStatus(String userId) async {

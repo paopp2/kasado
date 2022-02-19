@@ -136,7 +136,10 @@ class CourtsOwnedViewModel extends ViewModel with CourtsOwnedTecMixin {
       ),
     );
 
-    await userInfoRepo.toggleUserAdminPrivileges(currentUser.id);
+    await userInfoRepo.setUserAdminPrivileges(
+      userId: currentUser.id,
+      isAdmin: true,
+    );
 
     // TODO: Implement better routing on NewCourtInput through GoRouter
     Navigator.pop(context);
