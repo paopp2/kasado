@@ -59,7 +59,7 @@ class CourtDetailsView extends HookConsumerWidget {
                       children: [
                         Text(
                           court.name.toUpperCase() +
-                              ((isAdmin) ? ' (ADMIN)' : ''),
+                              "  [₱${court.ticketPrice}]",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
