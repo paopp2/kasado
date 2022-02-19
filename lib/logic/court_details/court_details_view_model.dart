@@ -60,7 +60,10 @@ class CourtDetailsViewModel extends ViewModel {
       );
       await userInfoRepo.reserveUserAt(
         userId: currentUser.id,
-        reservedAt: baseCourtSlot.timeRange.endsAt,
+        // A court slot closes an hour before its endTime
+        reservedAt: baseCourtSlot.timeRange.endsAt.subtract(
+          const Duration(hours: 1),
+        ),
       );
     }
   }
