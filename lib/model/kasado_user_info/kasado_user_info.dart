@@ -12,6 +12,7 @@ class KasadoUserInfo with _$KasadoUserInfo {
     required String id,
     required KasadoUser user,
     @Default(false) bool isAdmin,
+    @Default(false) bool isSuperAdmin,
     DateTime? reservedAt,
   }) = _KasadoUserInfo;
 

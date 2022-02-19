@@ -26,11 +26,13 @@ class _$KasadoUserInfoTearOff {
       {required String id,
       required KasadoUser user,
       bool isAdmin = false,
+      bool isSuperAdmin = false,
       DateTime? reservedAt}) {
     return _KasadoUserInfo(
       id: id,
       user: user,
       isAdmin: isAdmin,
+      isSuperAdmin: isSuperAdmin,
       reservedAt: reservedAt,
     );
   }
@@ -48,6 +50,7 @@ mixin _$KasadoUserInfo {
   String get id => throw _privateConstructorUsedError;
   KasadoUser get user => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
+  bool get isSuperAdmin => throw _privateConstructorUsedError;
   DateTime? get reservedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,7 +64,12 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
   factory $KasadoUserInfoCopyWith(
           KasadoUserInfo value, $Res Function(KasadoUserInfo) then) =
       _$KasadoUserInfoCopyWithImpl<$Res>;
-  $Res call({String id, KasadoUser user, bool isAdmin, DateTime? reservedAt});
+  $Res call(
+      {String id,
+      KasadoUser user,
+      bool isAdmin,
+      bool isSuperAdmin,
+      DateTime? reservedAt});
 
   $KasadoUserCopyWith<$Res> get user;
 }
@@ -80,6 +88,7 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
     Object? id = freezed,
     Object? user = freezed,
     Object? isAdmin = freezed,
+    Object? isSuperAdmin = freezed,
     Object? reservedAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -94,6 +103,10 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
       isAdmin: isAdmin == freezed
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSuperAdmin: isSuperAdmin == freezed
+          ? _value.isSuperAdmin
+          : isSuperAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
       reservedAt: reservedAt == freezed
           ? _value.reservedAt
@@ -117,7 +130,12 @@ abstract class _$KasadoUserInfoCopyWith<$Res>
           _KasadoUserInfo value, $Res Function(_KasadoUserInfo) then) =
       __$KasadoUserInfoCopyWithImpl<$Res>;
   @override
-  $Res call({String id, KasadoUser user, bool isAdmin, DateTime? reservedAt});
+  $Res call(
+      {String id,
+      KasadoUser user,
+      bool isAdmin,
+      bool isSuperAdmin,
+      DateTime? reservedAt});
 
   @override
   $KasadoUserCopyWith<$Res> get user;
@@ -139,6 +157,7 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
     Object? id = freezed,
     Object? user = freezed,
     Object? isAdmin = freezed,
+    Object? isSuperAdmin = freezed,
     Object? reservedAt = freezed,
   }) {
     return _then(_KasadoUserInfo(
@@ -153,6 +172,10 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
       isAdmin: isAdmin == freezed
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSuperAdmin: isSuperAdmin == freezed
+          ? _value.isSuperAdmin
+          : isSuperAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
       reservedAt: reservedAt == freezed
           ? _value.reservedAt
@@ -169,6 +192,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       {required this.id,
       required this.user,
       this.isAdmin = false,
+      this.isSuperAdmin = false,
       this.reservedAt})
       : super._();
 
@@ -182,12 +206,15 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final bool isAdmin;
+  @JsonKey()
+  @override
+  final bool isSuperAdmin;
   @override
   final DateTime? reservedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, reservedAt: $reservedAt)';
+    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, reservedAt: $reservedAt)';
   }
 
   @override
@@ -198,6 +225,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('user', user))
       ..add(DiagnosticsProperty('isAdmin', isAdmin))
+      ..add(DiagnosticsProperty('isSuperAdmin', isSuperAdmin))
       ..add(DiagnosticsProperty('reservedAt', reservedAt));
   }
 
@@ -210,6 +238,8 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.user, user) &&
             const DeepCollectionEquality().equals(other.isAdmin, isAdmin) &&
             const DeepCollectionEquality()
+                .equals(other.isSuperAdmin, isSuperAdmin) &&
+            const DeepCollectionEquality()
                 .equals(other.reservedAt, reservedAt));
   }
 
@@ -219,6 +249,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(user),
       const DeepCollectionEquality().hash(isAdmin),
+      const DeepCollectionEquality().hash(isSuperAdmin),
       const DeepCollectionEquality().hash(reservedAt));
 
   @JsonKey(ignore: true)
@@ -237,6 +268,7 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
       {required String id,
       required KasadoUser user,
       bool isAdmin,
+      bool isSuperAdmin,
       DateTime? reservedAt}) = _$_KasadoUserInfo;
   const _KasadoUserInfo._() : super._();
 
@@ -249,6 +281,8 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   KasadoUser get user;
   @override
   bool get isAdmin;
+  @override
+  bool get isSuperAdmin;
   @override
   DateTime? get reservedAt;
   @override
