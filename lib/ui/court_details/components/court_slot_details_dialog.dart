@@ -32,6 +32,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
       courtSlotStreamProvider('${court.id}|${courtSlot.slotId}'),
     );
     final currentUser = ref.watch(currentUserProvider)!;
+    final adminController = model.adminController;
     final utils = ref.watch(kasadoUtilsProvider);
 
     return Dialog(
@@ -70,7 +71,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                         final player = players[index];
                         return ListTile(
                           onLongPress: (isAdmin)
-                              ? () => model.togglePlayerPaymentStatus(
+                              ? () => adminController.togglePlayerPaymentStatus(
                                     baseCourtSlot: courtSlot!,
                                     player: player,
                                   )

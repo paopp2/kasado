@@ -37,20 +37,6 @@ class CourtDetailsViewModel extends ViewModel {
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;
 
-  Future<void> togglePlayerPaymentStatus({
-    required CourtSlot baseCourtSlot,
-    required KasadoUser player,
-  }) async {
-    assert(baseCourtSlot.hasPlayer(player));
-    final playerIndex = baseCourtSlot.players.indexOf(player);
-    await courtRepo.pushCourtSlot(
-      courtSlot: baseCourtSlot.copyWith(
-        players: baseCourtSlot.players
-          ..[playerIndex] = player.copyWith(hasPaid: !player.hasPaid),
-      ),
-    );
-  }
-
   Future<void> joinCourtSlot(
     CourtSlot baseCourtSlot, [
     BuildContext? context,

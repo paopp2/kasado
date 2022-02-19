@@ -39,6 +39,20 @@ class CourtAdminController with CourtAdminTecMixin {
   final KasadoUser currentUser;
   final KasadoUtils utils;
 
+  Future<void> togglePlayerPaymentStatus({
+    required CourtSlot baseCourtSlot,
+    required KasadoUser player,
+  }) async {
+    assert(baseCourtSlot.hasPlayer(player));
+    final playerIndex = baseCourtSlot.players.indexOf(player);
+    await courtRepo.pushCourtSlot(
+      courtSlot: baseCourtSlot.copyWith(
+        players: baseCourtSlot.players
+          ..[playerIndex] = player.copyWith(hasPaid: !player.hasPaid),
+      ),
+    );
+  }
+
   void selectSchedChip(bool isSelected, int index) {
     read(selectedSchedChipIndicesProvider.notifier).update((s) {
       if (isSelected) {
