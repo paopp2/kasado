@@ -52,6 +52,15 @@ class UserInfoRepository {
             .toJson());
   }
 
+  Future<void> toggleUserIsReservedStatus(String userId) async {
+    final KasadoUserInfo userInfoToUpdate = (await getUserInfo(userId))!;
+    await firestoreHelper.setData(
+        path: FirestorePath.docUserInfo(userId),
+        data: userInfoToUpdate
+            .copyWith(isReserved: !userInfoToUpdate.isReserved)
+            .toJson());
+  }
+
   Stream<List<KasadoUser>> getCourtAdmins(Court court) {
     final courtAdminUserInfos = firestoreHelper.collectionStream(
       path: FirestorePath.colUserInfos(),

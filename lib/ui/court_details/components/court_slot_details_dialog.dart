@@ -102,9 +102,10 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                       )
                     : TextButton(
                         child: const Text('JOIN GAME'),
-                        onPressed: (courtSlot.isFull)
-                            ? null
-                            : () => model.joinCourtSlot(courtSlot, context),
+                        onPressed: () => model.joinCourtSlot(
+                          courtSlot,
+                          context,
+                        ),
                       ),
               ],
             ],

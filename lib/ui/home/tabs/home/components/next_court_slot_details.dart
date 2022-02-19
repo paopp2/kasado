@@ -54,6 +54,8 @@ class NextCourtSlotDetails extends HookConsumerWidget {
       error: (e, _) => Text(e.toString()),
       loading: () => const LoadingWidget(),
       data: (courtSlot) {
+        // if there are no more timeSlots available for the day, then next
+        // CourtSlot is null
         final baseCourtSlot = (nextTimeSlot == null)
             ? null
             : courtSlot ??
@@ -117,7 +119,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                     )
                   : TextButton(
                       child: const Text('JOIN GAME'),
-                      onPressed: (baseCourtSlot == null || baseCourtSlot.isFull)
+                      onPressed: (baseCourtSlot == null)
                           ? null
                           : () => model.joinCourtSlot(baseCourtSlot),
                     ),
