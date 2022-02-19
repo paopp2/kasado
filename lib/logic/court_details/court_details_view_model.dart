@@ -51,11 +51,15 @@ class CourtDetailsViewModel extends ViewModel {
     CourtSlot baseCourtSlot, [
     BuildContext? context,
   ]) async {
+    final userHasReserved = currentUserInfo!.hasReserved;
+    final userReservationNotDone =
+        currentUserInfo!.reservedAt?.isAfter(DateTime.now()) ?? false;
+
     if (baseCourtSlot.isFull) {
       Fluttertoast.showToast(msg: 'Slot is full');
     } else if (baseCourtSlot.hasPlayer(currentUser)) {
       Fluttertoast.showToast(msg: 'Player already reserved');
-    } else if (currentUserInfo?.isReserved ?? true) {
+    } else if (userHasReserved && userReservationNotDone) {
       Fluttertoast.showToast(msg: 'Only 1 reservation allowed at a time');
     } else {
       await courtRepo.pushCourtSlot(
@@ -63,7 +67,10 @@ class CourtDetailsViewModel extends ViewModel {
           players: baseCourtSlot.players..add(currentUser),
         ),
       );
-      await userInfoRepo.toggleUserIsReservedStatus(currentUser.id);
+      await userInfoRepo.reserveUserAt(
+        userId: currentUser.id,
+        reservedAt: baseCourtSlot.timeRange.endsAt,
+      );
       if (context != null) Navigator.pop(context);
     }
   }
@@ -78,7 +85,10 @@ class CourtDetailsViewModel extends ViewModel {
     await courtRepo.pushCourtSlot(
       courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
     );
-    await userInfoRepo.toggleUserIsReservedStatus(currentUser.id);
+    await userInfoRepo.reserveUserAt(
+      userId: currentUser.id,
+      reservedAt: null,
+    );
     if (updatedPlayerList.isEmpty) {
       await courtRepo.removeCourtSlot(
         baseCourtSlot.courtId,
