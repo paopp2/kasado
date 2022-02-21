@@ -37,6 +37,12 @@ class CourtDetailsView extends HookConsumerWidget {
           data: (court) {
             court!;
             return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                iconTheme: const IconThemeData(color: Colors.white),
+              ),
+              extendBodyBehindAppBar: true,
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
