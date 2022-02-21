@@ -125,7 +125,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                                       model: model,
                                       isAdmin: isAdmin,
                                       court: court,
-                                      courtSlot: baseCourtSlot,
+                                      baseCourtSlot: baseCourtSlot,
                                       isDone: isSlotClosed,
                                     );
                                   },

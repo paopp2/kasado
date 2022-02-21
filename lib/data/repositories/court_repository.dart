@@ -51,6 +51,15 @@ class CourtRepository {
     );
   }
 
+  Future<void> setCourtSlotClosed({
+    required CourtSlot courtSlot,
+    required bool isCourtClosed,
+  }) async {
+    await pushCourtSlot(
+      courtSlot: courtSlot.copyWith(isClosedByAdmin: isCourtClosed),
+    );
+  }
+
   Stream<CourtSlot?> getCourtSlotStream(String courtId, String slotId) {
     return firestoreHelper.documentStream(
       path: FirestorePath.docCourtSlot(courtId, slotId),
