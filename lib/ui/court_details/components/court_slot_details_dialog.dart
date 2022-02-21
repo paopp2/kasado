@@ -67,36 +67,40 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                   loading: () => const LoadingWidget(),
                   data: (courtSlot) {
                     final players = courtSlot?.players ?? [];
-                    return ListView.builder(
-                      itemCount: players.length,
-                      itemBuilder: (context, index) {
-                        final player = players[index];
-                        return ListTile(
-                          onTap: () => context.pushNamed(
-                            Routes.userProfileView,
-                            extra: player.id,
-                          ),
-                          onLongPress: (isAdmin)
-                              ? () => adminController.togglePlayerPaymentStatus(
-                                    baseCourtSlot: courtSlot!,
-                                    player: player,
-                                  )
-                              : null,
-                          title: Text(player.displayName!),
-                          leading: CircleAvatar(
-                            radius: 25,
-                            backgroundImage: NetworkImage(player.photoUrl!),
-                          ),
-                          trailing: Visibility(
-                            visible: player.hasPaid,
-                            child: const Icon(
-                              Icons.check,
-                              color: Colors.green,
-                            ),
-                          ),
-                        );
-                      },
-                    );
+                    return (players.isEmpty)
+                        ? const Center(child: Text('No players yet'))
+                        : ListView.builder(
+                            itemCount: players.length,
+                            itemBuilder: (context, index) {
+                              final player = players[index];
+                              return ListTile(
+                                onTap: () => context.pushNamed(
+                                  Routes.userProfileView,
+                                  extra: player.id,
+                                ),
+                                onLongPress: (isAdmin)
+                                    ? () => adminController
+                                            .togglePlayerPaymentStatus(
+                                          baseCourtSlot: courtSlot!,
+                                          player: player,
+                                        )
+                                    : null,
+                                title: Text(player.displayName!),
+                                leading: CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage:
+                                      NetworkImage(player.photoUrl!),
+                                ),
+                                trailing: Visibility(
+                                  visible: player.hasPaid,
+                                  child: const Icon(
+                                    Icons.check,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
                   },
                 ),
               ),
