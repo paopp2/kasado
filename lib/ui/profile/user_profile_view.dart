@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/data/repositories/user_info_repository.dart';
-import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/logic/profile/user_profile_state.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
+import 'package:kasado/ui/shared/profile_widgets/user_profile_pane.dart';
 
 class UserProfileView extends HookConsumerWidget {
   const UserProfileView({
@@ -13,23 +14,27 @@ class UserProfileView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userInfoRepo = ref.watch(userInfoRepositoryProvider);
-    final userInfoStream = userInfoRepo.getUserInfoStream(userId);
+    final userInfoStream = ref.watch(userInfoStreamProvider(userId));
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Scaffold(
-          body: StreamBuilder(
-            stream: userInfoStream,
-            builder: (context, snapshot) {
-              final data = snapshot.data as KasadoUserInfo;
-              return Center(
-                child: Text(data.user.displayName!),
-              );
-            },
-          ),
-        );
-      },
+    return SafeArea(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+            ),
+            body: userInfoStream.when(
+              error: (e, _) => Text(e.toString()),
+              loading: () => const LoadingWidget(),
+              data: (userInfo) => UserProfilePane(
+                currentUser: userInfo?.user,
+                constraints: constraints,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
