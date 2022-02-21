@@ -13,6 +13,7 @@ class CourtSlot with _$CourtSlot {
     required String courtId,
     required List<KasadoUser> players,
     required TimeRange timeRange,
+    @Default(false) bool isClosedByAdmin,
   }) = _CourtSlot;
 
   int get playerCount => players.length;

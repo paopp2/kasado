@@ -17,7 +17,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
     required this.model,
     required this.isAdmin,
     required this.court,
-    required this.courtSlot,
+    required this.baseCourtSlot,
     required this.isDone,
   }) : super(key: key);
 
@@ -25,13 +25,13 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
   final bool isAdmin;
   final CourtDetailsViewModel model;
   final Court court;
-  final CourtSlot courtSlot;
+  final CourtSlot baseCourtSlot;
   final bool isDone;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courtSlotStream = ref.watch(
-      courtSlotStreamProvider('${court.id}|${courtSlot.slotId}'),
+      courtSlotStreamProvider('${court.id}|${baseCourtSlot.slotId}'),
     );
     final currentUser = ref.watch(currentUserProvider)!;
     final adminController = model.adminController;
@@ -44,78 +44,108 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
         child: SizedBox(
           height: constraints.maxHeight * 0.8,
           width: constraints.maxWidth * 0.8,
-          child: Column(
-            children: [
-              Text(
-                court.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(utils.getTimeRangeFormat(courtSlot.timeRange)),
-              const SizedBox(height: 10),
-              Visibility(
-                visible: isAdmin,
-                child: const Text('ADMIN MODE'),
-              ),
-              const Divider(thickness: 2),
-              Expanded(
-                child: courtSlotStream.when(
-                  error: (e, _) => Text(e.toString()),
-                  loading: () => const LoadingWidget(),
-                  data: (courtSlot) {
-                    final players = courtSlot?.players ?? [];
-                    return ListView.builder(
-                      itemCount: players.length,
-                      itemBuilder: (context, index) {
-                        final player = players[index];
-                        return ListTile(
-                          onTap: () => context.pushNamed(
-                            Routes.userProfileView,
-                            extra: player.id,
+          child: courtSlotStream.when(
+            error: (e, _) => Text(e.toString()),
+            loading: () => const LoadingWidget(),
+            data: (courtSlot) {
+              // If courtSlot doesn't exist in DB, use baseCourtSlot as passed
+              // from previous View
+              final fetchedCourtSlot = courtSlot ?? baseCourtSlot;
+              final players = fetchedCourtSlot.players;
+              return Column(
+                children: [
+                  Text(
+                    court.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "${utils.getDateFormat(fetchedCourtSlot.timeRange.startsAt)} / ${utils.getTimeRangeFormat(fetchedCourtSlot.timeRange)}",
+                  ),
+                  const SizedBox(height: 10),
+                  Visibility(
+                    visible: isAdmin,
+                    child: const Text('ADMIN MODE'),
+                  ),
+                  const Divider(thickness: 2),
+                  Expanded(
+                    child: (players.isEmpty)
+                        ? const Center(child: Text('No players yet'))
+                        : ListView.builder(
+                            itemCount: players.length,
+                            itemBuilder: (context, index) {
+                              final player = players[index];
+                              return ListTile(
+                                onTap: () => context.pushNamed(
+                                  Routes.userProfileView,
+                                  extra: player.id,
+                                ),
+                                onLongPress: (isAdmin)
+                                    ? () => adminController
+                                            .togglePlayerPaymentStatus(
+                                          baseCourtSlot: fetchedCourtSlot,
+                                          player: player,
+                                        )
+                                    : null,
+                                title: Text(player.displayName!),
+                                leading: CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage:
+                                      NetworkImage(player.photoUrl!),
+                                ),
+                                trailing: Visibility(
+                                  visible: player.hasPaid,
+                                  child: const Icon(
+                                    Icons.check,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                          onLongPress: (isAdmin)
-                              ? () => adminController.togglePlayerPaymentStatus(
-                                    baseCourtSlot: courtSlot!,
-                                    player: player,
-                                  )
-                              : null,
-                          title: Text(player.displayName!),
-                          leading: CircleAvatar(
-                            radius: 25,
-                            backgroundImage: NetworkImage(player.photoUrl!),
-                          ),
-                          trailing: Visibility(
-                            visible: player.hasPaid,
-                            child: const Icon(
-                              Icons.check,
-                              color: Colors.green,
+                  ),
+                  if (!isDone) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        if (isAdmin) ...[
+                          TextButton(
+                            child: Text(
+                              (fetchedCourtSlot.isClosedByAdmin)
+                                  ? 'OPEN SLOT'
+                                  : 'CLOSE SLOT',
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-              if (!isDone) ...[
-                (courtSlot.hasPlayer(currentUser))
-                    ? TextButton(
-                        child: const Text('LEAVE GAME'),
-                        onPressed: () =>
-                            model.leaveCourtSlot(courtSlot, context),
-                      )
-                    : TextButton(
-                        child: const Text('JOIN GAME'),
-                        onPressed: () => model.joinCourtSlot(
-                          courtSlot,
-                          context,
-                        ),
-                      ),
-              ],
-            ],
+                            onPressed: () => adminController.setCourtSlotClosed(
+                              context: context,
+                              courtSlot: fetchedCourtSlot,
+                              closeCourt: !fetchedCourtSlot.isClosedByAdmin,
+                            ),
+                          )
+                        ],
+                        (fetchedCourtSlot.hasPlayer(currentUser))
+                            ? TextButton(
+                                child: const Text('LEAVE GAME'),
+                                onPressed: () => model.leaveCourtSlot(
+                                  fetchedCourtSlot,
+                                  context,
+                                ),
+                              )
+                            : TextButton(
+                                child: const Text('JOIN GAME'),
+                                onPressed: () => model.joinCourtSlot(
+                                  fetchedCourtSlot,
+                                  context,
+                                ),
+                              ),
+                      ],
+                    ),
+                  ],
+                ],
+              );
+            },
           ),
         ),
       ),

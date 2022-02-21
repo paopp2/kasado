@@ -76,17 +76,20 @@ class CourtDetailsViewModel extends ViewModel {
     assert(baseCourtSlot.hasPlayer(currentUser));
     final updatedPlayerList = baseCourtSlot.players
       ..removeWhere((p) => (currentUser.id == p.id));
-    await courtRepo.pushCourtSlot(
-      courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
-    );
+
     await userInfoRepo.reserveUserAt(
       userId: currentUser.id,
       reservedAt: null,
     );
+
     if (updatedPlayerList.isEmpty) {
       await courtRepo.removeCourtSlot(
         baseCourtSlot.courtId,
         baseCourtSlot.slotId,
+      );
+    } else {
+      await courtRepo.pushCourtSlot(
+        courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
       );
     }
   }

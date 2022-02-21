@@ -159,6 +159,18 @@ class CourtAdminController with CourtAdminTecMixin {
     Navigator.pop(context);
   }
 
+  Future<void> setCourtSlotClosed({
+    required BuildContext context,
+    required CourtSlot courtSlot,
+    required bool closeCourt,
+  }) async {
+    Navigator.pop(context);
+    await courtRepo.setCourtSlotClosed(
+      courtSlot: courtSlot,
+      isCourtClosed: closeCourt,
+    );
+  }
+
   Future<void> deleteCourt(Court court) async {
     await courtRepo.deleteCourt(court);
   }
