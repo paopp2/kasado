@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/app_router.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
@@ -70,6 +72,10 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                       itemBuilder: (context, index) {
                         final player = players[index];
                         return ListTile(
+                          onTap: () => context.pushNamed(
+                            Routes.userProfileView,
+                            extra: player.id,
+                          ),
                           onLongPress: (isAdmin)
                               ? () => adminController.togglePlayerPaymentStatus(
                                     baseCourtSlot: courtSlot!,

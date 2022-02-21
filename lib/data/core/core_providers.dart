@@ -1,8 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/helpers/firestore_helper.dart';
+import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+
+final appMetaStreamProvider = StreamProvider.autoDispose((ref) {
+  final firestoreHelper = FirestoreHelper.instance;
+  return firestoreHelper.documentStream(
+    path: FirestorePath.docAppMeta(),
+    builder: (data, docId) => data,
+  );
+});
 
 final fireauthProvider = Provider<FirebaseAuth>((ref) => FirebaseAuth.instance);
 
