@@ -8,7 +8,7 @@ import 'package:kasado/app_router.dart';
 import 'package:kasado/firebase_options.dart';
 
 // TODO: Set to false in production
-const bool useFirebaseEmulator = false;
+const bool useFirebaseEmulator = true;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
