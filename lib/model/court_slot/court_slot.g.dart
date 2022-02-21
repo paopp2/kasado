@@ -12,6 +12,7 @@ _$_CourtSlot _$$_CourtSlotFromJson(Map<String, dynamic> json) => _$_CourtSlot(
           .map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
           .toList(),
       timeRange: TimeRange.fromJson(json['timeRange'] as Map<String, dynamic>),
+      isClosedByAdmin: json['isClosedByAdmin'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
@@ -19,4 +20,5 @@ Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
       'courtId': instance.courtId,
       'players': instance.players.map((e) => e.toJson()).toList(),
       'timeRange': instance.timeRange.toJson(),
+      'isClosedByAdmin': instance.isClosedByAdmin,
     };
