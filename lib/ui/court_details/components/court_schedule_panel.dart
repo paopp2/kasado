@@ -45,22 +45,20 @@ class CourtSchedulePanel extends HookConsumerWidget {
       ),
       scheduleViewMonthHeaderBuilder: (context, details) {
         final monthHeaderText = DateFormat('MMMM yyyy').format(details.date);
-        return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(55, 5, 5, 5),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade500,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Text(
-                  monthHeaderText,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(55, 5, 5, 5),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade500,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text(
+                monthHeaderText,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
