@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/current_app_meta.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/ui/home/components/user_info_drawer.dart';
 import 'package:kasado/ui/home/tabs/home/home_tab.dart';
 import 'package:kasado/ui/home/tabs/profile/profile_tab.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class HomeView extends HookConsumerWidget {
     final tabIndex = useState(0);
     final tabController = useTabController(initialLength: 2);
     final model = ref.watch(homeViewModel);
+    final appMetaStream = ref.watch(appMetaStreamProvider);
 
     useEffect(() {
       model.initState();
@@ -36,9 +40,18 @@ class HomeView extends HookConsumerWidget {
               physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
-                HomeTab(
-                  model: model,
-                  constraints: constraints,
+                appMetaStream.when(
+                  loading: () => const LoadingWidget(),
+                  error: (e, _) => Text(e.toString()),
+                  data: (appMeta) =>
+                      ((appMeta?['currentVer'] ?? '') == currentVersion)
+                          ? HomeTab(
+                              model: model,
+                              constraints: constraints,
+                            )
+                          : const Center(
+                              child: Text('Please update to newest version'),
+                            ),
                 ),
                 ProfileTab(constraints: constraints),
               ],
