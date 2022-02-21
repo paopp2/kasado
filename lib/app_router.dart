@@ -5,6 +5,7 @@ import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
 import 'package:kasado/ui/courts_owned/courts_owned_view.dart';
 import 'package:kasado/ui/home/home_view.dart';
+import 'package:kasado/ui/profile/user_profile_view.dart';
 
 class AppRouter {
   AppRouter._();
@@ -12,6 +13,11 @@ class AppRouter {
   final fireAuthInstance = FirebaseAuth.instance;
   late final router = GoRouter(
     routes: [
+      GoRoute(
+        name: Routes.loginView,
+        path: '/login',
+        builder: (context, state) => const LoginView(),
+      ),
       GoRoute(
         name: Routes.homeView,
         path: '/',
@@ -34,9 +40,11 @@ class AppRouter {
         },
       ),
       GoRoute(
-        name: Routes.loginView,
-        path: '/login',
-        builder: (context, state) => const LoginView(),
+        name: Routes.userProfileView,
+        path: '/user-profile-view',
+        builder: (context, state) => UserProfileView(
+          userId: state.extra as String,
+        ),
       ),
     ],
     redirect: (state) {
@@ -64,4 +72,5 @@ class Routes {
   static const loginView = 'login_view';
   static const courtDetailsView = 'court_details_view';
   static const courtsOwnedView = 'courts_owned_view';
+  static const userProfileView = 'user_profile_view';
 }
