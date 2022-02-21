@@ -114,7 +114,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: (baseCourtSlot.isClosedByAdmin)
+                        onTap: (baseCourtSlot.isClosedByAdmin && !isAdmin)
                             ? null
                             : () {
                                 showDialog(

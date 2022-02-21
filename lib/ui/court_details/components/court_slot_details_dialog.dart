@@ -48,7 +48,10 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
             error: (e, _) => Text(e.toString()),
             loading: () => const LoadingWidget(),
             data: (courtSlot) {
-              final players = courtSlot?.players ?? [];
+              // If courtSlot doesn't exist in DB, use baseCourtSlot as passed
+              // from previous View
+              final fetchedCourtSlot = courtSlot ?? baseCourtSlot;
+              final players = fetchedCourtSlot.players;
               return Column(
                 children: [
                   Text(
@@ -59,7 +62,9 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(utils.getTimeRangeFormat(courtSlot!.timeRange)),
+                  Text(
+                    "${utils.getDateFormat(fetchedCourtSlot.timeRange.startsAt)} / ${utils.getTimeRangeFormat(fetchedCourtSlot.timeRange)}",
+                  ),
                   const SizedBox(height: 10),
                   Visibility(
                     visible: isAdmin,
@@ -81,7 +86,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                                 onLongPress: (isAdmin)
                                     ? () => adminController
                                             .togglePlayerPaymentStatus(
-                                          baseCourtSlot: courtSlot,
+                                          baseCourtSlot: fetchedCourtSlot,
                                           player: player,
                                         )
                                     : null,
@@ -109,28 +114,29 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                         if (isAdmin) ...[
                           TextButton(
                             child: Text(
-                              (courtSlot.isClosedByAdmin)
+                              (fetchedCourtSlot.isClosedByAdmin)
                                   ? 'OPEN SLOT'
                                   : 'CLOSE SLOT',
                             ),
                             onPressed: () => adminController.setCourtSlotClosed(
-                              courtSlot: courtSlot,
-                              closeCourt: !courtSlot.isClosedByAdmin,
+                              context: context,
+                              courtSlot: fetchedCourtSlot,
+                              closeCourt: !fetchedCourtSlot.isClosedByAdmin,
                             ),
                           )
                         ],
-                        (courtSlot.hasPlayer(currentUser))
+                        (fetchedCourtSlot.hasPlayer(currentUser))
                             ? TextButton(
                                 child: const Text('LEAVE GAME'),
                                 onPressed: () => model.leaveCourtSlot(
-                                  courtSlot,
+                                  fetchedCourtSlot,
                                   context,
                                 ),
                               )
                             : TextButton(
                                 child: const Text('JOIN GAME'),
                                 onPressed: () => model.joinCourtSlot(
-                                  courtSlot,
+                                  fetchedCourtSlot,
                                   context,
                                 ),
                               ),

@@ -1,18 +1,26 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
+import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 final courtRepositoryProvider = Provider.autoDispose(
-  (ref) => CourtRepository(firestoreHelper: FirestoreHelper.instance),
+  (ref) => CourtRepository(
+    firestoreHelper: FirestoreHelper.instance,
+    userInfoRepo: ref.watch(userInfoRepositoryProvider),
+  ),
 );
 
 class CourtRepository {
-  CourtRepository({required this.firestoreHelper});
+  CourtRepository({
+    required this.firestoreHelper,
+    required this.userInfoRepo,
+  });
 
   final FirestoreHelper firestoreHelper;
+  final UserInfoRepository userInfoRepo;
 
   Future<void> pushCourt(Court court) async {
     await firestoreHelper.setData(
@@ -55,9 +63,22 @@ class CourtRepository {
     required CourtSlot courtSlot,
     required bool isCourtClosed,
   }) async {
-    await pushCourtSlot(
-      courtSlot: courtSlot.copyWith(isClosedByAdmin: isCourtClosed),
-    );
+    if (isCourtClosed) {
+      // For each player in the court slot about to be closed, nullify their
+      // 'reservedAt' DateTime for them to be able to reserve another slot
+      final players = courtSlot.players;
+      for (final player in players) {
+        await userInfoRepo.reserveUserAt(userId: player.id, reservedAt: null);
+      }
+      await pushCourtSlot(courtSlot: courtSlot.copyWith(isClosedByAdmin: true));
+    } else {
+      // When a CourtSlot is reopened from being previously closed, remove it.
+      // The reason for this is that when a CourtSlot does not appear (or exist)
+      // in the 'courts/$courtId/court_slots/' path, it is assumed to be open.
+      // Closed CourtSlots remain in the path mentioned but with a flag so that
+      // UI knows that it is a closed CourtSlot and can change its state based upon it
+      await removeCourtSlot(courtSlot.courtId, courtSlot.slotId);
+    }
   }
 
   Stream<CourtSlot?> getCourtSlotStream(String courtId, String slotId) {

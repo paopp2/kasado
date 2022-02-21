@@ -160,9 +160,11 @@ class CourtAdminController with CourtAdminTecMixin {
   }
 
   Future<void> setCourtSlotClosed({
+    required BuildContext context,
     required CourtSlot courtSlot,
     required bool closeCourt,
   }) async {
+    Navigator.pop(context);
     await courtRepo.setCourtSlotClosed(
       courtSlot: courtSlot,
       isCourtClosed: closeCourt,
