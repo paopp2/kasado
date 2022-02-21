@@ -103,7 +103,8 @@ class CourtSchedulePanel extends HookConsumerWidget {
                     decoration: BoxDecoration(
                       color: (isSlotClosed)
                           ? Colors.grey.shade300
-                          : (baseCourtSlot.isFull)
+                          : (baseCourtSlot.isFull ||
+                                  baseCourtSlot.isClosedByAdmin)
                               ? Colors.red
                               : (currentUserIsReserved)
                                   ? Colors.green.shade200
@@ -113,21 +114,23 @@ class CourtSchedulePanel extends HookConsumerWidget {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return CourtSlotDetailsDialog(
-                                constraints: constraints,
-                                model: model,
-                                isAdmin: isAdmin,
-                                court: court,
-                                courtSlot: baseCourtSlot,
-                                isDone: isSlotClosed,
-                              );
-                            },
-                          );
-                        },
+                        onTap: (baseCourtSlot.isClosedByAdmin)
+                            ? null
+                            : () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CourtSlotDetailsDialog(
+                                      constraints: constraints,
+                                      model: model,
+                                      isAdmin: isAdmin,
+                                      court: court,
+                                      courtSlot: baseCourtSlot,
+                                      isDone: isSlotClosed,
+                                    );
+                                  },
+                                );
+                              },
                         child: Center(
                           child: ListTile(
                             shape: RoundedRectangleBorder(
@@ -139,24 +142,28 @@ class CourtSchedulePanel extends HookConsumerWidget {
                                   ? 'Closed'
                                   : (baseCourtSlot.isFull)
                                       ? 'Full'
-                                      : currentUserIsReserved
-                                          ? 'Joined'
-                                          : 'Available',
+                                      : (baseCourtSlot.isClosedByAdmin)
+                                          ? 'Closed by admin'
+                                          : currentUserIsReserved
+                                              ? 'Joined'
+                                              : 'Available',
                             ),
                             subtitle: Text(
                                 "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm a').format(a.endTime)}"),
                             trailing: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                const Text('Players'),
-                                Text(
-                                  '${baseCourtSlot.playerCount} / 25',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 25,
-                                  ),
-                                ),
-                              ],
+                              children: (baseCourtSlot.isClosedByAdmin)
+                                  ? []
+                                  : [
+                                      const Text('Players'),
+                                      Text(
+                                        '${baseCourtSlot.playerCount} / 25',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                    ],
                             ),
                           ),
                         ),
