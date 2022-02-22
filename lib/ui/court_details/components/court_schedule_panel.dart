@@ -30,7 +30,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final utils = ref.watch(kasadoUtilsProvider);
     final courtSlotsStream = ref.watch(courtSlotsStreamProvider(court.id));
-    final currentUser = ref.watch(currentUserProvider)!;
+    final currentUserInfo = ref.watch(currentUserInfoProvider).value!;
 
     return SfCalendar(
       dataSource: _getCalendarDataSource(court),
@@ -92,8 +92,10 @@ class CourtSchedulePanel extends HookConsumerWidget {
                             timeRange: aTimeRange,
                           );
 
-                final currentUserIsReserved =
-                    baseCourtSlot.hasPlayer(currentUser);
+                final userNotReserved = !currentUserInfo.hasReserved;
+                final userReservedHere = baseCourtSlot.timeRange.startsAt
+                        .add(const Duration(hours: 1)) ==
+                    currentUserInfo.reservedAt;
 
                 return Center(
                   child: Container(
@@ -104,9 +106,9 @@ class CourtSchedulePanel extends HookConsumerWidget {
                           : (baseCourtSlot.isFull ||
                                   baseCourtSlot.isClosedByAdmin)
                               ? Colors.red.shade200
-                              : (currentUserIsReserved)
-                                  ? Colors.green.shade200
-                                  : Colors.green.shade400,
+                              : (userNotReserved || userReservedHere)
+                                  ? Colors.green.shade400
+                                  : Colors.green.shade200,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Material(
@@ -142,7 +144,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                                       ? 'Full'
                                       : (baseCourtSlot.isClosedByAdmin)
                                           ? 'Closed by admin'
-                                          : currentUserIsReserved
+                                          : (userReservedHere)
                                               ? 'Joined'
                                               : 'Available',
                             ),
