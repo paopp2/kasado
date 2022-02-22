@@ -34,7 +34,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
     final nextTimeSlot = nextTimeSlotState.value;
     final courtSlotStream = ref.watch(
       courtSlotStreamProvider(
-        "${court.id}|${utils.getSlotIdFromTimeSlot(nextTimeSlot)}",
+        "${court.id}|${CourtSlot.getIdFromTimeRange(nextTimeSlot)}",
       ),
     );
 
@@ -56,12 +56,12 @@ class NextCourtSlotDetails extends HookConsumerWidget {
       data: (courtSlot) {
         // if there are no more timeSlots available for the day, then next
         // CourtSlot is null
-        final baseCourtSlot = (nextTimeSlot == null)
+        final nextCourtSlot = (nextTimeSlot == null)
             ? null
             : courtSlot ??
                 CourtSlot(
                   courtId: court.id,
-                  players: [],
+                  slotId: CourtSlot.getIdFromTimeRange(nextTimeSlot),
                   timeRange: TimeRange(
                     startsAt: nextTimeSlot.startsAt,
                     endsAt: nextTimeSlot.endsAt,
@@ -79,11 +79,11 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   const Icon(Icons.people),
                   SizedBox(width: constraints.maxWidth * 0.05),
                   Text(
-                    (baseCourtSlot != null)
-                        ? '${baseCourtSlot.playerCount} / 25'
+                    (nextCourtSlot != null)
+                        ? '${nextCourtSlot.playerCount} / 25'
                         : '-',
                     style: TextStyle(
-                      color: (baseCourtSlot?.isFull ?? true)
+                      color: (nextCourtSlot?.isFull ?? true)
                           ? Colors.red
                           : Colors.green,
                     ),
@@ -113,15 +113,15 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                 ],
               ),
               Visibility(
-                visible: baseCourtSlot != null,
-                child: (baseCourtSlot?.hasPlayer(currentUser) ?? false)
+                visible: nextCourtSlot != null,
+                child: (nextCourtSlot?.hasPlayer(currentUser) ?? false)
                     ? TextButton(
                         child: const Text('LEAVE GAME'),
-                        onPressed: () => model.leaveCourtSlot(baseCourtSlot!),
+                        onPressed: () => model.leaveCourtSlot(nextCourtSlot!),
                       )
                     : TextButton(
                         child: const Text('JOIN GAME'),
-                        onPressed: () => model.joinCourtSlot(baseCourtSlot!),
+                        onPressed: () => model.joinCourtSlot(nextCourtSlot!),
                       ),
               ),
             ],

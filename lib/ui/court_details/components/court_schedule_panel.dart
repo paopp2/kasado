@@ -74,9 +74,11 @@ class CourtSchedulePanel extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: details.appointments.map((a) {
                 a as Appointment;
-                final isSlotClosed = utils.isCurrentSlotClosed(
-                  TimeRange(startsAt: a.startTime, endsAt: a.endTime),
+                final aTimeRange = TimeRange(
+                  startsAt: a.startTime,
+                  endsAt: a.endTime,
                 );
+                final isSlotClosed = utils.isCurrentSlotClosed(aTimeRange);
                 final appSlotId =
                     "${a.startTime.toIso8601String()}-${a.endTime.toIso8601String()}";
 
@@ -87,11 +89,8 @@ class CourtSchedulePanel extends HookConsumerWidget {
                           )
                         : CourtSlot(
                             courtId: court.id,
-                            players: [],
-                            timeRange: TimeRange(
-                              startsAt: a.startTime,
-                              endsAt: a.endTime,
-                            ),
+                            slotId: CourtSlot.getIdFromTimeRange(aTimeRange),
+                            timeRange: aTimeRange,
                           );
 
                 final currentUserIsReserved =

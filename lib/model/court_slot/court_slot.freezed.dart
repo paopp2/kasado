@@ -23,14 +23,16 @@ class _$CourtSlotTearOff {
   const _$CourtSlotTearOff();
 
   _CourtSlot call(
-      {required String courtId,
-      required List<KasadoUser> players,
+      {required String slotId,
+      required String courtId,
       required TimeRange timeRange,
+      List<KasadoUser> players = const [],
       bool isClosedByAdmin = false}) {
     return _CourtSlot(
+      slotId: slotId,
       courtId: courtId,
-      players: players,
       timeRange: timeRange,
+      players: players,
       isClosedByAdmin: isClosedByAdmin,
     );
   }
@@ -45,9 +47,10 @@ const $CourtSlot = _$CourtSlotTearOff();
 
 /// @nodoc
 mixin _$CourtSlot {
+  String get slotId => throw _privateConstructorUsedError;
   String get courtId => throw _privateConstructorUsedError;
-  List<KasadoUser> get players => throw _privateConstructorUsedError;
   TimeRange get timeRange => throw _privateConstructorUsedError;
+  List<KasadoUser> get players => throw _privateConstructorUsedError;
   bool get isClosedByAdmin => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,9 +64,10 @@ abstract class $CourtSlotCopyWith<$Res> {
   factory $CourtSlotCopyWith(CourtSlot value, $Res Function(CourtSlot) then) =
       _$CourtSlotCopyWithImpl<$Res>;
   $Res call(
-      {String courtId,
-      List<KasadoUser> players,
+      {String slotId,
+      String courtId,
       TimeRange timeRange,
+      List<KasadoUser> players,
       bool isClosedByAdmin});
 
   $TimeRangeCopyWith<$Res> get timeRange;
@@ -79,24 +83,29 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? slotId = freezed,
     Object? courtId = freezed,
-    Object? players = freezed,
     Object? timeRange = freezed,
+    Object? players = freezed,
     Object? isClosedByAdmin = freezed,
   }) {
     return _then(_value.copyWith(
+      slotId: slotId == freezed
+          ? _value.slotId
+          : slotId // ignore: cast_nullable_to_non_nullable
+              as String,
       courtId: courtId == freezed
           ? _value.courtId
           : courtId // ignore: cast_nullable_to_non_nullable
               as String,
-      players: players == freezed
-          ? _value.players
-          : players // ignore: cast_nullable_to_non_nullable
-              as List<KasadoUser>,
       timeRange: timeRange == freezed
           ? _value.timeRange
           : timeRange // ignore: cast_nullable_to_non_nullable
               as TimeRange,
+      players: players == freezed
+          ? _value.players
+          : players // ignore: cast_nullable_to_non_nullable
+              as List<KasadoUser>,
       isClosedByAdmin: isClosedByAdmin == freezed
           ? _value.isClosedByAdmin
           : isClosedByAdmin // ignore: cast_nullable_to_non_nullable
@@ -119,9 +128,10 @@ abstract class _$CourtSlotCopyWith<$Res> implements $CourtSlotCopyWith<$Res> {
       __$CourtSlotCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String courtId,
-      List<KasadoUser> players,
+      {String slotId,
+      String courtId,
       TimeRange timeRange,
+      List<KasadoUser> players,
       bool isClosedByAdmin});
 
   @override
@@ -139,24 +149,29 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? slotId = freezed,
     Object? courtId = freezed,
-    Object? players = freezed,
     Object? timeRange = freezed,
+    Object? players = freezed,
     Object? isClosedByAdmin = freezed,
   }) {
     return _then(_CourtSlot(
+      slotId: slotId == freezed
+          ? _value.slotId
+          : slotId // ignore: cast_nullable_to_non_nullable
+              as String,
       courtId: courtId == freezed
           ? _value.courtId
           : courtId // ignore: cast_nullable_to_non_nullable
               as String,
-      players: players == freezed
-          ? _value.players
-          : players // ignore: cast_nullable_to_non_nullable
-              as List<KasadoUser>,
       timeRange: timeRange == freezed
           ? _value.timeRange
           : timeRange // ignore: cast_nullable_to_non_nullable
               as TimeRange,
+      players: players == freezed
+          ? _value.players
+          : players // ignore: cast_nullable_to_non_nullable
+              as List<KasadoUser>,
       isClosedByAdmin: isClosedByAdmin == freezed
           ? _value.isClosedByAdmin
           : isClosedByAdmin // ignore: cast_nullable_to_non_nullable
@@ -169,9 +184,10 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   const _$_CourtSlot(
-      {required this.courtId,
-      required this.players,
+      {required this.slotId,
+      required this.courtId,
       required this.timeRange,
+      this.players = const [],
       this.isClosedByAdmin = false})
       : super._();
 
@@ -179,18 +195,21 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       _$$_CourtSlotFromJson(json);
 
   @override
+  final String slotId;
+  @override
   final String courtId;
   @override
-  final List<KasadoUser> players;
-  @override
   final TimeRange timeRange;
+  @JsonKey()
+  @override
+  final List<KasadoUser> players;
   @JsonKey()
   @override
   final bool isClosedByAdmin;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CourtSlot(courtId: $courtId, players: $players, timeRange: $timeRange, isClosedByAdmin: $isClosedByAdmin)';
+    return 'CourtSlot(slotId: $slotId, courtId: $courtId, timeRange: $timeRange, players: $players, isClosedByAdmin: $isClosedByAdmin)';
   }
 
   @override
@@ -198,9 +217,10 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'CourtSlot'))
+      ..add(DiagnosticsProperty('slotId', slotId))
       ..add(DiagnosticsProperty('courtId', courtId))
-      ..add(DiagnosticsProperty('players', players))
       ..add(DiagnosticsProperty('timeRange', timeRange))
+      ..add(DiagnosticsProperty('players', players))
       ..add(DiagnosticsProperty('isClosedByAdmin', isClosedByAdmin));
   }
 
@@ -209,9 +229,10 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _CourtSlot &&
+            const DeepCollectionEquality().equals(other.slotId, slotId) &&
             const DeepCollectionEquality().equals(other.courtId, courtId) &&
-            const DeepCollectionEquality().equals(other.players, players) &&
             const DeepCollectionEquality().equals(other.timeRange, timeRange) &&
+            const DeepCollectionEquality().equals(other.players, players) &&
             const DeepCollectionEquality()
                 .equals(other.isClosedByAdmin, isClosedByAdmin));
   }
@@ -219,9 +240,10 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(slotId),
       const DeepCollectionEquality().hash(courtId),
-      const DeepCollectionEquality().hash(players),
       const DeepCollectionEquality().hash(timeRange),
+      const DeepCollectionEquality().hash(players),
       const DeepCollectionEquality().hash(isClosedByAdmin));
 
   @JsonKey(ignore: true)
@@ -237,9 +259,10 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
 
 abstract class _CourtSlot extends CourtSlot {
   const factory _CourtSlot(
-      {required String courtId,
-      required List<KasadoUser> players,
+      {required String slotId,
+      required String courtId,
       required TimeRange timeRange,
+      List<KasadoUser> players,
       bool isClosedByAdmin}) = _$_CourtSlot;
   const _CourtSlot._() : super._();
 
@@ -247,11 +270,13 @@ abstract class _CourtSlot extends CourtSlot {
       _$_CourtSlot.fromJson;
 
   @override
+  String get slotId;
+  @override
   String get courtId;
   @override
-  List<KasadoUser> get players;
-  @override
   TimeRange get timeRange;
+  @override
+  List<KasadoUser> get players;
   @override
   bool get isClosedByAdmin;
   @override

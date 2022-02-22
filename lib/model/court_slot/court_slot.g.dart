@@ -7,18 +7,21 @@ part of 'court_slot.dart';
 // **************************************************************************
 
 _$_CourtSlot _$$_CourtSlotFromJson(Map<String, dynamic> json) => _$_CourtSlot(
+      slotId: json['slotId'] as String,
       courtId: json['courtId'] as String,
-      players: (json['players'] as List<dynamic>)
-          .map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
-          .toList(),
       timeRange: TimeRange.fromJson(json['timeRange'] as Map<String, dynamic>),
+      players: (json['players'] as List<dynamic>?)
+              ?.map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       isClosedByAdmin: json['isClosedByAdmin'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
     <String, dynamic>{
+      'slotId': instance.slotId,
       'courtId': instance.courtId,
-      'players': instance.players.map((e) => e.toJson()).toList(),
       'timeRange': instance.timeRange.toJson(),
+      'players': instance.players.map((e) => e.toJson()).toList(),
       'isClosedByAdmin': instance.isClosedByAdmin,
     };

@@ -51,7 +51,7 @@ class CourtDetailsViewModel extends ViewModel {
       if (context != null) Navigator.pop(context);
       await courtRepo.pushCourtSlot(
         courtSlot: baseCourtSlot.copyWith(
-          players: baseCourtSlot.players..add(currentUser),
+          players: [...baseCourtSlot.players, currentUser],
         ),
       );
       await userInfoRepo.reserveUserAt(
