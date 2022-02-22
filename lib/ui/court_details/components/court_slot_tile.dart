@@ -31,7 +31,14 @@ class CourtSlotTile extends HookConsumerWidget {
       child: Container(
         height: constraints.maxHeight * 0.15,
         decoration: BoxDecoration(
-          color: slotAndUserState.color,
+          color: slotAndUserState.when(
+            slotEnded: () => Colors.grey.shade300,
+            slotClosedByAdmin: () => Colors.red.shade200,
+            slotFull: () => Colors.red.shade200,
+            userNotReserved: () => Colors.green.shade400,
+            userReservedAtThisSlot: () => Colors.green.shade400,
+            userReservedAtAnotherSlot: () => Colors.green.shade200,
+          ),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Material(
@@ -62,7 +69,14 @@ class CourtSlotTile extends HookConsumerWidget {
                 ),
                 textColor: Colors.white,
                 title: Text(
-                  slotAndUserState.header,
+                  slotAndUserState.when(
+                    slotEnded: () => 'Slot has ended',
+                    slotClosedByAdmin: () => 'Closed by admin',
+                    slotFull: () => 'Full',
+                    userNotReserved: () => 'Available',
+                    userReservedAtThisSlot: () => 'Joined',
+                    userReservedAtAnotherSlot: () => 'Available',
+                  ),
                   style: const TextStyle(fontSize: 20),
                 ),
                 subtitle: Text(
@@ -84,41 +98,5 @@ class CourtSlotTile extends HookConsumerWidget {
         ),
       ),
     );
-  }
-}
-
-extension SlotAndUserStateExtension on SlotAndUserState {
-  Color get color {
-    switch (this) {
-      case SlotAndUserState.slotEnded:
-        return Colors.grey.shade300;
-      case SlotAndUserState.slotClosedByAdmin:
-        return Colors.red.shade200;
-      case SlotAndUserState.slotFull:
-        return Colors.red.shade200;
-      case SlotAndUserState.userNotReserved:
-        return Colors.green.shade400;
-      case SlotAndUserState.userReservedAtThisSlot:
-        return Colors.green.shade400;
-      case SlotAndUserState.userReservedAtAnotherSlot:
-        return Colors.green.shade200;
-    }
-  }
-
-  String get header {
-    switch (this) {
-      case SlotAndUserState.slotEnded:
-        return 'Slot has ended';
-      case SlotAndUserState.slotClosedByAdmin:
-        return 'Closed by admin';
-      case SlotAndUserState.slotFull:
-        return 'Full';
-      case SlotAndUserState.userNotReserved:
-        return 'Available';
-      case SlotAndUserState.userReservedAtThisSlot:
-        return 'Joined';
-      case SlotAndUserState.userReservedAtAnotherSlot:
-        return 'Available';
-    }
   }
 }

@@ -13,15 +13,6 @@ import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-enum SlotAndUserState {
-  slotEnded,
-  slotClosedByAdmin,
-  slotFull,
-  userNotReserved,
-  userReservedAtThisSlot,
-  userReservedAtAnotherSlot,
-}
-
 final courtDetailsViewModel = Provider.autoDispose(
   (ref) => CourtDetailsViewModel(
     read: ref.read,
@@ -145,6 +136,41 @@ class CourtDetailsViewModel extends ViewModel {
       await courtRepo.pushCourtSlot(
         courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
       );
+    }
+  }
+}
+
+enum SlotAndUserState {
+  slotEnded,
+  slotClosedByAdmin,
+  slotFull,
+  userNotReserved,
+  userReservedAtThisSlot,
+  userReservedAtAnotherSlot,
+}
+
+extension SlotAndUserStatePatternMatching on SlotAndUserState {
+  T when<T>({
+    required T Function() slotEnded,
+    required T Function() slotClosedByAdmin,
+    required T Function() slotFull,
+    required T Function() userNotReserved,
+    required T Function() userReservedAtThisSlot,
+    required T Function() userReservedAtAnotherSlot,
+  }) {
+    switch (this) {
+      case SlotAndUserState.slotEnded:
+        return slotEnded();
+      case SlotAndUserState.slotClosedByAdmin:
+        return slotClosedByAdmin();
+      case SlotAndUserState.slotFull:
+        return slotFull();
+      case SlotAndUserState.userNotReserved:
+        return userNotReserved();
+      case SlotAndUserState.userReservedAtThisSlot:
+        return userReservedAtThisSlot();
+      case SlotAndUserState.userReservedAtAnotherSlot:
+        return userReservedAtAnotherSlot();
     }
   }
 }
