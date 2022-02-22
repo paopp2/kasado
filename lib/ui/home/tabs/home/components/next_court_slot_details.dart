@@ -68,6 +68,10 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   ),
                 );
 
+        final nextSlotState = (nextCourtSlot == null)
+            ? null
+            : model.getSlotAndUserState(nextCourtSlot);
+
         return Padding(
           padding: EdgeInsets.symmetric(
             horizontal: constraints.maxWidth * 0.16,
@@ -79,13 +83,22 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   const Icon(Icons.people),
                   SizedBox(width: constraints.maxWidth * 0.05),
                   Text(
-                    (nextCourtSlot != null)
-                        ? '${nextCourtSlot.playerCount} / 25'
-                        : '-',
+                    (nextSlotState == null)
+                        ? 'No more games for today'
+                        : nextSlotState.when(
+                            slotClosedByAdmin: () => 'Closed by admin',
+                            orElse: () => '${nextCourtSlot!.playerCount} / 25',
+                          ),
                     style: TextStyle(
-                      color: (nextCourtSlot?.isFull ?? true)
-                          ? Colors.red
-                          : Colors.green,
+                      color: (nextSlotState == null)
+                          ? Colors.red.shade200
+                          : nextSlotState.when(
+                              slotFull: () => Colors.red.shade200,
+                              slotClosedByAdmin: () => Colors.red.shade200,
+                              userReservedAtAnotherSlot: () =>
+                                  Colors.green.shade200,
+                              orElse: () => Colors.green.shade400,
+                            ),
                     ),
                   )
                 ],
@@ -99,7 +112,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   Text(
                     (nextTimeSlot != null)
                         ? utils.getTimeRangeFormat(nextTimeSlot)
-                        : 'No more games for today',
+                        : '-',
                   )
                 ],
               ),
@@ -113,7 +126,13 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                 ],
               ),
               Visibility(
-                visible: nextCourtSlot != null,
+                visible: (nextSlotState == null)
+                    ? false
+                    : nextSlotState.when(
+                        slotClosedByAdmin: () => false,
+                        userReservedAtAnotherSlot: () => false,
+                        orElse: () => true,
+                      ),
                 child: (nextCourtSlot?.hasPlayer(currentUser) ?? false)
                     ? TextButton(
                         child: const Text('LEAVE GAME'),
