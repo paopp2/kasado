@@ -151,26 +151,27 @@ enum SlotAndUserState {
 
 extension SlotAndUserStatePatternMatching on SlotAndUserState {
   T when<T>({
-    required T Function() slotEnded,
-    required T Function() slotClosedByAdmin,
-    required T Function() slotFull,
-    required T Function() userNotReserved,
-    required T Function() userReservedAtThisSlot,
-    required T Function() userReservedAtAnotherSlot,
+    T Function()? slotEnded,
+    T Function()? slotClosedByAdmin,
+    T Function()? slotFull,
+    T Function()? userNotReserved,
+    T Function()? userReservedAtThisSlot,
+    T Function()? userReservedAtAnotherSlot,
+    T Function()? orElse,
   }) {
     switch (this) {
       case SlotAndUserState.slotEnded:
-        return slotEnded();
+        return slotEnded?.call() ?? orElse!();
       case SlotAndUserState.slotClosedByAdmin:
-        return slotClosedByAdmin();
+        return slotClosedByAdmin?.call() ?? orElse!();
       case SlotAndUserState.slotFull:
-        return slotFull();
+        return slotFull?.call() ?? orElse!();
       case SlotAndUserState.userNotReserved:
-        return userNotReserved();
+        return userNotReserved?.call() ?? orElse!();
       case SlotAndUserState.userReservedAtThisSlot:
-        return userReservedAtThisSlot();
+        return userReservedAtThisSlot?.call() ?? orElse!();
       case SlotAndUserState.userReservedAtAnotherSlot:
-        return userReservedAtAnotherSlot();
+        return userReservedAtAnotherSlot?.call() ?? orElse!();
     }
   }
 }
