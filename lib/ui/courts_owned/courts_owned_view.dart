@@ -33,7 +33,7 @@ class CourtsOwnedView extends HookConsumerWidget {
                   onTap: () => context.pushNamed(
                     Routes.courtDetailsView,
                     extra: {
-                      "court": court,
+                      "courtId": court.id,
                       "isAdmin": true,
                     },
                   ),
