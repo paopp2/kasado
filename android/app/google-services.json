@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "1004868845018",
+    "project_id": "kasado-2022",
+    "storage_bucket": "kasado-2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004868845018:android:130d939394dbc7b44b94e3",
+        "android_client_info": {
+          "package_name": "com.kasado"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004868845018-kvip6t5aofitcq6nb8lbbu2vk21lprn6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kasado",
+            "certificate_hash": "db1971bc99a919c59ac17acd2e3e220ad0b9f26c"
+          }
+        },
+        {
+          "client_id": "1004868845018-r19doinnqq28df3ul778rteiea4apsha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kasado",
+            "certificate_hash": "109ad9aae3f916964aeaff44a38e5a142f6a71ae"
+          }
+        },
+        {
+          "client_id": "1004868845018-vdug9967hlcs8jrndac7opknqtdsrrc6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQGztFPEa85YtGTVmTkXpdNGR20erwxy0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1004868845018-vdug9967hlcs8jrndac7opknqtdsrrc6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1004868845018-825ie6eig468e90riqdhtouu91k0gejm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kasado"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

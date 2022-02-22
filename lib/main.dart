@@ -12,7 +12,11 @@ const bool useFirebaseEmulator = true;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: (Platform.isAndroid)
+        ? null // Use manual installation for Android (to enable Analytics)
+        : DefaultFirebaseOptions.currentPlatform,
+  );
 
   if (useFirebaseEmulator) {
     final localHostString = Platform.isAndroid ? '10.0.2.2' : 'localhost';
