@@ -103,7 +103,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                           ? Colors.grey.shade300
                           : (baseCourtSlot.isFull ||
                                   baseCourtSlot.isClosedByAdmin)
-                              ? Colors.red
+                              ? Colors.red.shade200
                               : (currentUserIsReserved)
                                   ? Colors.green.shade200
                                   : Colors.green.shade400,
