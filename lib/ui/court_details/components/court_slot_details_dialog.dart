@@ -81,7 +81,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                               return ListTile(
                                 onTap: () => context.pushNamed(
                                   Routes.userProfileView,
-                                  extra: player.id,
+                                  params: {'uid': player.id},
                                 ),
                                 onLongPress: (isAdmin)
                                     ? () => adminController

@@ -41,9 +41,9 @@ class AppRouter {
       ),
       GoRoute(
         name: Routes.userProfileView,
-        path: '/user-profile-view',
+        path: '/user-profile-view/:uid',
         builder: (context, state) => UserProfileView(
-          userId: state.extra as String,
+          userId: state.params['uid']!,
         ),
       ),
     ],
