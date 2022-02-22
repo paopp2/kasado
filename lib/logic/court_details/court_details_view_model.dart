@@ -41,15 +41,11 @@ class CourtDetailsViewModel extends ViewModel {
     CourtSlot baseCourtSlot, [
     BuildContext? context,
   ]) async {
-    final userHasReserved = currentUserInfo!.hasReserved;
-    final userReservationNotDone =
-        currentUserInfo!.reservedAt?.isAfter(DateTime.now()) ?? false;
-
     if (baseCourtSlot.isFull) {
       Fluttertoast.showToast(msg: 'Slot is full');
     } else if (baseCourtSlot.hasPlayer(currentUser)) {
       Fluttertoast.showToast(msg: 'Player already reserved');
-    } else if (userHasReserved && userReservationNotDone) {
+    } else if (currentUserInfo!.hasReserved) {
       Fluttertoast.showToast(msg: 'Only 1 reservation allowed at a time');
     } else {
       if (context != null) Navigator.pop(context);

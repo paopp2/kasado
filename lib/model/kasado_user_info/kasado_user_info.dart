@@ -16,7 +16,13 @@ class KasadoUserInfo with _$KasadoUserInfo {
     DateTime? reservedAt,
   }) = _KasadoUserInfo;
 
-  bool get hasReserved => reservedAt != null;
+  bool get hasReserved {
+    if (reservedAt == null) return false;
+
+    final now = DateTime.now();
+    final isReservedAtFuture = reservedAt?.isAfter(now) ?? false;
+    return isReservedAtFuture;
+  }
 
   factory KasadoUserInfo.fromJson(Map<String, dynamic> json) =>
       _$KasadoUserInfoFromJson(json);
