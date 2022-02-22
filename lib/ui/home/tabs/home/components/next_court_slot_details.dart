@@ -121,9 +121,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                       )
                     : TextButton(
                         child: const Text('JOIN GAME'),
-                        onPressed: (baseCourtSlot == null)
-                            ? null
-                            : () => model.joinCourtSlot(baseCourtSlot),
+                        onPressed: () => model.joinCourtSlot(baseCourtSlot!),
                       ),
               ),
             ],
