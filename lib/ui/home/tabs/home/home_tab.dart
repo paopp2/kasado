@@ -21,7 +21,7 @@ class HomeTab extends HookConsumerWidget {
     return Column(
       children: [
         const Text(
-          'GAMES FOR TODAY',
+          'NEXT GAMES',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,

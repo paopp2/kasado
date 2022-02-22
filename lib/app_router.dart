@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
 import 'package:kasado/ui/courts_owned/courts_owned_view.dart';
@@ -34,16 +33,16 @@ class AppRouter {
         builder: (context, state) {
           final extraMap = state.extra as Map<String, Object?>;
           return CourtDetailsView(
-            baseCourt: extraMap['court'] as Court,
+            courtId: extraMap['courtId'] as String,
             isAdmin: (extraMap['isAdmin'] as bool?) ?? false,
           );
         },
       ),
       GoRoute(
         name: Routes.userProfileView,
-        path: '/user-profile-view',
+        path: '/user-profile-view/:uid',
         builder: (context, state) => UserProfileView(
-          userId: state.extra as String,
+          userId: state.params['uid']!,
         ),
       ),
     ],

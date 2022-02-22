@@ -34,14 +34,14 @@ class NextCourtSlotDetails extends HookConsumerWidget {
     final nextTimeSlot = nextTimeSlotState.value;
     final courtSlotStream = ref.watch(
       courtSlotStreamProvider(
-        "${court.id}|${utils.getSlotIdFromTimeSlot(nextTimeSlot)}",
+        "${court.id}|${CourtSlot.getIdFromTimeRange(nextTimeSlot)}",
       ),
     );
 
     useEffect(() {
       // TODO: Improve performance for this feature
-      // Update nextTimeSlot every 30 seconds
-      Timer.periodic(const Duration(seconds: 30), (_) {
+      // Update nextTimeSlot every 5 seconds
+      Timer.periodic(const Duration(seconds: 5), (_) {
         nextTimeSlotState.value = utils.getNextTimeSlotForToday(
           timeSlots: court.allowedTimeSlots,
           weekdays: court.allowedWeekDays,
@@ -56,17 +56,21 @@ class NextCourtSlotDetails extends HookConsumerWidget {
       data: (courtSlot) {
         // if there are no more timeSlots available for the day, then next
         // CourtSlot is null
-        final baseCourtSlot = (nextTimeSlot == null)
+        final nextCourtSlot = (nextTimeSlot == null)
             ? null
             : courtSlot ??
                 CourtSlot(
                   courtId: court.id,
-                  players: [],
+                  slotId: CourtSlot.getIdFromTimeRange(nextTimeSlot),
                   timeRange: TimeRange(
                     startsAt: nextTimeSlot.startsAt,
                     endsAt: nextTimeSlot.endsAt,
                   ),
                 );
+
+        final nextSlotState = (nextCourtSlot == null)
+            ? null
+            : model.getSlotAndUserState(nextCourtSlot);
 
         return Padding(
           padding: EdgeInsets.symmetric(
@@ -79,13 +83,22 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   const Icon(Icons.people),
                   SizedBox(width: constraints.maxWidth * 0.05),
                   Text(
-                    (baseCourtSlot != null)
-                        ? '${baseCourtSlot.playerCount} / 25'
-                        : '-',
+                    (nextSlotState == null)
+                        ? 'No more games for today'
+                        : nextSlotState.when(
+                            slotClosedByAdmin: () => 'Closed by admin',
+                            orElse: () => '${nextCourtSlot!.playerCount} / 25',
+                          ),
                     style: TextStyle(
-                      color: (baseCourtSlot?.isFull ?? true)
-                          ? Colors.red
-                          : Colors.green,
+                      color: (nextSlotState == null)
+                          ? Colors.red.shade200
+                          : nextSlotState.when(
+                              slotFull: () => Colors.red.shade200,
+                              slotClosedByAdmin: () => Colors.red.shade200,
+                              userReservedAtAnotherSlot: () =>
+                                  Colors.green.shade200,
+                              orElse: () => Colors.green.shade400,
+                            ),
                     ),
                   )
                 ],
@@ -99,7 +112,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   Text(
                     (nextTimeSlot != null)
                         ? utils.getTimeRangeFormat(nextTimeSlot)
-                        : 'No more games for today',
+                        : '-',
                   )
                 ],
               ),
@@ -112,17 +125,24 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   Text('₱ ${court.ticketPrice}')
                 ],
               ),
-              (baseCourtSlot?.hasPlayer(currentUser) ?? false)
-                  ? TextButton(
-                      child: const Text('LEAVE GAME'),
-                      onPressed: () => model.leaveCourtSlot(baseCourtSlot!),
-                    )
-                  : TextButton(
-                      child: const Text('JOIN GAME'),
-                      onPressed: (baseCourtSlot == null)
-                          ? null
-                          : () => model.joinCourtSlot(baseCourtSlot),
-                    ),
+              Visibility(
+                visible: (nextSlotState == null)
+                    ? false
+                    : nextSlotState.when(
+                        slotClosedByAdmin: () => false,
+                        userReservedAtAnotherSlot: () => false,
+                        orElse: () => true,
+                      ),
+                child: (nextCourtSlot?.hasPlayer(currentUser) ?? false)
+                    ? TextButton(
+                        child: const Text('LEAVE GAME'),
+                        onPressed: () => model.leaveCourtSlot(nextCourtSlot!),
+                      )
+                    : TextButton(
+                        child: const Text('JOIN GAME'),
+                        onPressed: () => model.joinCourtSlot(nextCourtSlot!),
+                      ),
+              ),
             ],
           ),
         );

@@ -143,7 +143,7 @@ class CourtAdminController with CourtAdminTecMixin {
             ? null
             : CourtSlot(
                 courtId: id,
-                players: [],
+                slotId: CourtSlot.getIdFromTimeRange(nextNearestTimeSlot),
                 timeRange: nextNearestTimeSlot,
               ),
         allowedWeekDays: allowedWeekDays,

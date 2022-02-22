@@ -5,10 +5,13 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/court_details/court_admin/court_admin_controller.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/time_range/time_range.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 final courtDetailsViewModel = Provider.autoDispose(
   (ref) => CourtDetailsViewModel(
@@ -18,6 +21,7 @@ final courtDetailsViewModel = Provider.autoDispose(
     currentUser: ref.watch(currentUserProvider)!,
     currentUserInfo: ref.watch(currentUserInfoProvider).value,
     adminController: ref.watch(courtAdminController),
+    utils: ref.watch(kasadoUtilsProvider),
   ),
 );
 
@@ -29,6 +33,7 @@ class CourtDetailsViewModel extends ViewModel {
     required this.adminController,
     required this.currentUser,
     required this.currentUserInfo,
+    required this.utils,
   }) : super(read);
 
   final CourtRepository courtRepo;
@@ -36,26 +41,66 @@ class CourtDetailsViewModel extends ViewModel {
   final UserInfoRepository userInfoRepo;
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;
+  final KasadoUtils utils;
+
+  SlotAndUserState getSlotAndUserState(CourtSlot courtSlot) {
+    final user = currentUserInfo!;
+    final userReservedHere =
+        courtSlot.timeRange.startsAt.add(const Duration(hours: 1)) ==
+            user.reservedAt;
+
+    final isSlotClosed = utils.isCurrentSlotClosed(courtSlot.timeRange);
+    if (isSlotClosed) {
+      return SlotAndUserState.slotEnded;
+    } else if (courtSlot.isClosedByAdmin) {
+      return SlotAndUserState.slotClosedByAdmin;
+    } else if (courtSlot.isFull) {
+      return SlotAndUserState.slotFull;
+    } else if (!user.hasReserved) {
+      return SlotAndUserState.userNotReserved;
+    } else if (userReservedHere) {
+      return SlotAndUserState.userReservedAtThisSlot;
+    } else {
+      return SlotAndUserState.userReservedAtAnotherSlot;
+    }
+  }
+
+  CourtSlot getBaseCourtSlot({
+    required Appointment appointment,
+    required String courtId,
+    required List<CourtSlot> courtSlots,
+  }) {
+    final aTimeRange = TimeRange(
+      startsAt: appointment.startTime,
+      endsAt: appointment.endTime,
+    );
+    final appSlotId = CourtSlot.getIdFromTimeRange(aTimeRange);
+
+    return courtSlots.singleWhere(
+      (slot) => slot.slotId == appSlotId,
+      orElse: () => CourtSlot(
+        courtId: courtId,
+        slotId: CourtSlot.getIdFromTimeRange(aTimeRange),
+        timeRange: aTimeRange,
+      ),
+    );
+  }
 
   Future<void> joinCourtSlot(
     CourtSlot baseCourtSlot, [
     BuildContext? context,
   ]) async {
-    final userHasReserved = currentUserInfo!.hasReserved;
-    final userReservationNotDone =
-        currentUserInfo!.reservedAt?.isAfter(DateTime.now()) ?? false;
-
     if (baseCourtSlot.isFull) {
       Fluttertoast.showToast(msg: 'Slot is full');
     } else if (baseCourtSlot.hasPlayer(currentUser)) {
       Fluttertoast.showToast(msg: 'Player already reserved');
-    } else if (userHasReserved && userReservationNotDone) {
+    } else if (currentUserInfo!.hasReserved) {
       Fluttertoast.showToast(msg: 'Only 1 reservation allowed at a time');
     } else {
       if (context != null) Navigator.pop(context);
       await courtRepo.pushCourtSlot(
         courtSlot: baseCourtSlot.copyWith(
-          players: baseCourtSlot.players..add(currentUser),
+          players: [...baseCourtSlot.players, currentUser],
         ),
       );
       await userInfoRepo.reserveUserAt(
@@ -91,6 +136,42 @@ class CourtDetailsViewModel extends ViewModel {
       await courtRepo.pushCourtSlot(
         courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
       );
+    }
+  }
+}
+
+enum SlotAndUserState {
+  slotEnded,
+  slotClosedByAdmin,
+  slotFull,
+  userNotReserved,
+  userReservedAtThisSlot,
+  userReservedAtAnotherSlot,
+}
+
+extension SlotAndUserStatePatternMatching on SlotAndUserState {
+  T when<T>({
+    T Function()? slotEnded,
+    T Function()? slotClosedByAdmin,
+    T Function()? slotFull,
+    T Function()? userNotReserved,
+    T Function()? userReservedAtThisSlot,
+    T Function()? userReservedAtAnotherSlot,
+    T Function()? orElse,
+  }) {
+    switch (this) {
+      case SlotAndUserState.slotEnded:
+        return slotEnded?.call() ?? orElse!();
+      case SlotAndUserState.slotClosedByAdmin:
+        return slotClosedByAdmin?.call() ?? orElse!();
+      case SlotAndUserState.slotFull:
+        return slotFull?.call() ?? orElse!();
+      case SlotAndUserState.userNotReserved:
+        return userNotReserved?.call() ?? orElse!();
+      case SlotAndUserState.userReservedAtThisSlot:
+        return userReservedAtThisSlot?.call() ?? orElse!();
+      case SlotAndUserState.userReservedAtAnotherSlot:
+        return userReservedAtAnotherSlot?.call() ?? orElse!();
     }
   }
 }

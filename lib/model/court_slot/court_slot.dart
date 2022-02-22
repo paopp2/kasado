@@ -10,17 +10,21 @@ part 'court_slot.g.dart';
 class CourtSlot with _$CourtSlot {
   const CourtSlot._();
   const factory CourtSlot({
+    required String slotId,
     required String courtId,
-    required List<KasadoUser> players,
     required TimeRange timeRange,
+    @Default([]) List<KasadoUser> players,
     @Default(false) bool isClosedByAdmin,
   }) = _CourtSlot;
 
   int get playerCount => players.length;
-  String get slotId =>
-      "${timeRange.startsAt.toIso8601String()}-${timeRange.endsAt.toIso8601String()}";
   bool get isFull => (playerCount == 25);
   bool hasPlayer(KasadoUser user) => players.any((p) => (p.id == user.id));
+
+  static String getIdFromTimeRange(TimeRange? timeRange) {
+    if (timeRange == null) return 'paththatdoesntexist';
+    return "${timeRange.startsAt.toIso8601String()}-${timeRange.endsAt.toIso8601String()}";
+  }
 
   factory CourtSlot.fromJson(Map<String, dynamic> json) =>
       _$CourtSlotFromJson(json);

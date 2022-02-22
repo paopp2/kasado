@@ -59,8 +59,9 @@ class UserInfoRepository {
   }) async {
     final KasadoUserInfo userInfoToUpdate = (await getUserInfo(userId))!;
     await firestoreHelper.setData(
-        path: FirestorePath.docUserInfo(userId),
-        data: userInfoToUpdate.copyWith(reservedAt: reservedAt).toJson());
+      path: FirestorePath.docUserInfo(userId),
+      data: userInfoToUpdate.copyWith(reservedAt: reservedAt).toJson(),
+    );
   }
 
   Stream<List<KasadoUser>> getCourtAdmins(Court court) {

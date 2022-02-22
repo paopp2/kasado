@@ -60,11 +60,6 @@ class KasadoUtils {
         timeRange.endsAt.difference(now).abs();
   }
 
-  String getSlotIdFromTimeSlot(TimeRange? timeRange) {
-    if (timeRange == null) return 'paththatdoesntexist';
-    return "${timeRange.startsAt.toIso8601String()}-${timeRange.endsAt.toIso8601String()}";
-  }
-
   String getDateFormat(DateTime dateTime) {
     return DateFormat('MMM d').format(dateTime);
   }
