@@ -79,8 +79,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                   endsAt: a.endTime,
                 );
                 final isSlotClosed = utils.isCurrentSlotClosed(aTimeRange);
-                final appSlotId =
-                    "${a.startTime.toIso8601String()}-${a.endTime.toIso8601String()}";
+                final appSlotId = CourtSlot.getIdFromTimeRange(aTimeRange);
 
                 CourtSlot baseCourtSlot =
                     (courtSlots.any((slot) => slot.slotId == appSlotId))
@@ -148,7 +147,8 @@ class CourtSchedulePanel extends HookConsumerWidget {
                                               : 'Available',
                             ),
                             subtitle: Text(
-                                "${DateFormat('h:mm').format(a.startTime)} - ${DateFormat('h:mm a').format(a.endTime)}"),
+                              utils.getTimeRangeFormat(aTimeRange),
+                            ),
                             trailing: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: (baseCourtSlot.isClosedByAdmin)
