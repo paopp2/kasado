@@ -73,7 +73,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                   const Divider(thickness: 2),
                   Expanded(
                     child: (players.isEmpty)
-                        ? const Center(child: Text('No players yet'))
+                        ? const Center(child: Text('No players'))
                         : ListView.builder(
                             itemCount: players.length,
                             itemBuilder: (context, index) {
