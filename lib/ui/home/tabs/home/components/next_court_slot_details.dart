@@ -112,17 +112,20 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   Text('₱ ${court.ticketPrice}')
                 ],
               ),
-              (baseCourtSlot?.hasPlayer(currentUser) ?? false)
-                  ? TextButton(
-                      child: const Text('LEAVE GAME'),
-                      onPressed: () => model.leaveCourtSlot(baseCourtSlot!),
-                    )
-                  : TextButton(
-                      child: const Text('JOIN GAME'),
-                      onPressed: (baseCourtSlot == null)
-                          ? null
-                          : () => model.joinCourtSlot(baseCourtSlot),
-                    ),
+              Visibility(
+                visible: baseCourtSlot != null,
+                child: (baseCourtSlot?.hasPlayer(currentUser) ?? false)
+                    ? TextButton(
+                        child: const Text('LEAVE GAME'),
+                        onPressed: () => model.leaveCourtSlot(baseCourtSlot!),
+                      )
+                    : TextButton(
+                        child: const Text('JOIN GAME'),
+                        onPressed: (baseCourtSlot == null)
+                            ? null
+                            : () => model.joinCourtSlot(baseCourtSlot),
+                      ),
+              ),
             ],
           ),
         );
