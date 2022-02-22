@@ -9,6 +9,8 @@ import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/time_range/time_range.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 final courtDetailsViewModel = Provider.autoDispose(
   (ref) => CourtDetailsViewModel(
@@ -36,6 +38,27 @@ class CourtDetailsViewModel extends ViewModel {
   final UserInfoRepository userInfoRepo;
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;
+
+  CourtSlot getBaseCourtSlot({
+    required Appointment appointment,
+    required String courtId,
+    required List<CourtSlot> courtSlots,
+  }) {
+    final aTimeRange = TimeRange(
+      startsAt: appointment.startTime,
+      endsAt: appointment.endTime,
+    );
+    final appSlotId = CourtSlot.getIdFromTimeRange(aTimeRange);
+
+    return courtSlots.singleWhere(
+      (slot) => slot.slotId == appSlotId,
+      orElse: () => CourtSlot(
+        courtId: courtId,
+        slotId: CourtSlot.getIdFromTimeRange(aTimeRange),
+        timeRange: aTimeRange,
+      ),
+    );
+  }
 
   Future<void> joinCourtSlot(
     CourtSlot baseCourtSlot, [
