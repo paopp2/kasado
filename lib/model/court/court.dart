@@ -6,11 +6,6 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 part 'court.freezed.dart';
 part 'court.g.dart';
 
-enum KasadoWeekDays {
-  sunday,
-  monday,
-}
-
 @freezed
 class Court with _$Court {
   const factory Court({
