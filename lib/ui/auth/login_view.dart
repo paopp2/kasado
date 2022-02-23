@@ -18,12 +18,13 @@ class LoginView extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'KASADO',
+                'Kasado',
                 style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 60,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
+              SizedBox(height: constraints.maxHeight * 0.2),
               const SizedBox(width: 200, child: Divider()),
               const SizedBox(height: 20),
               SizedBox(

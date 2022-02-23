@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/firebase_options.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Kasado',
       theme: ThemeData(
+        textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
         primarySwatch: Colors.grey,
       ),
       routeInformationParser: appRouter.routeInformationParser,
