@@ -6,7 +6,6 @@ import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/court_details/court_admin/court_admin_state.dart';
 import 'package:kasado/logic/court_details/court_admin/court_admin_tec_mixin.dart';
-import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
@@ -20,7 +19,6 @@ final courtAdminController = Provider.autoDispose(
     courtRepo: ref.watch(courtRepositoryProvider),
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
-    utils: ref.watch(kasadoUtilsProvider),
   ),
 );
 
@@ -29,7 +27,6 @@ class CourtAdminController with CourtAdminTecMixin {
     required this.read,
     required this.courtRepo,
     required this.currentUser,
-    required this.utils,
     required this.userInfoRepo,
   });
 
@@ -37,7 +34,6 @@ class CourtAdminController with CourtAdminTecMixin {
   final CourtRepository courtRepo;
   final UserInfoRepository userInfoRepo;
   final KasadoUser currentUser;
-  final KasadoUtils utils;
 
   Future<void> togglePlayerPaymentStatus({
     required CourtSlot baseCourtSlot,
@@ -121,10 +117,6 @@ class CourtAdminController with CourtAdminTecMixin {
         selectedSchedIndices.map((si) => allowedTimeRanges[si]).toList();
     final List<WeekDays> allowedWeekDays =
         selectedWeekDayIndices.map((di) => indexToWeekDay[di]).toList();
-    final TimeRange? nextNearestTimeSlot = utils.getNextTimeSlotForToday(
-      timeSlots: allowedTimeSlots,
-      weekdays: allowedWeekDays,
-    );
 
     // assert that courtId != null when in 'edit mode'
     assert(isEdit == (courtId != null));
@@ -139,13 +131,6 @@ class CourtAdminController with CourtAdminTecMixin {
         ticketPrice: double.parse(tecTicketPrice.text),
         allowedTimeSlots: allowedTimeSlots,
         adminIds: [currentUser.id],
-        nextAvailableSlot: (nextNearestTimeSlot == null)
-            ? null
-            : CourtSlot(
-                courtId: id,
-                slotId: CourtSlot.getIdFromTimeRange(nextNearestTimeSlot),
-                timeRange: nextNearestTimeSlot,
-              ),
         allowedWeekDays: allowedWeekDays,
       ),
     );
