@@ -22,52 +22,48 @@ class NextCourtSlotCard extends StatelessWidget {
         horizontal: 25,
         vertical: 10,
       ),
-      child: SizedBox(
-        height: constraints.maxHeight * 0.52,
-        width: constraints.maxWidth * 0.85,
-        child: Card(
-          elevation: 20,
-          shape: RoundedRectangleBorder(
+      child: Card(
+        elevation: 20,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: InkWell(
+          onTap: () => context.pushNamed(
+            Routes.courtDetailsView,
+            extra: {'courtId': court.id},
+          ),
+          customBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          child: InkWell(
-            onTap: () => context.pushNamed(
-              Routes.courtDetailsView,
-              extra: {'courtId': court.id},
-            ),
-            customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Center(
-              child: Column(
-                children: [
-                  Hero(
-                    tag: courtImageHeroTag,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: SizedBox(
-                        height: constraints.maxHeight * 0.25,
-                        width: constraints.maxWidth,
-                        child: Image.network(
-                          court.photoUrl,
-                          fit: BoxFit.cover,
-                        ),
+          child: Center(
+            child: Column(
+              children: [
+                Hero(
+                  tag: courtImageHeroTag,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: SizedBox(
+                      height: constraints.maxHeight * 0.25,
+                      width: constraints.maxWidth,
+                      child: Image.network(
+                        court.photoUrl,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  SizedBox(height: constraints.maxHeight * 0.02),
-                  Text(
-                    court.name.toUpperCase(),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(court.address),
-                  const Divider(),
-                  NextCourtSlotDetails(
-                    constraints: constraints,
-                    court: court,
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: constraints.maxHeight * 0.02),
+                Text(
+                  court.name.toUpperCase(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(court.address),
+                const Divider(),
+                NextCourtSlotDetails(
+                  constraints: constraints,
+                  court: court,
+                ),
+              ],
             ),
           ),
         ),
