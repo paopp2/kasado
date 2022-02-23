@@ -43,8 +43,11 @@ class HomeView extends HookConsumerWidget {
                 appMetaStream.when(
                   loading: () => const LoadingWidget(),
                   error: (e, _) => Text(e.toString()),
-                  data: (appMeta) =>
-                      ((appMeta?['currentVer'] ?? '') == currentVersion)
+                  data: (a) =>
+                      // If currentVersion is >= to the allowed version then
+                      // allow continuation of usage. If not then prompt
+                      // user to update
+                      (currentVersion.compareTo(a?['currentVer'] ?? '') >= 0)
                           ? HomeTab(
                               model: model,
                               constraints: constraints,
