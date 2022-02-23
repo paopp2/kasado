@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/auth/login_view_model.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
 class LoginView extends HookConsumerWidget {
   const LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isLoggingInState = useState(false);
     final model = ref.watch(loginViewModel);
 
     return LayoutBuilder(builder: (context, constraints) {
@@ -24,7 +27,15 @@ class LoginView extends HookConsumerWidget {
                   fontWeight: FontWeight.w900,
                 ),
               ),
-              SizedBox(height: constraints.maxHeight * 0.2),
+              SizedBox(
+                height: constraints.maxHeight * 0.2,
+                child: Visibility(
+                  visible: isLoggingInState.value,
+                  child: const Center(
+                    child: LoadingWidget(),
+                  ),
+                ),
+              ),
               const SizedBox(width: 200, child: Divider()),
               const SizedBox(height: 20),
               SizedBox(
@@ -32,7 +43,11 @@ class LoginView extends HookConsumerWidget {
                 width: constraints.maxWidth * 0.7,
                 child: SignInButton(
                   Buttons.Google,
-                  onPressed: model.signInWithGoogle,
+                  onPressed: () async {
+                    isLoggingInState.value = true;
+                    await model.signInWithGoogle();
+                    isLoggingInState.value = false;
+                  },
                   elevation: 10,
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10))),
