@@ -20,11 +20,13 @@ class LoginViewModel extends ViewModel {
 
   Future<void> signInWithGoogle() async {
     final authCreds = await authService.signInWithGoogle();
-    authCreds.fold((error) => Fluttertoast.showToast(msg: error.toString()),
-        (creds) {
-      if (creds != null) {
-        Fluttertoast.showToast(msg: 'Signed in successfully');
-      }
-    });
+    authCreds.fold(
+      (error) => Fluttertoast.showToast(msg: error.toString()),
+      (creds) {
+        if (creds != null) {
+          Fluttertoast.showToast(msg: 'Signed in successfully');
+        }
+      },
+    );
   }
 }

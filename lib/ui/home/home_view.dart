@@ -20,6 +20,7 @@ class HomeView extends HookConsumerWidget {
     final appMetaStream = ref.watch(appMetaStreamProvider);
 
     useEffect(() {
+      tabController.addListener(() => (tabIndex.value = tabController.index));
       model.initState();
       return model.dispose;
     }, []);
@@ -37,14 +38,16 @@ class HomeView extends HookConsumerWidget {
               backgroundColor: Colors.transparent,
             ),
             body: TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
               controller: tabController,
               children: [
                 appMetaStream.when(
                   loading: () => const LoadingWidget(),
                   error: (e, _) => Text(e.toString()),
-                  data: (appMeta) =>
-                      ((appMeta?['currentVer'] ?? '') == currentVersion)
+                  data: (a) =>
+                      // If currentVersion is >= to the allowed version then
+                      // allow continuation of usage. If not then prompt
+                      // user to update
+                      (currentVersion.compareTo(a?['currentVer'] ?? '') >= 0)
                           ? HomeTab(
                               model: model,
                               constraints: constraints,
@@ -57,11 +60,8 @@ class HomeView extends HookConsumerWidget {
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
-              onTap: (index) {
-                tabIndex.value = index;
-                tabController.animateTo(index);
-              },
-              currentIndex: tabController.index,
+              onTap: tabController.animateTo,
+              currentIndex: tabIndex.value,
               selectedItemColor: Colors.black,
               items: const [
                 BottomNavigationBarItem(
