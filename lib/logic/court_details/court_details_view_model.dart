@@ -104,27 +104,27 @@ class CourtDetailsViewModel extends ViewModel {
     CourtSlot baseCourtSlot, [
     BuildContext? context,
   ]) async {
-    if (baseCourtSlot.isFull) {
-      Fluttertoast.showToast(msg: 'Slot is full');
-    } else if (baseCourtSlot.hasPlayer(currentUser)) {
-      Fluttertoast.showToast(msg: 'Player already reserved');
-    } else if (currentUserInfo!.hasReserved) {
-      Fluttertoast.showToast(msg: 'Only 1 reservation allowed at a time');
-    } else {
-      await courtRepo.pushCourtSlot(
-        courtSlot: baseCourtSlot.copyWith(
-          players: [...baseCourtSlot.players, currentUser],
-        ),
-      );
-      await userInfoRepo.reserveUserAt(
-        userId: currentUser.id,
-        // A court slot closes an hour before its endTime
-        reservedAt: baseCourtSlot.timeRange.endsAt.subtract(
-          const Duration(hours: 1),
-        ),
-      );
-      if (context != null) Navigator.pop(context);
-    }
+    await getSlotAndUserState(baseCourtSlot).when(
+      slotFull: () => Fluttertoast.showToast(msg: 'Slot is full'),
+      userReservedAtAnotherSlot: () => Fluttertoast.showToast(
+        msg: 'Only 1 reservation allowed at a time',
+      ),
+      orElse: () async {
+        await courtRepo.pushCourtSlot(
+          courtSlot: baseCourtSlot.copyWith(
+            players: [...baseCourtSlot.players, currentUser],
+          ),
+        );
+        await userInfoRepo.reserveUserAt(
+          userId: currentUser.id,
+          // A court slot closes an hour before its endTime
+          reservedAt: baseCourtSlot.timeRange.endsAt.subtract(
+            const Duration(hours: 1),
+          ),
+        );
+        if (context != null) Navigator.pop(context);
+      },
+    );
   }
 
   Future<void> leaveCourtSlot(
