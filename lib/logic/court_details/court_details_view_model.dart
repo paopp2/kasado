@@ -44,6 +44,7 @@ class CourtDetailsViewModel extends ViewModel {
   final KasadoUtils utils;
 
   SlotAndUserState getSlotAndUserState(CourtSlot courtSlot) {
+    if (currentUserInfo == null) return SlotAndUserState.loading;
     final user = currentUserInfo!;
     final userReservedHere =
         courtSlot.timeRange.startsAt.add(const Duration(hours: 1)) ==
@@ -154,6 +155,8 @@ class CourtDetailsViewModel extends ViewModel {
 }
 
 enum SlotAndUserState {
+  loading,
+  error,
   slotEnded,
   slotClosedByAdmin,
   slotFull,
@@ -164,6 +167,8 @@ enum SlotAndUserState {
 
 extension SlotAndUserStatePatternMatching on SlotAndUserState {
   T when<T>({
+    T Function()? loading,
+    T Function()? error,
     T Function()? slotEnded,
     T Function()? slotClosedByAdmin,
     T Function()? slotFull,
@@ -173,6 +178,10 @@ extension SlotAndUserStatePatternMatching on SlotAndUserState {
     T Function()? orElse,
   }) {
     switch (this) {
+      case SlotAndUserState.loading:
+        return loading?.call() ?? orElse!();
+      case SlotAndUserState.error:
+        return error?.call() ?? orElse!();
       case SlotAndUserState.slotEnded:
         return slotEnded?.call() ?? orElse!();
       case SlotAndUserState.slotClosedByAdmin:
