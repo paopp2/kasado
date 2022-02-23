@@ -37,6 +37,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
         "${court.id}|${CourtSlot.getIdFromTimeRange(nextTimeSlot)}",
       ),
     );
+    final isModifyingSlot = useState(false);
 
     useEffect(() {
       // TODO: Improve performance for this feature
@@ -133,14 +134,22 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                         userReservedAtAnotherSlot: () => false,
                         orElse: () => true,
                       ),
-                child: (nextCourtSlot?.hasPlayer(currentUser) ?? false)
-                    ? TextButton(
-                        child: const Text('LEAVE GAME'),
-                        onPressed: () => model.leaveCourtSlot(nextCourtSlot!),
-                      )
+                child: (isModifyingSlot.value)
+                    ? const LoadingWidget()
                     : TextButton(
-                        child: const Text('JOIN GAME'),
-                        onPressed: () => model.joinCourtSlot(nextCourtSlot!),
+                        child: Text(
+                          (nextCourtSlot?.hasPlayer(currentUser) ?? false)
+                              ? 'LEAVE GAME'
+                              : 'JOIN GAME',
+                        ),
+                        onPressed: () async {
+                          isModifyingSlot.value = true;
+                          await model.joinLeaveCourtSlot(
+                            baseCourtSlot: nextCourtSlot!,
+                            slotHasPlayer: nextCourtSlot.hasPlayer(currentUser),
+                          );
+                          isModifyingSlot.value = false;
+                        },
                       ),
               ),
             ],

@@ -86,6 +86,19 @@ class CourtDetailsViewModel extends ViewModel {
     );
   }
 
+  /// Join/Leave [baseCourtSlot] depending on whether [slotHasPlayer]
+  Future<void> joinLeaveCourtSlot({
+    required CourtSlot baseCourtSlot,
+    required bool slotHasPlayer,
+    BuildContext? context,
+  }) async {
+    if (slotHasPlayer) {
+      await leaveCourtSlot(baseCourtSlot, context);
+    } else {
+      await joinCourtSlot(baseCourtSlot, context);
+    }
+  }
+
   Future<void> joinCourtSlot(
     CourtSlot baseCourtSlot, [
     BuildContext? context,
@@ -97,7 +110,6 @@ class CourtDetailsViewModel extends ViewModel {
     } else if (currentUserInfo!.hasReserved) {
       Fluttertoast.showToast(msg: 'Only 1 reservation allowed at a time');
     } else {
-      if (context != null) Navigator.pop(context);
       await courtRepo.pushCourtSlot(
         courtSlot: baseCourtSlot.copyWith(
           players: [...baseCourtSlot.players, currentUser],
@@ -110,6 +122,7 @@ class CourtDetailsViewModel extends ViewModel {
           const Duration(hours: 1),
         ),
       );
+      if (context != null) Navigator.pop(context);
     }
   }
 
@@ -117,7 +130,6 @@ class CourtDetailsViewModel extends ViewModel {
     CourtSlot baseCourtSlot, [
     BuildContext? context,
   ]) async {
-    if (context != null) Navigator.pop(context);
     assert(baseCourtSlot.hasPlayer(currentUser));
     final updatedPlayerList = baseCourtSlot.players
       ..removeWhere((p) => (currentUser.id == p.id));
@@ -137,6 +149,7 @@ class CourtDetailsViewModel extends ViewModel {
         courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
       );
     }
+    if (context != null) Navigator.pop(context);
   }
 }
 
