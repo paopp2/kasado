@@ -134,23 +134,28 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                         userReservedAtAnotherSlot: () => false,
                         orElse: () => true,
                       ),
-                child: (isModifyingSlot.value)
-                    ? const LoadingWidget()
-                    : TextButton(
-                        child: Text(
-                          (nextCourtSlot?.hasPlayer(currentUser) ?? false)
-                              ? 'LEAVE GAME'
-                              : 'JOIN GAME',
+                child: SizedBox(
+                  height: constraints.maxHeight * 0.08,
+                  child: (isModifyingSlot.value)
+                      ? const LoadingWidget()
+                      : TextButton(
+                          child: Text(
+                            (nextCourtSlot?.hasPlayer(currentUser) ?? false)
+                                ? 'LEAVE GAME'
+                                : 'JOIN GAME',
+                          ),
+                          onPressed: () async {
+                            isModifyingSlot.value = true;
+                            await model.joinLeaveCourtSlot(
+                              baseCourtSlot: nextCourtSlot!,
+                              slotHasPlayer: nextCourtSlot.hasPlayer(
+                                currentUser,
+                              ),
+                            );
+                            isModifyingSlot.value = false;
+                          },
                         ),
-                        onPressed: () async {
-                          isModifyingSlot.value = true;
-                          await model.joinLeaveCourtSlot(
-                            baseCourtSlot: nextCourtSlot!,
-                            slotHasPlayer: nextCourtSlot.hasPlayer(currentUser),
-                          );
-                          isModifyingSlot.value = false;
-                        },
-                      ),
+                ),
               ),
             ],
           ),
