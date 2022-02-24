@@ -122,6 +122,20 @@ class CourtAdminController with CourtAdminTecMixin {
     assert(isEdit == (courtId != null));
     final id = (isEdit) ? courtId! : const Uuid().v4();
 
+    Court? baseCourtInfo;
+    if (isEdit) {
+      // If edit, get the baseCourtInfo to obtain the existing court admins from
+      baseCourtInfo = await courtRepo.getCourt(courtId!);
+    } else {
+      // Else if this is a new court to be pushed, set the current user's (the
+      // one who added this new court) privileges to admin
+      await userInfoRepo.setUserAdminPrivileges(
+        userId: currentUser.id,
+        isAdmin: true,
+      );
+    }
+
+    // Push or update court
     await courtRepo.pushCourt(
       Court(
         id: id,
@@ -130,14 +144,9 @@ class CourtAdminController with CourtAdminTecMixin {
         photoUrl: tecCourtPhotoUrl.text,
         ticketPrice: double.parse(tecTicketPrice.text),
         allowedTimeSlots: allowedTimeSlots,
-        adminIds: [currentUser.id],
+        adminIds: baseCourtInfo?.adminIds ?? [currentUser.id],
         allowedWeekDays: allowedWeekDays,
       ),
-    );
-
-    await userInfoRepo.setUserAdminPrivileges(
-      userId: currentUser.id,
-      isAdmin: true,
     );
 
     // TODO: Implement better routing on NewCourtInput through GoRouter

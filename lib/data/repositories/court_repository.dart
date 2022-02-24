@@ -33,6 +33,13 @@ class CourtRepository {
     await firestoreHelper.deleteData(path: FirestorePath.docCourt(court.id));
   }
 
+  Future<Court?> getCourt(String courtId) async {
+    return firestoreHelper.getData(
+      path: FirestorePath.docCourt(courtId),
+      builder: (data, docId) => Court.fromJson(data),
+    );
+  }
+
   Stream<Court?> getCourtStream(String courtId) {
     return firestoreHelper.documentStream(
       path: FirestorePath.docCourt(courtId),
