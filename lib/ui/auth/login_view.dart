@@ -46,7 +46,6 @@ class LoginView extends HookConsumerWidget {
                   onPressed: () async {
                     isLoggingInState.value = true;
                     await model.signInWithGoogle();
-                    isLoggingInState.value = false;
                   },
                   elevation: 10,
                   shape: const RoundedRectangleBorder(
