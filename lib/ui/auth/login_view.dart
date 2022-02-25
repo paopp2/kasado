@@ -4,6 +4,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/auth/login_view_model.dart';
+import 'package:kasado/ui/auth/components/login_error_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class LoginView extends HookConsumerWidget {
@@ -45,7 +46,18 @@ class LoginView extends HookConsumerWidget {
                   Buttons.Google,
                   onPressed: () async {
                     isLoggingInState.value = true;
-                    await model.signInWithGoogle();
+                    await model.signInWithGoogle(
+                      ifError: (e) => showDialog(
+                        context: context,
+                        builder: (_) => const LoginErrorDialog(),
+                      ),
+                      ifSuccess: (creds) {
+                        if (creds != null) {
+                          Fluttertoast.showToast(msg: 'Signed in successfully');
+                        }
+                      },
+                    );
+                    isLoggingInState.value = false;
                   },
                   elevation: 10,
                   shape: const RoundedRectangleBorder(
@@ -61,7 +73,7 @@ class LoginView extends HookConsumerWidget {
                   Buttons.FacebookNew,
                   onPressed: () => Fluttertoast.showToast(
                     msg:
-                        'Google lng say gamita pre, butngan ra nya nako nig para FB pramis',
+                        'Google lng say gamita pre, butngan ra nya namo nig para FB pramis',
                   ),
                   elevation: 10,
                   shape: const RoundedRectangleBorder(
