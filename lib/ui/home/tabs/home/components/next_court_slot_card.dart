@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/app_router.dart';
@@ -52,11 +53,17 @@ class NextCourtSlotCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: constraints.maxHeight * 0.02),
-                Text(
+                AutoSizeText(
                   court.name.toUpperCase(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
                 ),
-                Text(court.address),
+                AutoSizeText(
+                  court.address,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                ),
                 const Divider(),
                 NextCourtSlotDetails(
                   constraints: constraints,

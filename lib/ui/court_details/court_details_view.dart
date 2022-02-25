@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -64,15 +65,21 @@ class CourtDetailsView extends HookConsumerWidget {
                   Center(
                     child: Column(
                       children: [
-                        Text(
+                        AutoSizeText(
                           court.name.toUpperCase() +
                               "  [₱${court.ticketPrice}]",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
                         ),
-                        Text(court.address),
+                        AutoSizeText(
+                          court.address,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
