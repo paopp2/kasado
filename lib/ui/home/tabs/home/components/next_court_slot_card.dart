@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/app_router.dart';
-import 'package:kasado/constants/strings.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/home/tabs/home/components/next_court_slot_details.dart';
 
@@ -39,7 +38,7 @@ class NextCourtSlotCard extends StatelessWidget {
             child: Column(
               children: [
                 Hero(
-                  tag: courtImageHeroTag,
+                  tag: court.id,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: SizedBox(
