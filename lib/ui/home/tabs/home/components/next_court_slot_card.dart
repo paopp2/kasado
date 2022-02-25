@@ -1,7 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/app_router.dart';
-import 'package:kasado/constants/strings.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/home/tabs/home/components/next_court_slot_details.dart';
 
@@ -22,52 +22,54 @@ class NextCourtSlotCard extends StatelessWidget {
         horizontal: 25,
         vertical: 10,
       ),
-      child: SizedBox(
-        height: constraints.maxHeight * 0.52,
-        width: constraints.maxWidth * 0.85,
-        child: Card(
-          elevation: 20,
-          shape: RoundedRectangleBorder(
+      child: Card(
+        elevation: 20,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: InkWell(
+          onTap: () => context.pushNamed(
+            Routes.courtDetailsView,
+            extra: {'courtId': court.id},
+          ),
+          customBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          child: InkWell(
-            onTap: () => context.pushNamed(
-              Routes.courtDetailsView,
-              extra: {'courtId': court.id},
-            ),
-            customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Center(
-              child: Column(
-                children: [
-                  Hero(
-                    tag: courtImageHeroTag,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: SizedBox(
-                        height: constraints.maxHeight * 0.25,
-                        width: constraints.maxWidth,
-                        child: Image.network(
-                          court.photoUrl,
-                          fit: BoxFit.cover,
-                        ),
+          child: Center(
+            child: Column(
+              children: [
+                Hero(
+                  tag: court.id,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: SizedBox(
+                      height: constraints.maxHeight * 0.25,
+                      width: constraints.maxWidth,
+                      child: Image.network(
+                        court.photoUrl,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  SizedBox(height: constraints.maxHeight * 0.02),
-                  Text(
-                    court.name.toUpperCase(),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(court.address),
-                  const Divider(),
-                  NextCourtSlotDetails(
-                    constraints: constraints,
-                    court: court,
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: constraints.maxHeight * 0.02),
+                AutoSizeText(
+                  court.name.toUpperCase(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                ),
+                AutoSizeText(
+                  court.address,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                ),
+                const Divider(),
+                NextCourtSlotDetails(
+                  constraints: constraints,
+                  court: court,
+                ),
+              ],
             ),
           ),
         ),

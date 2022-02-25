@@ -1,11 +1,13 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/firebase_options.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 // TODO: Set to false in production
 const bool useFirebaseEmulator = false;
@@ -13,19 +15,22 @@ const bool useFirebaseEmulator = false;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: (Platform.isAndroid)
+    options: (UniversalPlatform.isAndroid)
         ? null // Use manual installation for Android (to enable Analytics)
         : DefaultFirebaseOptions.currentPlatform,
   );
 
   if (useFirebaseEmulator) {
-    final localHostString = Platform.isAndroid ? '10.0.2.2' : 'localhost';
+    final localHostString =
+        UniversalPlatform.isAndroid ? '10.0.2.2' : 'localhost';
     FirebaseFirestore.instance.settings = Settings(
       host: '$localHostString:8080',
       sslEnabled: false,
       persistenceEnabled: false,
     );
   }
+
+  GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
 
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -35,14 +40,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appRouter = AppRouter.instance.router;
-    return MaterialApp.router(
-      title: 'Kasado',
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
-      ),
-      routeInformationParser: appRouter.routeInformationParser,
-      routerDelegate: appRouter.routerDelegate,
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        final user = snapshot.data;
+        final appRouter = AppRouter(isLoggedIn: user != null).router;
+        return MaterialApp.router(
+          title: 'Kasado',
+          theme: ThemeData(
+            textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
+            primarySwatch: Colors.grey,
+          ),
+          routeInformationParser: appRouter.routeInformationParser,
+          routerDelegate: appRouter.routerDelegate,
+        );
+      },
     );
   }
 }

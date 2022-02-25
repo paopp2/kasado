@@ -1,7 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/constants/strings.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/ui/court_details/components/court_admins_panel.dart';
@@ -46,7 +46,7 @@ class CourtDetailsView extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Hero(
-                    tag: courtImageHeroTag,
+                    tag: court.id,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(30),
@@ -65,15 +65,21 @@ class CourtDetailsView extends HookConsumerWidget {
                   Center(
                     child: Column(
                       children: [
-                        Text(
+                        AutoSizeText(
                           court.name.toUpperCase() +
                               "  [₱${court.ticketPrice}]",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
                         ),
-                        Text(court.address),
+                        AutoSizeText(
+                          court.address,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
