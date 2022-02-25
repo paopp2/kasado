@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
+import 'package:kasado/constants/current_app_meta.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 
@@ -75,10 +76,14 @@ class UserInfoDrawer extends HookConsumerWidget {
                   leading: const Icon(Icons.logout),
                 ),
                 const Spacer(),
-                TextButton(
-                  onPressed: null,
-                  onLongPress: () => context.pushNamed(Routes.courtsOwnedView),
-                  child: const Text('.'),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: GestureDetector(
+                    onLongPress: () => context.pushNamed(
+                      Routes.courtsOwnedView,
+                    ),
+                    child: const Text(currentVersion),
+                  ),
                 ),
               ],
             ),
