@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -40,21 +39,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        final user = snapshot.data;
-        final appRouter = AppRouter(isLoggedIn: user != null).router;
-        return MaterialApp.router(
-          title: 'Kasado',
-          theme: ThemeData(
-            textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
-            primarySwatch: Colors.grey,
-          ),
-          routeInformationParser: appRouter.routeInformationParser,
-          routerDelegate: appRouter.routerDelegate,
-        );
-      },
+    final appRouter = AppRouter.instance.router;
+    return MaterialApp.router(
+      title: 'Kasado',
+      theme: ThemeData(
+        textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
+        primarySwatch: Colors.grey,
+      ),
+      routeInformationParser: appRouter.routeInformationParser,
+      routerDelegate: appRouter.routerDelegate,
     );
   }
 }
