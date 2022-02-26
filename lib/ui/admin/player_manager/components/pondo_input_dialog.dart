@@ -19,6 +19,8 @@ class PondoInputDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoadingState = useState(false);
+    final pondoTec = useTextEditingController();
+
     return Dialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -35,7 +37,8 @@ class PondoInputDialog extends HookConsumerWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             Text('Pondo: ${userInfo.pondo}'),
-            const DataEntryField(
+            DataEntryField(
+              tec: pondoTec,
               hint: 'Pondo to add/deduct',
               isMoney: true,
             ),
@@ -58,7 +61,7 @@ class PondoInputDialog extends HookConsumerWidget {
                             context: context,
                             currentUserInfo: userInfo,
                             isAdd: false,
-                            pondo: 10,
+                            pondo: double.parse(pondoTec.text),
                           );
                           isLoadingState.value = false;
                         },
@@ -77,7 +80,7 @@ class PondoInputDialog extends HookConsumerWidget {
                             context: context,
                             currentUserInfo: userInfo,
                             isAdd: true,
-                            pondo: 10,
+                            pondo: double.parse(pondoTec.text),
                           );
                           isLoadingState.value = false;
                         },
