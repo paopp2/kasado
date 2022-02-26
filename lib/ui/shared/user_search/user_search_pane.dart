@@ -7,11 +7,12 @@ import 'package:kasado/ui/shared/data_entry_field.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 final userInfoQueryResultProvider =
-    FutureProvider.autoDispose.family<List<KasadoUserInfo>, String?>(
-  (ref, emailQuery) async {
+    StreamProvider.autoDispose.family<List<KasadoUserInfo>, String?>(
+  (ref, emailQuery) {
     ref.maintainState = true;
     final userInfoRepo = ref.watch(userInfoRepositoryProvider);
-    return await userInfoRepo.getUserInfoList(emailQuery);
+    if (emailQuery == null) return Stream.value([]);
+    return userInfoRepo.getUserInfosStream(emailQuery);
   },
 );
 

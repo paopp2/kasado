@@ -36,17 +36,16 @@ class UserInfoRepository {
     );
   }
 
-  Future<List<KasadoUserInfo>> getUserInfoList([
+  Stream<List<KasadoUserInfo>> getUserInfosStream([
     String? userEmailQuery,
-  ]) async {
-    if (userEmailQuery == null || userEmailQuery.isEmpty) return [];
-    return await firestoreHelper.collectionToList(
+  ]) {
+    return firestoreHelper.collectionStream(
       path: FirestorePath.colUserInfos(),
       builder: (data, docId) => KasadoUserInfo.fromJson(data),
       queryBuilder: (query) => query.where(
         'user.email',
         isGreaterThanOrEqualTo: userEmailQuery,
-        isLessThanOrEqualTo: userEmailQuery + '\uf8ff',
+        isLessThanOrEqualTo: (userEmailQuery ?? '') + '\uf8ff',
       ),
     );
   }
@@ -76,6 +75,24 @@ class UserInfoRepository {
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(userId),
       data: userInfoToUpdate.copyWith(reservedAt: reservedAt).toJson(),
+    );
+  }
+
+  /// Deposit [pondo] to user with [currentUserInfo.id] if [isDeposit],
+  /// withdraw if otherwise
+  Future<void> depositWithdrawPondo({
+    required KasadoUserInfo currentUserInfo,
+    required bool isDeposit,
+    required double pondo,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docUserInfo(currentUserInfo.id),
+      data: currentUserInfo
+          .copyWith(
+              pondo: (isDeposit)
+                  ? (currentUserInfo.pondo + pondo)
+                  : (currentUserInfo.pondo - pondo))
+          .toJson(),
     );
   }
 
