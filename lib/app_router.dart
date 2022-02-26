@@ -7,8 +7,8 @@ import 'package:kasado/ui/home/home_view.dart';
 import 'package:kasado/ui/profile/user_profile_view.dart';
 
 class AppRouter {
-  AppRouter({required this.isLoggedIn});
-  final bool isLoggedIn;
+  AppRouter._();
+  static final instance = AppRouter._();
   final fireAuthInstance = FirebaseAuth.instance;
   late final router = GoRouter(
     routes: [
@@ -47,6 +47,7 @@ class AppRouter {
       ),
     ],
     redirect: (state) {
+      final isLoggedIn = fireAuthInstance.currentUser != null;
       final loggingIn = state.subloc == '/login';
 
       // If the user is not logged in, they must login
