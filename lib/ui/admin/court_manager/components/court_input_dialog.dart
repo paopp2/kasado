@@ -5,8 +5,8 @@ import 'package:kasado/logic/court_details/court_admin/court_admin_controller.da
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
 
-class NewCourtInputDialog extends HookConsumerWidget {
-  const NewCourtInputDialog({
+class CourtInputDialog extends HookConsumerWidget {
+  const CourtInputDialog({
     Key? key,
     required this.controller,
     this.courtToEdit,

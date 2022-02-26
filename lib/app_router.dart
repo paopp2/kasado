@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
-import 'package:kasado/ui/courts_owned/courts_owned_view.dart';
+import 'package:kasado/ui/admin/court_manager/courts_owned_view.dart';
 import 'package:kasado/ui/home/home_view.dart';
 import 'package:kasado/ui/profile/user_profile_view.dart';
 

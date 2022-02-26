@@ -6,7 +6,7 @@ import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/ui/court_details/components/court_admins_panel.dart';
 import 'package:kasado/ui/court_details/components/court_schedule_panel.dart';
-import 'package:kasado/ui/courts_owned/components/new_court_input_dialog.dart';
+import 'package:kasado/ui/admin/court_manager/components/court_input_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class CourtDetailsView extends HookConsumerWidget {
@@ -107,7 +107,7 @@ class CourtDetailsView extends HookConsumerWidget {
                   onPressed: (tabIndex.value == 0)
                       ? () => adminController.openCourtInputDialog(
                             context: context,
-                            dialog: NewCourtInputDialog(
+                            dialog: CourtInputDialog(
                               controller: adminController,
                               courtToEdit: court,
                             ),
