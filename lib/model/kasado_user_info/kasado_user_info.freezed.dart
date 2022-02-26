@@ -27,12 +27,14 @@ class _$KasadoUserInfoTearOff {
       required KasadoUser user,
       bool isAdmin = false,
       bool isSuperAdmin = false,
+      double pondo = 0,
       DateTime? reservedAt}) {
     return _KasadoUserInfo(
       id: id,
       user: user,
       isAdmin: isAdmin,
       isSuperAdmin: isSuperAdmin,
+      pondo: pondo,
       reservedAt: reservedAt,
     );
   }
@@ -51,6 +53,7 @@ mixin _$KasadoUserInfo {
   KasadoUser get user => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
   bool get isSuperAdmin => throw _privateConstructorUsedError;
+  double get pondo => throw _privateConstructorUsedError;
   DateTime? get reservedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -69,6 +72,7 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
       KasadoUser user,
       bool isAdmin,
       bool isSuperAdmin,
+      double pondo,
       DateTime? reservedAt});
 
   $KasadoUserCopyWith<$Res> get user;
@@ -89,6 +93,7 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
     Object? user = freezed,
     Object? isAdmin = freezed,
     Object? isSuperAdmin = freezed,
+    Object? pondo = freezed,
     Object? reservedAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -108,6 +113,10 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.isSuperAdmin
           : isSuperAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
+      pondo: pondo == freezed
+          ? _value.pondo
+          : pondo // ignore: cast_nullable_to_non_nullable
+              as double,
       reservedAt: reservedAt == freezed
           ? _value.reservedAt
           : reservedAt // ignore: cast_nullable_to_non_nullable
@@ -135,6 +144,7 @@ abstract class _$KasadoUserInfoCopyWith<$Res>
       KasadoUser user,
       bool isAdmin,
       bool isSuperAdmin,
+      double pondo,
       DateTime? reservedAt});
 
   @override
@@ -158,6 +168,7 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
     Object? user = freezed,
     Object? isAdmin = freezed,
     Object? isSuperAdmin = freezed,
+    Object? pondo = freezed,
     Object? reservedAt = freezed,
   }) {
     return _then(_KasadoUserInfo(
@@ -177,6 +188,10 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.isSuperAdmin
           : isSuperAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
+      pondo: pondo == freezed
+          ? _value.pondo
+          : pondo // ignore: cast_nullable_to_non_nullable
+              as double,
       reservedAt: reservedAt == freezed
           ? _value.reservedAt
           : reservedAt // ignore: cast_nullable_to_non_nullable
@@ -193,6 +208,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       required this.user,
       this.isAdmin = false,
       this.isSuperAdmin = false,
+      this.pondo = 0,
       this.reservedAt})
       : super._();
 
@@ -209,12 +225,15 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final bool isSuperAdmin;
+  @JsonKey()
+  @override
+  final double pondo;
   @override
   final DateTime? reservedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, reservedAt: $reservedAt)';
+    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, reservedAt: $reservedAt)';
   }
 
   @override
@@ -226,6 +245,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('user', user))
       ..add(DiagnosticsProperty('isAdmin', isAdmin))
       ..add(DiagnosticsProperty('isSuperAdmin', isSuperAdmin))
+      ..add(DiagnosticsProperty('pondo', pondo))
       ..add(DiagnosticsProperty('reservedAt', reservedAt));
   }
 
@@ -239,6 +259,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.isAdmin, isAdmin) &&
             const DeepCollectionEquality()
                 .equals(other.isSuperAdmin, isSuperAdmin) &&
+            const DeepCollectionEquality().equals(other.pondo, pondo) &&
             const DeepCollectionEquality()
                 .equals(other.reservedAt, reservedAt));
   }
@@ -250,6 +271,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(user),
       const DeepCollectionEquality().hash(isAdmin),
       const DeepCollectionEquality().hash(isSuperAdmin),
+      const DeepCollectionEquality().hash(pondo),
       const DeepCollectionEquality().hash(reservedAt));
 
   @JsonKey(ignore: true)
@@ -269,6 +291,7 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
       required KasadoUser user,
       bool isAdmin,
       bool isSuperAdmin,
+      double pondo,
       DateTime? reservedAt}) = _$_KasadoUserInfo;
   const _KasadoUserInfo._() : super._();
 
@@ -283,6 +306,8 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   bool get isAdmin;
   @override
   bool get isSuperAdmin;
+  @override
+  double get pondo;
   @override
   DateTime? get reservedAt;
   @override

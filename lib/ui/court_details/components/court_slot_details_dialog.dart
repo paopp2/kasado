@@ -146,6 +146,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                                     slotHasPlayer: fetchedCourtSlot.hasPlayer(
                                       currentUser,
                                     ),
+                                    courtTicketPrice: court.ticketPrice,
                                     context: context,
                                   );
                                   isModifyingSlot.value = false;

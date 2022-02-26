@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
-import 'package:kasado/logic/court_details/court_admin/court_admin_state.dart';
-import 'package:kasado/ui/courts_owned/components/new_court_input_dialog.dart';
+import 'package:kasado/logic/admin/court_manager/court_admin_state.dart';
+import 'package:kasado/ui/admin/court_manager/components/court_input_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class CourtsOwnedView extends HookConsumerWidget {
@@ -51,7 +51,7 @@ class CourtsOwnedView extends HookConsumerWidget {
             child: FloatingActionButton.extended(
               onPressed: () => adminController.openCourtInputDialog(
                 context: context,
-                dialog: NewCourtInputDialog(controller: adminController),
+                dialog: CourtInputDialog(controller: adminController),
               ),
               label: const Text('Add Court'),
               icon: const Icon(Icons.add),

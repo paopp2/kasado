@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kasado/ui/admin/player_manager/player_manager_view.dart';
 import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
-import 'package:kasado/ui/courts_owned/courts_owned_view.dart';
+import 'package:kasado/ui/admin/court_manager/courts_owned_view.dart';
 import 'package:kasado/ui/home/home_view.dart';
 import 'package:kasado/ui/profile/user_profile_view.dart';
 
 class AppRouter {
-  AppRouter({required this.isLoggedIn});
-  final bool isLoggedIn;
+  AppRouter._();
+  static final instance = AppRouter._();
   final fireAuthInstance = FirebaseAuth.instance;
   late final router = GoRouter(
     routes: [
@@ -45,8 +46,14 @@ class AppRouter {
           userId: state.params['uid']!,
         ),
       ),
+      GoRoute(
+        name: Routes.playerManagerView,
+        path: '/player-manager-view',
+        builder: (context, state) => const PlayerManagerView(),
+      ),
     ],
     redirect: (state) {
+      final isLoggedIn = fireAuthInstance.currentUser != null;
       final loggingIn = state.subloc == '/login';
 
       // If the user is not logged in, they must login
@@ -71,4 +78,5 @@ class Routes {
   static const courtDetailsView = 'court_details_view';
   static const courtsOwnedView = 'courts_owned_view';
   static const userProfileView = 'user_profile_view';
+  static const playerManagerView = 'player_manager_view';
 }
