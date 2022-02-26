@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kasado/ui/admin/player_manager/player_manager_view.dart';
 import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
 import 'package:kasado/ui/admin/court_manager/courts_owned_view.dart';
@@ -45,6 +46,11 @@ class AppRouter {
           userId: state.params['uid']!,
         ),
       ),
+      GoRoute(
+        name: Routes.playerManagerView,
+        path: '/player-manager-view',
+        builder: (context, state) => const PlayerManagerView(),
+      ),
     ],
     redirect: (state) {
       final isLoggedIn = fireAuthInstance.currentUser != null;
@@ -72,4 +78,5 @@ class Routes {
   static const courtDetailsView = 'court_details_view';
   static const courtsOwnedView = 'courts_owned_view';
   static const userProfileView = 'user_profile_view';
+  static const playerManagerView = 'player_manager_view';
 }

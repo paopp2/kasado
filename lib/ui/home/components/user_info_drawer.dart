@@ -72,7 +72,7 @@ class UserInfoDrawer extends HookConsumerWidget {
                   child: ListTile(
                     title: const Text('Manage players'),
                     leading: const Icon(Icons.people_alt),
-                    onTap: () {},
+                    onTap: () => context.pushNamed(Routes.playerManagerView),
                   ),
                 ),
                 Visibility(
