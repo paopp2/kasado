@@ -28,7 +28,7 @@ class UserProfileView extends HookConsumerWidget {
               error: (e, _) => Text(e.toString()),
               loading: () => const LoadingWidget(),
               data: (userInfo) => UserProfilePane(
-                currentUser: userInfo?.user,
+                user: userInfo?.user,
                 constraints: constraints,
               ),
             ),

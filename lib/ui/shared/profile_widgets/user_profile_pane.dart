@@ -5,33 +5,33 @@ import 'package:kasado/ui/shared/profile_widgets/player_stat_block.dart';
 class UserProfilePane extends StatelessWidget {
   const UserProfilePane({
     Key? key,
-    required this.currentUser,
+    required this.user,
     required this.constraints,
   }) : super(key: key);
 
-  final KasadoUser? currentUser;
+  final KasadoUser? user;
   final BoxConstraints constraints;
 
   @override
   Widget build(BuildContext context) {
-    return (currentUser == null)
+    return (user == null)
         ? const Text('No user info')
         : Column(
             children: [
               const SizedBox(height: 10),
               CircleAvatar(
-                backgroundImage: NetworkImage(currentUser!.photoUrl!),
+                backgroundImage: NetworkImage(user!.photoUrl!),
                 radius: 50,
               ),
               const SizedBox(height: 10),
               Text(
-                currentUser!.displayName!,
+                user!.displayName!,
                 style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(currentUser!.email!),
+              Text(user!.email!),
               const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
