@@ -21,7 +21,7 @@ class ProfileTab extends HookConsumerWidget {
       loading: () => const LoadingWidget(),
       data: (currentUserInfo) {
         return UserProfilePane(
-          user: currentUserInfo?.user,
+          userInfo: currentUserInfo,
           constraints: constraints,
         );
       },
