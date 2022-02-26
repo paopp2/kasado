@@ -27,14 +27,26 @@ class UserSearchPane extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userEmailQuery = useState<String?>(null);
+    final tempQuery = useState('');
     final userInfoQueryResult =
         ref.watch(userInfoQueryResultProvider(userEmailQuery.value));
 
     return Column(
       children: [
-        DataEntryField(
-          hint: 'Search player email',
-          onFieldSubmitted: (query) => (userEmailQuery.value = query),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: DataEntryField(
+                hint: 'Search player email',
+                onChanged: (query) => (tempQuery.value = query),
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () => userEmailQuery.value = tempQuery.value,
+            ),
+          ],
         ),
         Expanded(
           child: userInfoQueryResult.when(
