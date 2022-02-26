@@ -36,6 +36,21 @@ class UserInfoRepository {
     );
   }
 
+  Future<List<KasadoUserInfo>> getUserInfoList([
+    String? userEmailQuery,
+  ]) async {
+    if (userEmailQuery == null || userEmailQuery.isEmpty) return [];
+    return await firestoreHelper.collectionToList(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, docId) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query.where(
+        'user.email',
+        isGreaterThanOrEqualTo: userEmailQuery,
+        isLessThanOrEqualTo: userEmailQuery + '\uf8ff',
+      ),
+    );
+  }
+
   Stream<KasadoUserInfo?> getUserInfoStream(String userId) {
     return firestoreHelper.documentStream(
       path: FirestorePath.docUserInfo(userId),

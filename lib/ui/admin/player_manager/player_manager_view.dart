@@ -8,9 +8,11 @@ class PlayerManagerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
-      body: const Padding(
-        padding: EdgeInsets.all(20.0),
-        child: UserSearchPane(),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: UserSearchPane(
+          onUserTapped: (userInfo) => print(userInfo.id),
+        ),
       ),
     );
   }
