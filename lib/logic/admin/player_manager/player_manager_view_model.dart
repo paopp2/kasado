@@ -25,9 +25,9 @@ class PlayerManagerViewModel extends ViewModel {
     required bool isAdd,
     required double pondo,
   }) async {
-    await userInfoRepo.depositWithdrawPondo(
+    await userInfoRepo.addOrDeductPondo(
       currentUserInfo: currentUserInfo,
-      isDeposit: isAdd,
+      isAdd: isAdd,
       pondo: pondo,
     );
     Navigator.pop(context);

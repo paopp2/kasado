@@ -78,18 +78,18 @@ class UserInfoRepository {
     );
   }
 
-  /// Deposit [pondo] to user with [currentUserInfo.id] if [isDeposit],
-  /// withdraw if otherwise
-  Future<void> depositWithdrawPondo({
+  /// Add [pondo] to user with [currentUserInfo.id] if [isAdd],
+  /// deduct if otherwise
+  Future<void> addOrDeductPondo({
     required KasadoUserInfo currentUserInfo,
-    required bool isDeposit,
+    required bool isAdd,
     required double pondo,
   }) async {
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(currentUserInfo.id),
       data: currentUserInfo
           .copyWith(
-              pondo: (isDeposit)
+              pondo: (isAdd)
                   ? (currentUserInfo.pondo + pondo)
                   : (currentUserInfo.pondo - pondo))
           .toJson(),

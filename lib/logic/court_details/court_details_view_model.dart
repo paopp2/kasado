@@ -37,8 +37,8 @@ class CourtDetailsViewModel extends ViewModel {
   }) : super(read);
 
   final CourtRepository courtRepo;
-  final CourtAdminController adminController;
   final UserInfoRepository userInfoRepo;
+  final CourtAdminController adminController;
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;
   final KasadoUtils utils;
@@ -91,17 +91,19 @@ class CourtDetailsViewModel extends ViewModel {
   Future<void> joinLeaveCourtSlot({
     required CourtSlot baseCourtSlot,
     required bool slotHasPlayer,
+    required double courtTicketPrice,
     BuildContext? context,
   }) async {
     if (slotHasPlayer) {
-      await leaveCourtSlot(baseCourtSlot, context);
+      await leaveCourtSlot(baseCourtSlot, courtTicketPrice, context);
     } else {
-      await joinCourtSlot(baseCourtSlot, context);
+      await joinCourtSlot(baseCourtSlot, courtTicketPrice, context);
     }
   }
 
   Future<void> joinCourtSlot(
-    CourtSlot baseCourtSlot, [
+    CourtSlot baseCourtSlot,
+    double courtTicketPrice, [
     BuildContext? context,
   ]) async {
     await getSlotAndUserState(baseCourtSlot).when(
@@ -110,9 +112,18 @@ class CourtDetailsViewModel extends ViewModel {
         msg: 'Only 1 reservation allowed at a time',
       ),
       orElse: () async {
+        KasadoUser? paidCurrentUser;
+        if (currentUserInfo!.hasEnoughPondoToPay(courtTicketPrice)) {
+          userInfoRepo.addOrDeductPondo(
+            currentUserInfo: currentUserInfo!,
+            isAdd: false,
+            pondo: courtTicketPrice,
+          );
+          paidCurrentUser = currentUser.copyWith(hasPaid: true);
+        }
         await courtRepo.pushCourtSlot(
           courtSlot: baseCourtSlot.copyWith(
-            players: [...baseCourtSlot.players, currentUser],
+            players: [...baseCourtSlot.players, paidCurrentUser ?? currentUser],
           ),
         );
         await userInfoRepo.reserveUserAt(
@@ -128,12 +139,22 @@ class CourtDetailsViewModel extends ViewModel {
   }
 
   Future<void> leaveCourtSlot(
-    CourtSlot baseCourtSlot, [
+    CourtSlot baseCourtSlot,
+    double courtTicketPrice, [
     BuildContext? context,
   ]) async {
-    assert(baseCourtSlot.hasPlayer(currentUser));
-    final updatedPlayerList = baseCourtSlot.players
-      ..removeWhere((p) => (currentUser.id == p.id));
+    final KasadoUser currentPlayer =
+        baseCourtSlot.players.singleWhere((p) => (p.id == currentUser.id));
+
+    if (currentPlayer.hasPaid) {
+      await userInfoRepo.addOrDeductPondo(
+        currentUserInfo: currentUserInfo!,
+        isAdd: true,
+        pondo: courtTicketPrice,
+      );
+    }
+
+    final updatedPlayerList = baseCourtSlot.players..remove(currentPlayer);
 
     await userInfoRepo.reserveUserAt(
       userId: currentUser.id,

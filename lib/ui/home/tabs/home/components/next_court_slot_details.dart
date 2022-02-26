@@ -160,6 +160,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                               slotHasPlayer: nextCourtSlot.hasPlayer(
                                 currentUser,
                               ),
+                              courtTicketPrice: court.ticketPrice,
                             );
                             isModifyingSlot.value = false;
                           },
