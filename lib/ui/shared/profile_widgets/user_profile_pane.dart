@@ -18,6 +18,9 @@ class UserProfilePane extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUser = ref.watch(currentUserProvider)!;
     final isCurrentUser = currentUser.id == user?.id;
+    final isSuperAdmin =
+        ref.watch(currentUserInfoProvider).value?.isSuperAdmin ?? false;
+
     return (user == null)
         ? const Text('No user info')
         : Column(
@@ -38,7 +41,7 @@ class UserProfilePane extends HookConsumerWidget {
               Text(user!.email!),
               const SizedBox(height: 30),
               Visibility(
-                visible: isCurrentUser,
+                visible: isCurrentUser || isSuperAdmin,
                 child: const Text(
                   'PONDO: 100.0 Php',
                   style: TextStyle(fontSize: 15),
