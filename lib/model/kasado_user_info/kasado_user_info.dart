@@ -13,6 +13,7 @@ class KasadoUserInfo with _$KasadoUserInfo {
     required KasadoUser user,
     @Default(false) bool isAdmin,
     @Default(false) bool isSuperAdmin,
+    @Default(0) double pondo,
     DateTime? reservedAt,
   }) = _KasadoUserInfo;
 
@@ -22,6 +23,10 @@ class KasadoUserInfo with _$KasadoUserInfo {
     final now = DateTime.now();
     final isReservedAtFuture = reservedAt?.isAfter(now) ?? false;
     return isReservedAtFuture;
+  }
+
+  bool hasEnoughPondoToPay(double pondoToPay) {
+    return pondo >= pondoToPay;
   }
 
   factory KasadoUserInfo.fromJson(Map<String, dynamic> json) =>
