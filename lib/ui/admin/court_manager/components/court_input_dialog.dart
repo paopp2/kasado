@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/logic/court_details/court_admin/court_admin_state.dart';
-import 'package:kasado/logic/court_details/court_admin/court_admin_controller.dart';
+import 'package:kasado/logic/admin/court_manager/court_admin_state.dart';
+import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
 
