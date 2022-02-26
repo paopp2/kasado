@@ -21,6 +21,8 @@ class UserInfoDrawer extends HookConsumerWidget {
     final currentUser = ref.watch(currentUserProvider);
     final currentUserInfoStream = ref.watch(currentUserInfoProvider);
     final isCurrentUserAdmin = currentUserInfoStream.value?.isAdmin ?? false;
+    final isCurrentUserSuperAdmin =
+        currentUserInfoStream.value?.isSuperAdmin ?? false;
 
     return Drawer(
       child: (currentUser == null)
@@ -28,7 +30,6 @@ class UserInfoDrawer extends HookConsumerWidget {
           : Column(
               children: [
                 Container(
-                  height: constraints.maxHeight * 0.3,
                   width: constraints.maxWidth * 0.85,
                   color: const Color(0xfff5f5f5),
                   padding: EdgeInsets.only(
@@ -47,8 +48,9 @@ class UserInfoDrawer extends HookConsumerWidget {
                           radius: 48,
                           child: CircleAvatar(
                             radius: 45,
-                            backgroundImage:
-                                NetworkImage(currentUser.photoUrl!),
+                            backgroundImage: NetworkImage(
+                              currentUser.photoUrl!,
+                            ),
                           ),
                         ),
                       ),
@@ -59,7 +61,18 @@ class UserInfoDrawer extends HookConsumerWidget {
                         style: const TextStyle(fontSize: 20),
                       ),
                       Text(currentUser.email!),
+                      const SizedBox(height: 30),
+                      const Text('PONDO: 100.0 Php'),
+                      const SizedBox(height: 30),
                     ],
+                  ),
+                ),
+                Visibility(
+                  visible: isCurrentUserSuperAdmin,
+                  child: ListTile(
+                    title: const Text('Manage players'),
+                    leading: const Icon(Icons.people_alt),
+                    onTap: () {},
                   ),
                 ),
                 Visibility(

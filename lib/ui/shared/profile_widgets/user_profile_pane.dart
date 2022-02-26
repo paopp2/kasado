@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/ui/shared/profile_widgets/player_stat_block.dart';
 
-class UserProfilePane extends StatelessWidget {
+class UserProfilePane extends HookConsumerWidget {
   const UserProfilePane({
     Key? key,
     required this.user,
@@ -13,7 +15,9 @@ class UserProfilePane extends StatelessWidget {
   final BoxConstraints constraints;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = ref.watch(currentUserProvider)!;
+    final isCurrentUser = currentUser.id == user?.id;
     return (user == null)
         ? const Text('No user info')
         : Column(
@@ -32,6 +36,14 @@ class UserProfilePane extends StatelessWidget {
                 ),
               ),
               Text(user!.email!),
+              const SizedBox(height: 30),
+              Visibility(
+                visible: isCurrentUser,
+                child: const Text(
+                  'PONDO: 100.0 Php',
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
               const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
