@@ -157,11 +157,13 @@ class CourtAdminController with CourtAdminTecMixin {
     required BuildContext context,
     required CourtSlot courtSlot,
     required bool closeCourt,
+    required double courtTicketPrice,
   }) async {
     Navigator.pop(context);
     await courtRepo.setCourtSlotClosed(
       courtSlot: courtSlot,
       isCourtClosed: closeCourt,
+      courtTicketPrice: courtTicketPrice,
     );
   }
 

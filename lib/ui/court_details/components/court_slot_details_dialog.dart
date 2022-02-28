@@ -36,6 +36,8 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
       courtSlotStreamProvider('${court.id}|${baseCourtSlot.slotId}'),
     );
     final currentUser = ref.watch(currentUserProvider)!;
+    final currentUserInfo = ref.watch(currentUserInfoProvider).value;
+    final isSuperAdmin = currentUserInfo?.isSuperAdmin ?? false;
     final adminController = model.adminController;
     final utils = ref.watch(kasadoUtilsProvider);
     final isModifyingSlot = useState(false);
@@ -75,43 +77,45 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                   ),
                   const Divider(thickness: 2),
                   Expanded(
-                    child: (players.isEmpty)
-                        ? const Center(child: Text('No players'))
-                        : ListView.builder(
-                            itemCount: players.length,
-                            itemBuilder: (context, index) {
-                              final player = players[index];
-                              return ListTile(
-                                onTap: () => context.pushNamed(
-                                  Routes.userProfileView,
-                                  params: {'uid': player.id},
-                                ),
-                                onLongPress: (isAdmin)
-                                    ? () => adminController
-                                            .togglePlayerPaymentStatus(
-                                          baseCourtSlot: fetchedCourtSlot,
-                                          player: player,
-                                        )
-                                    : null,
-                                title: AutoSizeText(
-                                  player.displayName!,
-                                  maxLines: 1,
-                                ),
-                                leading: CircleAvatar(
-                                  radius: 25,
-                                  backgroundImage:
-                                      NetworkImage(player.photoUrl!),
-                                ),
-                                trailing: Visibility(
-                                  visible: player.hasPaid,
-                                  child: const Icon(
-                                    Icons.check,
-                                    color: Colors.green,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                    child: (fetchedCourtSlot.isClosedByAdmin)
+                        ? const Center(child: Text('Closed by admin'))
+                        : (players.isEmpty)
+                            ? const Center(child: Text('No players'))
+                            : ListView.builder(
+                                itemCount: players.length,
+                                itemBuilder: (context, index) {
+                                  final player = players[index];
+                                  return ListTile(
+                                    onTap: () => context.pushNamed(
+                                      Routes.userProfileView,
+                                      params: {'uid': player.id},
+                                    ),
+                                    onLongPress: (isSuperAdmin)
+                                        ? () => adminController
+                                                .togglePlayerPaymentStatus(
+                                              baseCourtSlot: fetchedCourtSlot,
+                                              player: player,
+                                            )
+                                        : null,
+                                    title: AutoSizeText(
+                                      player.displayName!,
+                                      maxLines: 1,
+                                    ),
+                                    leading: CircleAvatar(
+                                      radius: 25,
+                                      backgroundImage:
+                                          NetworkImage(player.photoUrl!),
+                                    ),
+                                    trailing: Visibility(
+                                      visible: player.hasPaid,
+                                      child: const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                   ),
                   if (!isDone) ...[
                     Row(
@@ -128,29 +132,33 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                               context: context,
                               courtSlot: fetchedCourtSlot,
                               closeCourt: !fetchedCourtSlot.isClosedByAdmin,
+                              courtTicketPrice: court.ticketPrice,
                             ),
                           )
                         ],
                         (isModifyingSlot.value)
                             ? const LoadingWidget()
-                            : TextButton(
-                                child: Text(
-                                  fetchedCourtSlot.hasPlayer(currentUser)
-                                      ? 'LEAVE GAME'
-                                      : 'JOIN GAME',
+                            : Visibility(
+                                visible: !fetchedCourtSlot.isClosedByAdmin,
+                                child: TextButton(
+                                  child: Text(
+                                    fetchedCourtSlot.hasPlayer(currentUser)
+                                        ? 'LEAVE GAME'
+                                        : 'JOIN GAME',
+                                  ),
+                                  onPressed: () async {
+                                    isModifyingSlot.value = true;
+                                    await model.joinLeaveCourtSlot(
+                                      baseCourtSlot: fetchedCourtSlot,
+                                      slotHasPlayer: fetchedCourtSlot.hasPlayer(
+                                        currentUser,
+                                      ),
+                                      courtTicketPrice: court.ticketPrice,
+                                      context: context,
+                                    );
+                                    isModifyingSlot.value = false;
+                                  },
                                 ),
-                                onPressed: () async {
-                                  isModifyingSlot.value = true;
-                                  await model.joinLeaveCourtSlot(
-                                    baseCourtSlot: fetchedCourtSlot,
-                                    slotHasPlayer: fetchedCourtSlot.hasPlayer(
-                                      currentUser,
-                                    ),
-                                    courtTicketPrice: court.ticketPrice,
-                                    context: context,
-                                  );
-                                  isModifyingSlot.value = false;
-                                },
                               ),
                       ],
                     ),

@@ -15,7 +15,7 @@ class HomeView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: 2);
+    final tabController = useTabController(initialLength: 3);
     final model = ref.watch(homeViewModel);
     final appMetaStream = ref.watch(appMetaStreamProvider);
 
@@ -56,6 +56,7 @@ class HomeView extends HookConsumerWidget {
                               child: Text('Please update to newest version'),
                             ),
                 ),
+                const Center(child: Text('Team invites coming soon')),
                 ProfileTab(constraints: constraints),
               ],
             ),
@@ -67,6 +68,10 @@ class HomeView extends HookConsumerWidget {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.group),
+                  label: 'Team',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
