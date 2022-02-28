@@ -128,6 +128,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                               context: context,
                               courtSlot: fetchedCourtSlot,
                               closeCourt: !fetchedCourtSlot.isClosedByAdmin,
+                              courtTicketPrice: court.ticketPrice,
                             ),
                           )
                         ],

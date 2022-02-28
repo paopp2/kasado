@@ -5,6 +5,7 @@ import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 
 final courtRepositoryProvider = Provider.autoDispose(
   (ref) => CourtRepository(
@@ -69,14 +70,41 @@ class CourtRepository {
   Future<void> setCourtSlotClosed({
     required CourtSlot courtSlot,
     required bool isCourtClosed,
+    required double courtTicketPrice,
   }) async {
     if (isCourtClosed) {
-      // For each player in the court slot about to be closed, nullify their
-      // 'reservedAt' DateTime for them to be able to reserve another slot
-      final players = courtSlot.players;
-      for (final player in players) {
-        await userInfoRepo.reserveUserAt(userId: player.id, reservedAt: null);
+      // Convert courtSlot players to a map with their respective ID as the key
+      final Map<String, KasadoUser> playerMap = {
+        for (final player in courtSlot.players) player.id: player,
+      };
+
+      // Get the userInfos for each player at courtSlot
+      final userInfoList = (playerMap.isEmpty)
+          ? []
+          : await firestoreHelper.collectionToList(
+              path: FirestorePath.colUserInfos(),
+              builder: (data, docId) => KasadoUserInfo.fromJson(data),
+              queryBuilder: (query) => query.where(
+                'id',
+                whereIn: playerMap.keys.toList(),
+              ),
+            );
+
+      for (final userInfo in userInfoList) {
+        // If the player has already paid, return their money
+        if (playerMap[userInfo.id]!.hasPaid) {
+          await userInfoRepo.addOrDeductPondo(
+            currentUserInfo: userInfo,
+            isAdd: true,
+            pondo: courtTicketPrice,
+          );
+        }
+
+        // Nullify player's reservations to allow them to reserve for another slot
+        await userInfoRepo.reserveUserAt(userId: userInfo.id, reservedAt: null);
       }
+
+      // Flag court as closedByAdmin
       await pushCourtSlot(courtSlot: courtSlot.copyWith(isClosedByAdmin: true));
     } else {
       // When a CourtSlot is reopened from being previously closed, remove it.
