@@ -90,12 +90,12 @@ class CourtInputDialog extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FilterChip(
-                label: const Text('8 - 10 AM'),
+                label: const Text('6 - 8 AM'),
                 selected: selectedSchedChipIndices.contains(0),
                 onSelected: (val) => controller.selectSchedChip(val, 0),
               ),
               FilterChip(
-                label: const Text('10 - 12 PM'),
+                label: const Text('8 - 10 AM'),
                 selected: selectedSchedChipIndices.contains(1),
                 onSelected: (val) => controller.selectSchedChip(val, 1),
               ),
@@ -105,12 +105,12 @@ class CourtInputDialog extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FilterChip(
-                label: const Text('12 - 2 PM'),
+                label: const Text('10 - 12 PM'),
                 selected: selectedSchedChipIndices.contains(2),
                 onSelected: (val) => controller.selectSchedChip(val, 2),
               ),
               FilterChip(
-                label: const Text('2 - 4 PM'),
+                label: const Text('12 - 2 PM'),
                 selected: selectedSchedChipIndices.contains(3),
                 onSelected: (val) => controller.selectSchedChip(val, 3),
               ),
@@ -120,12 +120,12 @@ class CourtInputDialog extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FilterChip(
-                label: const Text('4 - 6 PM'),
+                label: const Text('2 - 4 PM'),
                 selected: selectedSchedChipIndices.contains(4),
                 onSelected: (val) => controller.selectSchedChip(val, 4),
               ),
               FilterChip(
-                label: const Text('6 - 8 PM'),
+                label: const Text('4 - 6 PM'),
                 selected: selectedSchedChipIndices.contains(5),
                 onSelected: (val) => controller.selectSchedChip(val, 5),
               ),
@@ -135,18 +135,88 @@ class CourtInputDialog extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FilterChip(
-                label: const Text('8 - 10 PM'),
+                label: const Text('6 - 8 PM'),
                 selected: selectedSchedChipIndices.contains(6),
                 onSelected: (val) => controller.selectSchedChip(val, 6),
               ),
+              FilterChip(
+                label: const Text('8 - 10 PM'),
+                selected: selectedSchedChipIndices.contains(7),
+                onSelected: (val) => controller.selectSchedChip(val, 7),
+              ),
             ],
           ),
-          TextButton(
-            child: Text((courtToEdit != null) ? 'Update Court' : 'Add Court'),
-            onPressed: () => controller.pushCourt(
-              context: context,
-              isEdit: courtToEdit != null,
-              courtId: courtToEdit?.id,
+          const Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FilterChip(
+                label: const Text('5 - 7 AM'),
+                selected: selectedSchedChipIndices.contains(8),
+                onSelected: (val) => controller.selectSchedChip(val, 8),
+              ),
+              FilterChip(
+                label: const Text('7 - 9 AM'),
+                selected: selectedSchedChipIndices.contains(9),
+                onSelected: (val) => controller.selectSchedChip(val, 9),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FilterChip(
+                label: const Text('9 - 11 PM'),
+                selected: selectedSchedChipIndices.contains(10),
+                onSelected: (val) => controller.selectSchedChip(val, 10),
+              ),
+              FilterChip(
+                label: const Text('11 - 1 PM'),
+                selected: selectedSchedChipIndices.contains(11),
+                onSelected: (val) => controller.selectSchedChip(val, 11),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FilterChip(
+                label: const Text('1 - 3 PM'),
+                selected: selectedSchedChipIndices.contains(12),
+                onSelected: (val) => controller.selectSchedChip(val, 12),
+              ),
+              FilterChip(
+                label: const Text('3 - 5 PM'),
+                selected: selectedSchedChipIndices.contains(13),
+                onSelected: (val) => controller.selectSchedChip(val, 13),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FilterChip(
+                label: const Text('5 - 7 PM'),
+                selected: selectedSchedChipIndices.contains(14),
+                onSelected: (val) => controller.selectSchedChip(val, 14),
+              ),
+              FilterChip(
+                label: const Text('7 - 9 PM'),
+                selected: selectedSchedChipIndices.contains(15),
+                onSelected: (val) => controller.selectSchedChip(val, 15),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              child: Text((courtToEdit != null) ? 'Update Court' : 'Add Court'),
+              onPressed: () => controller.pushCourt(
+                context: context,
+                isEdit: courtToEdit != null,
+                courtId: courtToEdit?.id,
+              ),
             ),
           ),
         ],
