@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:time/time.dart';
 
 final kasadoUtilsProvider = Provider.autoDispose(
   (ref) => KasadoUtils(ref.read),
@@ -13,7 +14,7 @@ class KasadoUtils {
 
   final Reader read;
 
-  TimeRange? getNextTimeSlotForToday({
+  TimeRange getNextTimeSlot({
     required List<TimeRange> timeSlots,
     required List<WeekDays> weekdays,
   }) {
@@ -22,9 +23,16 @@ class KasadoUtils {
     final sortedTimeSlots = timeSlots
       ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
 
-    // If today's WeekDay not permitted by Court, then there are no games today
-    if (!weekdays.contains(indexToWeekDay[now.weekday - 1])) return null;
+    // If today is not one of the allowed weekdays for the sched, calculate the
+    // time range for the next sched
+    if (!weekdays.contains(indexToWeekDay[now.weekday - 1])) {
+      return calculateFirstSlotForNextSched(
+        timeSlots: timeSlots,
+        weekdays: weekdays,
+      );
+    }
 
+    // Iterate over the time slots to get the next closest one for today
     for (final slot in sortedTimeSlots) {
       final sStart = slot.startTime;
       final sEnd = slot.endTime;
@@ -50,8 +58,66 @@ class KasadoUtils {
       }
     }
 
-    // If none in the list are viable then there are no more games for today
-    return null;
+    //In cases there is none,
+    // get the closest next schedule that is not for today
+    return calculateFirstSlotForNextSched(
+      timeSlots: timeSlots,
+      weekdays: weekdays,
+    );
+  }
+
+  /// Calculates the TimeRange for the next sched when it's not for today
+  TimeRange calculateFirstSlotForNextSched({
+    required List<TimeRange> timeSlots,
+    required List<WeekDays> weekdays,
+  }) {
+    final now = DateTime.now();
+    final weekFromNow = now + 1.weeks;
+    // -1 adjusts now.weekday to begin at 0 (eg. Monday: 0, Sunday: 6)
+    final dayTodayAsNum = now.weekday - 1;
+    // Map [weekdays] to their number counterpart (based on ISO 8601)
+    final weekdaysAsNumber =
+        weekdays.map((day) => indexToWeekDay.indexOf(day)).toList();
+    // Insert today (as number) to the list above
+    final weekdaysWithToday = weekdaysAsNumber
+      ..add(dayTodayAsNum)
+      ..sort();
+    // Obtain the index to be used below
+    final indexOfDayToday = weekdaysWithToday.indexOf(dayTodayAsNum);
+
+    DateTime nextSchedDate;
+    if (weekdaysWithToday.last == dayTodayAsNum) {
+      // If today is at the end of the weekdays list, the first one will be the
+      // day of the next sched
+      nextSchedDate = now
+          .to(weekFromNow)
+          .firstWhere((dt) => dt.weekday == (weekdaysWithToday.first + 1));
+    } else {
+      // Else the next sched day will be the next one on the weekdays list
+      // after today
+      nextSchedDate = now.to(weekFromNow).firstWhere(
+          (dt) => dt.weekday == (weekdaysAsNumber[indexOfDayToday + 1] + 1));
+    }
+
+    // Use the first slot at timeSlots
+    final firstSlot = timeSlots.first;
+
+    return TimeRange(
+      startsAt: DateTime(
+        nextSchedDate.year,
+        nextSchedDate.month,
+        nextSchedDate.day,
+        firstSlot.startsAt.hour,
+        firstSlot.startsAt.minute,
+      ),
+      endsAt: DateTime(
+        nextSchedDate.year,
+        nextSchedDate.month,
+        nextSchedDate.day,
+        firstSlot.endsAt.hour,
+        firstSlot.endsAt.minute,
+      ),
+    );
   }
 
   bool isCurrentSlotClosed(TimeRange timeRange) {
