@@ -26,44 +26,45 @@ class CourtSchedulePanel extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final courtSlotsStream = ref.watch(courtSlotsStreamProvider(court.id));
 
-    return SfCalendar(
-      dataSource: _getCalendarDataSource(court),
-      view: CalendarView.schedule,
-      allowedViews: const [CalendarView.schedule, CalendarView.day],
-      allowViewNavigation: true,
-      scheduleViewSettings: ScheduleViewSettings(
-        appointmentItemHeight: constraints.maxHeight * 0.15,
-      ),
-      timeSlotViewSettings: TimeSlotViewSettings(
-        timeIntervalHeight: constraints.maxHeight * 0.08,
-      ),
-      scheduleViewMonthHeaderBuilder: (context, details) {
-        final monthHeaderText = DateFormat('MMMM yyyy').format(details.date);
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(55, 5, 5, 5),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.grey.shade500,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Text(
-                monthHeaderText,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+    return courtSlotsStream.when(
+      error: (e, _) => Text(e.toString()),
+      loading: () => const LoadingWidget(),
+      data: (courtSlots) {
+        return SfCalendar(
+          dataSource: _getCalendarDataSource(court),
+          view: CalendarView.schedule,
+          allowedViews: const [CalendarView.schedule, CalendarView.day],
+          allowViewNavigation: true,
+          scheduleViewSettings: ScheduleViewSettings(
+            appointmentItemHeight: constraints.maxHeight * 0.15,
+          ),
+          timeSlotViewSettings: TimeSlotViewSettings(
+            timeIntervalHeight: constraints.maxHeight * 0.08,
+          ),
+          scheduleViewMonthHeaderBuilder: (context, details) {
+            final monthHeaderText =
+                DateFormat('MMMM yyyy').format(details.date);
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(55, 5, 5, 5),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade500,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    monthHeaderText,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        );
-      },
-      appointmentBuilder: (context, details) {
-        return courtSlotsStream.when(
-          error: (e, _) => Text(e.toString()),
-          loading: () => const LoadingWidget(),
-          data: (courtSlots) {
+            );
+          },
+          appointmentBuilder: (context, details) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: details.appointments.map((app) {
