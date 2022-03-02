@@ -3,7 +3,7 @@ description: Basketball court booking app
 
 publish_to: 'none'
 
-version: 0.2.7+11
+version: 0.2.8+11
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
@@ -19,9 +19,10 @@ dependencies:
   freezed_annotation: ^1.1.0
   go_router: ^3.0.1
   # Firebase-related
-  firebase_core: ^1.12.0
-  firebase_auth: ^3.3.7
-  cloud_firestore: ^3.1.8
+  firebase_core: ^1.13.1
+  firebase_auth: ^3.3.9
+  cloud_firestore: ^3.1.10
+  firebase_analytics: ^9.1.2
   # Google-related
   google_sign_in: ^5.2.3
   # Design

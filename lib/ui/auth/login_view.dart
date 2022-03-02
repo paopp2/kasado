@@ -15,6 +15,11 @@ class LoginView extends HookConsumerWidget {
     final isLoggingInState = useState(false);
     final model = ref.watch(loginViewModel);
 
+    useEffect(() {
+      model.initState();
+      return model.dispose;
+    }, []);
+
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
         body: Center(
