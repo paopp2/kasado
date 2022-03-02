@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -42,6 +43,18 @@ class CourtDetailsViewModel extends ViewModel {
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;
   final KasadoUtils utils;
+
+  @override
+  void initState([Map<String, Object?>? params]) {
+    FirebaseAnalytics.instance.logEvent(
+      name: 'court_details_view',
+      parameters: {
+        'user_id': currentUser.toJson().toString(),
+        'user_info': currentUserInfo?.toJson().toString(),
+        'court_id': params!['court_id'],
+      },
+    );
+  }
 
   SlotAndUserState getSlotAndUserState(CourtSlot courtSlot) {
     if (currentUserInfo == null) return SlotAndUserState.loading;

@@ -26,7 +26,14 @@ class CourtDetailsView extends HookConsumerWidget {
 
     final courtStream = ref.watch(courtStreamProvider(courtId));
     final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: 2);
+    final tabController = useTabController(
+      initialLength: 2,
+    );
+
+    useEffect(() {
+      courtDetailsModel.initState({'court_id': courtId});
+      return courtDetailsModel.dispose;
+    }, []);
 
     return LayoutBuilder(
       builder: (context, constraints) {

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
@@ -27,7 +28,11 @@ class HomeViewModel extends ViewModel {
   final KasadoUser currentUser;
 
   @override
-  Future<void> initState() async {
+  Future<void> initState([Map<String, Object?>? params]) async {
+    FirebaseAnalytics.instance.logEvent(
+      name: 'home_view',
+      parameters: {'user_id': currentUser.toJson().toString()},
+    );
     await userInfoRepo.pushUserInfoIfNonExistent(currentUser);
   }
 

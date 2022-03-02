@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/services/auth_service.dart';
@@ -17,6 +18,11 @@ class LoginViewModel extends ViewModel {
   }) : super(read);
 
   final AuthService authService;
+
+  @override
+  void initState([Map<String, Object?>? params]) {
+    FirebaseAnalytics.instance.logEvent(name: 'login_view');
+  }
 
   Future<void> signInWithGoogle({
     required Function(Exception) ifError,

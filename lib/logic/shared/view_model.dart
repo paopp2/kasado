@@ -4,6 +4,6 @@ abstract class ViewModel {
   ViewModel(this.read);
   final Reader read;
 
-  void initState() {}
+  void initState([Map<String, Object?>? params]) {}
   void dispose() {}
 }
