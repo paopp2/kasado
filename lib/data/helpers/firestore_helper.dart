@@ -38,6 +38,27 @@ class FirestoreHelper {
     await reference.set(data, SetOptions(merge: merge));
   }
 
+  // There might be a better way to do this (Use threads(?))
+  Future<void> setDataToAll({
+    required String baseColPath,
+    required String endPath,
+    required Map<String, dynamic> data,
+    Query Function(Query query)? queryBuilder,
+    bool merge = false,
+  }) async {
+    final List<String> docIdList = await collectionToList(
+      path: baseColPath,
+      builder: (_, docId) => docId,
+      queryBuilder: queryBuilder,
+    );
+
+    for (final docId in docIdList) {
+      final path = baseColPath + '/$docId/$endPath';
+      final reference = FirebaseFirestore.instance.doc(path);
+      await reference.set(data, SetOptions(merge: merge));
+    }
+  }
+
   Future<void> deleteData({required String path}) async {
     final reference = FirebaseFirestore.instance.doc(path);
     await reference.delete();
