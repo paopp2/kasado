@@ -16,7 +16,7 @@ class Notif with _$Notif {
     KasadoUser? sender,
     @Default(false) bool sendToAll,
     @Default(false) bool getFeedback,
-    @Default(0) List<String> recipientIds,
+    @Default([]) List<String> recipientIds,
     required DateTime sentAt,
   }) = _Notif;
 

@@ -20,7 +20,7 @@ _$_Notif _$$_NotifFromJson(Map<String, dynamic> json) => _$_Notif(
       recipientIds: (json['recipientIds'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
-          0,
+          const [],
       sentAt: DateTime.parse(json['sentAt'] as String),
       $type: json['runtimeType'] as String?,
     );

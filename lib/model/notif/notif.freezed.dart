@@ -40,7 +40,7 @@ class _$NotifTearOff {
       KasadoUser? sender,
       bool sendToAll = false,
       bool getFeedback = false,
-      List<String> recipientIds = 0,
+      List<String> recipientIds = const [],
       required DateTime sentAt}) {
     return _Notif(
       id: id,
@@ -289,7 +289,7 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
       this.sender,
       this.sendToAll = false,
       this.getFeedback = false,
-      this.recipientIds = 0,
+      this.recipientIds = const [],
       required this.sentAt,
       String? $type})
       : $type = $type ?? 'default';
