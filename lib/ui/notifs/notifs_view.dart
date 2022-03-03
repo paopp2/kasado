@@ -6,6 +6,7 @@ import 'package:kasado/logic/notifs/notifs_view_model.dart';
 import 'package:kasado/model/notif/notif.dart';
 import 'package:kasado/ui/notifs/components/notif_input_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NotifsView extends HookConsumerWidget {
   const NotifsView({
@@ -55,12 +56,30 @@ class NotifsView extends HookConsumerWidget {
                               : Colors.blue.shade100.withAlpha(50),
                           leading: CircleAvatar(
                             radius: 25,
-                            backgroundImage:
-                                NetworkImage(notif.sender!.photoUrl!),
+                            backgroundImage: NetworkImage(
+                              notif.sender!.photoUrl!,
+                            ),
                           ),
-                          title: Text(
-                            notif.title,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  notif.title,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Text(
+                                timeago.format(
+                                  notif.sentAt,
+                                  locale: 'en_short',
+                                ),
+                                style: const TextStyle(fontSize: 12),
+                              )
+                            ],
                           ),
                           subtitle: Column(
                             mainAxisSize: MainAxisSize.min,

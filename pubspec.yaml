@@ -38,6 +38,7 @@ dependencies:
   universal_platform: ^1.0.0+1
   time: ^2.1.0
   badges: ^2.0.2
+  timeago: ^3.2.2
 
 dev_dependencies:
   flutter_test:
