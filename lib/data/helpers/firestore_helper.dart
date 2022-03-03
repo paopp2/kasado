@@ -64,6 +64,25 @@ class FirestoreHelper {
     await reference.delete();
   }
 
+  // There might be a better way to do this (Use threads(?))
+  Future<void> deleteDataForAll({
+    required String baseColPath,
+    required String endPath,
+    Query Function(Query query)? queryBuilder,
+  }) async {
+    final List<String> docIdList = await collectionToList(
+      path: baseColPath,
+      builder: (_, docId) => docId,
+      queryBuilder: queryBuilder,
+    );
+
+    for (final docId in docIdList) {
+      final path = baseColPath + '/$docId/$endPath';
+      final reference = FirebaseFirestore.instance.doc(path);
+      await reference.delete();
+    }
+  }
+
   Future<void> moveData({
     required String sourcePath,
     required String destPath,

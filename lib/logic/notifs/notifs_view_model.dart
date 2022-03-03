@@ -51,6 +51,10 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
     read(isYesNoEnabledProvider.notifier).state = isEnabled;
   }
 
+  Future<void> deleteNotif(Notif notif) async {
+    await notifRepo.deleteNotifForAll(notif.id);
+  }
+
   Future<void> pushNotifications(BuildContext context) async {
     await notifRepo.sendNotifToAll(
       Notif(

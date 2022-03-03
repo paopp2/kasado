@@ -72,6 +72,17 @@ class NotifsView extends HookConsumerWidget {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
+                              Visibility(
+                                visible: isAdmin,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.red.shade900,
+                                    size: 18,
+                                  ),
+                                  onPressed: () => model.deleteNotif(notif),
+                                ),
+                              ),
                               Text(
                                 timeago.format(
                                   notif.sentAt,

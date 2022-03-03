@@ -58,6 +58,14 @@ class NotifRepository {
     );
   }
 
+  Future<void> deleteNotifForAll(String notifId) async {
+    await firestoreHelper.deleteData(path: FirestorePath.docNotif(notifId));
+    await firestoreHelper.deleteDataForAll(
+      baseColPath: FirestorePath.colUserInfos(),
+      endPath: FirestorePath.docNotif(notifId),
+    );
+  }
+
   Future<NotifMeta> getNotifMeta({required String notifId}) async {
     return (await firestoreHelper.getData(
       path: FirestorePath.docNotif(notifId),
