@@ -15,4 +15,6 @@ class FirestorePath {
       'courts/$courtId/court_slots/$slotId';
   static String docUserInfo(String userId) => 'user_info/$userId';
   static String docNotif(String notifId) => 'notifs/$notifId';
+  static String docUserNotif(String userId, String notifId) =>
+      'user_info/$userId/notifs/$notifId';
 }

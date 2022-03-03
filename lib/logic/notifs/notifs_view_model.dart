@@ -33,6 +33,11 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
     FirebaseAnalytics.instance.logEvent(name: 'notifs_view');
   }
 
+  @override
+  Future<void> dispose() async {
+    notifRepo.setUnreadUserNotifsAsRead(userId: currentUser.id);
+  }
+
   void setYesNoFeedbackEnabled(bool isEnabled) {
     read(isYesNoEnabledProvider.notifier).state = isEnabled;
   }

@@ -13,6 +13,17 @@ class NotifRepository {
   NotifRepository({required this.firestoreHelper});
   final FirestoreHelper firestoreHelper;
 
+  Future<void> setUnreadUserNotifsAsRead({required String userId}) async {
+    final notifs = await getUnreadUserNotifs(userId: userId);
+    for (final notif in notifs) {
+      notif as NotifObject;
+      await firestoreHelper.setData(
+        path: FirestorePath.docUserNotif(userId, notif.id),
+        data: notif.copyWith(isRead: true).toJson(),
+      );
+    }
+  }
+
   Future<void> sendNotifToAll(Notif notif) async {
     final notifMeta = Notif.meta(id: notif.id, sentAt: notif.sentAt);
     await firestoreHelper.setData(
@@ -24,6 +35,14 @@ class NotifRepository {
       baseColPath: FirestorePath.colUserInfos(),
       endPath: FirestorePath.docNotif(notif.id),
       data: notif.toJson(),
+    );
+  }
+
+  Future<List<Notif>> getUnreadUserNotifs({required String userId}) async {
+    return firestoreHelper.collectionToList(
+      path: FirestorePath.colUserNotifs(userId),
+      builder: (data, docId) => Notif.fromJson(data),
+      queryBuilder: (query) => query.where('isRead', isEqualTo: false),
     );
   }
 
