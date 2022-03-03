@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 Notif _$NotifFromJson(Map<String, dynamic> json) {
   switch (json['runtimeType']) {
     case 'default':
-      return _Notif.fromJson(json);
+      return NotifInfo.fromJson(json);
     case 'ref':
       return NotifRef.fromJson(json);
 
@@ -31,7 +31,7 @@ Notif _$NotifFromJson(Map<String, dynamic> json) {
 class _$NotifTearOff {
   const _$NotifTearOff();
 
-  _Notif call(
+  NotifInfo call(
       {required String id,
       String title = '',
       required String body,
@@ -43,7 +43,7 @@ class _$NotifTearOff {
       List<String> recipientIds = const [],
       bool isRead = false,
       required DateTime sentAt}) {
-    return _Notif(
+    return NotifInfo(
       id: id,
       title: title,
       body: body,
@@ -135,19 +135,19 @@ mixin _$Notif {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_Notif value) $default, {
+    TResult Function(NotifInfo value) $default, {
     required TResult Function(NotifRef value) ref,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(_Notif value)? $default, {
+    TResult Function(NotifInfo value)? $default, {
     TResult Function(NotifRef value)? ref,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_Notif value)? $default, {
+    TResult Function(NotifInfo value)? $default, {
     TResult Function(NotifRef value)? ref,
     required TResult orElse(),
   }) =>
@@ -191,9 +191,9 @@ class _$NotifCopyWithImpl<$Res> implements $NotifCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$NotifCopyWith<$Res> implements $NotifCopyWith<$Res> {
-  factory _$NotifCopyWith(_Notif value, $Res Function(_Notif) then) =
-      __$NotifCopyWithImpl<$Res>;
+abstract class $NotifInfoCopyWith<$Res> implements $NotifCopyWith<$Res> {
+  factory $NotifInfoCopyWith(NotifInfo value, $Res Function(NotifInfo) then) =
+      _$NotifInfoCopyWithImpl<$Res>;
   @override
   $Res call(
       {String id,
@@ -212,13 +212,13 @@ abstract class _$NotifCopyWith<$Res> implements $NotifCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$NotifCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
-    implements _$NotifCopyWith<$Res> {
-  __$NotifCopyWithImpl(_Notif _value, $Res Function(_Notif) _then)
-      : super(_value, (v) => _then(v as _Notif));
+class _$NotifInfoCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
+    implements $NotifInfoCopyWith<$Res> {
+  _$NotifInfoCopyWithImpl(NotifInfo _value, $Res Function(NotifInfo) _then)
+      : super(_value, (v) => _then(v as NotifInfo));
 
   @override
-  _Notif get _value => super._value as _Notif;
+  NotifInfo get _value => super._value as NotifInfo;
 
   @override
   $Res call({
@@ -234,7 +234,7 @@ class __$NotifCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
     Object? isRead = freezed,
     Object? sentAt = freezed,
   }) {
-    return _then(_Notif(
+    return _then(NotifInfo(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -296,8 +296,8 @@ class __$NotifCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Notif with DiagnosticableTreeMixin implements _Notif {
-  const _$_Notif(
+class _$NotifInfo with DiagnosticableTreeMixin implements NotifInfo {
+  const _$NotifInfo(
       {required this.id,
       this.title = '',
       required this.body,
@@ -312,8 +312,8 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
       String? $type})
       : $type = $type ?? 'default';
 
-  factory _$_Notif.fromJson(Map<String, dynamic> json) =>
-      _$$_NotifFromJson(json);
+  factory _$NotifInfo.fromJson(Map<String, dynamic> json) =>
+      _$$NotifInfoFromJson(json);
 
   @override
   final String id;
@@ -375,7 +375,7 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Notif &&
+            other is NotifInfo &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality().equals(other.body, body) &&
@@ -408,8 +408,8 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
 
   @JsonKey(ignore: true)
   @override
-  _$NotifCopyWith<_Notif> get copyWith =>
-      __$NotifCopyWithImpl<_Notif>(this, _$identity);
+  $NotifInfoCopyWith<NotifInfo> get copyWith =>
+      _$NotifInfoCopyWithImpl<NotifInfo>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -484,7 +484,7 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_Notif value) $default, {
+    TResult Function(NotifInfo value) $default, {
     required TResult Function(NotifRef value) ref,
   }) {
     return $default(this);
@@ -493,7 +493,7 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(_Notif value)? $default, {
+    TResult Function(NotifInfo value)? $default, {
     TResult Function(NotifRef value)? ref,
   }) {
     return $default?.call(this);
@@ -502,7 +502,7 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_Notif value)? $default, {
+    TResult Function(NotifInfo value)? $default, {
     TResult Function(NotifRef value)? ref,
     required TResult orElse(),
   }) {
@@ -514,12 +514,12 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NotifToJson(this);
+    return _$$NotifInfoToJson(this);
   }
 }
 
-abstract class _Notif implements Notif {
-  const factory _Notif(
+abstract class NotifInfo implements Notif {
+  const factory NotifInfo(
       {required String id,
       String title,
       required String body,
@@ -530,9 +530,9 @@ abstract class _Notif implements Notif {
       bool getFeedback,
       List<String> recipientIds,
       bool isRead,
-      required DateTime sentAt}) = _$_Notif;
+      required DateTime sentAt}) = _$NotifInfo;
 
-  factory _Notif.fromJson(Map<String, dynamic> json) = _$_Notif.fromJson;
+  factory NotifInfo.fromJson(Map<String, dynamic> json) = _$NotifInfo.fromJson;
 
   @override
   String get id;
@@ -549,7 +549,8 @@ abstract class _Notif implements Notif {
   DateTime get sentAt;
   @override
   @JsonKey(ignore: true)
-  _$NotifCopyWith<_Notif> get copyWith => throw _privateConstructorUsedError;
+  $NotifInfoCopyWith<NotifInfo> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -709,7 +710,7 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_Notif value) $default, {
+    TResult Function(NotifInfo value) $default, {
     required TResult Function(NotifRef value) ref,
   }) {
     return ref(this);
@@ -718,7 +719,7 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(_Notif value)? $default, {
+    TResult Function(NotifInfo value)? $default, {
     TResult Function(NotifRef value)? ref,
   }) {
     return ref?.call(this);
@@ -727,7 +728,7 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_Notif value)? $default, {
+    TResult Function(NotifInfo value)? $default, {
     TResult Function(NotifRef value)? ref,
     required TResult orElse(),
   }) {

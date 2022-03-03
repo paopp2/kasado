@@ -6,7 +6,7 @@ part of 'notif.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Notif _$$_NotifFromJson(Map<String, dynamic> json) => _$_Notif(
+_$NotifInfo _$$NotifInfoFromJson(Map<String, dynamic> json) => _$NotifInfo(
       id: json['id'] as String,
       title: json['title'] as String? ?? '',
       body: json['body'] as String,
@@ -26,7 +26,8 @@ _$_Notif _$$_NotifFromJson(Map<String, dynamic> json) => _$_Notif(
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$_NotifToJson(_$_Notif instance) => <String, dynamic>{
+Map<String, dynamic> _$$NotifInfoToJson(_$NotifInfo instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'body': instance.body,

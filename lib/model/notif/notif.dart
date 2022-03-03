@@ -19,7 +19,7 @@ class Notif with _$Notif {
     @Default([]) List<String> recipientIds,
     @Default(false) bool isRead,
     required DateTime sentAt,
-  }) = _Notif;
+  }) = NotifInfo;
 
   const factory Notif.ref({
     required String id,
