@@ -27,7 +27,10 @@ class NotifButton extends HookConsumerWidget {
         ),
         onPressed: () => context.pushNamed(
           Routes.notifsView,
-          extra: isAdmin,
+          extra: {
+            'isAdmin': isAdmin,
+            'userId': currentUserInfo!.id,
+          },
         ),
       ),
     );

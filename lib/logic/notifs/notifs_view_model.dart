@@ -43,9 +43,8 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
         id: const Uuid().v4(),
         title: tecNotifTitle.text,
         body: tecNotifBody.text,
-        sendToAll: true,
         sentAt: DateTime.now(),
-        getFeedback: read(isYesNoEnabledProvider),
+        needsFeedback: read(isYesNoEnabledProvider),
         sender: currentUser,
       ),
     );

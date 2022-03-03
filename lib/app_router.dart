@@ -55,7 +55,13 @@ class AppRouter {
       GoRoute(
         name: Routes.notifsView,
         path: '/notifs',
-        builder: (context, state) => NotifsView(isAdmin: state.extra as bool),
+        builder: (context, state) {
+          final extraMap = state.extra as Map<String, Object?>;
+          return NotifsView(
+            userId: extraMap['userId'] as String,
+            isAdmin: (extraMap['isAdmin'] as bool?) ?? false,
+          );
+        },
       ),
     ],
     redirect: (state) {

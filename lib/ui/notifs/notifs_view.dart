@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/logic/notifs/notifs_state.dart';
 import 'package:kasado/logic/notifs/notifs_view_model.dart';
+import 'package:kasado/model/notif/notif.dart';
 import 'package:kasado/ui/notifs/components/notif_input_dialog.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
 class NotifsView extends HookConsumerWidget {
   const NotifsView({
     Key? key,
+    required this.userId,
     this.isAdmin = false,
   }) : super(key: key);
 
   final bool isAdmin;
+  final String userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(notifsViewModel);
+    final userNotifsStream = ref.watch(userNotifsStreamProvider(userId));
 
     useEffect(() {
       model.initState();
@@ -31,51 +37,59 @@ class NotifsView extends HookConsumerWidget {
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemBuilder: (context, i) {
-                final isEven = i % 2 == 0;
-                return ListTile(
-                  contentPadding: const EdgeInsets.all(8),
-                  tileColor:
-                      (isEven) ? Colors.blue.shade100.withAlpha(50) : null,
-                  leading: const CircleAvatar(
-                    backgroundColor: Colors.amber,
-                    radius: 25,
-                  ),
-                  title: const Text(
-                    'This is the title',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        'The quic brown fox umpso ver the lazy doThe quic brown fox umpso ver the lazy doThe quic brown fox umpso ver the lazy doThe quic brown fox umpso ver the lazy doThe quic brown fox umpso ver the lazy doggggg The quic brown fox umpso ver the lazy doThe quic brown fox umpso ver the lazy doThe quic brown fox umpso ver the lazy doThe quic brown fox umpso ver the lazy doThe quic brown fox umpso ver the lazy doggggg',
+            child: userNotifsStream.when(
+              error: (e, _) => Text(e.toString()),
+              loading: () => const LoadingWidget(),
+              data: (userNotifs) {
+                return ListView.builder(
+                  itemCount: userNotifs.length,
+                  itemBuilder: (context, i) {
+                    final notif = userNotifs[i];
+                    notif as NotifObject;
+                    return ListTile(
+                      contentPadding: const EdgeInsets.all(8),
+                      tileColor: (notif.isRead)
+                          ? null
+                          : Colors.blue.shade100.withAlpha(50),
+                      leading: CircleAvatar(
+                        radius: 25,
+                        backgroundImage: NetworkImage(notif.sender!.photoUrl!),
                       ),
-                      Visibility(
-                        visible: true,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.thumb_down,
-                                color: Colors.red.shade300,
-                              ),
-                              onPressed: () {},
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.thumb_up,
-                                color: Colors.green.shade300,
-                              ),
-                              onPressed: () {},
-                            ),
-                          ],
-                        ),
+                      title: Text(
+                        notif.title,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                    ],
-                  ),
+                      subtitle: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(notif.body),
+                          Visibility(
+                            visible: notif.needsFeedback,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.thumb_down,
+                                    color: Colors.red.shade300,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.thumb_up,
+                                    color: Colors.green.shade300,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 );
               },
             ),
