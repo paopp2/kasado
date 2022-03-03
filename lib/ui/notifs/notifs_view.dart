@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kasado/ui/notifs/components/notif_input_dialog.dart';
 
 class NotifsView extends StatelessWidget {
   const NotifsView({
@@ -13,6 +14,7 @@ class NotifsView extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
+          extendBodyBehindAppBar: true,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -73,7 +75,10 @@ class NotifsView extends StatelessWidget {
             child: FloatingActionButton.extended(
               label: const Text('New notif'),
               icon: const Icon(Icons.add),
-              onPressed: () {},
+              onPressed: () => showDialog(
+                context: context,
+                builder: (_) => const NotifInputDialog(),
+              ),
             ),
           ),
         );
