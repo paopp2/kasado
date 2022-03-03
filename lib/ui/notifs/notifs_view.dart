@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/logic/notifs/notifs_view_model.dart';
 import 'package:kasado/ui/notifs/components/notif_input_dialog.dart';
 
-class NotifsView extends StatelessWidget {
+class NotifsView extends HookConsumerWidget {
   const NotifsView({
     Key? key,
     this.isAdmin = false,
@@ -10,7 +13,14 @@ class NotifsView extends StatelessWidget {
   final bool isAdmin;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final model = ref.watch(notifsViewModel);
+
+    useEffect(() {
+      model.initState();
+      return model.dispose;
+    }, []);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
@@ -77,8 +87,8 @@ class NotifsView extends StatelessWidget {
               icon: const Icon(Icons.add),
               onPressed: () => showDialog(
                 context: context,
-                builder: (_) => const NotifInputDialog(),
-              ),
+                builder: (_) => NotifInputDialog(model: model),
+              ).then((_) => model.clearAllTecs()),
             ),
           ),
         );
