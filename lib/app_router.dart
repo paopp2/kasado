@@ -5,6 +5,7 @@ import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
 import 'package:kasado/ui/admin/court_manager/courts_owned_view.dart';
 import 'package:kasado/ui/home/home_view.dart';
+import 'package:kasado/ui/notifs/notifs_view.dart';
 import 'package:kasado/ui/profile/user_profile_view.dart';
 
 class AppRouter {
@@ -51,6 +52,17 @@ class AppRouter {
         path: '/player-manager-view',
         builder: (context, state) => const PlayerManagerView(),
       ),
+      GoRoute(
+        name: Routes.notifsView,
+        path: '/notifs',
+        builder: (context, state) {
+          final extraMap = state.extra as Map<String, Object?>;
+          return NotifsView(
+            userId: extraMap['userId'] as String,
+            isAdmin: (extraMap['isAdmin'] as bool?) ?? false,
+          );
+        },
+      ),
     ],
     redirect: (state) {
       final isLoggedIn = fireAuthInstance.currentUser != null;
@@ -79,4 +91,5 @@ class Routes {
   static const courtsOwnedView = 'courts_owned_view';
   static const userProfileView = 'user_profile_view';
   static const playerManagerView = 'player_manager_view';
+  static const notifsView = 'notifs_view';
 }
