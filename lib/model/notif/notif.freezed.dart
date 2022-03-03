@@ -40,7 +40,8 @@ class _$NotifTearOff {
       KasadoUser? sender,
       bool sendToAll = false,
       bool getFeedback = false,
-      List<String> recipientIds = 0}) {
+      List<String> recipientIds = 0,
+      required DateTime sentAt}) {
     return _Notif(
       id: id,
       title: title,
@@ -51,6 +52,7 @@ class _$NotifTearOff {
       sendToAll: sendToAll,
       getFeedback: getFeedback,
       recipientIds: recipientIds,
+      sentAt: sentAt,
     );
   }
 
@@ -84,7 +86,8 @@ mixin _$Notif {
             KasadoUser? sender,
             bool sendToAll,
             bool getFeedback,
-            List<String> recipientIds)
+            List<String> recipientIds,
+            DateTime sentAt)
         $default, {
     required TResult Function(String id, bool isRead) ref,
   }) =>
@@ -100,7 +103,8 @@ mixin _$Notif {
             KasadoUser? sender,
             bool sendToAll,
             bool getFeedback,
-            List<String> recipientIds)?
+            List<String> recipientIds,
+            DateTime sentAt)?
         $default, {
     TResult Function(String id, bool isRead)? ref,
   }) =>
@@ -116,7 +120,8 @@ mixin _$Notif {
             KasadoUser? sender,
             bool sendToAll,
             bool getFeedback,
-            List<String> recipientIds)?
+            List<String> recipientIds,
+            DateTime sentAt)?
         $default, {
     TResult Function(String id, bool isRead)? ref,
     required TResult orElse(),
@@ -188,7 +193,8 @@ abstract class _$NotifCopyWith<$Res> implements $NotifCopyWith<$Res> {
       KasadoUser? sender,
       bool sendToAll,
       bool getFeedback,
-      List<String> recipientIds});
+      List<String> recipientIds,
+      DateTime sentAt});
 
   $KasadoUserCopyWith<$Res>? get sender;
 }
@@ -213,6 +219,7 @@ class __$NotifCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
     Object? sendToAll = freezed,
     Object? getFeedback = freezed,
     Object? recipientIds = freezed,
+    Object? sentAt = freezed,
   }) {
     return _then(_Notif(
       id: id == freezed
@@ -251,6 +258,10 @@ class __$NotifCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
           ? _value.recipientIds
           : recipientIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      sentAt: sentAt == freezed
+          ? _value.sentAt
+          : sentAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 
@@ -279,6 +290,7 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
       this.sendToAll = false,
       this.getFeedback = false,
       this.recipientIds = 0,
+      required this.sentAt,
       String? $type})
       : $type = $type ?? 'default';
 
@@ -309,13 +321,15 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
   @JsonKey()
   @override
   final List<String> recipientIds;
+  @override
+  final DateTime sentAt;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Notif(id: $id, title: $title, body: $body, yesCount: $yesCount, noCount: $noCount, sender: $sender, sendToAll: $sendToAll, getFeedback: $getFeedback, recipientIds: $recipientIds)';
+    return 'Notif(id: $id, title: $title, body: $body, yesCount: $yesCount, noCount: $noCount, sender: $sender, sendToAll: $sendToAll, getFeedback: $getFeedback, recipientIds: $recipientIds, sentAt: $sentAt)';
   }
 
   @override
@@ -331,7 +345,8 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
       ..add(DiagnosticsProperty('sender', sender))
       ..add(DiagnosticsProperty('sendToAll', sendToAll))
       ..add(DiagnosticsProperty('getFeedback', getFeedback))
-      ..add(DiagnosticsProperty('recipientIds', recipientIds));
+      ..add(DiagnosticsProperty('recipientIds', recipientIds))
+      ..add(DiagnosticsProperty('sentAt', sentAt));
   }
 
   @override
@@ -349,7 +364,8 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
             const DeepCollectionEquality()
                 .equals(other.getFeedback, getFeedback) &&
             const DeepCollectionEquality()
-                .equals(other.recipientIds, recipientIds));
+                .equals(other.recipientIds, recipientIds) &&
+            const DeepCollectionEquality().equals(other.sentAt, sentAt));
   }
 
   @override
@@ -363,7 +379,8 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
       const DeepCollectionEquality().hash(sender),
       const DeepCollectionEquality().hash(sendToAll),
       const DeepCollectionEquality().hash(getFeedback),
-      const DeepCollectionEquality().hash(recipientIds));
+      const DeepCollectionEquality().hash(recipientIds),
+      const DeepCollectionEquality().hash(sentAt));
 
   @JsonKey(ignore: true)
   @override
@@ -382,12 +399,13 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
             KasadoUser? sender,
             bool sendToAll,
             bool getFeedback,
-            List<String> recipientIds)
+            List<String> recipientIds,
+            DateTime sentAt)
         $default, {
     required TResult Function(String id, bool isRead) ref,
   }) {
     return $default(id, title, body, yesCount, noCount, sender, sendToAll,
-        getFeedback, recipientIds);
+        getFeedback, recipientIds, sentAt);
   }
 
   @override
@@ -402,12 +420,13 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
             KasadoUser? sender,
             bool sendToAll,
             bool getFeedback,
-            List<String> recipientIds)?
+            List<String> recipientIds,
+            DateTime sentAt)?
         $default, {
     TResult Function(String id, bool isRead)? ref,
   }) {
     return $default?.call(id, title, body, yesCount, noCount, sender, sendToAll,
-        getFeedback, recipientIds);
+        getFeedback, recipientIds, sentAt);
   }
 
   @override
@@ -422,14 +441,15 @@ class _$_Notif with DiagnosticableTreeMixin implements _Notif {
             KasadoUser? sender,
             bool sendToAll,
             bool getFeedback,
-            List<String> recipientIds)?
+            List<String> recipientIds,
+            DateTime sentAt)?
         $default, {
     TResult Function(String id, bool isRead)? ref,
     required TResult orElse(),
   }) {
     if ($default != null) {
       return $default(id, title, body, yesCount, noCount, sender, sendToAll,
-          getFeedback, recipientIds);
+          getFeedback, recipientIds, sentAt);
     }
     return orElse();
   }
@@ -481,7 +501,8 @@ abstract class _Notif implements Notif {
       KasadoUser? sender,
       bool sendToAll,
       bool getFeedback,
-      List<String> recipientIds}) = _$_Notif;
+      List<String> recipientIds,
+      required DateTime sentAt}) = _$_Notif;
 
   factory _Notif.fromJson(Map<String, dynamic> json) = _$_Notif.fromJson;
 
@@ -495,6 +516,7 @@ abstract class _Notif implements Notif {
   bool get sendToAll;
   bool get getFeedback;
   List<String> get recipientIds;
+  DateTime get sentAt;
   @override
   @JsonKey(ignore: true)
   _$NotifCopyWith<_Notif> get copyWith => throw _privateConstructorUsedError;
@@ -599,7 +621,8 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
             KasadoUser? sender,
             bool sendToAll,
             bool getFeedback,
-            List<String> recipientIds)
+            List<String> recipientIds,
+            DateTime sentAt)
         $default, {
     required TResult Function(String id, bool isRead) ref,
   }) {
@@ -618,7 +641,8 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
             KasadoUser? sender,
             bool sendToAll,
             bool getFeedback,
-            List<String> recipientIds)?
+            List<String> recipientIds,
+            DateTime sentAt)?
         $default, {
     TResult Function(String id, bool isRead)? ref,
   }) {
@@ -637,7 +661,8 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
             KasadoUser? sender,
             bool sendToAll,
             bool getFeedback,
-            List<String> recipientIds)?
+            List<String> recipientIds,
+            DateTime sentAt)?
         $default, {
     TResult Function(String id, bool isRead)? ref,
     required TResult orElse(),
