@@ -20,7 +20,7 @@ class NotifButton extends StatelessWidget {
           ),
           child: const Icon(Icons.notifications),
         ),
-        onPressed: () => context.pushNamed(Routes.courtsOwnedView),
+        onPressed: () => context.pushNamed(Routes.notifsView),
       ),
     );
   }
