@@ -13,15 +13,35 @@ class NotifRepository {
   NotifRepository({required this.firestoreHelper});
   final FirestoreHelper firestoreHelper;
 
+  Future<void> setUserFeedback({
+    required String notifId,
+    required bool isPositive,
+  }) async {
+    final notifMeta = await getNotifMeta(notifId: notifId);
+    await firestoreHelper.setData(
+      path: FirestorePath.docNotif(notifId),
+      data: (isPositive)
+          ? notifMeta.copyWith(yesCount: notifMeta.yesCount + 1).toJson()
+          : notifMeta.copyWith(noCount: notifMeta.noCount + 1).toJson(),
+    );
+  }
+
   Future<void> setUnreadUserNotifsAsRead({required String userId}) async {
     final notifs = await getUnreadUserNotifs(userId: userId);
     for (final notif in notifs) {
-      notif as NotifObject;
-      await firestoreHelper.setData(
-        path: FirestorePath.docUserNotif(userId, notif.id),
-        data: notif.copyWith(isRead: true).toJson(),
-      );
+      setUserNotifAsRead(userId: userId, notif: notif);
     }
+  }
+
+  Future<void> setUserNotifAsRead({
+    required String userId,
+    required Notif notif,
+  }) async {
+    notif as NotifObject;
+    await firestoreHelper.setData(
+      path: FirestorePath.docUserNotif(userId, notif.id),
+      data: notif.copyWith(isRead: true).toJson(),
+    );
   }
 
   Future<void> sendNotifToAll(Notif notif) async {
@@ -36,6 +56,13 @@ class NotifRepository {
       endPath: FirestorePath.docNotif(notif.id),
       data: notif.toJson(),
     );
+  }
+
+  Future<NotifMeta> getNotifMeta({required String notifId}) async {
+    return (await firestoreHelper.getData(
+      path: FirestorePath.docNotif(notifId),
+      builder: (data, docId) => NotifMeta.fromJson(data),
+    ));
   }
 
   Future<List<Notif>> getUnreadUserNotifs({required String userId}) async {

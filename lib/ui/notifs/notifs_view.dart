@@ -96,14 +96,22 @@ class NotifsView extends HookConsumerWidget {
                                         Icons.thumb_down,
                                         color: Colors.red.shade300,
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () => model.setFeedback(
+                                        userId: userId,
+                                        notif: notif,
+                                        isPositive: false,
+                                      ),
                                     ),
                                     IconButton(
                                       icon: Icon(
                                         Icons.thumb_up,
                                         color: Colors.green.shade300,
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () => model.setFeedback(
+                                        userId: userId,
+                                        notif: notif,
+                                        isPositive: true,
+                                      ),
                                     ),
                                   ],
                                 ),
