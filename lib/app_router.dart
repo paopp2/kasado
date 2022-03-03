@@ -55,7 +55,7 @@ class AppRouter {
       GoRoute(
         name: Routes.notifsView,
         path: '/notifs',
-        builder: (context, state) => const NotifsView(),
+        builder: (context, state) => NotifsView(isAdmin: state.extra as bool),
       ),
     ],
     redirect: (state) {

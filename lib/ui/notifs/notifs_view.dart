@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class NotifsView extends StatelessWidget {
-  const NotifsView({Key? key}) : super(key: key);
+  const NotifsView({
+    Key? key,
+    this.isAdmin = false,
+  }) : super(key: key);
+
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +17,7 @@ class NotifsView extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
-          body: Container(color: Colors.blueGrey),
+          body: Container(color: (isAdmin) ? Colors.red : Colors.blueGrey),
         );
       },
     );
