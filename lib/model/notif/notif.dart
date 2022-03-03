@@ -11,21 +11,18 @@ class Notif with _$Notif {
     required String id,
     @Default('') String title,
     required String body,
+    KasadoUser? sender,
+    required DateTime sentAt,
+    @Default(false) bool needsFeedback,
+    @Default(false) bool isRead,
+  }) = NotifObject;
+
+  const factory Notif.meta({
+    required String id,
+    required DateTime sentAt,
     @Default(0) int yesCount,
     @Default(0) int noCount,
-    KasadoUser? sender,
-    @Default(false) bool sendToAll,
-    @Default(false) bool getFeedback,
-    @Default([]) List<String> recipientIds,
-    @Default(false) bool isRead,
-    required DateTime sentAt,
-  }) = NotifInfo;
-
-  const factory Notif.ref({
-    required String id,
-    @Default(false) bool isRead,
-    required DateTime sentAt,
-  }) = NotifRef;
+  }) = NotifMeta;
 
   factory Notif.fromJson(Map<String, dynamic> json) => _$NotifFromJson(json);
 }
