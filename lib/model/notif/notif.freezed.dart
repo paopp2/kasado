@@ -58,10 +58,12 @@ class _$NotifTearOff {
     );
   }
 
-  NotifRef ref({required String id, bool isRead = false}) {
+  NotifRef ref(
+      {required String id, bool isRead = false, required DateTime sentAt}) {
     return NotifRef(
       id: id,
       isRead: isRead,
+      sentAt: sentAt,
     );
   }
 
@@ -77,6 +79,7 @@ const $Notif = _$NotifTearOff();
 mixin _$Notif {
   String get id => throw _privateConstructorUsedError;
   bool get isRead => throw _privateConstructorUsedError;
+  DateTime get sentAt => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
@@ -93,7 +96,7 @@ mixin _$Notif {
             bool isRead,
             DateTime sentAt)
         $default, {
-    required TResult Function(String id, bool isRead) ref,
+    required TResult Function(String id, bool isRead, DateTime sentAt) ref,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -111,7 +114,7 @@ mixin _$Notif {
             bool isRead,
             DateTime sentAt)?
         $default, {
-    TResult Function(String id, bool isRead)? ref,
+    TResult Function(String id, bool isRead, DateTime sentAt)? ref,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -129,7 +132,7 @@ mixin _$Notif {
             bool isRead,
             DateTime sentAt)?
         $default, {
-    TResult Function(String id, bool isRead)? ref,
+    TResult Function(String id, bool isRead, DateTime sentAt)? ref,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -161,7 +164,7 @@ mixin _$Notif {
 abstract class $NotifCopyWith<$Res> {
   factory $NotifCopyWith(Notif value, $Res Function(Notif) then) =
       _$NotifCopyWithImpl<$Res>;
-  $Res call({String id, bool isRead});
+  $Res call({String id, bool isRead, DateTime sentAt});
 }
 
 /// @nodoc
@@ -176,6 +179,7 @@ class _$NotifCopyWithImpl<$Res> implements $NotifCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? isRead = freezed,
+    Object? sentAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -186,6 +190,10 @@ class _$NotifCopyWithImpl<$Res> implements $NotifCopyWith<$Res> {
           ? _value.isRead
           : isRead // ignore: cast_nullable_to_non_nullable
               as bool,
+      sentAt: sentAt == freezed
+          ? _value.sentAt
+          : sentAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -427,7 +435,7 @@ class _$NotifInfo with DiagnosticableTreeMixin implements NotifInfo {
             bool isRead,
             DateTime sentAt)
         $default, {
-    required TResult Function(String id, bool isRead) ref,
+    required TResult Function(String id, bool isRead, DateTime sentAt) ref,
   }) {
     return $default(id, title, body, yesCount, noCount, sender, sendToAll,
         getFeedback, recipientIds, isRead, sentAt);
@@ -449,7 +457,7 @@ class _$NotifInfo with DiagnosticableTreeMixin implements NotifInfo {
             bool isRead,
             DateTime sentAt)?
         $default, {
-    TResult Function(String id, bool isRead)? ref,
+    TResult Function(String id, bool isRead, DateTime sentAt)? ref,
   }) {
     return $default?.call(id, title, body, yesCount, noCount, sender, sendToAll,
         getFeedback, recipientIds, isRead, sentAt);
@@ -471,7 +479,7 @@ class _$NotifInfo with DiagnosticableTreeMixin implements NotifInfo {
             bool isRead,
             DateTime sentAt)?
         $default, {
-    TResult Function(String id, bool isRead)? ref,
+    TResult Function(String id, bool isRead, DateTime sentAt)? ref,
     required TResult orElse(),
   }) {
     if ($default != null) {
@@ -546,6 +554,7 @@ abstract class NotifInfo implements Notif {
   List<String> get recipientIds;
   @override
   bool get isRead;
+  @override
   DateTime get sentAt;
   @override
   @JsonKey(ignore: true)
@@ -558,7 +567,7 @@ abstract class $NotifRefCopyWith<$Res> implements $NotifCopyWith<$Res> {
   factory $NotifRefCopyWith(NotifRef value, $Res Function(NotifRef) then) =
       _$NotifRefCopyWithImpl<$Res>;
   @override
-  $Res call({String id, bool isRead});
+  $Res call({String id, bool isRead, DateTime sentAt});
 }
 
 /// @nodoc
@@ -574,6 +583,7 @@ class _$NotifRefCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? isRead = freezed,
+    Object? sentAt = freezed,
   }) {
     return _then(NotifRef(
       id: id == freezed
@@ -584,6 +594,10 @@ class _$NotifRefCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
           ? _value.isRead
           : isRead // ignore: cast_nullable_to_non_nullable
               as bool,
+      sentAt: sentAt == freezed
+          ? _value.sentAt
+          : sentAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -591,7 +605,11 @@ class _$NotifRefCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
-  const _$NotifRef({required this.id, this.isRead = false, String? $type})
+  const _$NotifRef(
+      {required this.id,
+      this.isRead = false,
+      required this.sentAt,
+      String? $type})
       : $type = $type ?? 'ref';
 
   factory _$NotifRef.fromJson(Map<String, dynamic> json) =>
@@ -602,13 +620,15 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
   @JsonKey()
   @override
   final bool isRead;
+  @override
+  final DateTime sentAt;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Notif.ref(id: $id, isRead: $isRead)';
+    return 'Notif.ref(id: $id, isRead: $isRead, sentAt: $sentAt)';
   }
 
   @override
@@ -617,7 +637,8 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
     properties
       ..add(DiagnosticsProperty('type', 'Notif.ref'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('isRead', isRead));
+      ..add(DiagnosticsProperty('isRead', isRead))
+      ..add(DiagnosticsProperty('sentAt', sentAt));
   }
 
   @override
@@ -626,14 +647,16 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
         (other.runtimeType == runtimeType &&
             other is NotifRef &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.isRead, isRead));
+            const DeepCollectionEquality().equals(other.isRead, isRead) &&
+            const DeepCollectionEquality().equals(other.sentAt, sentAt));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(isRead));
+      const DeepCollectionEquality().hash(isRead),
+      const DeepCollectionEquality().hash(sentAt));
 
   @JsonKey(ignore: true)
   @override
@@ -656,9 +679,9 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
             bool isRead,
             DateTime sentAt)
         $default, {
-    required TResult Function(String id, bool isRead) ref,
+    required TResult Function(String id, bool isRead, DateTime sentAt) ref,
   }) {
-    return ref(id, isRead);
+    return ref(id, isRead, sentAt);
   }
 
   @override
@@ -677,9 +700,9 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
             bool isRead,
             DateTime sentAt)?
         $default, {
-    TResult Function(String id, bool isRead)? ref,
+    TResult Function(String id, bool isRead, DateTime sentAt)? ref,
   }) {
-    return ref?.call(id, isRead);
+    return ref?.call(id, isRead, sentAt);
   }
 
   @override
@@ -698,11 +721,11 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
             bool isRead,
             DateTime sentAt)?
         $default, {
-    TResult Function(String id, bool isRead)? ref,
+    TResult Function(String id, bool isRead, DateTime sentAt)? ref,
     required TResult orElse(),
   }) {
     if (ref != null) {
-      return ref(id, isRead);
+      return ref(id, isRead, sentAt);
     }
     return orElse();
   }
@@ -745,7 +768,8 @@ class _$NotifRef with DiagnosticableTreeMixin implements NotifRef {
 }
 
 abstract class NotifRef implements Notif {
-  const factory NotifRef({required String id, bool isRead}) = _$NotifRef;
+  const factory NotifRef(
+      {required String id, bool isRead, required DateTime sentAt}) = _$NotifRef;
 
   factory NotifRef.fromJson(Map<String, dynamic> json) = _$NotifRef.fromJson;
 
@@ -753,6 +777,8 @@ abstract class NotifRef implements Notif {
   String get id;
   @override
   bool get isRead;
+  @override
+  DateTime get sentAt;
   @override
   @JsonKey(ignore: true)
   $NotifRefCopyWith<NotifRef> get copyWith =>

@@ -45,6 +45,7 @@ Map<String, dynamic> _$$NotifInfoToJson(_$NotifInfo instance) =>
 _$NotifRef _$$NotifRefFromJson(Map<String, dynamic> json) => _$NotifRef(
       id: json['id'] as String,
       isRead: json['isRead'] as bool? ?? false,
+      sentAt: DateTime.parse(json['sentAt'] as String),
       $type: json['runtimeType'] as String?,
     );
 
@@ -52,5 +53,6 @@ Map<String, dynamic> _$$NotifRefToJson(_$NotifRef instance) =>
     <String, dynamic>{
       'id': instance.id,
       'isRead': instance.isRead,
+      'sentAt': instance.sentAt.toIso8601String(),
       'runtimeType': instance.$type,
     };

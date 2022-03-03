@@ -24,6 +24,7 @@ class Notif with _$Notif {
   const factory Notif.ref({
     required String id,
     @Default(false) bool isRead,
+    required DateTime sentAt,
   }) = NotifRef;
 
   factory Notif.fromJson(Map<String, dynamic> json) => _$NotifFromJson(json);
