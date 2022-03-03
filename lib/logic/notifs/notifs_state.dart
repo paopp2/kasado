@@ -11,3 +11,15 @@ final userNotifsStreamProvider =
     return notifRepo.getUserNotifsStream(userId: userId);
   },
 );
+
+final unreadUserNotifCountStream =
+    StreamProvider.autoDispose.family<int, String>(
+  (ref, userId) {
+    return ref.watch(userNotifsStreamProvider(userId).stream).map((notifList) {
+      return notifList.where((notif) {
+        notif as NotifObject;
+        return !notif.isRead;
+      }).length;
+    });
+  },
+);

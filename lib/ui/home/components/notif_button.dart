@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/data/core/core_providers.dart';
+import 'package:kasado/logic/notifs/notifs_state.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
 class NotifButton extends HookConsumerWidget {
   const NotifButton({
@@ -13,26 +15,41 @@ class NotifButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUserInfo = ref.watch(currentUserInfoProvider).value;
-    final isAdmin = currentUserInfo?.isAdmin;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: IconButton(
-        icon: Badge(
-          badgeContent: const Text(
-            '2',
-            style: TextStyle(color: Colors.white),
-          ),
-          child: const Icon(Icons.notifications),
-        ),
-        onPressed: () => context.pushNamed(
-          Routes.notifsView,
-          extra: {
-            'isAdmin': isAdmin,
-            'userId': currentUserInfo!.id,
-          },
-        ),
-      ),
-    );
+    return (currentUserInfo == null)
+        ? const SizedBox()
+        : Builder(
+            builder: (context) {
+              final isAdmin = currentUserInfo.isAdmin;
+              final unreadNotifCountStream =
+                  ref.watch(unreadUserNotifCountStream(currentUserInfo.id));
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: IconButton(
+                  icon: unreadNotifCountStream.when(
+                      error: (e, _) => Text(e.toString()),
+                      loading: () => const LoadingWidget(),
+                      data: (unreadNotifCount) {
+                        return Badge(
+                          showBadge: unreadNotifCount != 0,
+                          badgeContent: Text(
+                            unreadNotifCount.toString(),
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          child: const Icon(Icons.notifications),
+                        );
+                      }),
+                  onPressed: () => context.pushNamed(
+                    Routes.notifsView,
+                    extra: {
+                      'isAdmin': isAdmin,
+                      'userId': currentUserInfo.id,
+                    },
+                  ),
+                ),
+              );
+            },
+          );
   }
 }

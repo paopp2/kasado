@@ -68,7 +68,7 @@ class NotifsView extends HookConsumerWidget {
                             children: [
                               Text(notif.body),
                               Visibility(
-                                visible: notif.needsFeedback,
+                                visible: notif.needsFeedback && !notif.isRead,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
