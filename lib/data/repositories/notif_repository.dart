@@ -50,8 +50,7 @@ class NotifRepository {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colUserNotifs(userId),
       builder: (data, docId) => Notif.fromJson(data),
-      queryBuilder: (query) =>
-          query.orderBy('sentAt', descending: true).limit(10),
+      queryBuilder: (query) => query.orderBy('sentAt', descending: true),
     );
   }
 }
