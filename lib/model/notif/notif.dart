@@ -17,6 +17,7 @@ class Notif with _$Notif {
     @Default(false) bool sendToAll,
     @Default(false) bool getFeedback,
     @Default([]) List<String> recipientIds,
+    @Default(false) bool isRead,
     required DateTime sentAt,
   }) = _Notif;
 

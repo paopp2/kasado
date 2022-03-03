@@ -21,6 +21,7 @@ _$_Notif _$$_NotifFromJson(Map<String, dynamic> json) => _$_Notif(
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      isRead: json['isRead'] as bool? ?? false,
       sentAt: DateTime.parse(json['sentAt'] as String),
       $type: json['runtimeType'] as String?,
     );
@@ -35,6 +36,7 @@ Map<String, dynamic> _$$_NotifToJson(_$_Notif instance) => <String, dynamic>{
       'sendToAll': instance.sendToAll,
       'getFeedback': instance.getFeedback,
       'recipientIds': instance.recipientIds,
+      'isRead': instance.isRead,
       'sentAt': instance.sentAt.toIso8601String(),
       'runtimeType': instance.$type,
     };
