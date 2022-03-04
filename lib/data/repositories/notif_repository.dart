@@ -73,6 +73,13 @@ class NotifRepository {
     ));
   }
 
+  Stream<NotifMeta?> getNotifMetaStream({required String notifId}) {
+    return firestoreHelper.documentStream(
+      path: FirestorePath.docNotif(notifId),
+      builder: (data, docId) => NotifMeta.fromJson(data),
+    );
+  }
+
   Future<List<Notif>> getUnreadUserNotifs({required String userId}) async {
     return firestoreHelper.collectionToList(
       path: FirestorePath.colUserNotifs(userId),
