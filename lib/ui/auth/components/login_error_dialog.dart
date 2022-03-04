@@ -20,7 +20,7 @@ class LoginErrorDialog extends StatelessWidget {
           Text("Ni-error pre. Kani kasagaran ang problema:"),
           SizedBox(height: 20),
           Text(
-            "1) Dili Google Chrome or Safari ang gigamit sa pag abli sa link",
+            "1) Gipislit ang link lahos gikan Messenger. E-copy ang link pre nya e-paste sa Google Chrome or Safari",
           ),
           SizedBox(height: 20),
           Text("2) Naka-disabled ang popups. Try daw enable pre"),
