@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/notifs/notifs_state.dart';
 import 'package:kasado/logic/notifs/notifs_view_model.dart';
 import 'package:kasado/model/notif/notif.dart';
+import 'package:kasado/ui/notifs/components/notif_feedback_row.dart';
 import 'package:kasado/ui/notifs/components/notif_input_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -98,33 +99,11 @@ class NotifsView extends HookConsumerWidget {
                             children: [
                               Text(notif.body),
                               Visibility(
-                                visible: notif.needsFeedback && !notif.isRead,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.thumb_down,
-                                        color: Colors.red.shade300,
-                                      ),
-                                      onPressed: () => model.setFeedback(
-                                        userId: userId,
-                                        notif: notif,
-                                        isPositive: false,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.thumb_up,
-                                        color: Colors.green.shade300,
-                                      ),
-                                      onPressed: () => model.setFeedback(
-                                        userId: userId,
-                                        notif: notif,
-                                        isPositive: true,
-                                      ),
-                                    ),
-                                  ],
+                                visible: notif.needsFeedback,
+                                child: NotifFeedbackRow(
+                                  model: model,
+                                  userId: userId,
+                                  notif: notif,
                                 ),
                               ),
                             ],

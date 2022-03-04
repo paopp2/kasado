@@ -12,6 +12,30 @@ final userNotifsStreamProvider =
   },
 );
 
+final notifMetaStreamProvider =
+    StreamProvider.autoDispose.family<NotifMeta?, String>((ref, notifId) {
+  final notifRepo = ref.watch(notifRepositoryProvider);
+  return notifRepo.getNotifMetaStream(notifId: notifId);
+});
+
+final notifYesCountStreamProvider =
+    StreamProvider.autoDispose.family<int, String>(
+  (ref, notifId) {
+    return ref
+        .watch(notifMetaStreamProvider(notifId).stream)
+        .map((notif) => notif?.yesCount ?? 0);
+  },
+);
+
+final notifNoCountStreamProvider =
+    StreamProvider.autoDispose.family<int, String>(
+  (ref, notifId) {
+    return ref
+        .watch(notifMetaStreamProvider(notifId).stream)
+        .map((notif) => notif?.noCount ?? 0);
+  },
+);
+
 final unreadUserNotifCountStream =
     StreamProvider.autoDispose.family<int, String>(
   (ref, userId) {

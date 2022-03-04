@@ -39,12 +39,10 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
   }
 
   Future<void> setFeedback({
-    required String userId,
     required Notif notif,
     required bool isPositive,
   }) async {
     await notifRepo.setUserFeedback(notifId: notif.id, isPositive: isPositive);
-    await notifRepo.setUserNotifAsRead(userId: userId, notif: notif);
   }
 
   void setYesNoFeedbackEnabled(bool isEnabled) {
