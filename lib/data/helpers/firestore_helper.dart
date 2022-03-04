@@ -38,8 +38,7 @@ class FirestoreHelper {
     await reference.set(data, SetOptions(merge: merge));
   }
 
-  // There might be a better way to do this (Use threads(?))
-  Future<void> setDataToAll({
+  Future<void> setBatchData({
     required String baseColPath,
     required String endPath,
     required Map<String, dynamic> data,
@@ -52,11 +51,14 @@ class FirestoreHelper {
       queryBuilder: queryBuilder,
     );
 
+    WriteBatch batch = FirebaseFirestore.instance.batch();
     for (final docId in docIdList) {
       final path = baseColPath + '/$docId/$endPath';
       final reference = FirebaseFirestore.instance.doc(path);
-      await reference.set(data, SetOptions(merge: merge));
+      batch.set(reference, data, SetOptions(merge: merge));
     }
+
+    return batch.commit();
   }
 
   Future<void> deleteData({required String path}) async {
@@ -64,8 +66,7 @@ class FirestoreHelper {
     await reference.delete();
   }
 
-  // There might be a better way to do this (Use threads(?))
-  Future<void> deleteDataForAll({
+  Future<void> batchDelete({
     required String baseColPath,
     required String endPath,
     Query Function(Query query)? queryBuilder,
@@ -76,11 +77,14 @@ class FirestoreHelper {
       queryBuilder: queryBuilder,
     );
 
+    WriteBatch batch = FirebaseFirestore.instance.batch();
     for (final docId in docIdList) {
       final path = baseColPath + '/$docId/$endPath';
       final reference = FirebaseFirestore.instance.doc(path);
-      await reference.delete();
+      batch.delete(reference);
     }
+
+    return batch.commit();
   }
 
   Future<void> moveData({

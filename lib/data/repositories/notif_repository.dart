@@ -51,7 +51,7 @@ class NotifRepository {
       data: notifMeta.toJson(),
     );
 
-    await firestoreHelper.setDataToAll(
+    await firestoreHelper.setBatchData(
       baseColPath: FirestorePath.colUserInfos(),
       endPath: FirestorePath.docNotif(notif.id),
       data: notif.toJson(),
@@ -60,7 +60,7 @@ class NotifRepository {
 
   Future<void> deleteNotifForAll(String notifId) async {
     await firestoreHelper.deleteData(path: FirestorePath.docNotif(notifId));
-    await firestoreHelper.deleteDataForAll(
+    await firestoreHelper.batchDelete(
       baseColPath: FirestorePath.colUserInfos(),
       endPath: FirestorePath.docNotif(notifId),
     );
