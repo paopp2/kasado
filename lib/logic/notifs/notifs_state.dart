@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/notif_repository.dart';
 import 'package:kasado/model/notif/notif.dart';
 
@@ -9,6 +10,18 @@ final userNotifsStreamProvider =
   (ref, userId) {
     final notifRepo = ref.watch(notifRepositoryProvider);
     return notifRepo.getUserNotifsStream(userId: userId);
+  },
+);
+
+final userNotifStreamProvider =
+    StreamProvider.autoDispose.family<Notif?, String>(
+  (ref, notifId) {
+    final currentUserId = ref.watch(currentUserProvider)!.id;
+    final notifRepo = ref.watch(notifRepositoryProvider);
+    return notifRepo.getUserNotifStream(
+      userId: currentUserId,
+      notifId: notifId,
+    );
   },
 );
 
