@@ -46,17 +46,13 @@ class NotifFeedbackRow extends HookConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon:
-                            // If user responded 👎
-                            (hasDislikeBeenPressed.value)
-                                ? const Icon(
-                                    Icons.thumb_down,
-                                    color: Colors.red,
-                                  )
-                                : Icon(
-                                    Icons.thumb_down_outlined,
-                                    color: Colors.red.shade300,
-                                  ),
+                        icon: Icon(
+                          // If user responded 👎
+                          (hasDislikeBeenPressed.value)
+                              ? Icons.thumb_down
+                              : Icons.thumb_down_outlined,
+                          color: Colors.red.shade300,
+                        ),
                         onPressed: () => model.onDislikePressed(
                           notif: userNotif,
                           notifMeta: notifMeta!,
@@ -70,17 +66,13 @@ class NotifFeedbackRow extends HookConsumerWidget {
                   Column(
                     children: [
                       IconButton(
-                        icon:
-                            // If user responded 👍
-                            (hasLikeBeenPressed.value)
-                                ? const Icon(
-                                    Icons.thumb_up,
-                                    color: Colors.green,
-                                  )
-                                : Icon(
-                                    Icons.thumb_up_outlined,
-                                    color: Colors.green.shade300,
-                                  ),
+                        icon: Icon(
+                          // If user responded 👍
+                          (hasLikeBeenPressed.value)
+                              ? Icons.thumb_up
+                              : Icons.thumb_up_outlined,
+                          color: Colors.green.shade300,
+                        ),
                         onPressed: () => model.onLikePressed(
                           notif: userNotif,
                           notifMeta: notifMeta!,
