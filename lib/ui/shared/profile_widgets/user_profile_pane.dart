@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/ui/home/components/pondo_info_dialog.dart';
 import 'package:kasado/ui/shared/profile_widgets/player_stat_block.dart';
 
 class UserProfilePane extends HookConsumerWidget {
@@ -43,9 +44,28 @@ class UserProfilePane extends HookConsumerWidget {
               const SizedBox(height: 30),
               Visibility(
                 visible: isCurrentUser || isSuperAdmin,
-                child: Text(
-                  'PONDO: ${userInfo?.pondo} Php',
-                  style: const TextStyle(fontSize: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'PONDO: ${userInfo?.pondo} Php',
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                    TextButton(
+                      child: const Text(
+                        'ADD',
+                        style: TextStyle(color: Colors.green),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => PondoInfoDialog(
+                            constraints: constraints,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 50),
