@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/notifs/notifs_state.dart';
 import 'package:kasado/logic/notifs/notifs_view_model.dart';
@@ -22,8 +21,6 @@ class NotifFeedbackRow extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userNotifStream = ref.watch(userNotifStreamProvider(notifId));
     final notifMetaStream = ref.watch(notifMetaStreamProvider(notifId));
-    final hasLikeBeenPressed = useState(false);
-    final hasDislikeBeenPressed = useState(false);
 
     return userNotifStream.when(
       error: (e, _) => Text(e.toString()),
@@ -31,8 +28,6 @@ class NotifFeedbackRow extends HookConsumerWidget {
       data: (userNotif) {
         userNotif as NotifObject;
         final isLiked = userNotif.hasLiked;
-        hasLikeBeenPressed.value = isLiked ?? false;
-        hasDislikeBeenPressed.value = !(isLiked ?? true);
         return notifMetaStream.when(
           error: (e, _) => Text(e.toString()),
           loading: () => const LoadingWidget(),
@@ -48,7 +43,7 @@ class NotifFeedbackRow extends HookConsumerWidget {
                       IconButton(
                         icon: Icon(
                           // If user responded 👎
-                          (hasDislikeBeenPressed.value)
+                          (isLiked == false)
                               ? Icons.thumb_down
                               : Icons.thumb_down_outlined,
                           color: Colors.red.shade300,
@@ -56,8 +51,7 @@ class NotifFeedbackRow extends HookConsumerWidget {
                         onPressed: () => model.onDislikePressed(
                           notif: userNotif,
                           notifMeta: notifMeta!,
-                          hasBeenPressed: hasDislikeBeenPressed,
-                          hasLikeBeenPressed: hasLikeBeenPressed,
+                          wasLiked: userNotif.hasLiked,
                         ),
                       ),
                       Text(notifMeta?.noCount.toString() ?? '0'),
@@ -68,7 +62,7 @@ class NotifFeedbackRow extends HookConsumerWidget {
                       IconButton(
                         icon: Icon(
                           // If user responded 👍
-                          (hasLikeBeenPressed.value)
+                          (isLiked == true)
                               ? Icons.thumb_up
                               : Icons.thumb_up_outlined,
                           color: Colors.green.shade300,
@@ -76,8 +70,7 @@ class NotifFeedbackRow extends HookConsumerWidget {
                         onPressed: () => model.onLikePressed(
                           notif: userNotif,
                           notifMeta: notifMeta!,
-                          hasBeenPressed: hasLikeBeenPressed,
-                          hasDislikeBeenPressed: hasDislikeBeenPressed,
+                          wasLiked: userNotif.hasLiked,
                         ),
                       ),
                       Text(notifMeta?.yesCount.toString() ?? '0'),

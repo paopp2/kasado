@@ -38,71 +38,67 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
     notifRepo.setUnreadUserNotifsAsRead(userId: currentUser.id);
   }
 
+  // Decrease dislike count when disliked, add to like count and set notif to liked
+  // Split with onDislikePressed despite having more or less the same logic for
+  // the sake of readability
+  // TODO: Fix lag when liking at dislike state (and vice-versa for onDislikePressed)
   Future<void> onLikePressed({
     required Notif notif,
     required NotifMeta notifMeta,
-    required ValueNotifier<bool> hasBeenPressed,
-    required ValueNotifier<bool> hasDislikeBeenPressed,
+    required bool? wasLiked,
   }) async {
-    if (hasDislikeBeenPressed.value) {
+    if (wasLiked == false) {
       await giveFeedback(
         notifMeta: notifMeta,
         isLike: false,
         isAdd: false,
       );
-      hasDislikeBeenPressed.value = false;
     }
-    await giveFeedback(
+    giveFeedback(
       notifMeta: notifMeta,
       isLike: true,
-      isAdd: !hasBeenPressed.value,
+      isAdd: (wasLiked == null || !wasLiked),
     );
-    hasBeenPressed.value = !hasBeenPressed.value;
     setUserFeedbackState(
       notif: notif,
-      hasLikeBeenPressed: hasBeenPressed,
-      hasDislikeBeenPressed: hasDislikeBeenPressed,
+      isLiked: (wasLiked == true) ? null : true,
     );
   }
 
+  // Decrease like count when liked, add to dislike count and set notif to liked
+  // Split with onLikePressed despite having more or less the same logic for the
+  // sake of readability
   Future<void> onDislikePressed({
     required Notif notif,
     required NotifMeta notifMeta,
-    required ValueNotifier<bool> hasBeenPressed,
-    required ValueNotifier<bool> hasLikeBeenPressed,
+    required bool? wasLiked,
   }) async {
-    if (hasLikeBeenPressed.value) {
+    if (wasLiked == true) {
       await giveFeedback(
-        notifMeta: notif,
+        notifMeta: notifMeta,
         isLike: true,
         isAdd: false,
       );
-      hasLikeBeenPressed.value = false;
     }
-    await giveFeedback(
-      notifMeta: notif,
+    giveFeedback(
+      notifMeta: notifMeta,
       isLike: false,
-      isAdd: !hasBeenPressed.value,
+      isAdd: (wasLiked == null || wasLiked),
     );
-    hasBeenPressed.value = !hasBeenPressed.value;
     setUserFeedbackState(
       notif: notif,
-      hasLikeBeenPressed: hasLikeBeenPressed,
-      hasDislikeBeenPressed: hasBeenPressed,
+      isLiked: (wasLiked == false) ? null : false,
     );
   }
 
   Future<void> setUserFeedbackState({
     required Notif notif,
-    required ValueNotifier<bool> hasLikeBeenPressed,
-    required ValueNotifier<bool> hasDislikeBeenPressed,
+    bool? isLiked,
   }) async {
-    final isLiked = hasLikeBeenPressed.value;
-    final isDisliked = hasDislikeBeenPressed.value;
     await notifRepo.setUserNotifFeedbackState(
       userId: currentUser.id,
       notif: notif as NotifObject,
-      hasLiked: !(isLiked || isDisliked) ? null : isLiked,
+      hasLiked: isLiked,
     );
   }
 
