@@ -186,6 +186,42 @@ class CourtDetailsViewModel extends ViewModel {
     }
     if (context != null) Navigator.pop(context);
   }
+
+  Future<void> kickFromCourtSlot({
+    required CourtSlot baseCourtSlot,
+    required double courtTicketPrice,
+    required String userToKickId,
+  }) async {
+    final KasadoUser playerToKick =
+        baseCourtSlot.players.singleWhere((p) => (p.id == userToKickId));
+
+    if (playerToKick.hasPaid) {
+      final baseUserInfo = await userInfoRepo.getUserInfo(userToKickId);
+      await userInfoRepo.addOrDeductPondo(
+        currentUserInfo: baseUserInfo!,
+        isAdd: true,
+        pondo: courtTicketPrice,
+      );
+    }
+
+    final updatedPlayerList = baseCourtSlot.players..remove(playerToKick);
+
+    await userInfoRepo.reserveUserAt(
+      userId: userToKickId,
+      reservedAt: null,
+    );
+
+    if (updatedPlayerList.isEmpty) {
+      await courtRepo.removeCourtSlot(
+        baseCourtSlot.courtId,
+        baseCourtSlot.slotId,
+      );
+    } else {
+      await courtRepo.pushCourtSlot(
+        courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
+      );
+    }
+  }
 }
 
 enum SlotAndUserState {
