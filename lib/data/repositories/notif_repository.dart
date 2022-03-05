@@ -15,14 +15,23 @@ class NotifRepository {
 
   Future<void> setUserFeedback({
     required String notifId,
-    required bool isPositive,
+    required bool isLike,
+    required bool isAdd,
   }) async {
     final notifMeta = await getNotifMeta(notifId: notifId);
     await firestoreHelper.setData(
       path: FirestorePath.docNotif(notifId),
-      data: (isPositive)
-          ? notifMeta.copyWith(yesCount: notifMeta.yesCount + 1).toJson()
-          : notifMeta.copyWith(noCount: notifMeta.noCount + 1).toJson(),
+      data: (isLike)
+          ? notifMeta
+              .copyWith(
+                  yesCount:
+                      (isAdd) ? notifMeta.yesCount + 1 : notifMeta.yesCount - 1)
+              .toJson()
+          : notifMeta
+              .copyWith(
+                  noCount:
+                      (isAdd) ? notifMeta.noCount + 1 : notifMeta.noCount - 1)
+              .toJson(),
     );
   }
 
@@ -44,8 +53,27 @@ class NotifRepository {
     );
   }
 
-  Future<void> sendNotifToAll(Notif notif) async {
-    final notifMeta = Notif.meta(id: notif.id, sentAt: notif.sentAt);
+  Future<void> setUserNotifFeedbackState({
+    required String userId,
+    required NotifObject notif,
+    required bool? hasLiked,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docUserNotif(userId, notif.id),
+      data: notif.copyWith(hasLiked: hasLiked).toJson(),
+    );
+  }
+
+  Future<void> sendNotifToAll({
+    required Notif notif,
+    bool needsFeedback = false,
+  }) async {
+    final notifMeta = Notif.meta(
+      id: notif.id,
+      title: notif.title,
+      sentAt: notif.sentAt,
+      needsFeedback: needsFeedback,
+    );
     await firestoreHelper.setData(
       path: FirestorePath.docNotif(notif.id),
       data: notifMeta.toJson(),
@@ -77,6 +105,16 @@ class NotifRepository {
     return firestoreHelper.documentStream(
       path: FirestorePath.docNotif(notifId),
       builder: (data, docId) => NotifMeta.fromJson(data),
+    );
+  }
+
+  Stream<Notif?> getUserNotifStream({
+    required String userId,
+    required String notifId,
+  }) {
+    return firestoreHelper.documentStream(
+      path: FirestorePath.docUserNotif(userId, notifId),
+      builder: (data, docId) => Notif.fromJson(data),
     );
   }
 

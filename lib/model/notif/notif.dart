@@ -13,15 +13,17 @@ class Notif with _$Notif {
     required String body,
     KasadoUser? sender,
     required DateTime sentAt,
-    @Default(false) bool needsFeedback,
     @Default(false) bool isRead,
+    @Default(null) bool? hasLiked,
   }) = NotifObject;
 
   const factory Notif.meta({
     required String id,
+    @Default('') String title,
     required DateTime sentAt,
     @Default(0) int yesCount,
     @Default(0) int noCount,
+    @Default(false) bool needsFeedback,
   }) = NotifMeta;
 
   factory Notif.fromJson(Map<String, dynamic> json) => _$NotifFromJson(json);

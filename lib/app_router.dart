@@ -59,7 +59,7 @@ class AppRouter {
           final extraMap = state.extra as Map<String, Object?>;
           return NotifsView(
             userId: extraMap['userId'] as String,
-            isAdmin: (extraMap['isAdmin'] as bool?) ?? false,
+            isSuperAdmin: (extraMap['isSuperAdmin'] as bool?) ?? false,
           );
         },
       ),

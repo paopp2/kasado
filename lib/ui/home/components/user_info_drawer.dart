@@ -5,6 +5,7 @@ import 'package:kasado/app_router.dart';
 import 'package:kasado/constants/current_app_meta.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
+import 'package:kasado/ui/home/components/pondo_info_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class UserInfoDrawer extends HookConsumerWidget {
@@ -66,7 +67,26 @@ class UserInfoDrawer extends HookConsumerWidget {
                           ),
                           Text(currentUser.email!),
                           const SizedBox(height: 30),
-                          Text('PONDO: ${userInfo.pondo} Php'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('PONDO: ${userInfo.pondo} Php'),
+                              TextButton(
+                                child: const Text(
+                                  'ADD',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => PondoInfoDialog(
+                                      constraints: constraints,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                           const SizedBox(height: 30),
                         ],
                       ),

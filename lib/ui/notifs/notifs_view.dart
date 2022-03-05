@@ -13,10 +13,10 @@ class NotifsView extends HookConsumerWidget {
   const NotifsView({
     Key? key,
     required this.userId,
-    this.isAdmin = false,
+    this.isSuperAdmin = false,
   }) : super(key: key);
 
-  final bool isAdmin;
+  final bool isSuperAdmin;
   final String userId;
 
   @override
@@ -74,7 +74,7 @@ class NotifsView extends HookConsumerWidget {
                                 ),
                               ),
                               Visibility(
-                                visible: isAdmin,
+                                visible: isSuperAdmin,
                                 child: IconButton(
                                   icon: Icon(
                                     Icons.delete,
@@ -98,13 +98,10 @@ class NotifsView extends HookConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(notif.body),
-                              Visibility(
-                                visible: notif.needsFeedback,
-                                child: NotifFeedbackRow(
-                                  model: model,
-                                  userId: userId,
-                                  notif: notif,
-                                ),
+                              NotifFeedbackRow(
+                                model: model,
+                                userId: userId,
+                                notifId: notif.id,
                               ),
                             ],
                           ),
@@ -121,7 +118,7 @@ class NotifsView extends HookConsumerWidget {
             ),
           ),
           floatingActionButton: Visibility(
-            visible: isAdmin,
+            visible: isSuperAdmin,
             child: FloatingActionButton.extended(
               label: const Text('New notif'),
               icon: const Icon(Icons.add),

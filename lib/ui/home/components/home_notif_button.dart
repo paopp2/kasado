@@ -7,8 +7,8 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/notifs/notifs_state.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
-class NotifButton extends HookConsumerWidget {
-  const NotifButton({
+class HomeNotifButton extends HookConsumerWidget {
+  const HomeNotifButton({
     Key? key,
   }) : super(key: key);
 
@@ -20,7 +20,7 @@ class NotifButton extends HookConsumerWidget {
         ? const SizedBox()
         : Builder(
             builder: (context) {
-              final isAdmin = currentUserInfo.isAdmin;
+              final isSuperAdmin = currentUserInfo.isSuperAdmin;
               final unreadNotifCountStream =
                   ref.watch(unreadUserNotifCountStream(currentUserInfo.id));
 
@@ -43,7 +43,7 @@ class NotifButton extends HookConsumerWidget {
                   onPressed: () => context.pushNamed(
                     Routes.notifsView,
                     extra: {
-                      'isAdmin': isAdmin,
+                      'isSuperAdmin': isSuperAdmin,
                       'userId': currentUserInfo.id,
                     },
                   ),

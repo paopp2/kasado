@@ -38,11 +38,80 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
     notifRepo.setUnreadUserNotifsAsRead(userId: currentUser.id);
   }
 
-  Future<void> setFeedback({
+  // Decrease dislike count when disliked, add to like count and set notif to liked
+  // Split with onDislikePressed despite having more or less the same logic for
+  // the sake of readability
+  // TODO: Fix lag when liking at dislike state (and vice-versa for onDislikePressed)
+  Future<void> onLikePressed({
     required Notif notif,
-    required bool isPositive,
+    required NotifMeta notifMeta,
+    required bool? wasLiked,
   }) async {
-    await notifRepo.setUserFeedback(notifId: notif.id, isPositive: isPositive);
+    if (wasLiked == false) {
+      await giveFeedback(
+        notifMeta: notifMeta,
+        isLike: false,
+        isAdd: false,
+      );
+    }
+    giveFeedback(
+      notifMeta: notifMeta,
+      isLike: true,
+      isAdd: (wasLiked == null || !wasLiked),
+    );
+    setUserFeedbackState(
+      notif: notif,
+      isLiked: (wasLiked == true) ? null : true,
+    );
+  }
+
+  // Decrease like count when liked, add to dislike count and set notif to liked
+  // Split with onLikePressed despite having more or less the same logic for the
+  // sake of readability
+  Future<void> onDislikePressed({
+    required Notif notif,
+    required NotifMeta notifMeta,
+    required bool? wasLiked,
+  }) async {
+    if (wasLiked == true) {
+      await giveFeedback(
+        notifMeta: notifMeta,
+        isLike: true,
+        isAdd: false,
+      );
+    }
+    giveFeedback(
+      notifMeta: notifMeta,
+      isLike: false,
+      isAdd: (wasLiked == null || wasLiked),
+    );
+    setUserFeedbackState(
+      notif: notif,
+      isLiked: (wasLiked == false) ? null : false,
+    );
+  }
+
+  Future<void> setUserFeedbackState({
+    required Notif notif,
+    bool? isLiked,
+  }) async {
+    await notifRepo.setUserNotifFeedbackState(
+      userId: currentUser.id,
+      notif: notif as NotifObject,
+      hasLiked: isLiked,
+    );
+  }
+
+  Future<void> giveFeedback({
+    required Notif notifMeta,
+    required bool isLike,
+    required bool isAdd,
+  }) async {
+    await notifRepo.setUserFeedback(
+      notifId: notifMeta.id,
+      isLike: isLike,
+      isAdd: isAdd,
+    );
   }
 
   void setYesNoFeedbackEnabled(bool isEnabled) {
@@ -55,14 +124,14 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
 
   Future<void> pushNotifications(BuildContext context) async {
     await notifRepo.sendNotifToAll(
-      Notif(
+      notif: Notif(
         id: const Uuid().v4(),
         title: tecNotifTitle.text,
         body: tecNotifBody.text,
         sentAt: DateTime.now(),
-        needsFeedback: read(isYesNoEnabledProvider),
         sender: currentUser,
       ),
+      needsFeedback: read(isYesNoEnabledProvider),
     );
     Navigator.pop(context);
   }
