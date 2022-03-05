@@ -14,7 +14,7 @@ class Notif with _$Notif {
     KasadoUser? sender,
     required DateTime sentAt,
     @Default(false) bool isRead,
-    bool? hasLiked,
+    @Default(null) bool? hasLiked,
   }) = NotifObject;
 
   const factory Notif.meta({

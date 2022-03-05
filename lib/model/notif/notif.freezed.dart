@@ -38,7 +38,7 @@ class _$NotifTearOff {
       KasadoUser? sender,
       required DateTime sentAt,
       bool isRead = false,
-      bool? hasLiked}) {
+      bool? hasLiked = null}) {
     return NotifObject(
       id: id,
       title: title,
@@ -266,7 +266,7 @@ class _$NotifObject with DiagnosticableTreeMixin implements NotifObject {
       this.sender,
       required this.sentAt,
       this.isRead = false,
-      this.hasLiked,
+      this.hasLiked = null,
       String? $type})
       : $type = $type ?? 'default';
 
@@ -287,6 +287,7 @@ class _$NotifObject with DiagnosticableTreeMixin implements NotifObject {
   @JsonKey()
   @override
   final bool isRead;
+  @JsonKey()
   @override
   final bool? hasLiked;
 

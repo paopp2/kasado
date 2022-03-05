@@ -16,7 +16,7 @@ _$NotifObject _$$NotifObjectFromJson(Map<String, dynamic> json) =>
           : KasadoUser.fromJson(json['sender'] as Map<String, dynamic>),
       sentAt: DateTime.parse(json['sentAt'] as String),
       isRead: json['isRead'] as bool? ?? false,
-      hasLiked: json['hasLiked'] as bool?,
+      hasLiked: json['hasLiked'] as bool? ?? null,
       $type: json['runtimeType'] as String?,
     );
 
