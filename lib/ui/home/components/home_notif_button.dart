@@ -7,8 +7,8 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/notifs/notifs_state.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
-class NotifButton extends HookConsumerWidget {
-  const NotifButton({
+class HomeNotifButton extends HookConsumerWidget {
+  const HomeNotifButton({
     Key? key,
   }) : super(key: key);
 

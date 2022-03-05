@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/current_app_meta.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
-import 'package:kasado/ui/home/components/notif_button.dart';
+import 'package:kasado/ui/home/components/home_notif_button.dart';
 import 'package:kasado/ui/home/components/user_info_drawer.dart';
 import 'package:kasado/ui/home/tabs/home/home_tab.dart';
 import 'package:kasado/ui/home/tabs/profile/profile_tab.dart';
@@ -37,7 +37,7 @@ class HomeView extends HookConsumerWidget {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.transparent,
-              actions: const [NotifButton()],
+              actions: const [HomeNotifButton()],
             ),
             body: TabBarView(
               controller: tabController,
