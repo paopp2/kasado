@@ -54,8 +54,16 @@ class HomeView extends HookConsumerWidget {
                               model: model,
                               constraints: constraints,
                             )
-                          : const Center(
-                              child: Text('Please update to newest version'),
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Please update to version ${a?['currentVer']}',
+                                ),
+                                const Text(
+                                  '(Try daw exit sa app nya sud balik)',
+                                ),
+                              ],
                             ),
                 ),
                 const Center(child: Text('Team invites coming soon')),
