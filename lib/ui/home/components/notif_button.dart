@@ -20,7 +20,7 @@ class NotifButton extends HookConsumerWidget {
         ? const SizedBox()
         : Builder(
             builder: (context) {
-              final isAdmin = currentUserInfo.isAdmin;
+              final isSuperAdmin = currentUserInfo.isSuperAdmin;
               final unreadNotifCountStream =
                   ref.watch(unreadUserNotifCountStream(currentUserInfo.id));
 
@@ -43,7 +43,7 @@ class NotifButton extends HookConsumerWidget {
                   onPressed: () => context.pushNamed(
                     Routes.notifsView,
                     extra: {
-                      'isAdmin': isAdmin,
+                      'isSuperAdmin': isSuperAdmin,
                       'userId': currentUserInfo.id,
                     },
                   ),

@@ -44,8 +44,16 @@ class NotifRepository {
     );
   }
 
-  Future<void> sendNotifToAll(Notif notif) async {
-    final notifMeta = Notif.meta(id: notif.id, sentAt: notif.sentAt);
+  Future<void> sendNotifToAll({
+    required Notif notif,
+    bool needsFeedback = false,
+  }) async {
+    final notifMeta = Notif.meta(
+      id: notif.id,
+      title: notif.title,
+      sentAt: notif.sentAt,
+      needsFeedback: needsFeedback,
+    );
     await firestoreHelper.setData(
       path: FirestorePath.docNotif(notif.id),
       data: notifMeta.toJson(),

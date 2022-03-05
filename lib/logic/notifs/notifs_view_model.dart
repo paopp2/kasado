@@ -55,14 +55,14 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
 
   Future<void> pushNotifications(BuildContext context) async {
     await notifRepo.sendNotifToAll(
-      Notif(
+      notif: Notif(
         id: const Uuid().v4(),
         title: tecNotifTitle.text,
         body: tecNotifBody.text,
         sentAt: DateTime.now(),
-        needsFeedback: read(isYesNoEnabledProvider),
         sender: currentUser,
       ),
+      needsFeedback: read(isYesNoEnabledProvider),
     );
     Navigator.pop(context);
   }
