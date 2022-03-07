@@ -28,7 +28,7 @@ class _$KasadoUserInfoTearOff {
       bool isAdmin = false,
       bool isSuperAdmin = false,
       double pondo = 0,
-      DateTime? reservedAt}) {
+      CourtSlot? reservedAt}) {
     return _KasadoUserInfo(
       id: id,
       user: user,
@@ -54,7 +54,7 @@ mixin _$KasadoUserInfo {
   bool get isAdmin => throw _privateConstructorUsedError;
   bool get isSuperAdmin => throw _privateConstructorUsedError;
   double get pondo => throw _privateConstructorUsedError;
-  DateTime? get reservedAt => throw _privateConstructorUsedError;
+  CourtSlot? get reservedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -73,9 +73,10 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
       bool isAdmin,
       bool isSuperAdmin,
       double pondo,
-      DateTime? reservedAt});
+      CourtSlot? reservedAt});
 
   $KasadoUserCopyWith<$Res> get user;
+  $CourtSlotCopyWith<$Res>? get reservedAt;
 }
 
 /// @nodoc
@@ -120,7 +121,7 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
       reservedAt: reservedAt == freezed
           ? _value.reservedAt
           : reservedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as CourtSlot?,
     ));
   }
 
@@ -128,6 +129,17 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
   $KasadoUserCopyWith<$Res> get user {
     return $KasadoUserCopyWith<$Res>(_value.user, (value) {
       return _then(_value.copyWith(user: value));
+    });
+  }
+
+  @override
+  $CourtSlotCopyWith<$Res>? get reservedAt {
+    if (_value.reservedAt == null) {
+      return null;
+    }
+
+    return $CourtSlotCopyWith<$Res>(_value.reservedAt!, (value) {
+      return _then(_value.copyWith(reservedAt: value));
     });
   }
 }
@@ -145,10 +157,12 @@ abstract class _$KasadoUserInfoCopyWith<$Res>
       bool isAdmin,
       bool isSuperAdmin,
       double pondo,
-      DateTime? reservedAt});
+      CourtSlot? reservedAt});
 
   @override
   $KasadoUserCopyWith<$Res> get user;
+  @override
+  $CourtSlotCopyWith<$Res>? get reservedAt;
 }
 
 /// @nodoc
@@ -195,7 +209,7 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
       reservedAt: reservedAt == freezed
           ? _value.reservedAt
           : reservedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as CourtSlot?,
     ));
   }
 }
@@ -229,7 +243,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   @override
   final double pondo;
   @override
-  final DateTime? reservedAt;
+  final CourtSlot? reservedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -292,7 +306,7 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
       bool isAdmin,
       bool isSuperAdmin,
       double pondo,
-      DateTime? reservedAt}) = _$_KasadoUserInfo;
+      CourtSlot? reservedAt}) = _$_KasadoUserInfo;
   const _KasadoUserInfo._() : super._();
 
   factory _KasadoUserInfo.fromJson(Map<String, dynamic> json) =
@@ -309,7 +323,7 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   @override
   double get pondo;
   @override
-  DateTime? get reservedAt;
+  CourtSlot? get reservedAt;
   @override
   @JsonKey(ignore: true)
   _$KasadoUserInfoCopyWith<_KasadoUserInfo> get copyWith =>

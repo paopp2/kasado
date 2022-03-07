@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/notifs/notifs_state.dart';
-import 'package:kasado/ui/shared/loading_widget.dart';
 
 class HomeNotifButton extends HookConsumerWidget {
   const HomeNotifButton({
@@ -29,7 +28,7 @@ class HomeNotifButton extends HookConsumerWidget {
                 child: IconButton(
                   icon: unreadNotifCountStream.when(
                       error: (e, _) => Text(e.toString()),
-                      loading: () => const LoadingWidget(),
+                      loading: () => const Icon(Icons.notifications),
                       data: (unreadNotifCount) {
                         return Badge(
                           showBadge: unreadNotifCount != 0,

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 part 'kasado_user_info.freezed.dart';
@@ -14,14 +15,19 @@ class KasadoUserInfo with _$KasadoUserInfo {
     @Default(false) bool isAdmin,
     @Default(false) bool isSuperAdmin,
     @Default(0) double pondo,
-    DateTime? reservedAt,
+    CourtSlot? reservedAt,
   }) = _KasadoUserInfo;
 
   bool get hasReserved {
     if (reservedAt == null) return false;
 
     final now = DateTime.now();
-    final isReservedAtFuture = reservedAt?.isAfter(now) ?? false;
+    // 1 hour after a game slot starts, only then can a user join another slot.
+    // Hence, the user by that time has NOT reserved
+    final isReservedAtFuture = reservedAt?.timeRange.startsAt
+            .add(const Duration(hours: 1))
+            .isAfter(now) ??
+        false;
     return isReservedAtFuture;
   }
 

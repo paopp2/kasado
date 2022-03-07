@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/notifs/notifs_state.dart';
 import 'package:kasado/logic/notifs/notifs_view_model.dart';
 import 'package:kasado/model/notif/notif.dart';
-import 'package:kasado/ui/shared/loading_widget.dart';
 
 class NotifFeedbackRow extends HookConsumerWidget {
   const NotifFeedbackRow({
@@ -24,13 +23,13 @@ class NotifFeedbackRow extends HookConsumerWidget {
 
     return userNotifStream.when(
       error: (e, _) => Text(e.toString()),
-      loading: () => const LoadingWidget(),
+      loading: () => const SizedBox(),
       data: (userNotif) {
         userNotif as NotifObject;
         final isLiked = userNotif.hasLiked;
         return notifMetaStream.when(
           error: (e, _) => Text(e.toString()),
-          loading: () => const LoadingWidget(),
+          loading: () => const SizedBox(),
           data: (notifMeta) {
             return Visibility(
               visible: notifMeta?.needsFeedback ?? false,

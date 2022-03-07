@@ -15,7 +15,7 @@ _$_KasadoUserInfo _$$_KasadoUserInfoFromJson(Map<String, dynamic> json) =>
       pondo: (json['pondo'] as num?)?.toDouble() ?? 0,
       reservedAt: json['reservedAt'] == null
           ? null
-          : DateTime.parse(json['reservedAt'] as String),
+          : CourtSlot.fromJson(json['reservedAt'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_KasadoUserInfoToJson(_$_KasadoUserInfo instance) =>
@@ -25,5 +25,5 @@ Map<String, dynamic> _$$_KasadoUserInfoToJson(_$_KasadoUserInfo instance) =>
       'isAdmin': instance.isAdmin,
       'isSuperAdmin': instance.isSuperAdmin,
       'pondo': instance.pondo,
-      'reservedAt': instance.reservedAt?.toIso8601String(),
+      'reservedAt': instance.reservedAt?.toJson(),
     };

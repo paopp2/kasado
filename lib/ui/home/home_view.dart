@@ -1,5 +1,7 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/current_app_meta.dart';
 import 'package:kasado/data/core/core_providers.dart';
@@ -8,6 +10,7 @@ import 'package:kasado/ui/home/components/home_notif_button.dart';
 import 'package:kasado/ui/home/components/user_info_drawer.dart';
 import 'package:kasado/ui/home/tabs/home/home_tab.dart';
 import 'package:kasado/ui/home/tabs/profile/profile_tab.dart';
+import 'package:kasado/ui/home/tabs/ticket/ticket_tab.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class HomeView extends HookConsumerWidget {
@@ -16,7 +19,7 @@ class HomeView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: 3);
+    final tabController = useTabController(initialLength: 4);
     final model = ref.watch(homeViewModel);
     final appMetaStream = ref.watch(appMetaStreamProvider);
 
@@ -67,23 +70,40 @@ class HomeView extends HookConsumerWidget {
                             ),
                 ),
                 const Center(child: Text('Team invites coming soon')),
+                TicketTab(constraints: constraints),
                 ProfileTab(constraints: constraints),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
               onTap: tabController.animateTo,
               currentIndex: tabIndex.value,
               selectedItemColor: Colors.black,
-              items: const [
-                BottomNavigationBarItem(
+              items: [
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.group),
+                  icon: Badge(
+                    badgeColor: Colors.green,
+                    showBadge: false,
+                    child: const Icon(Icons.group_sharp),
+                  ),
                   label: 'Team',
                 ),
                 BottomNavigationBarItem(
+                  icon: Badge(
+                    badgeColor: Colors.green,
+                    showBadge: false,
+                    child: const FaIcon(
+                      FontAwesomeIcons.ticketAlt,
+                      size: 20,
+                    ),
+                  ),
+                  label: 'Ticket',
+                ),
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.person),
                   label: 'Profile',
                 ),
