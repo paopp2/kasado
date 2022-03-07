@@ -21,7 +21,10 @@ class KasadoUserInfo with _$KasadoUserInfo {
     if (reservedAt == null) return false;
 
     final now = DateTime.now();
-    final isReservedAtFuture = reservedAt?.isAfter(now) ?? false;
+    // 1 hour after a game slot starts, only then can a user join another slot.
+    // Hence, the user by that time has NOT reserved
+    final isReservedAtFuture =
+        reservedAt?.add(const Duration(hours: 1)).isAfter(now) ?? false;
     return isReservedAtFuture;
   }
 

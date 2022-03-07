@@ -59,9 +59,7 @@ class CourtDetailsViewModel extends ViewModel {
   SlotAndUserState getSlotAndUserState(CourtSlot courtSlot) {
     if (currentUserInfo == null) return SlotAndUserState.loading;
     final user = currentUserInfo!;
-    final userReservedHere =
-        courtSlot.timeRange.startsAt.add(const Duration(hours: 1)) ==
-            user.reservedAt;
+    final userReservedHere = courtSlot.timeRange.startsAt == user.reservedAt;
 
     final isSlotClosed = utils.isCurrentSlotClosed(courtSlot.timeRange);
     if (isSlotClosed) {
@@ -141,10 +139,7 @@ class CourtDetailsViewModel extends ViewModel {
         );
         await userInfoRepo.reserveUserAt(
           userId: currentUser.id,
-          // A court slot closes an hour before its endTime
-          reservedAt: baseCourtSlot.timeRange.endsAt.subtract(
-            const Duration(hours: 1),
-          ),
+          reservedAt: baseCourtSlot.timeRange.startsAt,
         );
         if (context != null) Navigator.pop(context);
       },
