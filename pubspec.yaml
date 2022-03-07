@@ -30,6 +30,7 @@ dependencies:
   flutter_signin_button: ^2.0.0
   google_fonts: ^2.3.1
   auto_size_text: ^3.0.0
+  font_awesome_flutter: ^9.2.0
   # Utils
   dartz: ^0.10.1
   fluttertoast: ^8.0.8
