@@ -59,7 +59,8 @@ class CourtDetailsViewModel extends ViewModel {
   SlotAndUserState getSlotAndUserState(CourtSlot courtSlot) {
     if (currentUserInfo == null) return SlotAndUserState.loading;
     final user = currentUserInfo!;
-    final userReservedHere = courtSlot.timeRange.startsAt == user.reservedAt;
+    final userReservedHere = (courtSlot.courtId == user.reservedAt?.courtId) &&
+        (courtSlot.slotId == user.reservedAt?.slotId);
 
     final isSlotClosed = utils.isCurrentSlotClosed(courtSlot.timeRange);
     if (isSlotClosed) {
@@ -139,7 +140,7 @@ class CourtDetailsViewModel extends ViewModel {
         );
         await userInfoRepo.reserveUserAt(
           userId: currentUser.id,
-          reservedAt: baseCourtSlot.timeRange.startsAt,
+          reservedAt: baseCourtSlot.copyWith(players: []),
         );
         if (context != null) Navigator.pop(context);
       },
