@@ -126,35 +126,29 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   ),
                 ],
               ),
-              Visibility(
-                visible: nextSlotState.when(
-                  slotClosedByAdmin: () => false,
-                  userReservedAtAnotherSlot: () => false,
-                  orElse: () => true,
-                ),
-                child: SizedBox(
-                  height: constraints.maxHeight * 0.08,
-                  child: (isModifyingSlot.value)
-                      ? const LoadingWidget()
-                      : TextButton(
-                          child: Text(
-                            (nextCourtSlot.hasPlayer(currentUser))
-                                ? 'LEAVE GAME'
-                                : 'JOIN GAME',
-                          ),
-                          onPressed: () async {
-                            isModifyingSlot.value = true;
-                            await model.joinLeaveCourtSlot(
-                              baseCourtSlot: nextCourtSlot,
-                              slotHasPlayer: nextCourtSlot.hasPlayer(
-                                currentUser,
-                              ),
-                              courtTicketPrice: court.ticketPrice,
-                            );
-                            isModifyingSlot.value = false;
-                          },
+              SizedBox(
+                height: constraints.maxHeight * 0.08,
+                child: (isModifyingSlot.value)
+                    ? const LoadingWidget()
+                    : TextButton(
+                        child: Text(
+                          (nextCourtSlot.hasPlayer(currentUser))
+                              ? 'LEAVE GAME'
+                              : 'JOIN GAME',
+                          style: const TextStyle(color: Colors.grey),
                         ),
-                ),
+                        onPressed: () async {
+                          isModifyingSlot.value = true;
+                          await model.joinLeaveCourtSlot(
+                            baseCourtSlot: nextCourtSlot,
+                            slotHasPlayer: nextCourtSlot.hasPlayer(
+                              currentUser,
+                            ),
+                            courtTicketPrice: court.ticketPrice,
+                          );
+                          isModifyingSlot.value = false;
+                        },
+                      ),
               ),
               const SizedBox(height: 10),
             ],
