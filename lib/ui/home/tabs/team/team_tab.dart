@@ -10,6 +10,15 @@ class TeamTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Team invites coming soon'));
+    return Scaffold(
+      body: const Center(
+        child: Text('You currently do not have a team'),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Create a team'),
+        icon: const Icon(Icons.group),
+        onPressed: () {},
+      ),
+    );
   }
 }
