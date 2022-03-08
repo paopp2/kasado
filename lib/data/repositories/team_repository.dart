@@ -41,4 +41,11 @@ class TeamRepository {
       );
     }
   }
+
+  Stream<Team?> getTeamStream(String teamId) {
+    return firestoreHelper.documentStream(
+      path: FirestorePath.docTeam(teamId),
+      builder: (data, docId) => Team.fromJson(data),
+    );
+  }
 }
