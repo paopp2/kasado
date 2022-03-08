@@ -79,11 +79,11 @@ class TeamInviteDialog extends HookConsumerWidget {
             ),
           ),
           TextButton(
-            onPressed: () {},
             child: const Text(
               'BUILD TEAM',
               style: TextStyle(color: Colors.green),
             ),
+            onPressed: model.pushTeam,
           ),
         ],
       ),
