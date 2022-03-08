@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
+import 'package:kasado/data/repositories/team_repository.dart';
 import 'package:kasado/logic/home/states/team_tab_state.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
@@ -12,6 +13,7 @@ final teamTabModel = Provider.autoDispose(
   (ref) => TeamTabModel(
     read: ref.read,
     currentUser: ref.watch(currentUserProvider)!,
+    teamRepo: ref.watch(teamRepositoryProvider),
   ),
 );
 
@@ -19,9 +21,11 @@ class TeamTabModel extends ViewModel {
   TeamTabModel({
     required Reader read,
     required this.currentUser,
+    required this.teamRepo,
   }) : super(read);
 
   final KasadoUser currentUser;
+  final TeamRepository teamRepo;
 
   void addUserInfoToTeam(KasadoUserInfo userInfo) {
     read(teamUserInfoListProvider.notifier).update(
@@ -42,11 +46,13 @@ class TeamTabModel extends ViewModel {
 
   Future<void> pushTeam() async {
     final teamUserInfoList = read(teamUserInfoListProvider);
-    final team = Team(
-      id: const Uuid().v4(),
-      teamCaptain: currentUser,
-      players: teamUserInfoList.map((userInfo) => userInfo.user).toList(),
+    await teamRepo.pushTeam(
+      team: Team(
+        id: const Uuid().v4(),
+        teamCaptain: currentUser,
+        players: teamUserInfoList.map((userInfo) => userInfo.user).toList(),
+      ),
+      teamPlayerUserInfos: teamUserInfoList,
     );
-    print(team);
   }
 }
