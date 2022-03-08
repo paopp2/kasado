@@ -16,7 +16,7 @@ class TeamTab extends StatelessWidget {
         child: Text('You currently do not have a team'),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: const Text('Create a team'),
+        label: const Text('Build a team'),
         icon: const Icon(Icons.group),
         onPressed: () => showDialog(
           context: context,
@@ -105,7 +105,7 @@ class TeamInviteDialog extends StatelessWidget {
           TextButton(
             onPressed: () {},
             child: const Text(
-              'RECRUIT',
+              'BUILD TEAM',
               style: TextStyle(color: Colors.green),
             ),
           ),
