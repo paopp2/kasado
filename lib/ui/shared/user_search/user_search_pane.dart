@@ -22,11 +22,11 @@ class UserSearchPane extends HookConsumerWidget {
   const UserSearchPane({
     Key? key,
     this.onUserTapped,
-    this.trailing,
+    this.trailingFromInfo,
   }) : super(key: key);
 
   final Function(KasadoUserInfo)? onUserTapped;
-  final Widget? trailing;
+  final Widget? Function(KasadoUserInfo)? trailingFromInfo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -76,7 +76,7 @@ class UserSearchPane extends HookConsumerWidget {
                   title: Text(user.displayName!),
                   subtitle: Text(user.email!),
                   onTap: () => onUserTapped?.call(userInfo),
-                  trailing: trailing,
+                  trailing: trailingFromInfo?.call(userInfo),
                 );
               },
             ),
