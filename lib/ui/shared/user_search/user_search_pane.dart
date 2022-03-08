@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,16 +22,29 @@ class UserSearchPane extends HookConsumerWidget {
   const UserSearchPane({
     Key? key,
     this.onUserTapped,
+    this.trailing,
   }) : super(key: key);
 
   final Function(KasadoUserInfo)? onUserTapped;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userEmailQuery = useState<String?>(null);
-    final tempQuery = useState('');
     final userInfoQueryResult =
         ref.watch(userInfoQueryResultProvider(userEmailQuery.value));
+    final timer = useState<Timer?>(null);
+
+    // Query DB once user stops typing after 650ms
+    void _onChanged(String query) {
+      if (timer.value != null) timer.value!.cancel();
+      timer.value = Timer(
+        const Duration(milliseconds: 650),
+        () {
+          if (query.isNotEmpty) (userEmailQuery.value = query);
+        },
+      );
+    }
 
     return Column(
       children: [
@@ -39,12 +54,8 @@ class UserSearchPane extends HookConsumerWidget {
             Expanded(
               child: DataEntryField(
                 hint: 'Search player email',
-                onChanged: (query) => (tempQuery.value = query),
+                onChanged: _onChanged,
               ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () => userEmailQuery.value = tempQuery.value,
             ),
           ],
         ),
@@ -65,6 +76,7 @@ class UserSearchPane extends HookConsumerWidget {
                   title: Text(user.displayName!),
                   subtitle: Text(user.email!),
                   onTap: () => onUserTapped?.call(userInfo),
+                  trailing: trailing,
                 );
               },
             ),
