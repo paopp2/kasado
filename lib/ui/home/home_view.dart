@@ -10,6 +10,7 @@ import 'package:kasado/ui/home/components/home_notif_button.dart';
 import 'package:kasado/ui/home/components/user_info_drawer.dart';
 import 'package:kasado/ui/home/tabs/home/home_tab.dart';
 import 'package:kasado/ui/home/tabs/profile/profile_tab.dart';
+import 'package:kasado/ui/home/tabs/team/team_tab.dart';
 import 'package:kasado/ui/home/tabs/ticket/ticket_tab.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
@@ -69,7 +70,7 @@ class HomeView extends HookConsumerWidget {
                               ],
                             ),
                 ),
-                const Center(child: Text('Team invites coming soon')),
+                TeamTab(constraints: constraints),
                 TicketTab(constraints: constraints),
                 ProfileTab(constraints: constraints),
               ],
