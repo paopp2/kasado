@@ -13,6 +13,8 @@ _$_KasadoUserInfo _$$_KasadoUserInfoFromJson(Map<String, dynamic> json) =>
       isAdmin: json['isAdmin'] as bool? ?? false,
       isSuperAdmin: json['isSuperAdmin'] as bool? ?? false,
       pondo: (json['pondo'] as num?)?.toDouble() ?? 0,
+      isTeamCaptain: json['isTeamCaptain'] as bool? ?? false,
+      teamId: json['teamId'] as String?,
       reservedAt: json['reservedAt'] == null
           ? null
           : CourtSlot.fromJson(json['reservedAt'] as Map<String, dynamic>),
@@ -25,5 +27,7 @@ Map<String, dynamic> _$$_KasadoUserInfoToJson(_$_KasadoUserInfo instance) =>
       'isAdmin': instance.isAdmin,
       'isSuperAdmin': instance.isSuperAdmin,
       'pondo': instance.pondo,
+      'isTeamCaptain': instance.isTeamCaptain,
+      'teamId': instance.teamId,
       'reservedAt': instance.reservedAt?.toJson(),
     };

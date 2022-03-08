@@ -15,6 +15,8 @@ class KasadoUserInfo with _$KasadoUserInfo {
     @Default(false) bool isAdmin,
     @Default(false) bool isSuperAdmin,
     @Default(0) double pondo,
+    @Default(false) bool isTeamCaptain,
+    String? teamId,
     CourtSlot? reservedAt,
   }) = _KasadoUserInfo;
 
