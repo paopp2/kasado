@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/logic/home/team_tab_model.dart';
 import 'package:kasado/ui/shared/user_search/user_search_pane.dart';
 
-class TeamTab extends StatelessWidget {
+class TeamTab extends HookConsumerWidget {
   const TeamTab({
     Key? key,
     required this.constraints,
@@ -10,7 +12,9 @@ class TeamTab extends StatelessWidget {
   final BoxConstraints constraints;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final model = ref.watch(teamTabModel);
+
     return Scaffold(
       body: const Center(
         child: Text('You currently do not have a team'),
@@ -20,23 +24,28 @@ class TeamTab extends StatelessWidget {
         icon: const Icon(Icons.group),
         onPressed: () => showDialog(
           context: context,
-          builder: (_) => TeamInviteDialog(constraints: constraints),
+          builder: (_) => TeamInviteDialog(
+            constraints: constraints,
+            model: model,
+          ),
         ),
       ),
     );
   }
 }
 
-class TeamInviteDialog extends StatelessWidget {
+class TeamInviteDialog extends HookConsumerWidget {
   const TeamInviteDialog({
     Key? key,
     required this.constraints,
+    required this.model,
   }) : super(key: key);
 
   final BoxConstraints constraints;
+  final TeamTabModel model;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
