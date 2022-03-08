@@ -33,6 +33,8 @@ class KasadoUserInfo with _$KasadoUserInfo {
     return isReservedAtFuture;
   }
 
+  bool get hasTeam => (teamId != null);
+
   bool hasEnoughPondoToPay(double pondoToPay) {
     return pondo >= pondoToPay;
   }
