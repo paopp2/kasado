@@ -10,7 +10,7 @@ part 'team.g.dart';
 class Team with _$Team {
   const factory Team({
     required String id,
-    KasadoUser? teamCaptain,
+    required KasadoUser teamCaptain,
     @Default([]) List<KasadoUser> players,
     CourtSlot? nextGame,
   }) = _Team;

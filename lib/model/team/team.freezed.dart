@@ -24,7 +24,7 @@ class _$TeamTearOff {
 
   _Team call(
       {required String id,
-      KasadoUser? teamCaptain,
+      required KasadoUser teamCaptain,
       List<KasadoUser> players = const [],
       CourtSlot? nextGame}) {
     return _Team(
@@ -46,7 +46,7 @@ const $Team = _$TeamTearOff();
 /// @nodoc
 mixin _$Team {
   String get id => throw _privateConstructorUsedError;
-  KasadoUser? get teamCaptain => throw _privateConstructorUsedError;
+  KasadoUser get teamCaptain => throw _privateConstructorUsedError;
   List<KasadoUser> get players => throw _privateConstructorUsedError;
   CourtSlot? get nextGame => throw _privateConstructorUsedError;
 
@@ -61,11 +61,11 @@ abstract class $TeamCopyWith<$Res> {
       _$TeamCopyWithImpl<$Res>;
   $Res call(
       {String id,
-      KasadoUser? teamCaptain,
+      KasadoUser teamCaptain,
       List<KasadoUser> players,
       CourtSlot? nextGame});
 
-  $KasadoUserCopyWith<$Res>? get teamCaptain;
+  $KasadoUserCopyWith<$Res> get teamCaptain;
   $CourtSlotCopyWith<$Res>? get nextGame;
 }
 
@@ -92,7 +92,7 @@ class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
       teamCaptain: teamCaptain == freezed
           ? _value.teamCaptain
           : teamCaptain // ignore: cast_nullable_to_non_nullable
-              as KasadoUser?,
+              as KasadoUser,
       players: players == freezed
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
@@ -105,12 +105,8 @@ class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
   }
 
   @override
-  $KasadoUserCopyWith<$Res>? get teamCaptain {
-    if (_value.teamCaptain == null) {
-      return null;
-    }
-
-    return $KasadoUserCopyWith<$Res>(_value.teamCaptain!, (value) {
+  $KasadoUserCopyWith<$Res> get teamCaptain {
+    return $KasadoUserCopyWith<$Res>(_value.teamCaptain, (value) {
       return _then(_value.copyWith(teamCaptain: value));
     });
   }
@@ -134,12 +130,12 @@ abstract class _$TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
   @override
   $Res call(
       {String id,
-      KasadoUser? teamCaptain,
+      KasadoUser teamCaptain,
       List<KasadoUser> players,
       CourtSlot? nextGame});
 
   @override
-  $KasadoUserCopyWith<$Res>? get teamCaptain;
+  $KasadoUserCopyWith<$Res> get teamCaptain;
   @override
   $CourtSlotCopyWith<$Res>? get nextGame;
 }
@@ -168,7 +164,7 @@ class __$TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
       teamCaptain: teamCaptain == freezed
           ? _value.teamCaptain
           : teamCaptain // ignore: cast_nullable_to_non_nullable
-              as KasadoUser?,
+              as KasadoUser,
       players: players == freezed
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
@@ -186,7 +182,7 @@ class __$TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
 class _$_Team with DiagnosticableTreeMixin implements _Team {
   const _$_Team(
       {required this.id,
-      this.teamCaptain,
+      required this.teamCaptain,
       this.players = const [],
       this.nextGame});
 
@@ -195,7 +191,7 @@ class _$_Team with DiagnosticableTreeMixin implements _Team {
   @override
   final String id;
   @override
-  final KasadoUser? teamCaptain;
+  final KasadoUser teamCaptain;
   @JsonKey()
   @override
   final List<KasadoUser> players;
@@ -252,7 +248,7 @@ class _$_Team with DiagnosticableTreeMixin implements _Team {
 abstract class _Team implements Team {
   const factory _Team(
       {required String id,
-      KasadoUser? teamCaptain,
+      required KasadoUser teamCaptain,
       List<KasadoUser> players,
       CourtSlot? nextGame}) = _$_Team;
 
@@ -261,7 +257,7 @@ abstract class _Team implements Team {
   @override
   String get id;
   @override
-  KasadoUser? get teamCaptain;
+  KasadoUser get teamCaptain;
   @override
   List<KasadoUser> get players;
   @override
