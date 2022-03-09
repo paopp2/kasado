@@ -18,20 +18,13 @@ class NotifRepository {
     required bool isLike,
     required bool isAdd,
   }) async {
-    final notifMeta = await getNotifMeta(notifId: notifId);
+    final notif = await getNotifMeta(notifId: notifId);
     await firestoreHelper.setData(
       path: FirestorePath.docNotif(notifId),
       data: (isLike)
-          ? notifMeta
-              .copyWith(
-                  yesCount:
-                      (isAdd) ? notifMeta.yesCount + 1 : notifMeta.yesCount - 1)
-              .toJson()
-          : notifMeta
-              .copyWith(
-                  noCount:
-                      (isAdd) ? notifMeta.noCount + 1 : notifMeta.noCount - 1)
-              .toJson(),
+          ? {'yesCount': (isAdd) ? notif.yesCount + 1 : notif.yesCount - 1}
+          : {'noCount': (isAdd) ? notif.noCount + 1 : notif.noCount - 1},
+      merge: true,
     );
   }
 
@@ -49,7 +42,8 @@ class NotifRepository {
     notif as NotifObject;
     await firestoreHelper.setData(
       path: FirestorePath.docUserNotif(userId, notif.id),
-      data: notif.copyWith(isRead: true).toJson(),
+      data: {'isRead': true},
+      merge: true,
     );
   }
 
@@ -60,7 +54,8 @@ class NotifRepository {
   }) async {
     await firestoreHelper.setData(
       path: FirestorePath.docUserNotif(userId, notif.id),
-      data: notif.copyWith(hasLiked: hasLiked).toJson(),
+      data: {'hasLiked': hasLiked},
+      merge: true,
     );
   }
 
