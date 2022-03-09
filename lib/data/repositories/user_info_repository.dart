@@ -70,20 +70,21 @@ class UserInfoRepository {
     required String userId,
     required bool isAdmin,
   }) async {
-    final KasadoUserInfo userInfoToUpdate = (await getUserInfo(userId))!;
     await firestoreHelper.setData(
-        path: FirestorePath.docUserInfo(userId),
-        data: userInfoToUpdate.copyWith(isAdmin: isAdmin).toJson());
+      path: FirestorePath.docUserInfo(userId),
+      data: {'isAdmin': isAdmin},
+      merge: true,
+    );
   }
 
   Future<void> reserveUserAt({
     required String userId,
     required CourtSlot? reservedAt,
   }) async {
-    final KasadoUserInfo userInfoToUpdate = (await getUserInfo(userId))!;
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(userId),
-      data: userInfoToUpdate.copyWith(reservedAt: reservedAt).toJson(),
+      data: {'reservedAt': reservedAt?.toJson()},
+      merge: true,
     );
   }
 
@@ -96,12 +97,12 @@ class UserInfoRepository {
   }) async {
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(currentUserInfo.id),
-      data: currentUserInfo
-          .copyWith(
-              pondo: (isAdd)
-                  ? (currentUserInfo.pondo + pondo)
-                  : (currentUserInfo.pondo - pondo))
-          .toJson(),
+      data: {
+        'pondo': (isAdd)
+            ? (currentUserInfo.pondo + pondo)
+            : (currentUserInfo.pondo - pondo),
+      },
+      merge: true,
     );
   }
 
