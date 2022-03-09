@@ -127,7 +127,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                                   ),
                                   onPressed: () async {
                                     isModifyingSlot.value = true;
-                                    await model.joinLeaveCourtSlot(
+                                    await model.selfJoinLeaveCourtSlot(
                                       baseCourtSlot: fetchedCourtSlot,
                                       slotHasPlayer: fetchedCourtSlot.hasPlayer(
                                         currentUser,

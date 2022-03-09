@@ -139,7 +139,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                         ),
                         onPressed: () async {
                           isModifyingSlot.value = true;
-                          await model.joinLeaveCourtSlot(
+                          await model.selfJoinLeaveCourtSlot(
                             baseCourtSlot: nextCourtSlot,
                             slotHasPlayer: nextCourtSlot.hasPlayer(
                               currentUser,

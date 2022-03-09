@@ -99,54 +99,65 @@ class CourtDetailsViewModel extends ViewModel {
     );
   }
 
-  /// Join/Leave [baseCourtSlot] depending on whether [slotHasPlayer]
-  Future<void> joinLeaveCourtSlot({
+  /// Join/Leave [baseCourtSlot] depending on whether [slotHasPlayer] for self
+  Future<void> selfJoinLeaveCourtSlot({
     required CourtSlot baseCourtSlot,
     required bool slotHasPlayer,
     required double courtTicketPrice,
     BuildContext? context,
   }) async {
     if (slotHasPlayer) {
-      await leaveCourtSlot(baseCourtSlot, courtTicketPrice, context);
+      await leaveCourtSlot(
+        userInfo: currentUserInfo!,
+        baseCourtSlot: baseCourtSlot,
+        courtTicketPrice: courtTicketPrice,
+        context: context,
+      );
     } else {
-      await joinCourtSlot(baseCourtSlot, courtTicketPrice, context);
+      await joinCourtSlot(
+        userInfo: currentUserInfo!,
+        baseCourtSlot: baseCourtSlot,
+        courtTicketPrice: courtTicketPrice,
+        context: context,
+      );
     }
   }
 
-  Future<void> joinCourtSlot(
-    CourtSlot baseCourtSlot,
-    double courtTicketPrice, [
+  Future<void> joinCourtSlot({
+    required CourtSlot baseCourtSlot,
+    required double courtTicketPrice,
+    required KasadoUserInfo userInfo,
     BuildContext? context,
-  ]) async {
+  }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       slotFull: () => Fluttertoast.showToast(msg: 'Slot is full'),
       userReservedAtAnotherSlot: () => Fluttertoast.showToast(
         msg: 'Only 1 reservation allowed at a time',
       ),
       orElse: () async {
-        KasadoUser? paidCurrentUser;
+        KasadoUser? paidUser;
         // If slot is not full and user is not reserved at another slot, check
         // if user has enough pondo to pay for joining
-        if (currentUserInfo!.hasEnoughPondoToPay(courtTicketPrice)) {
+        if (userInfo.hasEnoughPondoToPay(courtTicketPrice)) {
           // If user has enough pondo, use pondo to pay for court ticket
           userInfoRepo.addOrDeductPondo(
             currentUserInfo: currentUserInfo!,
             isAdd: false,
             pondo: courtTicketPrice,
           );
-          paidCurrentUser = currentUser.copyWith(hasPaid: true);
+          paidUser = userInfo.user.copyWith(hasPaid: true);
         }
 
         // Add user to courtSlot indicating whether user has already paid/not
         await courtRepo.pushCourtSlot(
           courtSlot: baseCourtSlot.copyWith(
-            players: [...baseCourtSlot.players, paidCurrentUser ?? currentUser],
+            players: [...baseCourtSlot.players, paidUser ?? userInfo.user],
           ),
         );
 
         // Also indicate at user's userInfo that user is already reserved at slot
         await userInfoRepo.reserveUserAt(
-          userId: currentUser.id,
+          userId: userInfo.id,
           reservedAt: baseCourtSlot.copyWith(players: []),
         );
         if (context != null) Navigator.pop(context);
@@ -154,16 +165,17 @@ class CourtDetailsViewModel extends ViewModel {
     );
   }
 
-  Future<void> leaveCourtSlot(
-    CourtSlot baseCourtSlot,
-    double courtTicketPrice, [
+  Future<void> leaveCourtSlot({
+    required KasadoUserInfo userInfo,
+    required CourtSlot baseCourtSlot,
+    required double courtTicketPrice,
     BuildContext? context,
-  ]) async {
-    final KasadoUser currentPlayer =
-        baseCourtSlot.players.singleWhere((p) => (p.id == currentUser.id));
+  }) async {
+    final KasadoUser user =
+        baseCourtSlot.players.singleWhere((p) => (p.id == userInfo.id));
 
     // If user has already paid for slot, return money (re-add to user's pondo)
-    if (currentPlayer.hasPaid) {
+    if (user.hasPaid) {
       await userInfoRepo.addOrDeductPondo(
         currentUserInfo: currentUserInfo!,
         isAdd: true,
@@ -172,11 +184,11 @@ class CourtDetailsViewModel extends ViewModel {
     }
 
     // Remove player from courtSlot player list
-    final updatedPlayerList = baseCourtSlot.players..remove(currentPlayer);
+    final updatedPlayerList = baseCourtSlot.players..remove(user);
 
     // Nullify user's reservations at userInfo
     await userInfoRepo.reserveUserAt(
-      userId: currentUser.id,
+      userId: userInfo.id,
       reservedAt: null,
     );
 
