@@ -17,8 +17,10 @@ class CourtSlot with _$CourtSlot {
     @Default(false) bool isClosedByAdmin,
   }) = _CourtSlot;
 
+  int get maxPlayerCount => 25;
   int get playerCount => players.length;
-  bool get isFull => (playerCount == 25);
+  int get availablePlayerSlots => (maxPlayerCount - playerCount);
+  bool get isFull => (playerCount == maxPlayerCount);
   bool hasPlayer(KasadoUser user) => players.any((p) => (p.id == user.id));
 
   static String getIdFromTimeRange(TimeRange? timeRange) {
