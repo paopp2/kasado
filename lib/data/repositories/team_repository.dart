@@ -36,10 +36,18 @@ class TeamRepository {
         data: {
           'teamId': team.id,
           'isTeamCaptain': isTeamCaptain,
+          'reservedAt': null, // Remove any pending reservations for user
         },
         merge: true,
       );
     }
+  }
+
+  Future<Team?> getTeam(String teamId) async {
+    return (await firestoreHelper.getData(
+      path: FirestorePath.docTeam(teamId),
+      builder: (data, docId) => Team.fromJson(data),
+    ));
   }
 
   Stream<Team?> getTeamStream(String teamId) {

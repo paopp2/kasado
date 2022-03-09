@@ -37,6 +37,14 @@ class UserInfoRepository {
     );
   }
 
+  Future<List<KasadoUserInfo>> getUserInfoList(List<String> userIdList) async {
+    return firestoreHelper.collectionToList(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, docId) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query.where('id', whereIn: userIdList),
+    );
+  }
+
   Stream<List<KasadoUserInfo>> getUserInfosStream([
     String? userEmailQuery,
   ]) {
