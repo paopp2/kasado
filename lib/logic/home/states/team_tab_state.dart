@@ -8,8 +8,9 @@ final teamUserInfoListProvider = StateProvider.autoDispose((ref) {
   return [currentUserInfo];
 });
 
-final teamStreamProvider = StreamProvider.autoDispose.family<Team?, String>(
+final teamStreamProvider = StreamProvider.autoDispose.family<Team?, String?>(
   (ref, teamId) {
+    if (teamId == null) return Stream.value(null);
     final teamRepo = ref.watch(teamRepositoryProvider);
     return teamRepo.getTeamStream(teamId);
   },

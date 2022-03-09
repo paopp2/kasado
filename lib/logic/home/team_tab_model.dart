@@ -55,4 +55,8 @@ class TeamTabModel extends ViewModel {
       teamPlayerUserInfos: teamUserInfoList,
     );
   }
+
+  Future<void> dissolveTeam(Team team) async {
+    await teamRepo.dissolveTeam(team);
+  }
 }

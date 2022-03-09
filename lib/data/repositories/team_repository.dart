@@ -46,6 +46,25 @@ class TeamRepository {
     );
   }
 
+  Future<void> dissolveTeam(Team team) async {
+    await firestoreHelper.deleteData(path: FirestorePath.docTeam(team.id));
+
+    await firestoreHelper.setData(
+      path: FirestorePath.docUserInfo(team.teamCaptain.id),
+      data: {'isTeamCaptain': false},
+      merge: true,
+    );
+
+    await firestoreHelper.setBatchData(
+      baseColPath: FirestorePath.colUserInfos(),
+      data: {
+        'teamId': null,
+        'reservedAt': null, // Remove any pending reservations for user
+      },
+      merge: true,
+    );
+  }
+
   Future<Team?> getTeam(String teamId) async {
     return (await firestoreHelper.getData(
       path: FirestorePath.docTeam(teamId),

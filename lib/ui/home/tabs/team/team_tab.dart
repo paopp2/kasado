@@ -25,56 +25,62 @@ class TeamTab extends HookConsumerWidget {
       error: (e, _) => Text(e.toString()),
       loading: () => const LoadingWidget(),
       data: (userInfo) {
-        return Scaffold(
-          body: (userInfo!.hasTeam)
-              ? ref.watch(teamStreamProvider(userInfo.teamId!)).when(
-                    error: (e, _) => Text(e.toString()),
-                    loading: () => const LoadingWidget(),
-                    data: (team) {
-                      final players = team!.players;
-                      return ListView.builder(
-                        itemCount: players.length,
-                        itemBuilder: (context, i) {
-                          final player = players[i];
-                          final isTeamCaptain =
-                              player.id == team.teamCaptain.id;
-                          return ListTile(
-                            leading: Badge(
-                              badgeContent: const FaIcon(
-                                FontAwesomeIcons.crown,
-                                size: 8,
+        return ref.watch(teamStreamProvider(userInfo!.teamId)).when(
+              error: (e, _) => Text(e.toString()),
+              loading: () => const LoadingWidget(),
+              data: (team) {
+                return Scaffold(
+                  body: (team != null) // User has team
+                      ? ListView.builder(
+                          itemCount: team.players.length,
+                          itemBuilder: (context, i) {
+                            final player = team.players[i];
+                            final isTeamCaptain =
+                                player.id == team.teamCaptain.id;
+                            return ListTile(
+                              leading: Badge(
+                                badgeContent: const FaIcon(
+                                  FontAwesomeIcons.crown,
+                                  size: 8,
+                                ),
+                                badgeColor: Colors.amber,
+                                showBadge: isTeamCaptain,
+                                child: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(player.photoUrl!),
+                                ),
                               ),
-                              badgeColor: Colors.amber,
-                              showBadge: isTeamCaptain,
-                              child: CircleAvatar(
-                                backgroundImage: NetworkImage(player.photoUrl!),
+                              title: Text(player.displayName!),
+                            );
+                          },
+                        )
+                      : const Center(
+                          child: Text(
+                            'You currently do not have a team',
+                          ),
+                        ),
+                  floatingActionButton: FloatingActionButton.extended(
+                    label: Text(
+                      (userInfo.hasTeam)
+                          ? (userInfo.isTeamCaptain)
+                              ? 'Delete Team'
+                              : 'Leave Team'
+                          : 'Build a team',
+                    ),
+                    icon: const Icon(Icons.group),
+                    onPressed: (userInfo.hasTeam && userInfo.isTeamCaptain)
+                        ? () => model.dissolveTeam(team!)
+                        : () => showDialog(
+                              context: context,
+                              builder: (_) => TeamInviteDialog(
+                                constraints: constraints,
+                                model: model,
                               ),
                             ),
-                            title: Text(player.displayName!),
-                          );
-                        },
-                      );
-                    },
-                  )
-              : const Center(child: Text('You currently do not have a team')),
-          floatingActionButton: FloatingActionButton.extended(
-            label: Text(
-              (userInfo.hasTeam)
-                  ? (userInfo.isTeamCaptain)
-                      ? 'Edit Team'
-                      : 'Leave Team'
-                  : 'Build a team',
-            ),
-            icon: const Icon(Icons.group),
-            onPressed: () => showDialog(
-              context: context,
-              builder: (_) => TeamInviteDialog(
-                constraints: constraints,
-                model: model,
-              ),
-            ),
-          ),
-        );
+                  ),
+                );
+              },
+            );
       },
     );
   }
