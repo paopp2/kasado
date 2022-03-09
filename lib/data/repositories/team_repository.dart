@@ -36,7 +36,8 @@ class TeamRepository {
       merge: true,
     );
 
-    await firestoreHelper.setBatchData(
+    await firestoreHelper.setBatchDataForDocInList(
+      docIdList: teamPlayerUserInfos.map((u) => u.id).toList(),
       baseColPath: FirestorePath.colUserInfos(),
       data: {
         'teamId': team.id,

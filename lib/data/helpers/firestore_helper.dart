@@ -61,6 +61,21 @@ class FirestoreHelper {
     return batch.commit();
   }
 
+  Future<void> setBatchDataForDocInList({
+    required String baseColPath,
+    required List<String> docIdList,
+    required Map<String, dynamic> data,
+    bool merge = false,
+  }) async {
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+    for (final docId in docIdList) {
+      final path = baseColPath + '/$docId';
+      final reference = FirebaseFirestore.instance.doc(path);
+      batch.set(reference, data, SetOptions(merge: merge));
+    }
+    return batch.commit();
+  }
+
   Future<void> deleteData({required String path}) async {
     final reference = FirebaseFirestore.instance.doc(path);
     await reference.delete();

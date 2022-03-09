@@ -32,8 +32,8 @@ class SlotPlayerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: UniqueKey(),
-      onDismissed: (_) => model.kickFromCourtSlot(
-        userToKickId: player.id,
+      onDismissed: (_) => model.removeFromCourtSlot(
+        playerToRemove: player,
         courtTicketPrice: court.ticketPrice,
         baseCourtSlot: fetchedCourtSlot,
       ),

@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
@@ -70,12 +71,27 @@ class CourtRepository {
   Future<void> addPlayerToCourtSlot({
     required KasadoUser player,
     required CourtSlot courtSlot,
+    required double courtTicketPrice,
   }) async {
+    KasadoUser? paidUser;
+    final userInfo = await userInfoRepo.getUserInfo(player.id);
+    // If slot is not full and user is not reserved at another slot, check
+    // if user has enough pondo to pay for joining
+    if (userInfo!.hasEnoughPondoToPay(courtTicketPrice)) {
+      // If user has enough pondo, use pondo to pay for court ticket
+      userInfoRepo.addOrDeductPondo(
+        currentUserInfo: userInfo,
+        isAdd: false,
+        pondo: courtTicketPrice,
+      );
+      paidUser = userInfo.user.copyWith(hasPaid: true);
+    }
+
     // The whole courtSlot has to be pushed to cover for cases wherein the
     // courtSlot doesn't exist yet (has no players before adding [player])
     await pushCourtSlot(
       courtSlot: courtSlot.copyWith(
-        players: [...courtSlot.players, player],
+        players: [...courtSlot.players, paidUser ?? player],
       ),
     );
 
@@ -86,14 +102,72 @@ class CourtRepository {
     );
   }
 
+  Future<void> addTeamToCourtSlot({
+    required List<KasadoUser> teamPlayers,
+    required CourtSlot courtSlot,
+  }) async {
+    if (courtSlot.availablePlayerSlots >= teamPlayers.length) {
+      // The whole courtSlot has to be pushed to cover for cases wherein the
+      // courtSlot doesn't exist yet (has no players before adding [player])
+      await pushCourtSlot(
+        courtSlot: courtSlot.copyWith(
+          players: [...courtSlot.players, ...teamPlayers],
+        ),
+      );
+      await userInfoRepo.reserveTeamAt(
+        teamPlayersIdList: teamPlayers.map((u) => u.id).toList(),
+        reservedAt: courtSlot.copyWith(players: []),
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: "You're team can't fit for this slot, please choose another",
+      );
+    }
+  }
+
   Future<void> removePlayerFromCourtSlot({
     required KasadoUser player,
     required CourtSlot courtSlot,
+    required double courtTicketPrice,
   }) async {
+    if (player.hasPaid) {
+      final baseUserInfo = await userInfoRepo.getUserInfo(player.id);
+      await userInfoRepo.addOrDeductPondo(
+        currentUserInfo: baseUserInfo!,
+        isAdd: true,
+        pondo: courtTicketPrice,
+      );
+    }
+
     final updatedPlayerList = courtSlot.players..remove(player);
 
     // Nullify player's reservation at userInfo
     await userInfoRepo.reserveUserAt(userId: player.id, reservedAt: null);
+
+    if (updatedPlayerList.isEmpty) {
+      // If no player remains at courtSlot, remove the court slot
+      await removeCourtSlot(courtSlot.courtId, courtSlot.slotId);
+    } else {
+      // Otherwise, push the updated list with the leaving user removed
+      await firestoreHelper.setData(
+        path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
+        data: {'players': updatedPlayerList.map((u) => u.toJson()).toList()},
+        merge: true,
+      );
+    }
+  }
+
+  Future<void> removeTeamFromCourtSlot({
+    required List<KasadoUser> teamPlayers,
+    required CourtSlot courtSlot,
+  }) async {
+    final updatedPlayerList = courtSlot.players
+      ..removeWhere((player) => teamPlayers.contains(player));
+
+    await userInfoRepo.reserveTeamAt(
+      teamPlayersIdList: teamPlayers.map((u) => u.id).toList(),
+      reservedAt: null,
+    );
 
     if (updatedPlayerList.isEmpty) {
       // If no player remains at courtSlot, remove the court slot

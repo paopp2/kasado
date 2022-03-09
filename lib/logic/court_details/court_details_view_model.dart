@@ -112,8 +112,8 @@ class CourtDetailsViewModel extends ViewModel {
     BuildContext? context,
   }) async {
     if (slotHasPlayer) {
-      await leaveCourtSlot(
-        userInfo: currentUserInfo!,
+      await removeFromCourtSlot(
+        playerToRemove: currentUserInfo!.user,
         baseCourtSlot: baseCourtSlot,
         courtTicketPrice: courtTicketPrice,
         context: context,
@@ -140,23 +140,11 @@ class CourtDetailsViewModel extends ViewModel {
         msg: 'Only 1 reservation allowed at a time',
       ),
       orElse: () async {
-        KasadoUser? paidUser;
-        // If slot is not full and user is not reserved at another slot, check
-        // if user has enough pondo to pay for joining
-        if (userInfo.hasEnoughPondoToPay(courtTicketPrice)) {
-          // If user has enough pondo, use pondo to pay for court ticket
-          userInfoRepo.addOrDeductPondo(
-            currentUserInfo: currentUserInfo!,
-            isAdd: false,
-            pondo: courtTicketPrice,
-          );
-          paidUser = userInfo.user.copyWith(hasPaid: true);
-        }
-
-        // Add user to courtSlot indicating whether user has already paid/not
+        // Add user to courtSlot
         await courtRepo.addPlayerToCourtSlot(
           courtSlot: baseCourtSlot,
-          player: paidUser ?? userInfo.user,
+          player: userInfo.user,
+          courtTicketPrice: courtTicketPrice,
         );
 
         if (context != null) Navigator.pop(context);
@@ -164,53 +152,21 @@ class CourtDetailsViewModel extends ViewModel {
     );
   }
 
-  Future<void> leaveCourtSlot({
-    required KasadoUserInfo userInfo,
+  Future<void> removeFromCourtSlot({
+    required KasadoUser playerToRemove,
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
     BuildContext? context,
   }) async {
     final KasadoUser player =
-        baseCourtSlot.players.singleWhere((p) => (p.id == userInfo.id));
-
-    // If player has already paid for slot, return money (re-add to user's pondo)
-    if (player.hasPaid) {
-      await userInfoRepo.addOrDeductPondo(
-        currentUserInfo: currentUserInfo!,
-        isAdd: true,
-        pondo: courtTicketPrice,
-      );
-    }
+        baseCourtSlot.players.singleWhere((p) => (p.id == playerToRemove.id));
 
     await courtRepo.removePlayerFromCourtSlot(
       player: player,
       courtSlot: baseCourtSlot,
+      courtTicketPrice: courtTicketPrice,
     );
 
     if (context != null) Navigator.pop(context);
-  }
-
-  Future<void> kickFromCourtSlot({
-    required CourtSlot baseCourtSlot,
-    required double courtTicketPrice,
-    required String userToKickId,
-  }) async {
-    final KasadoUser playerToKick =
-        baseCourtSlot.players.singleWhere((p) => (p.id == userToKickId));
-
-    // If player has already paid for slot, return money (re-add to user's pondo)
-    if (playerToKick.hasPaid) {
-      final baseUserInfo = await userInfoRepo.getUserInfo(userToKickId);
-      await userInfoRepo.addOrDeductPondo(
-        currentUserInfo: baseUserInfo!,
-        isAdd: true,
-        pondo: courtTicketPrice,
-      );
-    }
-
-    await courtRepo.removePlayerFromCourtSlot(
-      player: playerToKick,
-      courtSlot: baseCourtSlot,
-    );
   }
 }
