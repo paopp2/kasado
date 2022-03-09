@@ -125,7 +125,10 @@ class CourtDetailsViewModel extends ViewModel {
       ),
       orElse: () async {
         KasadoUser? paidCurrentUser;
+        // If slot is not full and user is not reserved at another slot, check
+        // if user has enough pondo to pay for joining
         if (currentUserInfo!.hasEnoughPondoToPay(courtTicketPrice)) {
+          // If user has enough pondo, use pondo to pay for court ticket
           userInfoRepo.addOrDeductPondo(
             currentUserInfo: currentUserInfo!,
             isAdd: false,
@@ -133,11 +136,15 @@ class CourtDetailsViewModel extends ViewModel {
           );
           paidCurrentUser = currentUser.copyWith(hasPaid: true);
         }
+
+        // Add user to courtSlot indicating whether user has already paid/not
         await courtRepo.pushCourtSlot(
           courtSlot: baseCourtSlot.copyWith(
             players: [...baseCourtSlot.players, paidCurrentUser ?? currentUser],
           ),
         );
+
+        // Also indicate at user's userInfo that user is already reserved at slot
         await userInfoRepo.reserveUserAt(
           userId: currentUser.id,
           reservedAt: baseCourtSlot.copyWith(players: []),
@@ -155,6 +162,7 @@ class CourtDetailsViewModel extends ViewModel {
     final KasadoUser currentPlayer =
         baseCourtSlot.players.singleWhere((p) => (p.id == currentUser.id));
 
+    // If user has already paid for slot, return money (re-add to user's pondo)
     if (currentPlayer.hasPaid) {
       await userInfoRepo.addOrDeductPondo(
         currentUserInfo: currentUserInfo!,
@@ -163,19 +171,23 @@ class CourtDetailsViewModel extends ViewModel {
       );
     }
 
+    // Remove player from courtSlot player list
     final updatedPlayerList = baseCourtSlot.players..remove(currentPlayer);
 
+    // Nullify user's reservations at userInfo
     await userInfoRepo.reserveUserAt(
       userId: currentUser.id,
       reservedAt: null,
     );
 
     if (updatedPlayerList.isEmpty) {
+      // If no player remains at courtSlot, remove the court slot
       await courtRepo.removeCourtSlot(
         baseCourtSlot.courtId,
         baseCourtSlot.slotId,
       );
     } else {
+      // Otherwise, push the updated list without the leaving user
       await courtRepo.pushCourtSlot(
         courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
       );
