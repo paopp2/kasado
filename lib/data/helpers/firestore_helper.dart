@@ -40,7 +40,7 @@ class FirestoreHelper {
 
   Future<void> setBatchData({
     required String baseColPath,
-    required String endPath,
+    String endPath = '',
     required Map<String, dynamic> data,
     Query Function(Query query)? queryBuilder,
     bool merge = false,

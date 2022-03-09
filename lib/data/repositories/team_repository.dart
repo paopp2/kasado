@@ -29,18 +29,21 @@ class TeamRepository {
       path: FirestorePath.docTeam(team.id),
       data: team.toJson(),
     );
-    for (final userInfo in teamPlayerUserInfos) {
-      final isTeamCaptain = userInfo.id == team.teamCaptain.id;
-      await firestoreHelper.setData(
-        path: FirestorePath.docUserInfo(userInfo.id),
-        data: {
-          'teamId': team.id,
-          'isTeamCaptain': isTeamCaptain,
-          'reservedAt': null, // Remove any pending reservations for user
-        },
-        merge: true,
-      );
-    }
+
+    await firestoreHelper.setData(
+      path: FirestorePath.docUserInfo(team.teamCaptain.id),
+      data: {'isTeamCaptain': true},
+      merge: true,
+    );
+
+    await firestoreHelper.setBatchData(
+      baseColPath: FirestorePath.colUserInfos(),
+      data: {
+        'teamId': team.id,
+        'reservedAt': null, // Remove any pending reservations for user
+      },
+      merge: true,
+    );
   }
 
   Future<Team?> getTeam(String teamId) async {
