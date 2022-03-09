@@ -4,8 +4,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
+import 'package:kasado/data/repositories/team_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
+import 'package:kasado/logic/court_details/slot_and_user_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -19,6 +21,7 @@ final courtDetailsViewModel = Provider.autoDispose(
     read: ref.read,
     courtRepo: ref.watch(courtRepositoryProvider),
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
+    teamRepo: ref.watch(teamRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
     currentUserInfo: ref.watch(currentUserInfoProvider).value,
     adminController: ref.watch(courtAdminController),
@@ -31,6 +34,7 @@ class CourtDetailsViewModel extends ViewModel {
     required Reader read,
     required this.courtRepo,
     required this.userInfoRepo,
+    required this.teamRepo,
     required this.adminController,
     required this.currentUser,
     required this.currentUserInfo,
@@ -39,6 +43,7 @@ class CourtDetailsViewModel extends ViewModel {
 
   final CourtRepository courtRepo;
   final UserInfoRepository userInfoRepo;
+  final TeamRepository teamRepo;
   final CourtAdminController adminController;
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;
@@ -240,50 +245,6 @@ class CourtDetailsViewModel extends ViewModel {
       await courtRepo.pushCourtSlot(
         courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
       );
-    }
-  }
-}
-
-enum SlotAndUserState {
-  loading,
-  error,
-  slotEnded,
-  slotClosedByAdmin,
-  slotFull,
-  userNotReserved,
-  userReservedAtThisSlot,
-  userReservedAtAnotherSlot,
-}
-
-extension SlotAndUserStatePatternMatching on SlotAndUserState {
-  T when<T>({
-    T Function()? loading,
-    T Function()? error,
-    T Function()? slotEnded,
-    T Function()? slotClosedByAdmin,
-    T Function()? slotFull,
-    T Function()? userNotReserved,
-    T Function()? userReservedAtThisSlot,
-    T Function()? userReservedAtAnotherSlot,
-    T Function()? orElse,
-  }) {
-    switch (this) {
-      case SlotAndUserState.loading:
-        return loading?.call() ?? orElse!();
-      case SlotAndUserState.error:
-        return error?.call() ?? orElse!();
-      case SlotAndUserState.slotEnded:
-        return slotEnded?.call() ?? orElse!();
-      case SlotAndUserState.slotClosedByAdmin:
-        return slotClosedByAdmin?.call() ?? orElse!();
-      case SlotAndUserState.slotFull:
-        return slotFull?.call() ?? orElse!();
-      case SlotAndUserState.userNotReserved:
-        return userNotReserved?.call() ?? orElse!();
-      case SlotAndUserState.userReservedAtThisSlot:
-        return userReservedAtThisSlot?.call() ?? orElse!();
-      case SlotAndUserState.userReservedAtAnotherSlot:
-        return userReservedAtAnotherSlot?.call() ?? orElse!();
     }
   }
 }
