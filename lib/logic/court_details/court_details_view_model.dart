@@ -154,17 +154,11 @@ class CourtDetailsViewModel extends ViewModel {
         }
 
         // Add user to courtSlot indicating whether user has already paid/not
-        await courtRepo.pushCourtSlot(
-          courtSlot: baseCourtSlot.copyWith(
-            players: [...baseCourtSlot.players, paidUser ?? userInfo.user],
-          ),
+        await courtRepo.addPlayerToCourtSlot(
+          courtSlot: baseCourtSlot,
+          player: paidUser ?? userInfo.user,
         );
 
-        // Also indicate at user's userInfo that user is already reserved at slot
-        await userInfoRepo.reserveUserAt(
-          userId: userInfo.id,
-          reservedAt: baseCourtSlot.copyWith(players: []),
-        );
         if (context != null) Navigator.pop(context);
       },
     );
@@ -176,11 +170,11 @@ class CourtDetailsViewModel extends ViewModel {
     required double courtTicketPrice,
     BuildContext? context,
   }) async {
-    final KasadoUser user =
+    final KasadoUser player =
         baseCourtSlot.players.singleWhere((p) => (p.id == userInfo.id));
 
-    // If user has already paid for slot, return money (re-add to user's pondo)
-    if (user.hasPaid) {
+    // If player has already paid for slot, return money (re-add to user's pondo)
+    if (player.hasPaid) {
       await userInfoRepo.addOrDeductPondo(
         currentUserInfo: currentUserInfo!,
         isAdd: true,
@@ -188,27 +182,11 @@ class CourtDetailsViewModel extends ViewModel {
       );
     }
 
-    // Remove player from courtSlot player list
-    final updatedPlayerList = baseCourtSlot.players..remove(user);
-
-    // Nullify user's reservations at userInfo
-    await userInfoRepo.reserveUserAt(
-      userId: userInfo.id,
-      reservedAt: null,
+    await courtRepo.removePlayerFromCourtSlot(
+      player: player,
+      courtSlot: baseCourtSlot,
     );
 
-    if (updatedPlayerList.isEmpty) {
-      // If no player remains at courtSlot, remove the court slot
-      await courtRepo.removeCourtSlot(
-        baseCourtSlot.courtId,
-        baseCourtSlot.slotId,
-      );
-    } else {
-      // Otherwise, push the updated list without the leaving user
-      await courtRepo.pushCourtSlot(
-        courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
-      );
-    }
     if (context != null) Navigator.pop(context);
   }
 
@@ -220,6 +198,7 @@ class CourtDetailsViewModel extends ViewModel {
     final KasadoUser playerToKick =
         baseCourtSlot.players.singleWhere((p) => (p.id == userToKickId));
 
+    // If player has already paid for slot, return money (re-add to user's pondo)
     if (playerToKick.hasPaid) {
       final baseUserInfo = await userInfoRepo.getUserInfo(userToKickId);
       await userInfoRepo.addOrDeductPondo(
@@ -229,22 +208,9 @@ class CourtDetailsViewModel extends ViewModel {
       );
     }
 
-    final updatedPlayerList = baseCourtSlot.players..remove(playerToKick);
-
-    await userInfoRepo.reserveUserAt(
-      userId: userToKickId,
-      reservedAt: null,
+    await courtRepo.removePlayerFromCourtSlot(
+      player: playerToKick,
+      courtSlot: baseCourtSlot,
     );
-
-    if (updatedPlayerList.isEmpty) {
-      await courtRepo.removeCourtSlot(
-        baseCourtSlot.courtId,
-        baseCourtSlot.slotId,
-      );
-    } else {
-      await courtRepo.pushCourtSlot(
-        courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
-      );
-    }
   }
 }
