@@ -127,13 +127,16 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                                   ),
                                   onPressed: () async {
                                     isModifyingSlot.value = true;
-                                    await model.selfJoinLeaveCourtSlot(
+                                    await model.joinLeaveCourtSlot(
                                       baseCourtSlot: fetchedCourtSlot,
                                       slotHasPlayer: fetchedCourtSlot.hasPlayer(
                                         currentUser,
                                       ),
                                       courtTicketPrice: court.ticketPrice,
                                       context: context,
+                                      teamId: currentUserInfo!.teamId,
+                                      isTeamCaptain:
+                                          currentUserInfo.isTeamCaptain,
                                     );
                                     isModifyingSlot.value = false;
                                   },

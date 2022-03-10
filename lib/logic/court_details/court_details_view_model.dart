@@ -105,30 +105,52 @@ class CourtDetailsViewModel extends ViewModel {
   }
 
   /// Join/Leave [baseCourtSlot] depending on whether [slotHasPlayer] for self
-  Future<void> selfJoinLeaveCourtSlot({
+  Future<void> joinLeaveCourtSlot({
     required CourtSlot baseCourtSlot,
     required bool slotHasPlayer,
     required double courtTicketPrice,
+    required String? teamId,
+    required bool isTeamCaptain,
     BuildContext? context,
   }) async {
-    if (slotHasPlayer) {
-      await removeFromCourtSlot(
-        playerToRemove: currentUserInfo!.user,
-        baseCourtSlot: baseCourtSlot,
-        courtTicketPrice: courtTicketPrice,
-        context: context,
-      );
+    if (teamId == null) {
+      // If player is not part of a team
+      if (slotHasPlayer) {
+        await removeFromCourtSlot(
+          playerToRemove: currentUserInfo!.user,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: courtTicketPrice,
+          context: context,
+        );
+      } else {
+        await addToCourtSlot(
+          userInfo: currentUserInfo!,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: courtTicketPrice,
+          context: context,
+        );
+      }
     } else {
-      await joinCourtSlot(
-        userInfo: currentUserInfo!,
-        baseCourtSlot: baseCourtSlot,
-        courtTicketPrice: courtTicketPrice,
-        context: context,
-      );
+      // If player is part of a team
+      if (slotHasPlayer) {
+        await removeTeamFromCourtSlot(
+          teamId: teamId,
+          isTeamCaptain: isTeamCaptain,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: courtTicketPrice,
+        );
+      } else {
+        await addTeamToCourtSlot(
+          teamId: teamId,
+          isTeamCaptain: isTeamCaptain,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: courtTicketPrice,
+        );
+      }
     }
   }
 
-  Future<void> joinCourtSlot({
+  Future<void> addToCourtSlot({
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
     required KasadoUserInfo userInfo,
@@ -168,5 +190,47 @@ class CourtDetailsViewModel extends ViewModel {
     );
 
     if (context != null) Navigator.pop(context);
+  }
+
+  Future<void> addTeamToCourtSlot({
+    required String teamId,
+    required bool isTeamCaptain,
+    required CourtSlot baseCourtSlot,
+    required double courtTicketPrice,
+    BuildContext? context,
+  }) async {
+    if (isTeamCaptain) {
+      await courtRepo.addTeamToCourtSlot(
+        teamId: teamId,
+        courtSlot: baseCourtSlot,
+        courtTicketPrice: courtTicketPrice,
+      );
+      if (context != null) Navigator.pop(context);
+    } else {
+      Fluttertoast.showToast(
+        msg: 'Only the team captain can join a game for the team',
+      );
+    }
+  }
+
+  Future<void> removeTeamFromCourtSlot({
+    required String teamId,
+    required bool isTeamCaptain,
+    required CourtSlot baseCourtSlot,
+    required double courtTicketPrice,
+    BuildContext? context,
+  }) async {
+    if (isTeamCaptain) {
+      await courtRepo.removeTeamFromCourtSlot(
+        teamId: teamId,
+        courtSlot: baseCourtSlot,
+        courtTicketPrice: courtTicketPrice,
+      );
+      if (context != null) Navigator.pop(context);
+    } else {
+      Fluttertoast.showToast(
+        msg: 'Only the team captain can leave a game for the team',
+      );
+    }
   }
 }

@@ -28,6 +28,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUser = ref.watch(currentUserProvider)!;
+    final currentUserInfo = ref.watch(currentUserInfoProvider).value;
     final model = ref.watch(courtDetailsViewModel);
     final utils = ref.watch(kasadoUtilsProvider);
     final nextTimeSlotState = useState(utils.getNextTimeSlot(
@@ -140,12 +141,14 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                         ),
                         onPressed: () async {
                           isModifyingSlot.value = true;
-                          await model.selfJoinLeaveCourtSlot(
+                          await model.joinLeaveCourtSlot(
                             baseCourtSlot: nextCourtSlot,
                             slotHasPlayer: nextCourtSlot.hasPlayer(
                               currentUser,
                             ),
                             courtTicketPrice: court.ticketPrice,
+                            teamId: currentUserInfo!.teamId,
+                            isTeamCaptain: currentUserInfo.isTeamCaptain,
                           );
                           isModifyingSlot.value = false;
                         },
