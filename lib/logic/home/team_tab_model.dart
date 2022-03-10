@@ -56,7 +56,17 @@ class TeamTabModel extends ViewModel {
     );
   }
 
-  Future<void> dissolveTeam(Team team) async {
-    await teamRepo.dissolveTeam(team);
+  Future<void> dissolveTeam({
+    required bool hasReserved,
+    required Team team,
+  }) async {
+    if (hasReserved) {
+      Fluttertoast.showToast(
+        msg:
+            "Please leave the game you have joined before dissolving your team",
+      );
+    } else {
+      await teamRepo.dissolveTeam(team);
+    }
   }
 }

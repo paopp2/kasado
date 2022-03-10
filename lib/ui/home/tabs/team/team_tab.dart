@@ -69,7 +69,10 @@ class TeamTab extends HookConsumerWidget {
                     ),
                     icon: const Icon(Icons.group),
                     onPressed: (userInfo.hasTeam && userInfo.isTeamCaptain)
-                        ? () => model.dissolveTeam(team!)
+                        ? () => model.dissolveTeam(
+                              team: team!,
+                              hasReserved: userInfo.hasReserved,
+                            )
                         : () => showDialog(
                               context: context,
                               builder: (_) => TeamInviteDialog(
