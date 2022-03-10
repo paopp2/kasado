@@ -37,7 +37,7 @@ class TeamInviteDialog extends HookConsumerWidget {
                       return GestureDetector(
                         onTap: (isCurrentUser)
                             ? null
-                            : () => model.removeUserInfoFromTeam(userInfo),
+                            : () => model.removeUserInfoFromTeamBuild(userInfo),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8.0,

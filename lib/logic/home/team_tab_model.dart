@@ -38,7 +38,7 @@ class TeamTabModel extends ViewModel {
     );
   }
 
-  void removeUserInfoFromTeam(KasadoUserInfo userInfo) {
+  void removeUserInfoFromTeamBuild(KasadoUserInfo userInfo) {
     read(teamUserInfoListProvider.notifier).update((state) {
       return [...state]..remove(userInfo);
     });
