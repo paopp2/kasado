@@ -89,7 +89,13 @@ class TeamTab extends HookConsumerWidget {
                               : 'Leave Team'
                           : 'Build a team',
                     ),
-                    icon: const Icon(Icons.group),
+                    icon: Icon(
+                      (userInfo.hasTeam)
+                          ? (userInfo.isTeamCaptain)
+                              ? Icons.edit
+                              : Icons.logout
+                          : Icons.group,
+                    ),
                     // If user has no team, user can build a team
                     // Or if user is team captain, user can edit team
                     onPressed: (!userInfo.hasTeam || userInfo.isTeamCaptain)
