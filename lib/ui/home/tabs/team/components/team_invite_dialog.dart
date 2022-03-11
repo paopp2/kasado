@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/states/team_tab_state.dart';
@@ -23,7 +24,14 @@ class TeamInviteDialog extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bool isEdit = team != null;
     final currentUserInfo = ref.watch(currentUserInfoProvider).value!;
-    final teamUserInfoList = ref.watch(teamUserInfoListProvider);
+    final teamPlayersList = ref.watch(teamPlayersListProvider);
+
+    useEffect(() {
+      Future.delayed(Duration.zero, () {
+        ref.read(teamPlayersListProvider.notifier).state = team?.players ?? [];
+      });
+      return;
+    }, []);
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -35,13 +43,13 @@ class TeamInviteDialog extends HookConsumerWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: teamUserInfoList.map(
-                    (userInfo) {
-                      final isCurrentUser = userInfo.id == currentUserInfo.id;
+                  children: teamPlayersList.map(
+                    (player) {
+                      final isCurrentUser = player.id == currentUserInfo.id;
                       return GestureDetector(
                         onTap: (isCurrentUser)
                             ? null
-                            : () => model.removeUserInfoFromTeamBuild(userInfo),
+                            : () => model.removeUserInfoFromTeamBuild(player),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8.0,
@@ -58,7 +66,7 @@ class TeamInviteDialog extends HookConsumerWidget {
                             showBadge: !isCurrentUser,
                             child: CircleAvatar(
                               backgroundImage: NetworkImage(
-                                userInfo.user.photoUrl!,
+                                player.photoUrl!,
                               ),
                               radius: 25,
                             ),
@@ -69,7 +77,7 @@ class TeamInviteDialog extends HookConsumerWidget {
                   ).toList(),
                 ),
               ),
-              Text('${teamUserInfoList.length} / ${Team.maxPlayerCount}'),
+              Text('${teamPlayersList.length} / ${Team.maxPlayerCount}'),
             ],
           ),
           Expanded(
@@ -77,7 +85,7 @@ class TeamInviteDialog extends HookConsumerWidget {
               key: UniqueKey(),
               onUserTapped: model.addUserInfoToTeam,
               trailingFromInfo: (userInfo) =>
-                  teamUserInfoList.contains(userInfo)
+                  teamPlayersList.contains(userInfo.user)
                       ? const Icon(Icons.check, color: Colors.green)
                       : null,
             ),

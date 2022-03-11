@@ -3,7 +3,6 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
-import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/team/team.dart';
 
 final teamRepositoryProvider = Provider.autoDispose(
@@ -21,10 +20,7 @@ class TeamRepository {
   final FirestoreHelper firestoreHelper;
   final KasadoUser currentUser;
 
-  Future<void> pushTeam({
-    required Team team,
-    required List<KasadoUserInfo> teamPlayerUserInfos,
-  }) async {
+  Future<void> pushTeam(Team team) async {
     await firestoreHelper.setData(
       path: FirestorePath.docTeam(team.id),
       data: team.toJson(),
@@ -37,7 +33,7 @@ class TeamRepository {
     );
 
     await firestoreHelper.setBatchDataForDocInList(
-      docIdList: teamPlayerUserInfos.map((u) => u.id).toList(),
+      docIdList: team.players.map((p) => p.id).toList(),
       baseColPath: FirestorePath.colUserInfos(),
       data: {'teamId': team.id},
       merge: true,

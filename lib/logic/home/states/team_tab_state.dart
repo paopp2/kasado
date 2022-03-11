@@ -3,9 +3,9 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/team_repository.dart';
 import 'package:kasado/model/team/team.dart';
 
-final teamUserInfoListProvider = StateProvider.autoDispose((ref) {
-  final currentUserInfo = ref.watch(currentUserInfoProvider).value!;
-  return [currentUserInfo];
+final teamPlayersListProvider = StateProvider.autoDispose((ref) {
+  final currentUser = ref.watch(currentUserProvider)!;
+  return [currentUser];
 });
 
 final teamStreamProvider = StreamProvider.autoDispose.family<Team?, String?>(
