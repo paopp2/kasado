@@ -40,6 +40,24 @@ class TeamRepository {
     );
   }
 
+  Future<void> removePlayerFromTeam({
+    required Team team,
+    required KasadoUser player,
+  }) async {
+    final updatedTeam = team.copyWith(players: team.players..remove(player));
+
+    pushTeam(updatedTeam);
+
+    await firestoreHelper.setData(
+      path: FirestorePath.docUserInfo(player.id),
+      data: {
+        'teamId': null,
+        'isTeamCaptain': false,
+      },
+      merge: true,
+    );
+  }
+
   Future<void> dissolveTeam(Team team) async {
     await firestoreHelper.deleteData(path: FirestorePath.docTeam(team.id));
 

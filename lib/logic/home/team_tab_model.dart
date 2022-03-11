@@ -60,6 +60,13 @@ class TeamTabModel extends ViewModel {
     });
   }
 
+  Future<void> removeUserFromTeam({
+    required Team team,
+    required KasadoUser player,
+  }) async {
+    await teamRepo.removePlayerFromTeam(team: team, player: player);
+  }
+
   Future<void> pushTeam(BuildContext context) async {
     final teamPlayersList = read(teamPlayersListProvider);
     if (teamPlayersList.length == 1) {
@@ -88,7 +95,7 @@ class TeamTabModel extends ViewModel {
       );
     } else {
       await teamRepo.dissolveTeam(team);
+      Navigator.pop(context);
     }
-    Navigator.pop(context);
   }
 }
