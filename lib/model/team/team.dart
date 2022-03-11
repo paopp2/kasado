@@ -8,12 +8,15 @@ part 'team.g.dart';
 
 @freezed
 class Team with _$Team {
+  const Team._();
   const factory Team({
     required String id,
     required KasadoUser teamCaptain,
     @Default([]) List<KasadoUser> players,
     CourtSlot? reservedAt,
   }) = _Team;
+
+  static int get maxPlayerCount => 10;
 
   factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
 }

@@ -179,12 +179,13 @@ class __$TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Team with DiagnosticableTreeMixin implements _Team {
+class _$_Team extends _Team with DiagnosticableTreeMixin {
   const _$_Team(
       {required this.id,
       required this.teamCaptain,
       this.players = const [],
-      this.reservedAt});
+      this.reservedAt})
+      : super._();
 
   factory _$_Team.fromJson(Map<String, dynamic> json) => _$$_TeamFromJson(json);
 
@@ -246,12 +247,13 @@ class _$_Team with DiagnosticableTreeMixin implements _Team {
   }
 }
 
-abstract class _Team implements Team {
+abstract class _Team extends Team {
   const factory _Team(
       {required String id,
       required KasadoUser teamCaptain,
       List<KasadoUser> players,
       CourtSlot? reservedAt}) = _$_Team;
+  const _Team._() : super._();
 
   factory _Team.fromJson(Map<String, dynamic> json) = _$_Team.fromJson;
 
