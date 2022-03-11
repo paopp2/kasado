@@ -63,25 +63,25 @@ class TeamTab extends HookConsumerWidget {
                     label: Text(
                       (userInfo.hasTeam)
                           ? (userInfo.isTeamCaptain)
-                              ? 'Delete Team'
+                              ? 'Edit Team'
                               : 'Leave Team'
                           : 'Build a team',
                     ),
                     icon: const Icon(Icons.group),
-                    onPressed: (userInfo.hasTeam)
-                        ? (userInfo.isTeamCaptain)
-                            ? () => model.dissolveTeam(
-                                  team: team!,
-                                  hasReserved: userInfo.hasReserved,
-                                )
-                            : () {}
-                        : () => showDialog(
+                    // If user has no team, user can build a team
+                    // Or if user is team captain, user can edit team
+                    onPressed: (!userInfo.hasTeam || userInfo.isTeamCaptain)
+                        ? () => showDialog(
                               context: context,
                               builder: (_) => TeamInviteDialog(
                                 constraints: constraints,
                                 model: model,
+                                team: team,
                               ),
-                            ),
+                            )
+                        : () {
+                            // Leave team
+                          },
                   ),
                 );
               },

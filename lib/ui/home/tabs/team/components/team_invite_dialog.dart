@@ -12,13 +12,16 @@ class TeamInviteDialog extends HookConsumerWidget {
     Key? key,
     required this.constraints,
     required this.model,
+    required this.team,
   }) : super(key: key);
 
   final BoxConstraints constraints;
   final TeamTabModel model;
+  final Team? team;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final bool isEdit = team != null;
     final currentUserInfo = ref.watch(currentUserInfoProvider).value!;
     final teamUserInfoList = ref.watch(teamUserInfoListProvider);
 
@@ -79,12 +82,29 @@ class TeamInviteDialog extends HookConsumerWidget {
                       : null,
             ),
           ),
-          TextButton(
-            child: const Text(
-              'BUILD TEAM',
-              style: TextStyle(color: Colors.green),
-            ),
-            onPressed: () => model.pushTeam(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              if (isEdit) ...[
+                TextButton(
+                  child: const Text(
+                    'DISSOLVE TEAM',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  onPressed: () => model.dissolveTeam(
+                    hasReserved: currentUserInfo.hasReserved,
+                    team: team!,
+                  ),
+                ),
+              ],
+              TextButton(
+                child: Text(
+                  (isEdit) ? 'UPDATE TEAM' : 'BUILD TEAM',
+                  style: const TextStyle(color: Colors.green),
+                ),
+                onPressed: () => model.pushTeam(context),
+              ),
+            ],
           ),
         ],
       ),
