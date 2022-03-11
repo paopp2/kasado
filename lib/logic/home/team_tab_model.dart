@@ -60,14 +60,18 @@ class TeamTabModel extends ViewModel {
 
   Future<void> pushTeam(BuildContext context) async {
     final teamPlayersList = read(teamPlayersListProvider);
-    await teamRepo.pushTeam(
-      Team(
-        id: const Uuid().v4(),
-        teamCaptain: currentUser,
-        players: teamPlayersList,
-      ),
-    );
-    Navigator.pop(context);
+    if (teamPlayersList.length == 1) {
+      Fluttertoast.showToast(msg: "There's no I in TEAM pre");
+    } else {
+      await teamRepo.pushTeam(
+        Team(
+          id: const Uuid().v4(),
+          teamCaptain: currentUser,
+          players: teamPlayersList,
+        ),
+      );
+      Navigator.pop(context);
+    }
   }
 
   Future<void> dissolveTeam({
