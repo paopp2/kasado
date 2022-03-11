@@ -31,28 +31,50 @@ class TeamTab extends HookConsumerWidget {
               data: (team) {
                 return Scaffold(
                   body: (team != null) // User has team
-                      ? ListView.builder(
-                          itemCount: team.players.length,
-                          itemBuilder: (context, i) {
-                            final player = team.players[i];
-                            final isTeamCaptain =
-                                player.id == team.teamCaptain.id;
-                            return ListTile(
-                              leading: Badge(
-                                badgeContent: const FaIcon(
-                                  FontAwesomeIcons.crown,
-                                  size: 8,
-                                ),
-                                badgeColor: Colors.amber,
-                                showBadge: isTeamCaptain,
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(player.photoUrl!),
-                                ),
+                      ? Column(
+                          children: [
+                            Text(
+                              "TEAM ${team.teamCaptain.displayName!.split(' ').first.toUpperCase()}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
                               ),
-                              title: Text(player.displayName!),
-                            );
-                          },
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 20,
+                                ),
+                                itemCount: team.players.length,
+                                itemBuilder: (context, i) {
+                                  final player = team.players[i];
+                                  final isTeamCaptain =
+                                      player.id == team.teamCaptain.id;
+                                  return ListTile(
+                                    leading: Badge(
+                                      badgeContent: const FaIcon(
+                                        FontAwesomeIcons.crown,
+                                        size: 8,
+                                      ),
+                                      badgeColor: Colors.amber,
+                                      showBadge: isTeamCaptain,
+                                      child: CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(player.photoUrl!),
+                                      ),
+                                    ),
+                                    title: Text(
+                                      player.displayName!,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         )
                       : const Center(
                           child: Text(
