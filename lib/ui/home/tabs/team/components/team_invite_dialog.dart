@@ -28,7 +28,9 @@ class TeamInviteDialog extends HookConsumerWidget {
 
     useEffect(() {
       Future.delayed(Duration.zero, () {
-        ref.read(teamPlayersListProvider.notifier).state = team?.players ?? [];
+        if (team != null) {
+          ref.read(teamPlayersListProvider.notifier).state = team!.players;
+        }
       });
       return;
     }, []);
@@ -102,6 +104,7 @@ class TeamInviteDialog extends HookConsumerWidget {
                   onPressed: () => model.dissolveTeam(
                     hasReserved: currentUserInfo.hasReserved,
                     team: team!,
+                    context: context,
                   ),
                 ),
               ],

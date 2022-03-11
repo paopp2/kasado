@@ -73,6 +73,7 @@ class TeamTabModel extends ViewModel {
   Future<void> dissolveTeam({
     required bool hasReserved,
     required Team team,
+    required BuildContext context,
   }) async {
     if (hasReserved) {
       Fluttertoast.showToast(
@@ -82,5 +83,6 @@ class TeamTabModel extends ViewModel {
     } else {
       await teamRepo.dissolveTeam(team);
     }
+    Navigator.pop(context);
   }
 }
