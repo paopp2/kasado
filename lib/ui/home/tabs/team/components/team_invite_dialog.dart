@@ -49,7 +49,7 @@ class TeamInviteDialog extends HookConsumerWidget {
                       return GestureDetector(
                         onTap: (isCurrentUser)
                             ? null
-                            : () => model.removeUserInfoFromTeamBuild(player),
+                            : () => model.removeUserFromTeamBuild(player),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8.0,
@@ -83,7 +83,7 @@ class TeamInviteDialog extends HookConsumerWidget {
           Expanded(
             child: UserSearchPane(
               key: UniqueKey(),
-              onUserTapped: model.addUserInfoToTeam,
+              onUserTapped: model.addUserToTeam,
               trailingFromInfo: (userInfo) =>
                   teamPlayersList.contains(userInfo.user)
                       ? const Icon(Icons.check, color: Colors.green)

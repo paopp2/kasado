@@ -28,7 +28,7 @@ class TeamTabModel extends ViewModel {
   final KasadoUser currentUser;
   final TeamRepository teamRepo;
 
-  void addUserInfoToTeam(KasadoUserInfo userInfo) {
+  void addUserToTeam(KasadoUserInfo userInfo) {
     read(teamPlayersListProvider.notifier).update(
       (state) {
         if (state.length < Team.maxPlayerCount) {
@@ -52,19 +52,19 @@ class TeamTabModel extends ViewModel {
     );
   }
 
-  void removeUserInfoFromTeamBuild(KasadoUser user) {
+  void removeUserFromTeamBuild(KasadoUser user) {
     read(teamPlayersListProvider.notifier).update((state) {
       return [...state]..remove(user);
     });
   }
 
   Future<void> pushTeam(BuildContext context) async {
-    final teamUserInfoList = read(teamPlayersListProvider);
+    final teamPlayersList = read(teamPlayersListProvider);
     await teamRepo.pushTeam(
       Team(
         id: const Uuid().v4(),
         teamCaptain: currentUser,
-        players: teamUserInfoList,
+        players: teamPlayersList,
       ),
     );
     Navigator.pop(context);
