@@ -138,6 +138,7 @@ class CourtDetailsViewModel extends ViewModel {
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: courtTicketPrice,
+          context: context,
         );
       } else {
         await addTeamToCourtSlot(
@@ -145,6 +146,7 @@ class CourtDetailsViewModel extends ViewModel {
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: courtTicketPrice,
+          context: context,
         );
       }
     }
