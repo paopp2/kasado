@@ -39,10 +39,7 @@ class TeamRepository {
     await firestoreHelper.setBatchDataForDocInList(
       docIdList: teamPlayerUserInfos.map((u) => u.id).toList(),
       baseColPath: FirestorePath.colUserInfos(),
-      data: {
-        'teamId': team.id,
-        'reservedAt': null, // Remove any pending reservations for user
-      },
+      data: {'teamId': team.id},
       merge: true,
     );
   }
@@ -58,10 +55,7 @@ class TeamRepository {
 
     await firestoreHelper.setBatchData(
       baseColPath: FirestorePath.colUserInfos(),
-      data: {
-        'teamId': null,
-        'reservedAt': null, // Remove any pending reservations for user
-      },
+      data: {'teamId': null},
       merge: true,
     );
   }

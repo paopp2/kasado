@@ -30,9 +30,18 @@ class TeamTabModel extends ViewModel {
   void addUserInfoToTeam(KasadoUserInfo userInfo) {
     read(teamUserInfoListProvider.notifier).update(
       (state) {
-        if (!state.contains(userInfo)) return [...state, userInfo];
-
-        Fluttertoast.showToast(msg: 'User already added');
+        if (!state.contains(userInfo)) {
+          if (userInfo.hasReserved) {
+            Fluttertoast.showToast(
+              msg:
+                  "Can't add player because player is currently reserved for a game",
+            );
+          } else {
+            return [...state, userInfo];
+          }
+        } else {
+          Fluttertoast.showToast(msg: 'User already added');
+        }
         return state;
       },
     );
