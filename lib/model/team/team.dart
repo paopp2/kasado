@@ -16,7 +16,7 @@ class Team with _$Team {
     CourtSlot? reservedAt,
   }) = _Team;
 
-  static int get maxPlayerCount => 10;
+  static int get maxPlayerCount => 5;
 
   factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
 }

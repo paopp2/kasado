@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
@@ -30,17 +31,21 @@ class TeamTabModel extends ViewModel {
   void addUserInfoToTeam(KasadoUserInfo userInfo) {
     read(teamUserInfoListProvider.notifier).update(
       (state) {
-        if (!state.contains(userInfo)) {
-          if (userInfo.hasReserved) {
-            Fluttertoast.showToast(
-              msg:
-                  "Can't add player because player is currently reserved for a game",
-            );
+        if (state.length < Team.maxPlayerCount) {
+          if (!state.contains(userInfo)) {
+            if (userInfo.hasReserved) {
+              Fluttertoast.showToast(
+                msg:
+                    "Can't add player because player is currently reserved for a game",
+              );
+            } else {
+              return [...state, userInfo];
+            }
           } else {
-            return [...state, userInfo];
+            Fluttertoast.showToast(msg: 'User already added');
           }
         } else {
-          Fluttertoast.showToast(msg: 'User already added');
+          Fluttertoast.showToast(msg: "Team already full");
         }
         return state;
       },
@@ -53,7 +58,7 @@ class TeamTabModel extends ViewModel {
     });
   }
 
-  Future<void> pushTeam() async {
+  Future<void> pushTeam(BuildContext context) async {
     final teamUserInfoList = read(teamUserInfoListProvider);
     await teamRepo.pushTeam(
       team: Team(
@@ -63,6 +68,7 @@ class TeamTabModel extends ViewModel {
       ),
       teamPlayerUserInfos: teamUserInfoList,
     );
+    Navigator.pop(context);
   }
 
   Future<void> dissolveTeam({

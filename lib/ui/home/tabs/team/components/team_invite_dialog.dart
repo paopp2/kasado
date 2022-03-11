@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/states/team_tab_state.dart';
 import 'package:kasado/logic/home/team_tab_model.dart';
+import 'package:kasado/model/team/team.dart';
 import 'package:kasado/ui/shared/user_search/user_search_pane.dart';
 
 class TeamInviteDialog extends HookConsumerWidget {
@@ -65,7 +66,7 @@ class TeamInviteDialog extends HookConsumerWidget {
                   ).toList(),
                 ),
               ),
-              Text('${teamUserInfoList.length} / 10'),
+              Text('${teamUserInfoList.length} / ${Team.maxPlayerCount}'),
             ],
           ),
           Expanded(
@@ -83,7 +84,7 @@ class TeamInviteDialog extends HookConsumerWidget {
               'BUILD TEAM',
               style: TextStyle(color: Colors.green),
             ),
-            onPressed: model.pushTeam,
+            onPressed: () => model.pushTeam(context),
           ),
         ],
       ),
