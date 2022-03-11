@@ -28,24 +28,26 @@ class TeamTabModel extends ViewModel {
   final KasadoUser currentUser;
   final TeamRepository teamRepo;
 
-  void addUserToTeam(KasadoUserInfo userInfo) {
+  // TODO: Might be doable without the teamId for checking if player is at another team
+  void addUserToTeam({
+    required KasadoUserInfo userInfo,
+    required String? teamId,
+  }) {
     read(teamPlayersListProvider.notifier).update(
       (state) {
-        if (state.length < Team.maxPlayerCount) {
-          if (!state.contains(userInfo.user)) {
-            if (userInfo.hasReserved) {
-              Fluttertoast.showToast(
-                msg:
-                    "Can't add player because player is currently reserved for a game",
-              );
-            } else {
-              return [...state, userInfo.user];
-            }
-          } else {
-            Fluttertoast.showToast(msg: 'User already added');
-          }
-        } else {
+        if (userInfo.hasTeam && userInfo.teamId != teamId) {
+          Fluttertoast.showToast(msg: "Player is at another team");
+        } else if (userInfo.hasReserved) {
+          Fluttertoast.showToast(
+            msg:
+                "Can't add player because player is currently reserved for a game",
+          );
+        } else if (state.length == Team.maxPlayerCount) {
           Fluttertoast.showToast(msg: "Team already full");
+        } else if (state.contains(userInfo.user)) {
+          Fluttertoast.showToast(msg: "User already added");
+        } else {
+          return [...state, userInfo.user];
         }
         return state;
       },

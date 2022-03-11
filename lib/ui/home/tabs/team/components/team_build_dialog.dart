@@ -85,7 +85,10 @@ class TeamBuildDialog extends HookConsumerWidget {
           Expanded(
             child: UserSearchPane(
               key: UniqueKey(),
-              onUserTapped: model.addUserToTeam,
+              onUserTapped: (userInfo) => model.addUserToTeam(
+                userInfo: userInfo,
+                teamId: team?.id,
+              ),
               trailingFromInfo: (userInfo) =>
                   teamPlayersList.contains(userInfo.user)
                       ? const Icon(Icons.check, color: Colors.green)
