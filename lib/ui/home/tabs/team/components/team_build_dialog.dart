@@ -8,8 +8,8 @@ import 'package:kasado/logic/home/team_tab_model.dart';
 import 'package:kasado/model/team/team.dart';
 import 'package:kasado/ui/shared/user_search/user_search_pane.dart';
 
-class TeamInviteDialog extends HookConsumerWidget {
-  const TeamInviteDialog({
+class TeamBuildDialog extends HookConsumerWidget {
+  const TeamBuildDialog({
     Key? key,
     required this.constraints,
     required this.model,

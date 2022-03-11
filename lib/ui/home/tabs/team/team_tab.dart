@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/states/team_tab_state.dart';
 import 'package:kasado/logic/home/team_tab_model.dart';
-import 'package:kasado/ui/home/tabs/team/components/team_invite_dialog.dart';
+import 'package:kasado/ui/home/tabs/team/components/team_build_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class TeamTab extends HookConsumerWidget {
@@ -73,7 +73,7 @@ class TeamTab extends HookConsumerWidget {
                     onPressed: (!userInfo.hasTeam || userInfo.isTeamCaptain)
                         ? () => showDialog(
                               context: context,
-                              builder: (_) => TeamInviteDialog(
+                              builder: (_) => TeamBuildDialog(
                                 constraints: constraints,
                                 model: model,
                                 team: team,
