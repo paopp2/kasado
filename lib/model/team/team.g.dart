@@ -14,14 +14,14 @@ _$_Team _$$_TeamFromJson(Map<String, dynamic> json) => _$_Team(
               ?.map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      nextGame: json['nextGame'] == null
+      reservedAt: json['reservedAt'] == null
           ? null
-          : CourtSlot.fromJson(json['nextGame'] as Map<String, dynamic>),
+          : CourtSlot.fromJson(json['reservedAt'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_TeamToJson(_$_Team instance) => <String, dynamic>{
       'id': instance.id,
       'teamCaptain': instance.teamCaptain.toJson(),
       'players': instance.players.map((e) => e.toJson()).toList(),
-      'nextGame': instance.nextGame?.toJson(),
+      'reservedAt': instance.reservedAt?.toJson(),
     };

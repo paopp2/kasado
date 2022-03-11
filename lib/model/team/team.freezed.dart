@@ -26,12 +26,12 @@ class _$TeamTearOff {
       {required String id,
       required KasadoUser teamCaptain,
       List<KasadoUser> players = const [],
-      CourtSlot? nextGame}) {
+      CourtSlot? reservedAt}) {
     return _Team(
       id: id,
       teamCaptain: teamCaptain,
       players: players,
-      nextGame: nextGame,
+      reservedAt: reservedAt,
     );
   }
 
@@ -48,7 +48,7 @@ mixin _$Team {
   String get id => throw _privateConstructorUsedError;
   KasadoUser get teamCaptain => throw _privateConstructorUsedError;
   List<KasadoUser> get players => throw _privateConstructorUsedError;
-  CourtSlot? get nextGame => throw _privateConstructorUsedError;
+  CourtSlot? get reservedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -63,10 +63,10 @@ abstract class $TeamCopyWith<$Res> {
       {String id,
       KasadoUser teamCaptain,
       List<KasadoUser> players,
-      CourtSlot? nextGame});
+      CourtSlot? reservedAt});
 
   $KasadoUserCopyWith<$Res> get teamCaptain;
-  $CourtSlotCopyWith<$Res>? get nextGame;
+  $CourtSlotCopyWith<$Res>? get reservedAt;
 }
 
 /// @nodoc
@@ -82,7 +82,7 @@ class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
     Object? id = freezed,
     Object? teamCaptain = freezed,
     Object? players = freezed,
-    Object? nextGame = freezed,
+    Object? reservedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -97,9 +97,9 @@ class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>,
-      nextGame: nextGame == freezed
-          ? _value.nextGame
-          : nextGame // ignore: cast_nullable_to_non_nullable
+      reservedAt: reservedAt == freezed
+          ? _value.reservedAt
+          : reservedAt // ignore: cast_nullable_to_non_nullable
               as CourtSlot?,
     ));
   }
@@ -112,13 +112,13 @@ class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
   }
 
   @override
-  $CourtSlotCopyWith<$Res>? get nextGame {
-    if (_value.nextGame == null) {
+  $CourtSlotCopyWith<$Res>? get reservedAt {
+    if (_value.reservedAt == null) {
       return null;
     }
 
-    return $CourtSlotCopyWith<$Res>(_value.nextGame!, (value) {
-      return _then(_value.copyWith(nextGame: value));
+    return $CourtSlotCopyWith<$Res>(_value.reservedAt!, (value) {
+      return _then(_value.copyWith(reservedAt: value));
     });
   }
 }
@@ -132,12 +132,12 @@ abstract class _$TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
       {String id,
       KasadoUser teamCaptain,
       List<KasadoUser> players,
-      CourtSlot? nextGame});
+      CourtSlot? reservedAt});
 
   @override
   $KasadoUserCopyWith<$Res> get teamCaptain;
   @override
-  $CourtSlotCopyWith<$Res>? get nextGame;
+  $CourtSlotCopyWith<$Res>? get reservedAt;
 }
 
 /// @nodoc
@@ -154,7 +154,7 @@ class __$TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
     Object? id = freezed,
     Object? teamCaptain = freezed,
     Object? players = freezed,
-    Object? nextGame = freezed,
+    Object? reservedAt = freezed,
   }) {
     return _then(_Team(
       id: id == freezed
@@ -169,9 +169,9 @@ class __$TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>,
-      nextGame: nextGame == freezed
-          ? _value.nextGame
-          : nextGame // ignore: cast_nullable_to_non_nullable
+      reservedAt: reservedAt == freezed
+          ? _value.reservedAt
+          : reservedAt // ignore: cast_nullable_to_non_nullable
               as CourtSlot?,
     ));
   }
@@ -184,7 +184,7 @@ class _$_Team with DiagnosticableTreeMixin implements _Team {
       {required this.id,
       required this.teamCaptain,
       this.players = const [],
-      this.nextGame});
+      this.reservedAt});
 
   factory _$_Team.fromJson(Map<String, dynamic> json) => _$$_TeamFromJson(json);
 
@@ -196,11 +196,11 @@ class _$_Team with DiagnosticableTreeMixin implements _Team {
   @override
   final List<KasadoUser> players;
   @override
-  final CourtSlot? nextGame;
+  final CourtSlot? reservedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Team(id: $id, teamCaptain: $teamCaptain, players: $players, nextGame: $nextGame)';
+    return 'Team(id: $id, teamCaptain: $teamCaptain, players: $players, reservedAt: $reservedAt)';
   }
 
   @override
@@ -211,7 +211,7 @@ class _$_Team with DiagnosticableTreeMixin implements _Team {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('teamCaptain', teamCaptain))
       ..add(DiagnosticsProperty('players', players))
-      ..add(DiagnosticsProperty('nextGame', nextGame));
+      ..add(DiagnosticsProperty('reservedAt', reservedAt));
   }
 
   @override
@@ -223,7 +223,8 @@ class _$_Team with DiagnosticableTreeMixin implements _Team {
             const DeepCollectionEquality()
                 .equals(other.teamCaptain, teamCaptain) &&
             const DeepCollectionEquality().equals(other.players, players) &&
-            const DeepCollectionEquality().equals(other.nextGame, nextGame));
+            const DeepCollectionEquality()
+                .equals(other.reservedAt, reservedAt));
   }
 
   @override
@@ -232,7 +233,7 @@ class _$_Team with DiagnosticableTreeMixin implements _Team {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(teamCaptain),
       const DeepCollectionEquality().hash(players),
-      const DeepCollectionEquality().hash(nextGame));
+      const DeepCollectionEquality().hash(reservedAt));
 
   @JsonKey(ignore: true)
   @override
@@ -250,7 +251,7 @@ abstract class _Team implements Team {
       {required String id,
       required KasadoUser teamCaptain,
       List<KasadoUser> players,
-      CourtSlot? nextGame}) = _$_Team;
+      CourtSlot? reservedAt}) = _$_Team;
 
   factory _Team.fromJson(Map<String, dynamic> json) = _$_Team.fromJson;
 
@@ -261,7 +262,7 @@ abstract class _Team implements Team {
   @override
   List<KasadoUser> get players;
   @override
-  CourtSlot? get nextGame;
+  CourtSlot? get reservedAt;
   @override
   @JsonKey(ignore: true)
   _$TeamCopyWith<_Team> get copyWith => throw _privateConstructorUsedError;

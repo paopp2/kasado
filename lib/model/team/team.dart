@@ -12,7 +12,7 @@ class Team with _$Team {
     required String id,
     required KasadoUser teamCaptain,
     @Default([]) List<KasadoUser> players,
-    CourtSlot? nextGame,
+    CourtSlot? reservedAt,
   }) = _Team;
 
   factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
