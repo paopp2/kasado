@@ -11,8 +11,13 @@ class Team with _$Team {
   const factory Team({
     required String id,
     required KasadoUser teamCaptain,
+    String? customTeamName,
     @Default([]) List<KasadoUser> players,
   }) = _Team;
+
+  String get teamName =>
+      customTeamName ??
+      "Team ${teamCaptain.displayName!.split(' ').first.toUpperCase()}";
 
   static int get maxPlayerCount => 5;
 

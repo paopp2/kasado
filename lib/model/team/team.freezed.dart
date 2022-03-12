@@ -25,10 +25,12 @@ class _$TeamTearOff {
   _Team call(
       {required String id,
       required KasadoUser teamCaptain,
+      String? customTeamName,
       List<KasadoUser> players = const []}) {
     return _Team(
       id: id,
       teamCaptain: teamCaptain,
+      customTeamName: customTeamName,
       players: players,
     );
   }
@@ -45,6 +47,7 @@ const $Team = _$TeamTearOff();
 mixin _$Team {
   String get id => throw _privateConstructorUsedError;
   KasadoUser get teamCaptain => throw _privateConstructorUsedError;
+  String? get customTeamName => throw _privateConstructorUsedError;
   List<KasadoUser> get players => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,7 +59,11 @@ mixin _$Team {
 abstract class $TeamCopyWith<$Res> {
   factory $TeamCopyWith(Team value, $Res Function(Team) then) =
       _$TeamCopyWithImpl<$Res>;
-  $Res call({String id, KasadoUser teamCaptain, List<KasadoUser> players});
+  $Res call(
+      {String id,
+      KasadoUser teamCaptain,
+      String? customTeamName,
+      List<KasadoUser> players});
 
   $KasadoUserCopyWith<$Res> get teamCaptain;
 }
@@ -73,6 +80,7 @@ class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? teamCaptain = freezed,
+    Object? customTeamName = freezed,
     Object? players = freezed,
   }) {
     return _then(_value.copyWith(
@@ -84,6 +92,10 @@ class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
           ? _value.teamCaptain
           : teamCaptain // ignore: cast_nullable_to_non_nullable
               as KasadoUser,
+      customTeamName: customTeamName == freezed
+          ? _value.customTeamName
+          : customTeamName // ignore: cast_nullable_to_non_nullable
+              as String?,
       players: players == freezed
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
@@ -104,7 +116,11 @@ abstract class _$TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
   factory _$TeamCopyWith(_Team value, $Res Function(_Team) then) =
       __$TeamCopyWithImpl<$Res>;
   @override
-  $Res call({String id, KasadoUser teamCaptain, List<KasadoUser> players});
+  $Res call(
+      {String id,
+      KasadoUser teamCaptain,
+      String? customTeamName,
+      List<KasadoUser> players});
 
   @override
   $KasadoUserCopyWith<$Res> get teamCaptain;
@@ -123,6 +139,7 @@ class __$TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? teamCaptain = freezed,
+    Object? customTeamName = freezed,
     Object? players = freezed,
   }) {
     return _then(_Team(
@@ -134,6 +151,10 @@ class __$TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
           ? _value.teamCaptain
           : teamCaptain // ignore: cast_nullable_to_non_nullable
               as KasadoUser,
+      customTeamName: customTeamName == freezed
+          ? _value.customTeamName
+          : customTeamName // ignore: cast_nullable_to_non_nullable
+              as String?,
       players: players == freezed
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
@@ -146,7 +167,10 @@ class __$TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Team extends _Team with DiagnosticableTreeMixin {
   const _$_Team(
-      {required this.id, required this.teamCaptain, this.players = const []})
+      {required this.id,
+      required this.teamCaptain,
+      this.customTeamName,
+      this.players = const []})
       : super._();
 
   factory _$_Team.fromJson(Map<String, dynamic> json) => _$$_TeamFromJson(json);
@@ -155,13 +179,15 @@ class _$_Team extends _Team with DiagnosticableTreeMixin {
   final String id;
   @override
   final KasadoUser teamCaptain;
+  @override
+  final String? customTeamName;
   @JsonKey()
   @override
   final List<KasadoUser> players;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Team(id: $id, teamCaptain: $teamCaptain, players: $players)';
+    return 'Team(id: $id, teamCaptain: $teamCaptain, customTeamName: $customTeamName, players: $players)';
   }
 
   @override
@@ -171,6 +197,7 @@ class _$_Team extends _Team with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'Team'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('teamCaptain', teamCaptain))
+      ..add(DiagnosticsProperty('customTeamName', customTeamName))
       ..add(DiagnosticsProperty('players', players));
   }
 
@@ -182,6 +209,8 @@ class _$_Team extends _Team with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality()
                 .equals(other.teamCaptain, teamCaptain) &&
+            const DeepCollectionEquality()
+                .equals(other.customTeamName, customTeamName) &&
             const DeepCollectionEquality().equals(other.players, players));
   }
 
@@ -190,6 +219,7 @@ class _$_Team extends _Team with DiagnosticableTreeMixin {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(teamCaptain),
+      const DeepCollectionEquality().hash(customTeamName),
       const DeepCollectionEquality().hash(players));
 
   @JsonKey(ignore: true)
@@ -207,6 +237,7 @@ abstract class _Team extends Team {
   const factory _Team(
       {required String id,
       required KasadoUser teamCaptain,
+      String? customTeamName,
       List<KasadoUser> players}) = _$_Team;
   const _Team._() : super._();
 
@@ -216,6 +247,8 @@ abstract class _Team extends Team {
   String get id;
   @override
   KasadoUser get teamCaptain;
+  @override
+  String? get customTeamName;
   @override
   List<KasadoUser> get players;
   @override

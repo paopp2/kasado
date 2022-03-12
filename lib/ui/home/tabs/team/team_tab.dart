@@ -34,7 +34,7 @@ class TeamTab extends HookConsumerWidget {
                       ? Column(
                           children: [
                             Text(
-                              "TEAM ${team.teamCaptain.displayName!.split(' ').first.toUpperCase()}",
+                              team.teamName,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25,
