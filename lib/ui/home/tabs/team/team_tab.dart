@@ -110,6 +110,7 @@ class TeamTab extends HookConsumerWidget {
                         : () => model.removeUserFromTeam(
                               team: team!,
                               player: userInfo.user,
+                              teamHasReserved: userInfo.hasReserved,
                             ),
                   ),
                 );

@@ -63,8 +63,14 @@ class TeamTabModel extends ViewModel {
   Future<void> removeUserFromTeam({
     required Team team,
     required KasadoUser player,
+    required bool teamHasReserved,
   }) async {
-    await teamRepo.removePlayerFromTeam(team: team, player: player);
+    if (teamHasReserved) {
+      Fluttertoast.showToast(
+          msg: "Can't leave team because team has a pending reservation");
+    } else {
+      await teamRepo.removePlayerFromTeam(team: team, player: player);
+    }
   }
 
   Future<void> pushTeam(BuildContext context, String teamName) async {
