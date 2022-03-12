@@ -33,10 +33,8 @@ class CourtsOwnedView extends HookConsumerWidget {
                   subtitle: Text(court.address),
                   onTap: () => context.pushNamed(
                     Routes.courtDetailsView,
-                    extra: {
-                      "courtId": court.id,
-                      "isAdmin": true,
-                    },
+                    params: {"courtId": court.id},
+                    extra: true, // isAdmin
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
