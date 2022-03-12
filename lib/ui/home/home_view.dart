@@ -1,11 +1,10 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/current_app_meta.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
+import 'package:kasado/ui/home/components/home_bottom_nav_bar.dart';
 import 'package:kasado/ui/home/components/home_notif_button.dart';
 import 'package:kasado/ui/home/components/user_info_drawer.dart';
 import 'package:kasado/ui/home/tabs/home/home_tab.dart';
@@ -75,40 +74,9 @@ class HomeView extends HookConsumerWidget {
                 ProfileTab(constraints: constraints),
               ],
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              onTap: tabController.animateTo,
-              currentIndex: tabIndex.value,
-              selectedItemColor: Colors.black,
-              items: [
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Badge(
-                    badgeColor: Colors.green,
-                    showBadge: false,
-                    child: const Icon(Icons.group_sharp),
-                  ),
-                  label: 'Team',
-                ),
-                BottomNavigationBarItem(
-                  icon: Badge(
-                    badgeColor: Colors.green,
-                    showBadge: false,
-                    child: const FaIcon(
-                      FontAwesomeIcons.ticketAlt,
-                      size: 20,
-                    ),
-                  ),
-                  label: 'Ticket',
-                ),
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Profile',
-                ),
-              ],
+            bottomNavigationBar: HomeBottomNavBar(
+              tabController: tabController,
+              tabIndex: tabIndex,
             ),
           );
         },

@@ -134,6 +134,9 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                                       ),
                                       courtTicketPrice: court.ticketPrice,
                                       context: context,
+                                      teamId: currentUserInfo!.teamId,
+                                      isTeamCaptain:
+                                          currentUserInfo.isTeamCaptain,
                                     );
                                     isModifyingSlot.value = false;
                                   },

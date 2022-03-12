@@ -13,6 +13,7 @@ _$_KasadoUser _$$_KasadoUserFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String?,
       phoneNumber: json['phoneNumber'] as String?,
       photoUrl: json['photoUrl'] as String?,
+      teamName: json['teamName'] as String? ?? '',
       hasPaid: json['hasPaid'] as bool? ?? false,
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$$_KasadoUserToJson(_$_KasadoUser instance) =>
       'email': instance.email,
       'phoneNumber': instance.phoneNumber,
       'photoUrl': instance.photoUrl,
+      'teamName': instance.teamName,
       'hasPaid': instance.hasPaid,
     };

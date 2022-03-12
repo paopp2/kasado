@@ -37,6 +37,14 @@ class UserInfoRepository {
     );
   }
 
+  Future<List<KasadoUserInfo>> getUserInfoList(List<String> userIdList) async {
+    return firestoreHelper.collectionToList(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, docId) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query.where('id', whereIn: userIdList),
+    );
+  }
+
   Stream<List<KasadoUserInfo>> getUserInfosStream([
     String? userEmailQuery,
   ]) {
@@ -62,20 +70,33 @@ class UserInfoRepository {
     required String userId,
     required bool isAdmin,
   }) async {
-    final KasadoUserInfo userInfoToUpdate = (await getUserInfo(userId))!;
     await firestoreHelper.setData(
-        path: FirestorePath.docUserInfo(userId),
-        data: userInfoToUpdate.copyWith(isAdmin: isAdmin).toJson());
+      path: FirestorePath.docUserInfo(userId),
+      data: {'isAdmin': isAdmin},
+      merge: true,
+    );
   }
 
   Future<void> reserveUserAt({
     required String userId,
     required CourtSlot? reservedAt,
   }) async {
-    final KasadoUserInfo userInfoToUpdate = (await getUserInfo(userId))!;
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(userId),
-      data: userInfoToUpdate.copyWith(reservedAt: reservedAt).toJson(),
+      data: {'reservedAt': reservedAt?.toJson()},
+      merge: true,
+    );
+  }
+
+  Future<void> reserveTeamAt({
+    required List<String> teamPlayersIdList,
+    required CourtSlot? reservedAt,
+  }) async {
+    await firestoreHelper.setBatchDataForDocInList(
+      baseColPath: FirestorePath.colUserInfos(),
+      docIdList: teamPlayersIdList,
+      data: {'reservedAt': reservedAt?.toJson()},
+      merge: true,
     );
   }
 
@@ -88,12 +109,12 @@ class UserInfoRepository {
   }) async {
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(currentUserInfo.id),
-      data: currentUserInfo
-          .copyWith(
-              pondo: (isAdd)
-                  ? (currentUserInfo.pondo + pondo)
-                  : (currentUserInfo.pondo - pondo))
-          .toJson(),
+      data: {
+        'pondo': (isAdd)
+            ? (currentUserInfo.pondo + pondo)
+            : (currentUserInfo.pondo - pondo),
+      },
+      merge: true,
     );
   }
 

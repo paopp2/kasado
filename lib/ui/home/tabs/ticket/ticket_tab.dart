@@ -28,7 +28,7 @@ class TicketTab extends HookConsumerWidget {
               borderRadius: BorderRadius.circular(30),
             ),
             elevation: 20,
-            child: (userInfo?.reservedAt == null)
+            child: !(userInfo?.hasReserved ?? false)
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
