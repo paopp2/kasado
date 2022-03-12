@@ -168,7 +168,8 @@ class CourtRepository {
 
       List<KasadoUser> _updatedTeamPlayers = [];
 
-      // Get payment for court slot from players with enough pondo
+      // Get payment for court slot from players with enough pondo and also
+      // indicate the players' team name
       for (final userInfo in playerUserInfos) {
         bool _hasPaid = false;
         if (userInfo.hasEnoughPondoToPay(courtTicketPrice)) {
@@ -179,7 +180,10 @@ class CourtRepository {
             pondo: courtTicketPrice,
           );
         }
-        _updatedTeamPlayers.add(userInfo.user.copyWith(hasPaid: _hasPaid));
+        _updatedTeamPlayers.add(userInfo.user.copyWith(
+          hasPaid: _hasPaid,
+          teamName: team.teamName,
+        ));
       }
 
       // The whole courtSlot has to be pushed to cover for cases wherein the
