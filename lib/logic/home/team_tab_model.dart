@@ -67,7 +67,7 @@ class TeamTabModel extends ViewModel {
     await teamRepo.removePlayerFromTeam(team: team, player: player);
   }
 
-  Future<void> pushTeam(BuildContext context) async {
+  Future<void> pushTeam(BuildContext context, String teamName) async {
     final teamPlayersList = read(teamPlayersListProvider);
     if (teamPlayersList.length == 1) {
       Fluttertoast.showToast(msg: "There's no I in TEAM pre");
@@ -77,6 +77,7 @@ class TeamTabModel extends ViewModel {
           id: const Uuid().v4(),
           teamCaptain: currentUser,
           players: teamPlayersList,
+          customTeamName: teamName,
         ),
       );
       Navigator.pop(context);

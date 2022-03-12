@@ -6,6 +6,7 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/states/team_tab_state.dart';
 import 'package:kasado/logic/home/team_tab_model.dart';
 import 'package:kasado/model/team/team.dart';
+import 'package:kasado/ui/shared/data_entry_field.dart';
 import 'package:kasado/ui/shared/user_search/user_search_pane.dart';
 
 class TeamBuildDialog extends HookConsumerWidget {
@@ -25,6 +26,7 @@ class TeamBuildDialog extends HookConsumerWidget {
     final bool isEdit = team != null;
     final currentUserInfo = ref.watch(currentUserInfoProvider).value!;
     final teamPlayersList = ref.watch(teamPlayersListProvider);
+    final teamNameState = useState(team?.teamName ?? '');
 
     useEffect(() {
       Future.delayed(Duration.zero, () {
@@ -41,6 +43,12 @@ class TeamBuildDialog extends HookConsumerWidget {
         children: [
           Column(
             children: [
+              DataEntryField(
+                hint: 'Team Name',
+                initialValue: team?.teamName,
+                onChanged: (input) => teamNameState.value = input,
+                validator: null,
+              ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -116,7 +124,7 @@ class TeamBuildDialog extends HookConsumerWidget {
                   (isEdit) ? 'UPDATE TEAM' : 'BUILD TEAM',
                   style: const TextStyle(color: Colors.green),
                 ),
-                onPressed: () => model.pushTeam(context),
+                onPressed: () => model.pushTeam(context, teamNameState.value),
               ),
             ],
           ),

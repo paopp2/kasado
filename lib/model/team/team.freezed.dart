@@ -25,7 +25,7 @@ class _$TeamTearOff {
   _Team call(
       {required String id,
       required KasadoUser teamCaptain,
-      String? customTeamName,
+      String customTeamName = '',
       List<KasadoUser> players = const []}) {
     return _Team(
       id: id,
@@ -47,7 +47,7 @@ const $Team = _$TeamTearOff();
 mixin _$Team {
   String get id => throw _privateConstructorUsedError;
   KasadoUser get teamCaptain => throw _privateConstructorUsedError;
-  String? get customTeamName => throw _privateConstructorUsedError;
+  String get customTeamName => throw _privateConstructorUsedError;
   List<KasadoUser> get players => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,7 +62,7 @@ abstract class $TeamCopyWith<$Res> {
   $Res call(
       {String id,
       KasadoUser teamCaptain,
-      String? customTeamName,
+      String customTeamName,
       List<KasadoUser> players});
 
   $KasadoUserCopyWith<$Res> get teamCaptain;
@@ -95,7 +95,7 @@ class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
       customTeamName: customTeamName == freezed
           ? _value.customTeamName
           : customTeamName // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       players: players == freezed
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
@@ -119,7 +119,7 @@ abstract class _$TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
   $Res call(
       {String id,
       KasadoUser teamCaptain,
-      String? customTeamName,
+      String customTeamName,
       List<KasadoUser> players});
 
   @override
@@ -154,7 +154,7 @@ class __$TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
       customTeamName: customTeamName == freezed
           ? _value.customTeamName
           : customTeamName // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       players: players == freezed
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
@@ -169,7 +169,7 @@ class _$_Team extends _Team with DiagnosticableTreeMixin {
   const _$_Team(
       {required this.id,
       required this.teamCaptain,
-      this.customTeamName,
+      this.customTeamName = '',
       this.players = const []})
       : super._();
 
@@ -179,8 +179,9 @@ class _$_Team extends _Team with DiagnosticableTreeMixin {
   final String id;
   @override
   final KasadoUser teamCaptain;
+  @JsonKey()
   @override
-  final String? customTeamName;
+  final String customTeamName;
   @JsonKey()
   @override
   final List<KasadoUser> players;
@@ -237,7 +238,7 @@ abstract class _Team extends Team {
   const factory _Team(
       {required String id,
       required KasadoUser teamCaptain,
-      String? customTeamName,
+      String customTeamName,
       List<KasadoUser> players}) = _$_Team;
   const _Team._() : super._();
 
@@ -248,7 +249,7 @@ abstract class _Team extends Team {
   @override
   KasadoUser get teamCaptain;
   @override
-  String? get customTeamName;
+  String get customTeamName;
   @override
   List<KasadoUser> get players;
   @override
