@@ -7,6 +7,7 @@ import 'package:kasado/logic/home/states/team_tab_state.dart';
 import 'package:kasado/logic/home/team_tab_model.dart';
 import 'package:kasado/model/team/team.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 import 'package:kasado/ui/shared/user_search/user_search_pane.dart';
 
 class TeamBuildDialog extends HookConsumerWidget {
@@ -27,6 +28,7 @@ class TeamBuildDialog extends HookConsumerWidget {
     final currentUserInfo = ref.watch(currentUserInfoProvider).value!;
     final teamPlayersList = ref.watch(teamPlayersListProvider);
     final teamNameState = useState(team?.teamName ?? '');
+    final isLoadingState = useState(false);
 
     useEffect(() {
       Future.delayed(Duration.zero, () {
@@ -103,31 +105,44 @@ class TeamBuildDialog extends HookConsumerWidget {
                       : null,
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              if (isEdit) ...[
-                TextButton(
-                  child: const Text(
-                    'DISSOLVE TEAM',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  onPressed: () => model.dissolveTeam(
-                    hasReserved: currentUserInfo.hasReserved,
-                    team: team!,
-                    context: context,
-                  ),
+          (isLoadingState.value)
+              ? const Padding(
+                  padding: EdgeInsets.all(15.0),
+                  child: LoadingWidget(),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    if (isEdit) ...[
+                      TextButton(
+                        child: const Text(
+                          'DISSOLVE TEAM',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        onPressed: () async {
+                          isLoadingState.value = true;
+                          await model.dissolveTeam(
+                            hasReserved: currentUserInfo.hasReserved,
+                            team: team!,
+                            context: context,
+                          );
+                          isLoadingState.value = false;
+                        },
+                      ),
+                    ],
+                    TextButton(
+                      child: Text(
+                        (isEdit) ? 'UPDATE TEAM' : 'BUILD TEAM',
+                        style: const TextStyle(color: Colors.green),
+                      ),
+                      onPressed: () async {
+                        isLoadingState.value = true;
+                        await model.pushTeam(context, teamNameState.value);
+                        isLoadingState.value = false;
+                      },
+                    ),
+                  ],
                 ),
-              ],
-              TextButton(
-                child: Text(
-                  (isEdit) ? 'UPDATE TEAM' : 'BUILD TEAM',
-                  style: const TextStyle(color: Colors.green),
-                ),
-                onPressed: () => model.pushTeam(context, teamNameState.value),
-              ),
-            ],
-          ),
         ],
       ),
     );
