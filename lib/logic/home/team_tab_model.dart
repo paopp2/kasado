@@ -73,18 +73,28 @@ class TeamTabModel extends ViewModel {
     }
   }
 
-  Future<void> pushTeam(BuildContext context, String teamName) async {
+  Future<void> pushTeam({
+    required BuildContext context,
+    required String teamName,
+    required Team? team,
+  }) async {
+    final isEdit = team != null;
     final teamPlayersList = read(teamPlayersListProvider);
     if (teamPlayersList.length == 1) {
       Fluttertoast.showToast(msg: "There's no I in TEAM pre");
     } else {
       await teamRepo.pushTeam(
-        Team(
-          id: const Uuid().v4(),
-          teamCaptain: currentUser,
-          players: teamPlayersList,
-          customTeamName: teamName,
-        ),
+        (isEdit)
+            ? team.copyWith(
+                players: teamPlayersList,
+                customTeamName: teamName,
+              )
+            : Team(
+                id: const Uuid().v4(),
+                teamCaptain: currentUser,
+                players: teamPlayersList,
+                customTeamName: teamName,
+              ),
       );
       Navigator.pop(context);
     }

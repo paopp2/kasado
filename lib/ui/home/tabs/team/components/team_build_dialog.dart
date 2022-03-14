@@ -137,7 +137,11 @@ class TeamBuildDialog extends HookConsumerWidget {
                       ),
                       onPressed: () async {
                         isLoadingState.value = true;
-                        await model.pushTeam(context, teamNameState.value);
+                        await model.pushTeam(
+                          context: context,
+                          teamName: teamNameState.value,
+                          team: team,
+                        );
                         isLoadingState.value = false;
                       },
                     ),
