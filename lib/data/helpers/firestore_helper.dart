@@ -40,7 +40,7 @@ class FirestoreHelper {
 
   Future<void> setBatchData({
     required String baseColPath,
-    required String endPath,
+    String endPath = '',
     required Map<String, dynamic> data,
     Query Function(Query query)? queryBuilder,
     bool merge = false,
@@ -58,6 +58,21 @@ class FirestoreHelper {
       batch.set(reference, data, SetOptions(merge: merge));
     }
 
+    return batch.commit();
+  }
+
+  Future<void> setBatchDataForDocInList({
+    required String baseColPath,
+    required List<String> docIdList,
+    required Map<String, dynamic> data,
+    bool merge = false,
+  }) async {
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+    for (final docId in docIdList) {
+      final path = baseColPath + '/$docId';
+      final reference = FirebaseFirestore.instance.doc(path);
+      batch.set(reference, data, SetOptions(merge: merge));
+    }
     return batch.commit();
   }
 

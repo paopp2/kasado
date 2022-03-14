@@ -12,6 +12,7 @@ class KasadoUser with _$KasadoUser {
     String? email,
     String? phoneNumber,
     String? photoUrl,
+    @Default('') String teamName,
     @Default(false) bool hasPaid,
   }) = _KasadoUser;
 

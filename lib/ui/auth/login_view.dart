@@ -37,21 +37,24 @@ class LoginView extends HookConsumerWidget {
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Kasado',
-                          style: TextStyle(
-                            fontSize: 60,
-                            fontWeight: FontWeight.w900,
+                        SizedBox(
+                          height: constraints.maxHeight * 0.3,
+                          child: Image.asset(
+                            'assets/images/logo/kasado_logo_v2.png',
                           ),
                         ),
                         SizedBox(
-                          height: constraints.maxHeight * 0.2,
-                          child: Visibility(
-                            visible: isLoggingInState.value,
-                            child: const Center(
-                              child: LoadingWidget(),
-                            ),
-                          ),
+                          height: constraints.maxHeight * 0.1,
+                          child: (isLoggingInState.value)
+                              ? const LoadingWidget()
+                              : const Text(
+                                  'Kasado',
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.grey,
+                                  ),
+                                ),
                         ),
                         const SizedBox(width: 200, child: Divider()),
                         const SizedBox(height: 20),
@@ -70,7 +73,8 @@ class LoginView extends HookConsumerWidget {
                                 ifSuccess: (creds) {
                                   if (creds != null) {
                                     Fluttertoast.showToast(
-                                        msg: 'Signed in successfully');
+                                      msg: 'Signed in successfully',
+                                    );
                                   }
                                 },
                               );

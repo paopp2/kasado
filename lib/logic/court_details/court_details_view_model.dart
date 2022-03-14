@@ -4,8 +4,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
+import 'package:kasado/data/repositories/team_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
+import 'package:kasado/logic/court_details/slot_and_user_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -19,6 +21,7 @@ final courtDetailsViewModel = Provider.autoDispose(
     read: ref.read,
     courtRepo: ref.watch(courtRepositoryProvider),
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
+    teamRepo: ref.watch(teamRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
     currentUserInfo: ref.watch(currentUserInfoProvider).value,
     adminController: ref.watch(courtAdminController),
@@ -31,6 +34,7 @@ class CourtDetailsViewModel extends ViewModel {
     required Reader read,
     required this.courtRepo,
     required this.userInfoRepo,
+    required this.teamRepo,
     required this.adminController,
     required this.currentUser,
     required this.currentUserInfo,
@@ -39,6 +43,7 @@ class CourtDetailsViewModel extends ViewModel {
 
   final CourtRepository courtRepo;
   final UserInfoRepository userInfoRepo;
+  final TeamRepository teamRepo;
   final CourtAdminController adminController;
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;
@@ -99,167 +104,135 @@ class CourtDetailsViewModel extends ViewModel {
     );
   }
 
-  /// Join/Leave [baseCourtSlot] depending on whether [slotHasPlayer]
+  /// Join/Leave [baseCourtSlot] depending on whether [slotHasPlayer] for self
   Future<void> joinLeaveCourtSlot({
     required CourtSlot baseCourtSlot,
     required bool slotHasPlayer,
     required double courtTicketPrice,
+    required String? teamId,
+    required bool isTeamCaptain,
     BuildContext? context,
   }) async {
-    if (slotHasPlayer) {
-      await leaveCourtSlot(baseCourtSlot, courtTicketPrice, context);
+    if (teamId == null) {
+      // If player is not part of a team
+      if (slotHasPlayer) {
+        await removeFromCourtSlot(
+          playerToRemove: currentUserInfo!.user,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: courtTicketPrice,
+          context: context,
+        );
+      } else {
+        await addToCourtSlot(
+          userInfo: currentUserInfo!,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: courtTicketPrice,
+          context: context,
+        );
+      }
     } else {
-      await joinCourtSlot(baseCourtSlot, courtTicketPrice, context);
+      // If player is part of a team
+      if (slotHasPlayer) {
+        await removeTeamFromCourtSlot(
+          teamId: teamId,
+          isTeamCaptain: isTeamCaptain,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: courtTicketPrice,
+          context: context,
+        );
+      } else {
+        await addTeamToCourtSlot(
+          teamId: teamId,
+          isTeamCaptain: isTeamCaptain,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: courtTicketPrice,
+          context: context,
+        );
+      }
     }
   }
 
-  Future<void> joinCourtSlot(
-    CourtSlot baseCourtSlot,
-    double courtTicketPrice, [
+  Future<void> addToCourtSlot({
+    required CourtSlot baseCourtSlot,
+    required double courtTicketPrice,
+    required KasadoUserInfo userInfo,
     BuildContext? context,
-  ]) async {
+  }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       slotFull: () => Fluttertoast.showToast(msg: 'Slot is full'),
       userReservedAtAnotherSlot: () => Fluttertoast.showToast(
         msg: 'Only 1 reservation allowed at a time',
       ),
       orElse: () async {
-        KasadoUser? paidCurrentUser;
-        if (currentUserInfo!.hasEnoughPondoToPay(courtTicketPrice)) {
-          userInfoRepo.addOrDeductPondo(
-            currentUserInfo: currentUserInfo!,
-            isAdd: false,
-            pondo: courtTicketPrice,
-          );
-          paidCurrentUser = currentUser.copyWith(hasPaid: true);
-        }
-        await courtRepo.pushCourtSlot(
-          courtSlot: baseCourtSlot.copyWith(
-            players: [...baseCourtSlot.players, paidCurrentUser ?? currentUser],
-          ),
+        // Add user to courtSlot
+        await courtRepo.addPlayerToCourtSlot(
+          courtSlot: baseCourtSlot,
+          player: userInfo.user,
+          courtTicketPrice: courtTicketPrice,
         );
-        await userInfoRepo.reserveUserAt(
-          userId: currentUser.id,
-          reservedAt: baseCourtSlot.copyWith(players: []),
-        );
+
         if (context != null) Navigator.pop(context);
       },
     );
   }
 
-  Future<void> leaveCourtSlot(
-    CourtSlot baseCourtSlot,
-    double courtTicketPrice, [
+  Future<void> removeFromCourtSlot({
+    required KasadoUser playerToRemove,
+    required CourtSlot baseCourtSlot,
+    required double courtTicketPrice,
     BuildContext? context,
-  ]) async {
-    final KasadoUser currentPlayer =
-        baseCourtSlot.players.singleWhere((p) => (p.id == currentUser.id));
+  }) async {
+    final KasadoUser player =
+        baseCourtSlot.players.singleWhere((p) => (p.id == playerToRemove.id));
 
-    if (currentPlayer.hasPaid) {
-      await userInfoRepo.addOrDeductPondo(
-        currentUserInfo: currentUserInfo!,
-        isAdd: true,
-        pondo: courtTicketPrice,
-      );
-    }
-
-    final updatedPlayerList = baseCourtSlot.players..remove(currentPlayer);
-
-    await userInfoRepo.reserveUserAt(
-      userId: currentUser.id,
-      reservedAt: null,
+    await courtRepo.removePlayerFromCourtSlot(
+      player: player,
+      courtSlot: baseCourtSlot,
+      courtTicketPrice: courtTicketPrice,
     );
 
-    if (updatedPlayerList.isEmpty) {
-      await courtRepo.removeCourtSlot(
-        baseCourtSlot.courtId,
-        baseCourtSlot.slotId,
-      );
-    } else {
-      await courtRepo.pushCourtSlot(
-        courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
-      );
-    }
     if (context != null) Navigator.pop(context);
   }
 
-  Future<void> kickFromCourtSlot({
+  Future<void> addTeamToCourtSlot({
+    required String teamId,
+    required bool isTeamCaptain,
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
-    required String userToKickId,
+    BuildContext? context,
   }) async {
-    final KasadoUser playerToKick =
-        baseCourtSlot.players.singleWhere((p) => (p.id == userToKickId));
-
-    if (playerToKick.hasPaid) {
-      final baseUserInfo = await userInfoRepo.getUserInfo(userToKickId);
-      await userInfoRepo.addOrDeductPondo(
-        currentUserInfo: baseUserInfo!,
-        isAdd: true,
-        pondo: courtTicketPrice,
+    if (isTeamCaptain) {
+      await courtRepo.addTeamToCourtSlot(
+        teamId: teamId,
+        courtSlot: baseCourtSlot,
+        courtTicketPrice: courtTicketPrice,
       );
-    }
-
-    final updatedPlayerList = baseCourtSlot.players..remove(playerToKick);
-
-    await userInfoRepo.reserveUserAt(
-      userId: userToKickId,
-      reservedAt: null,
-    );
-
-    if (updatedPlayerList.isEmpty) {
-      await courtRepo.removeCourtSlot(
-        baseCourtSlot.courtId,
-        baseCourtSlot.slotId,
-      );
+      if (context != null) Navigator.pop(context);
     } else {
-      await courtRepo.pushCourtSlot(
-        courtSlot: baseCourtSlot.copyWith(players: updatedPlayerList),
+      Fluttertoast.showToast(
+        msg: 'Only the team captain can join a game for the team',
       );
     }
   }
-}
 
-enum SlotAndUserState {
-  loading,
-  error,
-  slotEnded,
-  slotClosedByAdmin,
-  slotFull,
-  userNotReserved,
-  userReservedAtThisSlot,
-  userReservedAtAnotherSlot,
-}
-
-extension SlotAndUserStatePatternMatching on SlotAndUserState {
-  T when<T>({
-    T Function()? loading,
-    T Function()? error,
-    T Function()? slotEnded,
-    T Function()? slotClosedByAdmin,
-    T Function()? slotFull,
-    T Function()? userNotReserved,
-    T Function()? userReservedAtThisSlot,
-    T Function()? userReservedAtAnotherSlot,
-    T Function()? orElse,
-  }) {
-    switch (this) {
-      case SlotAndUserState.loading:
-        return loading?.call() ?? orElse!();
-      case SlotAndUserState.error:
-        return error?.call() ?? orElse!();
-      case SlotAndUserState.slotEnded:
-        return slotEnded?.call() ?? orElse!();
-      case SlotAndUserState.slotClosedByAdmin:
-        return slotClosedByAdmin?.call() ?? orElse!();
-      case SlotAndUserState.slotFull:
-        return slotFull?.call() ?? orElse!();
-      case SlotAndUserState.userNotReserved:
-        return userNotReserved?.call() ?? orElse!();
-      case SlotAndUserState.userReservedAtThisSlot:
-        return userReservedAtThisSlot?.call() ?? orElse!();
-      case SlotAndUserState.userReservedAtAnotherSlot:
-        return userReservedAtAnotherSlot?.call() ?? orElse!();
+  Future<void> removeTeamFromCourtSlot({
+    required String teamId,
+    required bool isTeamCaptain,
+    required CourtSlot baseCourtSlot,
+    required double courtTicketPrice,
+    BuildContext? context,
+  }) async {
+    if (isTeamCaptain) {
+      await courtRepo.removeTeamFromCourtSlot(
+        teamId: teamId,
+        courtSlot: baseCourtSlot,
+        courtTicketPrice: courtTicketPrice,
+      );
+      if (context != null) Navigator.pop(context);
+    } else {
+      Fluttertoast.showToast(
+        msg: 'Only the team captain can leave a game for the team',
+      );
     }
   }
 }

@@ -28,6 +28,8 @@ class _$KasadoUserInfoTearOff {
       bool isAdmin = false,
       bool isSuperAdmin = false,
       double pondo = 0,
+      bool isTeamCaptain = false,
+      String? teamId,
       CourtSlot? reservedAt}) {
     return _KasadoUserInfo(
       id: id,
@@ -35,6 +37,8 @@ class _$KasadoUserInfoTearOff {
       isAdmin: isAdmin,
       isSuperAdmin: isSuperAdmin,
       pondo: pondo,
+      isTeamCaptain: isTeamCaptain,
+      teamId: teamId,
       reservedAt: reservedAt,
     );
   }
@@ -54,6 +58,8 @@ mixin _$KasadoUserInfo {
   bool get isAdmin => throw _privateConstructorUsedError;
   bool get isSuperAdmin => throw _privateConstructorUsedError;
   double get pondo => throw _privateConstructorUsedError;
+  bool get isTeamCaptain => throw _privateConstructorUsedError;
+  String? get teamId => throw _privateConstructorUsedError;
   CourtSlot? get reservedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -73,6 +79,8 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
       bool isAdmin,
       bool isSuperAdmin,
       double pondo,
+      bool isTeamCaptain,
+      String? teamId,
       CourtSlot? reservedAt});
 
   $KasadoUserCopyWith<$Res> get user;
@@ -95,6 +103,8 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
     Object? isAdmin = freezed,
     Object? isSuperAdmin = freezed,
     Object? pondo = freezed,
+    Object? isTeamCaptain = freezed,
+    Object? teamId = freezed,
     Object? reservedAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -118,6 +128,14 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.pondo
           : pondo // ignore: cast_nullable_to_non_nullable
               as double,
+      isTeamCaptain: isTeamCaptain == freezed
+          ? _value.isTeamCaptain
+          : isTeamCaptain // ignore: cast_nullable_to_non_nullable
+              as bool,
+      teamId: teamId == freezed
+          ? _value.teamId
+          : teamId // ignore: cast_nullable_to_non_nullable
+              as String?,
       reservedAt: reservedAt == freezed
           ? _value.reservedAt
           : reservedAt // ignore: cast_nullable_to_non_nullable
@@ -157,6 +175,8 @@ abstract class _$KasadoUserInfoCopyWith<$Res>
       bool isAdmin,
       bool isSuperAdmin,
       double pondo,
+      bool isTeamCaptain,
+      String? teamId,
       CourtSlot? reservedAt});
 
   @override
@@ -183,6 +203,8 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
     Object? isAdmin = freezed,
     Object? isSuperAdmin = freezed,
     Object? pondo = freezed,
+    Object? isTeamCaptain = freezed,
+    Object? teamId = freezed,
     Object? reservedAt = freezed,
   }) {
     return _then(_KasadoUserInfo(
@@ -206,6 +228,14 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.pondo
           : pondo // ignore: cast_nullable_to_non_nullable
               as double,
+      isTeamCaptain: isTeamCaptain == freezed
+          ? _value.isTeamCaptain
+          : isTeamCaptain // ignore: cast_nullable_to_non_nullable
+              as bool,
+      teamId: teamId == freezed
+          ? _value.teamId
+          : teamId // ignore: cast_nullable_to_non_nullable
+              as String?,
       reservedAt: reservedAt == freezed
           ? _value.reservedAt
           : reservedAt // ignore: cast_nullable_to_non_nullable
@@ -223,6 +253,8 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       this.isAdmin = false,
       this.isSuperAdmin = false,
       this.pondo = 0,
+      this.isTeamCaptain = false,
+      this.teamId,
       this.reservedAt})
       : super._();
 
@@ -242,12 +274,17 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final double pondo;
+  @JsonKey()
+  @override
+  final bool isTeamCaptain;
+  @override
+  final String? teamId;
   @override
   final CourtSlot? reservedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, reservedAt: $reservedAt)';
+    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, teamId: $teamId, reservedAt: $reservedAt)';
   }
 
   @override
@@ -260,6 +297,8 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('isAdmin', isAdmin))
       ..add(DiagnosticsProperty('isSuperAdmin', isSuperAdmin))
       ..add(DiagnosticsProperty('pondo', pondo))
+      ..add(DiagnosticsProperty('isTeamCaptain', isTeamCaptain))
+      ..add(DiagnosticsProperty('teamId', teamId))
       ..add(DiagnosticsProperty('reservedAt', reservedAt));
   }
 
@@ -275,6 +314,9 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
                 .equals(other.isSuperAdmin, isSuperAdmin) &&
             const DeepCollectionEquality().equals(other.pondo, pondo) &&
             const DeepCollectionEquality()
+                .equals(other.isTeamCaptain, isTeamCaptain) &&
+            const DeepCollectionEquality().equals(other.teamId, teamId) &&
+            const DeepCollectionEquality()
                 .equals(other.reservedAt, reservedAt));
   }
 
@@ -286,6 +328,8 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(isAdmin),
       const DeepCollectionEquality().hash(isSuperAdmin),
       const DeepCollectionEquality().hash(pondo),
+      const DeepCollectionEquality().hash(isTeamCaptain),
+      const DeepCollectionEquality().hash(teamId),
       const DeepCollectionEquality().hash(reservedAt));
 
   @JsonKey(ignore: true)
@@ -306,6 +350,8 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
       bool isAdmin,
       bool isSuperAdmin,
       double pondo,
+      bool isTeamCaptain,
+      String? teamId,
       CourtSlot? reservedAt}) = _$_KasadoUserInfo;
   const _KasadoUserInfo._() : super._();
 
@@ -322,6 +368,10 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   bool get isSuperAdmin;
   @override
   double get pondo;
+  @override
+  bool get isTeamCaptain;
+  @override
+  String? get teamId;
   @override
   CourtSlot? get reservedAt;
   @override

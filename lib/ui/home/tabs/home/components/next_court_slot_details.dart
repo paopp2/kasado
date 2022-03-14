@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/court_details/slot_and_user_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -27,6 +28,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUser = ref.watch(currentUserProvider)!;
+    final currentUserInfo = ref.watch(currentUserInfoProvider).value;
     final model = ref.watch(courtDetailsViewModel);
     final utils = ref.watch(kasadoUtilsProvider);
     final nextTimeSlotState = useState(utils.getNextTimeSlot(
@@ -145,6 +147,8 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                               currentUser,
                             ),
                             courtTicketPrice: court.ticketPrice,
+                            teamId: currentUserInfo!.teamId,
+                            isTeamCaptain: currentUserInfo.isTeamCaptain,
                           );
                           isModifyingSlot.value = false;
                         },

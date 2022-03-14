@@ -43,77 +43,81 @@ class NotifsView extends HookConsumerWidget {
               error: (e, _) => Text(e.toString()),
               loading: () => const LoadingWidget(),
               data: (userNotifs) {
-                return ListView.builder(
-                  itemCount: userNotifs.length,
-                  itemBuilder: (context, i) {
-                    final notif = userNotifs[i];
-                    notif as NotifObject;
-                    return Column(
-                      children: [
-                        ListTile(
-                          contentPadding: const EdgeInsets.all(8),
-                          tileColor: (notif.isRead)
-                              ? null
-                              : Colors.blue.shade100.withAlpha(50),
-                          leading: CircleAvatar(
-                            radius: 25,
-                            backgroundImage: NetworkImage(
-                              notif.sender!.photoUrl!,
-                            ),
-                          ),
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                return (userNotifs.isEmpty)
+                    ? const Center(child: Text('No new notifications'))
+                    : ListView.builder(
+                        itemCount: userNotifs.length,
+                        itemBuilder: (context, i) {
+                          final notif = userNotifs[i];
+                          notif as NotifObject;
+                          return Column(
                             children: [
-                              Expanded(
-                                child: Text(
-                                  notif.title,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+                              ListTile(
+                                contentPadding: const EdgeInsets.all(8),
+                                tileColor: (notif.isRead)
+                                    ? null
+                                    : Colors.blue.shade100.withAlpha(50),
+                                leading: CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage: NetworkImage(
+                                    notif.sender!.photoUrl!,
                                   ),
-                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                title: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        notif.title,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: isSuperAdmin,
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.red.shade900,
+                                          size: 18,
+                                        ),
+                                        onPressed: () =>
+                                            model.deleteNotif(notif),
+                                      ),
+                                    ),
+                                    Text(
+                                      timeago.format(
+                                        notif.sentAt,
+                                        locale: 'en_short',
+                                      ),
+                                      style: const TextStyle(fontSize: 12),
+                                    )
+                                  ],
+                                ),
+                                subtitle: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(notif.body),
+                                    NotifFeedbackRow(
+                                      model: model,
+                                      userId: userId,
+                                      notifId: notif.id,
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Visibility(
-                                visible: isSuperAdmin,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: Colors.red.shade900,
-                                    size: 18,
-                                  ),
-                                  onPressed: () => model.deleteNotif(notif),
-                                ),
+                              SizedBox(
+                                width: constraints.maxWidth * 0.8,
+                                child: const Divider(),
                               ),
-                              Text(
-                                timeago.format(
-                                  notif.sentAt,
-                                  locale: 'en_short',
-                                ),
-                                style: const TextStyle(fontSize: 12),
-                              )
                             ],
-                          ),
-                          subtitle: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(notif.body),
-                              NotifFeedbackRow(
-                                model: model,
-                                userId: userId,
-                                notifId: notif.id,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: constraints.maxWidth * 0.8,
-                          child: const Divider(),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                          );
+                        },
+                      );
               },
             ),
           ),

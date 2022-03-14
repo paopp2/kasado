@@ -31,12 +31,12 @@ class AppRouter {
       ),
       GoRoute(
         name: Routes.courtDetailsView,
-        path: '/court-details',
+        path: '/court-details/:courtId',
         builder: (context, state) {
-          final extraMap = state.extra as Map<String, Object?>;
+          final isAdmin = state.extra as bool?;
           return CourtDetailsView(
-            courtId: extraMap['courtId'] as String,
-            isAdmin: (extraMap['isAdmin'] as bool?) ?? false,
+            courtId: state.params['courtId']!,
+            isAdmin: (isAdmin ?? false),
           );
         },
       ),

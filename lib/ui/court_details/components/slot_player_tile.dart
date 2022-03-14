@@ -32,8 +32,8 @@ class SlotPlayerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: UniqueKey(),
-      onDismissed: (_) => model.kickFromCourtSlot(
-        userToKickId: player.id,
+      onDismissed: (_) => model.removeFromCourtSlot(
+        playerToRemove: player,
         courtTicketPrice: court.ticketPrice,
         baseCourtSlot: fetchedCourtSlot,
       ),
@@ -53,6 +53,12 @@ class SlotPlayerTile extends StatelessWidget {
           player.displayName!,
           maxLines: 1,
         ),
+        subtitle: (player.teamName.isNotEmpty)
+            ? Text(
+                player.teamName,
+                style: const TextStyle(fontSize: 10),
+              )
+            : null,
         leading: CircleAvatar(
           radius: 25,
           backgroundImage: NetworkImage(player.photoUrl!),
