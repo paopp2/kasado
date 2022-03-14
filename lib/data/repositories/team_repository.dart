@@ -58,6 +58,21 @@ class TeamRepository {
     );
   }
 
+  /// Remove the team info for  players with IDs in [playerIdList]
+  Future<void> removeTeamInfoForPlayers({
+    required List<String> playerIdList,
+  }) async {
+    await firestoreHelper.setBatchDataForDocInList(
+      baseColPath: FirestorePath.colUserInfos(),
+      docIdList: playerIdList,
+      data: {
+        'teamId': null,
+        'isTeamCaptain': false,
+      },
+      merge: true,
+    );
+  }
+
   Future<void> dissolveTeam(Team team) async {
     await firestoreHelper.deleteData(path: FirestorePath.docTeam(team.id));
 

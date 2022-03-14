@@ -55,6 +55,9 @@ class TeamTabModel extends ViewModel {
   }
 
   void removeUserFromTeamBuild(KasadoUser user) {
+    read(removedPlayersListProvider.notifier).update((state) {
+      return [...state, user];
+    });
     read(teamPlayersListProvider.notifier).update((state) {
       return [...state]..remove(user);
     });
@@ -73,16 +76,31 @@ class TeamTabModel extends ViewModel {
     }
   }
 
+  // TODO: Optimize removing of players from a team
   Future<void> pushTeam({
     required BuildContext context,
     required String teamName,
     required Team? team,
+    required bool hasReserved,
   }) async {
     final isEdit = team != null;
     final teamPlayersList = read(teamPlayersListProvider);
     if (teamPlayersList.length == 1) {
       Fluttertoast.showToast(msg: "There's no I in TEAM pre");
+    } else if (hasReserved) {
+      Fluttertoast.showToast(
+          msg:
+              "Please leave games you've joined before building/editing your team");
     } else {
+      final playersToRemove = read(removedPlayersListProvider);
+      if (playersToRemove.isNotEmpty) {
+        // Remove team info for the removed players
+        await teamRepo.removeTeamInfoForPlayers(
+          playerIdList: playersToRemove.map((u) => u.id).toList(),
+        );
+        // Reset removedPlayersList state
+        read(removedPlayersListProvider.notifier).state = [];
+      }
       await teamRepo.pushTeam(
         (isEdit)
             ? team.copyWith(

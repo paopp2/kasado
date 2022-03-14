@@ -141,6 +141,7 @@ class TeamBuildDialog extends HookConsumerWidget {
                           context: context,
                           teamName: teamNameState.value,
                           team: team,
+                          hasReserved: currentUserInfo.hasReserved,
                         );
                         isLoadingState.value = false;
                       },
