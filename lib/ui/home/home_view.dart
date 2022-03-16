@@ -11,7 +11,6 @@ import 'package:kasado/ui/home/tabs/home/home_tab.dart';
 import 'package:kasado/ui/home/tabs/profile/profile_tab.dart';
 import 'package:kasado/ui/home/tabs/team/team_tab.dart';
 import 'package:kasado/ui/home/tabs/ticket/ticket_tab.dart';
-import 'package:kasado/ui/shared/loading_widget.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -22,6 +21,11 @@ class HomeView extends HookConsumerWidget {
     final tabController = useTabController(initialLength: 4);
     final model = ref.watch(homeViewModel);
     final appMetaStream = ref.watch(appMetaStreamProvider);
+    final isCurrentVerGood = (appMetaStream.value != null)
+        // Is the current version greater than or equal to the 'allowed' version
+        ? (currentVersion.compareTo(appMetaStream.value!['currentVer'] ?? '') >=
+            0)
+        : true;
 
     useEffect(() {
       tabController.addListener(() => (tabIndex.value = tabController.index));
@@ -45,30 +49,22 @@ class HomeView extends HookConsumerWidget {
             body: TabBarView(
               controller: tabController,
               children: [
-                appMetaStream.when(
-                  loading: () => const LoadingWidget(),
-                  error: (e, _) => Text(e.toString()),
-                  data: (a) =>
-                      // If currentVersion is >= to the allowed version then
-                      // allow continuation of usage. If not then prompt
-                      // user to update
-                      (currentVersion.compareTo(a?['currentVer'] ?? '') >= 0)
-                          ? HomeTab(
-                              model: model,
-                              constraints: constraints,
-                            )
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Please update to version ${a?['currentVer']}',
-                                ),
-                                const Text(
-                                  '(Try daw exit sa app nya sud balik)',
-                                ),
-                              ],
-                            ),
-                ),
+                (isCurrentVerGood)
+                    ? HomeTab(
+                        model: model,
+                        constraints: constraints,
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Please update to version ${appMetaStream.value?['currentVer']}',
+                          ),
+                          const Text(
+                            '(Try daw exit sa app nya sud balik)',
+                          ),
+                        ],
+                      ),
                 TeamTab(constraints: constraints),
                 TicketTab(constraints: constraints),
                 ProfileTab(constraints: constraints),
