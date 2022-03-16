@@ -28,7 +28,10 @@ class PondoInfoDialog extends StatelessWidget {
                 "When paying through your PONDO, you don't have to pay on game day",
               ),
               Text(
-                'For more information, contact Paul Abenaza or Paolo Pepito',
+                "This will be the preferred way of paying for games in the near future",
+              ),
+              Text(
+                'Contact Paul Abenaza or Paolo Pepito for info on adding to your PONDO (pwede Gcash, pwede ra sad tunol)',
               ),
             ],
           ),
