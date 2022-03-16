@@ -17,7 +17,6 @@ class PlayerStatBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.grey,
-      elevation: 20,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: () => Fluttertoast.showToast(

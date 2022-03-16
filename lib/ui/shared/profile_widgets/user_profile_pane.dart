@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/ui/home/components/pondo_info_dialog.dart';
-import 'package:kasado/ui/shared/profile_widgets/player_stat_block.dart';
 
 class UserProfilePane extends HookConsumerWidget {
   const UserProfilePane({
@@ -67,27 +66,6 @@ class UserProfilePane extends HookConsumerWidget {
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  PlayerStatBlock(
-                    constraints: constraints,
-                    statValue: '69',
-                    statDescription: 'PPG',
-                  ),
-                  PlayerStatBlock(
-                    constraints: constraints,
-                    statValue: '23',
-                    statDescription: 'APG',
-                  ),
-                  PlayerStatBlock(
-                    constraints: constraints,
-                    statValue: '420',
-                    statDescription: 'RPG',
-                  ),
-                ],
               ),
             ],
           );
