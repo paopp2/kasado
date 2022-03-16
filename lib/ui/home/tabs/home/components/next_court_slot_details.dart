@@ -57,7 +57,10 @@ class NextCourtSlotDetails extends HookConsumerWidget {
 
     return courtSlotStream.when(
       error: (e, _) => Text(e.toString()),
-      loading: () => const CircularProgressIndicator(),
+      loading: () => SizedBox(
+        height: constraints.maxHeight * 0.12,
+        child: const LoadingWidget(),
+      ),
       data: (courtSlot) {
         // if there are no more timeSlots available for the day, then next
         // CourtSlot is null
