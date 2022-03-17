@@ -98,22 +98,25 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                         ? const Center(child: Text('Closed by admin'))
                         : (players.isEmpty)
                             ? const Center(child: Text('No players'))
-                            : ListView.builder(
-                                itemCount: players.length,
-                                itemBuilder: (context, index) {
-                                  final player = players[index];
-                                  return SlotPlayerTile(
-                                    isMvp: index == 0,
-                                    model: model,
-                                    player: player,
-                                    currentPlayer: currentPlayer,
-                                    court: court,
-                                    fetchedCourtSlot: fetchedCourtSlot,
-                                    isAdmin: isAdmin,
-                                    isSuperAdmin: isSuperAdmin,
-                                    adminController: adminController,
-                                  );
-                                },
+                            : Material(
+                                child: ListView.builder(
+                                  itemCount: players.length,
+                                  itemBuilder: (context, index) {
+                                    final player = players[index];
+                                    return SlotPlayerTile(
+                                      isMvp: index == 0 &&
+                                          (player.mvpVoteCount != 0),
+                                      model: model,
+                                      player: player,
+                                      currentPlayer: currentPlayer,
+                                      court: court,
+                                      fetchedCourtSlot: fetchedCourtSlot,
+                                      isAdmin: isAdmin,
+                                      isSuperAdmin: isSuperAdmin,
+                                      adminController: adminController,
+                                    );
+                                  },
+                                ),
                               ),
                   ),
                   if (!isDone) ...[
