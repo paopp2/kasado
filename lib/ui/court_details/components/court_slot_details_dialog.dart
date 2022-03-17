@@ -55,7 +55,17 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
               // from previous View
               final fetchedCourtSlot =
                   courtSlot ?? baseCourtSlot.copyWith(players: []);
+              final isSlotClosed =
+                  utils.isCurrentSlotClosed(fetchedCourtSlot.timeRange);
               final players = fetchedCourtSlot.players;
+              final currentPlayer = fetchedCourtSlot.hasPlayer(currentUser)
+                  ? players.singleWhere((u) => (u.id == currentUser.id))
+                  : null;
+              if (isSlotClosed && (currentPlayer?.hasVotedForMvp ?? true)) {
+                players
+                    .sort((a, b) => b.mvpVoteCount.compareTo(a.mvpVoteCount));
+              }
+
               return Column(
                 children: [
                   Text(
@@ -74,6 +84,11 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                     visible: isAdmin,
                     child: const Text('ADMIN MODE'),
                   ),
+                  if (utils.isCurrentSlotClosed(fetchedCourtSlot.timeRange) &&
+                      currentPlayer != null &&
+                      !currentPlayer.hasVotedForMvp) ...[
+                    const Text('Pick your MVP to show results')
+                  ],
                   const Divider(thickness: 2),
                   Expanded(
                     child: (fetchedCourtSlot.isClosedByAdmin)
@@ -87,6 +102,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                                   return SlotPlayerTile(
                                     model: model,
                                     player: player,
+                                    currentPlayer: currentPlayer,
                                     court: court,
                                     fetchedCourtSlot: fetchedCourtSlot,
                                     isAdmin: isAdmin,

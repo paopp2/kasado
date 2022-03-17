@@ -16,6 +16,7 @@ class SlotPlayerTile extends HookConsumerWidget {
     Key? key,
     required this.model,
     required this.player,
+    required this.currentPlayer,
     required this.court,
     required this.fetchedCourtSlot,
     required this.isAdmin,
@@ -24,6 +25,7 @@ class SlotPlayerTile extends HookConsumerWidget {
   }) : super(key: key);
 
   final CourtDetailsViewModel model;
+  final KasadoUser? currentPlayer;
   final KasadoUser player;
   final Court court;
   final CourtSlot fetchedCourtSlot;
@@ -35,6 +37,9 @@ class SlotPlayerTile extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final utils = ref.watch(kasadoUtilsProvider);
     final isSlotClosed = utils.isCurrentSlotClosed(fetchedCourtSlot.timeRange);
+    final isPlayerVotedByCurrentPlayer =
+        (currentPlayer?.votedMvpId == player.id);
+    final currentUserDidntPlay = currentPlayer == null;
 
     return Dismissible(
       key: UniqueKey(),
@@ -47,8 +52,12 @@ class SlotPlayerTile extends HookConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.all(3.0),
         child: ListTile(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: (isPlayerVotedByCurrentPlayer)
+                ? const BorderSide(color: Colors.green)
+                : BorderSide.none,
+          ),
           tileColor: (player.hasPaid) ? Colors.green.shade50 : null,
           onTap: () => context.pushNamed(
             Routes.userProfileView,
@@ -75,14 +84,20 @@ class SlotPlayerTile extends HookConsumerWidget {
             backgroundImage: NetworkImage(player.photoUrl!),
           ),
           trailing: (isSlotClosed)
-              ? IconButton(
-                  onPressed: () {},
-                  icon: const FaIcon(
-                    FontAwesomeIcons.crown,
-                    color: Colors.amber,
-                    size: 15,
-                  ),
-                )
+              ? (currentPlayer?.hasVotedForMvp ?? false) || currentUserDidntPlay
+                  ? Text(player.mvpVoteCount.toString())
+                  : IconButton(
+                      onPressed: () => model.votePlayerAsMvp(
+                        baseCourtSlot: fetchedCourtSlot,
+                        currentPlayer: currentPlayer!,
+                        myMvp: player,
+                      ),
+                      icon: const FaIcon(
+                        FontAwesomeIcons.crown,
+                        color: Colors.amber,
+                        size: 15,
+                      ),
+                    )
               : null,
         ),
       ),
