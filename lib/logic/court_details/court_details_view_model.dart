@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
+import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/team_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
@@ -20,6 +21,7 @@ final courtDetailsViewModel = Provider.autoDispose(
   (ref) => CourtDetailsViewModel(
     read: ref.read,
     courtRepo: ref.watch(courtRepositoryProvider),
+    courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
     teamRepo: ref.watch(teamRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
@@ -33,6 +35,7 @@ class CourtDetailsViewModel extends ViewModel {
   CourtDetailsViewModel({
     required Reader read,
     required this.courtRepo,
+    required this.courtSlotRepo,
     required this.userInfoRepo,
     required this.teamRepo,
     required this.adminController,
@@ -42,6 +45,7 @@ class CourtDetailsViewModel extends ViewModel {
   }) : super(read);
 
   final CourtRepository courtRepo;
+  final CourtSlotRepository courtSlotRepo;
   final UserInfoRepository userInfoRepo;
   final TeamRepository teamRepo;
   final CourtAdminController adminController;
@@ -165,7 +169,7 @@ class CourtDetailsViewModel extends ViewModel {
       ),
       orElse: () async {
         // Add user to courtSlot
-        await courtRepo.addPlayerToCourtSlot(
+        await courtSlotRepo.addPlayerToCourtSlot(
           courtSlot: baseCourtSlot,
           player: userInfo.user,
           courtTicketPrice: courtTicketPrice,
@@ -185,7 +189,7 @@ class CourtDetailsViewModel extends ViewModel {
     final KasadoUser player =
         baseCourtSlot.players.singleWhere((p) => (p.id == playerToRemove.id));
 
-    await courtRepo.removePlayerFromCourtSlot(
+    await courtSlotRepo.removePlayerFromCourtSlot(
       player: player,
       courtSlot: baseCourtSlot,
       courtTicketPrice: courtTicketPrice,
@@ -202,7 +206,7 @@ class CourtDetailsViewModel extends ViewModel {
     BuildContext? context,
   }) async {
     if (isTeamCaptain) {
-      await courtRepo.addTeamToCourtSlot(
+      await courtSlotRepo.addTeamToCourtSlot(
         teamId: teamId,
         courtSlot: baseCourtSlot,
         courtTicketPrice: courtTicketPrice,
@@ -223,7 +227,7 @@ class CourtDetailsViewModel extends ViewModel {
     BuildContext? context,
   }) async {
     if (isTeamCaptain) {
-      await courtRepo.removeTeamFromCourtSlot(
+      await courtSlotRepo.removeTeamFromCourtSlot(
         teamId: teamId,
         courtSlot: baseCourtSlot,
         courtTicketPrice: courtTicketPrice,
