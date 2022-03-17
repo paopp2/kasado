@@ -87,7 +87,10 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                   if (utils.isCurrentSlotClosed(fetchedCourtSlot.timeRange) &&
                       currentPlayer != null &&
                       !currentPlayer.hasVotedForMvp) ...[
-                    const Text('Pick your MVP to show results')
+                    const Text(
+                      'Pick your MVP to show results',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
                   ],
                   const Divider(thickness: 2),
                   Expanded(
@@ -100,6 +103,7 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                                 itemBuilder: (context, index) {
                                   final player = players[index];
                                   return SlotPlayerTile(
+                                    isMvp: index == 0,
                                     model: model,
                                     player: player,
                                     currentPlayer: currentPlayer,

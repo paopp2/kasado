@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +23,7 @@ class SlotPlayerTile extends HookConsumerWidget {
     required this.isAdmin,
     required this.isSuperAdmin,
     required this.adminController,
+    required this.isMvp,
   }) : super(key: key);
 
   final CourtDetailsViewModel model;
@@ -32,6 +34,7 @@ class SlotPlayerTile extends HookConsumerWidget {
   final bool isAdmin;
   final bool isSuperAdmin;
   final CourtAdminController adminController;
+  final bool isMvp;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,6 +43,12 @@ class SlotPlayerTile extends HookConsumerWidget {
     final isPlayerVotedByCurrentPlayer =
         (currentPlayer?.votedMvpId == player.id);
     final currentUserDidntPlay = currentPlayer == null;
+    // Indivate MVP when isMvp (first in sorted player list), the slot has
+    // already ended, and either the current user played and has already
+    // voted for his MVP or the current user didn't play
+    final indicateMvp = isMvp &&
+        isSlotClosed &&
+        ((currentPlayer?.hasVotedForMvp ?? false) || currentUserDidntPlay);
 
     return Dismissible(
       key: UniqueKey(),
@@ -79,9 +88,14 @@ class SlotPlayerTile extends HookConsumerWidget {
                   style: const TextStyle(fontSize: 10),
                 )
               : null,
-          leading: CircleAvatar(
-            radius: 25,
-            backgroundImage: NetworkImage(player.photoUrl!),
+          leading: Badge(
+            badgeContent: const Icon(Icons.star, size: 15),
+            badgeColor: Colors.amber,
+            showBadge: indicateMvp,
+            child: CircleAvatar(
+              radius: 25,
+              backgroundImage: NetworkImage(player.photoUrl!),
+            ),
           ),
           trailing: (isSlotClosed)
               ? (currentPlayer?.hasVotedForMvp ?? false) || currentUserDidntPlay
