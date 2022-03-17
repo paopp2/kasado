@@ -1,14 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 
-class SlotPlayerTile extends StatelessWidget {
+class SlotPlayerTile extends HookConsumerWidget {
   const SlotPlayerTile({
     Key? key,
     required this.model,
@@ -29,7 +32,10 @@ class SlotPlayerTile extends StatelessWidget {
   final CourtAdminController adminController;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final utils = ref.watch(kasadoUtilsProvider);
+    final isSlotClosed = utils.isCurrentSlotClosed(fetchedCourtSlot.timeRange);
+
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (_) => model.removeFromCourtSlot(
@@ -38,37 +44,46 @@ class SlotPlayerTile extends StatelessWidget {
         baseCourtSlot: fetchedCourtSlot,
       ),
       direction: isAdmin ? DismissDirection.horizontal : DismissDirection.none,
-      child: ListTile(
-        onTap: () => context.pushNamed(
-          Routes.userProfileView,
-          params: {'uid': player.id},
-        ),
-        onLongPress: (isSuperAdmin)
-            ? () => adminController.togglePlayerPaymentStatus(
-                  baseCourtSlot: fetchedCourtSlot,
-                  player: player,
-                )
-            : null,
-        title: AutoSizeText(
-          player.displayName!,
-          maxLines: 1,
-        ),
-        subtitle: (player.teamName.isNotEmpty)
-            ? Text(
-                player.teamName,
-                style: const TextStyle(fontSize: 10),
-              )
-            : null,
-        leading: CircleAvatar(
-          radius: 25,
-          backgroundImage: NetworkImage(player.photoUrl!),
-        ),
-        trailing: Visibility(
-          visible: player.hasPaid,
-          child: const Icon(
-            Icons.check,
-            color: Colors.green,
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: ListTile(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          tileColor: (player.hasPaid) ? Colors.green.shade50 : null,
+          onTap: () => context.pushNamed(
+            Routes.userProfileView,
+            params: {'uid': player.id},
           ),
+          onLongPress: (isSuperAdmin)
+              ? () => adminController.togglePlayerPaymentStatus(
+                    baseCourtSlot: fetchedCourtSlot,
+                    player: player,
+                  )
+              : null,
+          title: AutoSizeText(
+            player.displayName!,
+            maxLines: 1,
+          ),
+          subtitle: (player.teamName.isNotEmpty)
+              ? Text(
+                  player.teamName,
+                  style: const TextStyle(fontSize: 10),
+                )
+              : null,
+          leading: CircleAvatar(
+            radius: 25,
+            backgroundImage: NetworkImage(player.photoUrl!),
+          ),
+          trailing: (isSlotClosed)
+              ? IconButton(
+                  onPressed: () {},
+                  icon: const FaIcon(
+                    FontAwesomeIcons.crown,
+                    color: Colors.amber,
+                    size: 15,
+                  ),
+                )
+              : null,
         ),
       ),
     );
