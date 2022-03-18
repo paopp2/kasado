@@ -55,7 +55,17 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
               // from previous View
               final fetchedCourtSlot =
                   courtSlot ?? baseCourtSlot.copyWith(players: []);
+              final isSlotClosed =
+                  utils.isCurrentSlotClosed(fetchedCourtSlot.timeRange);
               final players = fetchedCourtSlot.players;
+              final currentPlayer = fetchedCourtSlot.hasPlayer(currentUser)
+                  ? players.singleWhere((u) => (u.id == currentUser.id))
+                  : null;
+              if (isSlotClosed && (currentPlayer?.hasVotedForMvp ?? true)) {
+                players
+                    .sort((a, b) => b.mvpVoteCount.compareTo(a.mvpVoteCount));
+              }
+
               return Column(
                 children: [
                   Text(
@@ -74,26 +84,39 @@ class CourtSlotDetailsDialog extends HookConsumerWidget {
                     visible: isAdmin,
                     child: const Text('ADMIN MODE'),
                   ),
+                  if (utils.isCurrentSlotClosed(fetchedCourtSlot.timeRange) &&
+                      currentPlayer != null &&
+                      !currentPlayer.hasVotedForMvp) ...[
+                    const Text(
+                      'Pick your MVP to show results',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+                  ],
                   const Divider(thickness: 2),
                   Expanded(
                     child: (fetchedCourtSlot.isClosedByAdmin)
                         ? const Center(child: Text('Closed by admin'))
                         : (players.isEmpty)
                             ? const Center(child: Text('No players'))
-                            : ListView.builder(
-                                itemCount: players.length,
-                                itemBuilder: (context, index) {
-                                  final player = players[index];
-                                  return SlotPlayerTile(
-                                    model: model,
-                                    player: player,
-                                    court: court,
-                                    fetchedCourtSlot: fetchedCourtSlot,
-                                    isAdmin: isAdmin,
-                                    isSuperAdmin: isSuperAdmin,
-                                    adminController: adminController,
-                                  );
-                                },
+                            : Material(
+                                child: ListView.builder(
+                                  itemCount: players.length,
+                                  itemBuilder: (context, index) {
+                                    final player = players[index];
+                                    return SlotPlayerTile(
+                                      isMvp: index == 0 &&
+                                          (player.mvpVoteCount != 0),
+                                      model: model,
+                                      player: player,
+                                      currentPlayer: currentPlayer,
+                                      court: court,
+                                      fetchedCourtSlot: fetchedCourtSlot,
+                                      isAdmin: isAdmin,
+                                      isSuperAdmin: isSuperAdmin,
+                                      adminController: adminController,
+                                    );
+                                  },
+                                ),
                               ),
                   ),
                   if (!isDone) ...[

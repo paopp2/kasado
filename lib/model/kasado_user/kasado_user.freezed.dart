@@ -29,7 +29,9 @@ class _$KasadoUserTearOff {
       String? phoneNumber,
       String? photoUrl,
       String teamName = '',
-      bool hasPaid = false}) {
+      bool hasPaid = false,
+      int mvpVoteCount = 0,
+      String votedMvpId = ''}) {
     return _KasadoUser(
       id: id,
       displayName: displayName,
@@ -38,6 +40,8 @@ class _$KasadoUserTearOff {
       photoUrl: photoUrl,
       teamName: teamName,
       hasPaid: hasPaid,
+      mvpVoteCount: mvpVoteCount,
+      votedMvpId: votedMvpId,
     );
   }
 
@@ -58,6 +62,8 @@ mixin _$KasadoUser {
   String? get photoUrl => throw _privateConstructorUsedError;
   String get teamName => throw _privateConstructorUsedError;
   bool get hasPaid => throw _privateConstructorUsedError;
+  int get mvpVoteCount => throw _privateConstructorUsedError;
+  String get votedMvpId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -77,7 +83,9 @@ abstract class $KasadoUserCopyWith<$Res> {
       String? phoneNumber,
       String? photoUrl,
       String teamName,
-      bool hasPaid});
+      bool hasPaid,
+      int mvpVoteCount,
+      String votedMvpId});
 }
 
 /// @nodoc
@@ -97,6 +105,8 @@ class _$KasadoUserCopyWithImpl<$Res> implements $KasadoUserCopyWith<$Res> {
     Object? photoUrl = freezed,
     Object? teamName = freezed,
     Object? hasPaid = freezed,
+    Object? mvpVoteCount = freezed,
+    Object? votedMvpId = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -127,6 +137,14 @@ class _$KasadoUserCopyWithImpl<$Res> implements $KasadoUserCopyWith<$Res> {
           ? _value.hasPaid
           : hasPaid // ignore: cast_nullable_to_non_nullable
               as bool,
+      mvpVoteCount: mvpVoteCount == freezed
+          ? _value.mvpVoteCount
+          : mvpVoteCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      votedMvpId: votedMvpId == freezed
+          ? _value.votedMvpId
+          : votedMvpId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -144,7 +162,9 @@ abstract class _$KasadoUserCopyWith<$Res> implements $KasadoUserCopyWith<$Res> {
       String? phoneNumber,
       String? photoUrl,
       String teamName,
-      bool hasPaid});
+      bool hasPaid,
+      int mvpVoteCount,
+      String votedMvpId});
 }
 
 /// @nodoc
@@ -166,6 +186,8 @@ class __$KasadoUserCopyWithImpl<$Res> extends _$KasadoUserCopyWithImpl<$Res>
     Object? photoUrl = freezed,
     Object? teamName = freezed,
     Object? hasPaid = freezed,
+    Object? mvpVoteCount = freezed,
+    Object? votedMvpId = freezed,
   }) {
     return _then(_KasadoUser(
       id: id == freezed
@@ -196,13 +218,21 @@ class __$KasadoUserCopyWithImpl<$Res> extends _$KasadoUserCopyWithImpl<$Res>
           ? _value.hasPaid
           : hasPaid // ignore: cast_nullable_to_non_nullable
               as bool,
+      mvpVoteCount: mvpVoteCount == freezed
+          ? _value.mvpVoteCount
+          : mvpVoteCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      votedMvpId: votedMvpId == freezed
+          ? _value.votedMvpId
+          : votedMvpId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
+class _$_KasadoUser extends _KasadoUser with DiagnosticableTreeMixin {
   const _$_KasadoUser(
       {required this.id,
       this.displayName,
@@ -210,7 +240,10 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
       this.phoneNumber,
       this.photoUrl,
       this.teamName = '',
-      this.hasPaid = false});
+      this.hasPaid = false,
+      this.mvpVoteCount = 0,
+      this.votedMvpId = ''})
+      : super._();
 
   factory _$_KasadoUser.fromJson(Map<String, dynamic> json) =>
       _$$_KasadoUserFromJson(json);
@@ -231,10 +264,16 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
   @JsonKey()
   @override
   final bool hasPaid;
+  @JsonKey()
+  @override
+  final int mvpVoteCount;
+  @JsonKey()
+  @override
+  final String votedMvpId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUser(id: $id, displayName: $displayName, email: $email, phoneNumber: $phoneNumber, photoUrl: $photoUrl, teamName: $teamName, hasPaid: $hasPaid)';
+    return 'KasadoUser(id: $id, displayName: $displayName, email: $email, phoneNumber: $phoneNumber, photoUrl: $photoUrl, teamName: $teamName, hasPaid: $hasPaid, mvpVoteCount: $mvpVoteCount, votedMvpId: $votedMvpId)';
   }
 
   @override
@@ -248,7 +287,9 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
       ..add(DiagnosticsProperty('phoneNumber', phoneNumber))
       ..add(DiagnosticsProperty('photoUrl', photoUrl))
       ..add(DiagnosticsProperty('teamName', teamName))
-      ..add(DiagnosticsProperty('hasPaid', hasPaid));
+      ..add(DiagnosticsProperty('hasPaid', hasPaid))
+      ..add(DiagnosticsProperty('mvpVoteCount', mvpVoteCount))
+      ..add(DiagnosticsProperty('votedMvpId', votedMvpId));
   }
 
   @override
@@ -264,7 +305,11 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
                 .equals(other.phoneNumber, phoneNumber) &&
             const DeepCollectionEquality().equals(other.photoUrl, photoUrl) &&
             const DeepCollectionEquality().equals(other.teamName, teamName) &&
-            const DeepCollectionEquality().equals(other.hasPaid, hasPaid));
+            const DeepCollectionEquality().equals(other.hasPaid, hasPaid) &&
+            const DeepCollectionEquality()
+                .equals(other.mvpVoteCount, mvpVoteCount) &&
+            const DeepCollectionEquality()
+                .equals(other.votedMvpId, votedMvpId));
   }
 
   @override
@@ -276,7 +321,9 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
       const DeepCollectionEquality().hash(phoneNumber),
       const DeepCollectionEquality().hash(photoUrl),
       const DeepCollectionEquality().hash(teamName),
-      const DeepCollectionEquality().hash(hasPaid));
+      const DeepCollectionEquality().hash(hasPaid),
+      const DeepCollectionEquality().hash(mvpVoteCount),
+      const DeepCollectionEquality().hash(votedMvpId));
 
   @JsonKey(ignore: true)
   @override
@@ -289,7 +336,7 @@ class _$_KasadoUser with DiagnosticableTreeMixin implements _KasadoUser {
   }
 }
 
-abstract class _KasadoUser implements KasadoUser {
+abstract class _KasadoUser extends KasadoUser {
   const factory _KasadoUser(
       {required String id,
       String? displayName,
@@ -297,7 +344,10 @@ abstract class _KasadoUser implements KasadoUser {
       String? phoneNumber,
       String? photoUrl,
       String teamName,
-      bool hasPaid}) = _$_KasadoUser;
+      bool hasPaid,
+      int mvpVoteCount,
+      String votedMvpId}) = _$_KasadoUser;
+  const _KasadoUser._() : super._();
 
   factory _KasadoUser.fromJson(Map<String, dynamic> json) =
       _$_KasadoUser.fromJson;
@@ -316,6 +366,10 @@ abstract class _KasadoUser implements KasadoUser {
   String get teamName;
   @override
   bool get hasPaid;
+  @override
+  int get mvpVoteCount;
+  @override
+  String get votedMvpId;
   @override
   @JsonKey(ignore: true)
   _$KasadoUserCopyWith<_KasadoUser> get copyWith =>

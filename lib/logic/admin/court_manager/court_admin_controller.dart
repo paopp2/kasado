@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
+import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_state.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_tec_mixin.dart';
@@ -17,6 +18,7 @@ final courtAdminController = Provider.autoDispose(
   (ref) => CourtAdminController(
     read: ref.read,
     courtRepo: ref.watch(courtRepositoryProvider),
+    courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
   ),
@@ -26,12 +28,14 @@ class CourtAdminController with CourtAdminTecMixin {
   CourtAdminController({
     required this.read,
     required this.courtRepo,
+    required this.courtSlotRepo,
     required this.currentUser,
     required this.userInfoRepo,
   });
 
   final Reader read;
   final CourtRepository courtRepo;
+  final CourtSlotRepository courtSlotRepo;
   final UserInfoRepository userInfoRepo;
   final KasadoUser currentUser;
 
@@ -41,7 +45,7 @@ class CourtAdminController with CourtAdminTecMixin {
   }) async {
     assert(baseCourtSlot.hasPlayer(player));
     final playerIndex = baseCourtSlot.players.indexOf(player);
-    await courtRepo.pushCourtSlot(
+    await courtSlotRepo.pushCourtSlot(
       courtSlot: baseCourtSlot.copyWith(
         players: baseCourtSlot.players
           ..[playerIndex] = player.copyWith(hasPaid: !player.hasPaid),
@@ -160,7 +164,7 @@ class CourtAdminController with CourtAdminTecMixin {
     required double courtTicketPrice,
   }) async {
     Navigator.pop(context);
-    await courtRepo.setCourtSlotClosed(
+    await courtSlotRepo.setCourtSlotClosed(
       courtSlot: courtSlot,
       isCourtClosed: closeCourt,
       courtTicketPrice: courtTicketPrice,
