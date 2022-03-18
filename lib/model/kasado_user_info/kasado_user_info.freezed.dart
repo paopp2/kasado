@@ -29,6 +29,7 @@ class _$KasadoUserInfoTearOff {
       bool isSuperAdmin = false,
       double pondo = 0,
       bool isTeamCaptain = false,
+      OverviewStats overviewStats = const OverviewStats(),
       String? teamId,
       CourtSlot? reservedAt}) {
     return _KasadoUserInfo(
@@ -38,6 +39,7 @@ class _$KasadoUserInfoTearOff {
       isSuperAdmin: isSuperAdmin,
       pondo: pondo,
       isTeamCaptain: isTeamCaptain,
+      overviewStats: overviewStats,
       teamId: teamId,
       reservedAt: reservedAt,
     );
@@ -59,6 +61,7 @@ mixin _$KasadoUserInfo {
   bool get isSuperAdmin => throw _privateConstructorUsedError;
   double get pondo => throw _privateConstructorUsedError;
   bool get isTeamCaptain => throw _privateConstructorUsedError;
+  OverviewStats get overviewStats => throw _privateConstructorUsedError;
   String? get teamId => throw _privateConstructorUsedError;
   CourtSlot? get reservedAt => throw _privateConstructorUsedError;
 
@@ -80,10 +83,12 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
       bool isSuperAdmin,
       double pondo,
       bool isTeamCaptain,
+      OverviewStats overviewStats,
       String? teamId,
       CourtSlot? reservedAt});
 
   $KasadoUserCopyWith<$Res> get user;
+  $OverviewStatsCopyWith<$Res> get overviewStats;
   $CourtSlotCopyWith<$Res>? get reservedAt;
 }
 
@@ -104,6 +109,7 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
     Object? isSuperAdmin = freezed,
     Object? pondo = freezed,
     Object? isTeamCaptain = freezed,
+    Object? overviewStats = freezed,
     Object? teamId = freezed,
     Object? reservedAt = freezed,
   }) {
@@ -132,6 +138,10 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.isTeamCaptain
           : isTeamCaptain // ignore: cast_nullable_to_non_nullable
               as bool,
+      overviewStats: overviewStats == freezed
+          ? _value.overviewStats
+          : overviewStats // ignore: cast_nullable_to_non_nullable
+              as OverviewStats,
       teamId: teamId == freezed
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
@@ -147,6 +157,13 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
   $KasadoUserCopyWith<$Res> get user {
     return $KasadoUserCopyWith<$Res>(_value.user, (value) {
       return _then(_value.copyWith(user: value));
+    });
+  }
+
+  @override
+  $OverviewStatsCopyWith<$Res> get overviewStats {
+    return $OverviewStatsCopyWith<$Res>(_value.overviewStats, (value) {
+      return _then(_value.copyWith(overviewStats: value));
     });
   }
 
@@ -176,11 +193,14 @@ abstract class _$KasadoUserInfoCopyWith<$Res>
       bool isSuperAdmin,
       double pondo,
       bool isTeamCaptain,
+      OverviewStats overviewStats,
       String? teamId,
       CourtSlot? reservedAt});
 
   @override
   $KasadoUserCopyWith<$Res> get user;
+  @override
+  $OverviewStatsCopyWith<$Res> get overviewStats;
   @override
   $CourtSlotCopyWith<$Res>? get reservedAt;
 }
@@ -204,6 +224,7 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
     Object? isSuperAdmin = freezed,
     Object? pondo = freezed,
     Object? isTeamCaptain = freezed,
+    Object? overviewStats = freezed,
     Object? teamId = freezed,
     Object? reservedAt = freezed,
   }) {
@@ -232,6 +253,10 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.isTeamCaptain
           : isTeamCaptain // ignore: cast_nullable_to_non_nullable
               as bool,
+      overviewStats: overviewStats == freezed
+          ? _value.overviewStats
+          : overviewStats // ignore: cast_nullable_to_non_nullable
+              as OverviewStats,
       teamId: teamId == freezed
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
@@ -254,6 +279,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       this.isSuperAdmin = false,
       this.pondo = 0,
       this.isTeamCaptain = false,
+      this.overviewStats = const OverviewStats(),
       this.teamId,
       this.reservedAt})
       : super._();
@@ -277,6 +303,9 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final bool isTeamCaptain;
+  @JsonKey()
+  @override
+  final OverviewStats overviewStats;
   @override
   final String? teamId;
   @override
@@ -284,7 +313,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, teamId: $teamId, reservedAt: $reservedAt)';
+    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, overviewStats: $overviewStats, teamId: $teamId, reservedAt: $reservedAt)';
   }
 
   @override
@@ -298,6 +327,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('isSuperAdmin', isSuperAdmin))
       ..add(DiagnosticsProperty('pondo', pondo))
       ..add(DiagnosticsProperty('isTeamCaptain', isTeamCaptain))
+      ..add(DiagnosticsProperty('overviewStats', overviewStats))
       ..add(DiagnosticsProperty('teamId', teamId))
       ..add(DiagnosticsProperty('reservedAt', reservedAt));
   }
@@ -315,6 +345,8 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.pondo, pondo) &&
             const DeepCollectionEquality()
                 .equals(other.isTeamCaptain, isTeamCaptain) &&
+            const DeepCollectionEquality()
+                .equals(other.overviewStats, overviewStats) &&
             const DeepCollectionEquality().equals(other.teamId, teamId) &&
             const DeepCollectionEquality()
                 .equals(other.reservedAt, reservedAt));
@@ -329,6 +361,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(isSuperAdmin),
       const DeepCollectionEquality().hash(pondo),
       const DeepCollectionEquality().hash(isTeamCaptain),
+      const DeepCollectionEquality().hash(overviewStats),
       const DeepCollectionEquality().hash(teamId),
       const DeepCollectionEquality().hash(reservedAt));
 
@@ -351,6 +384,7 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
       bool isSuperAdmin,
       double pondo,
       bool isTeamCaptain,
+      OverviewStats overviewStats,
       String? teamId,
       CourtSlot? reservedAt}) = _$_KasadoUserInfo;
   const _KasadoUserInfo._() : super._();
@@ -370,6 +404,8 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   double get pondo;
   @override
   bool get isTeamCaptain;
+  @override
+  OverviewStats get overviewStats;
   @override
   String? get teamId;
   @override

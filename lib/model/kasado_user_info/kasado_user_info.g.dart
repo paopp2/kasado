@@ -14,6 +14,10 @@ _$_KasadoUserInfo _$$_KasadoUserInfoFromJson(Map<String, dynamic> json) =>
       isSuperAdmin: json['isSuperAdmin'] as bool? ?? false,
       pondo: (json['pondo'] as num?)?.toDouble() ?? 0,
       isTeamCaptain: json['isTeamCaptain'] as bool? ?? false,
+      overviewStats: json['overviewStats'] == null
+          ? const OverviewStats()
+          : OverviewStats.fromJson(
+              json['overviewStats'] as Map<String, dynamic>),
       teamId: json['teamId'] as String?,
       reservedAt: json['reservedAt'] == null
           ? null
@@ -28,6 +32,7 @@ Map<String, dynamic> _$$_KasadoUserInfoToJson(_$_KasadoUserInfo instance) =>
       'isSuperAdmin': instance.isSuperAdmin,
       'pondo': instance.pondo,
       'isTeamCaptain': instance.isTeamCaptain,
+      'overviewStats': instance.overviewStats.toJson(),
       'teamId': instance.teamId,
       'reservedAt': instance.reservedAt?.toJson(),
     };
