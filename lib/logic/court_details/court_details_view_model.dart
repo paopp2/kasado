@@ -14,6 +14,7 @@ import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/overview_stats/overview_stats.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -265,6 +266,15 @@ class CourtDetailsViewModel extends ViewModel {
                   currentPlayer.copyWith(votedMvpId: myMvp.id)
               ..[myMvpIndex] =
                   myMvp.copyWith(mvpVoteCount: myMvp.mvpVoteCount + 1)),
+      ),
+    );
+
+    // TODO: Optimize and clean code IF and ONLY IF this clicks with users
+    final userInfoBase = await userInfoRepo.getUserInfo(myMvp.id);
+    userInfoRepo.updateUserOverviewStats(
+      userId: myMvp.id,
+      stats: OverviewStats(
+        mvpVoteCount: userInfoBase!.overviewStats.mvpVoteCount + 1,
       ),
     );
   }

@@ -70,7 +70,8 @@ class UserProfilePane extends HookConsumerWidget {
               ),
               PlayerStatBlock(
                 constraints: constraints,
-                statValue: '0',
+                statValue:
+                    userInfo?.overviewStats.mvpVoteCount.toString() ?? '0',
                 statDescription: 'MVP Votes',
               )
             ],
