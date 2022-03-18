@@ -100,16 +100,19 @@ class SlotPlayerTile extends HookConsumerWidget {
           trailing: (isSlotClosed)
               ? (currentPlayer?.hasVotedForMvp ?? false) || currentUserDidntPlay
                   ? Text(player.mvpVoteCount.toString())
-                  : IconButton(
-                      onPressed: () => model.votePlayerAsMvp(
-                        baseCourtSlot: fetchedCourtSlot,
-                        currentPlayer: currentPlayer!,
-                        myMvp: player,
-                      ),
-                      icon: const FaIcon(
-                        FontAwesomeIcons.crown,
-                        color: Colors.amber,
-                        size: 15,
+                  : Visibility(
+                      visible: currentPlayer?.id != player.id,
+                      child: IconButton(
+                        onPressed: () => model.votePlayerAsMvp(
+                          baseCourtSlot: fetchedCourtSlot,
+                          currentPlayer: currentPlayer!,
+                          myMvp: player,
+                        ),
+                        icon: const FaIcon(
+                          FontAwesomeIcons.crown,
+                          color: Colors.amber,
+                          size: 15,
+                        ),
                       ),
                     )
               : null,
