@@ -8,7 +8,7 @@ import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/team_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
-import 'package:kasado/logic/court_details/slot_and_user_state.dart';
+import 'package:kasado/logic/court_slot_details/slot_and_user_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
