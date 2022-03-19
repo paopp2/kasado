@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
-import 'package:kasado/logic/court_details/court_details_view_model.dart';
 import 'package:kasado/logic/court_details/slot_and_user_state.dart';
+import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -20,7 +20,7 @@ class CourtSlotTile extends HookConsumerWidget {
 
   final BoxConstraints constraints;
   final bool isAdmin;
-  final CourtDetailsViewModel model;
+  final CourtSlotDetailsViewModel model;
   final CourtSlot courtSlot;
   final Court court;
 

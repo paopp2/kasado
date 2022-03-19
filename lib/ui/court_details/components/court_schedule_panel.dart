@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
-import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/court_details/components/court_slot_tile.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
@@ -17,7 +17,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
     required this.court,
   }) : super(key: key);
 
-  final CourtDetailsViewModel model;
+  final CourtSlotDetailsViewModel model;
   final bool isAdmin;
   final BoxConstraints constraints;
   final Court court;

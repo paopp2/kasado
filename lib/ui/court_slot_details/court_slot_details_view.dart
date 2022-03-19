@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
-import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -26,7 +26,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(courtDetailsViewModel);
+    final model = ref.watch(courtSlotDetailsViewModel);
     final courtSlotStream = ref.watch(
       courtSlotStreamProvider('${court.id}|${baseCourtSlot.slotId}'),
     );
