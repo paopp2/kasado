@@ -39,7 +39,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
     final utils = ref.watch(kasadoUtilsProvider);
     final isModifyingSlot = useState(false);
     final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: 2);
+    final tabController = useTabController(initialLength: (isAdmin) ? 3 : 2);
 
     useEffect(() {
       tabController.addListener(() => (tabIndex.value = tabController.index));
@@ -348,6 +348,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                               ),
                             ],
                           ),
+                          if (isAdmin) ...[Container()],
                         ],
                       ),
                     ),
@@ -360,15 +361,21 @@ class CourtSlotDetailsView extends HookConsumerWidget {
             onTap: tabController.animateTo,
             currentIndex: tabIndex.value,
             selectedItemColor: Colors.black,
-            items: const [
-              BottomNavigationBarItem(
+            items: [
+              const BottomNavigationBarItem(
                 label: "Players",
                 icon: Icon(Icons.people),
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 label: "Box Score",
                 icon: Icon(Icons.bar_chart),
               ),
+              if (isAdmin) ...[
+                const BottomNavigationBarItem(
+                  label: "Stats Controller",
+                  icon: Icon(Icons.auto_graph),
+                ),
+              ],
             ],
           ),
         );
