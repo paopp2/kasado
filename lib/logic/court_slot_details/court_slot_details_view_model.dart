@@ -8,7 +8,6 @@ import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/team_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
-import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -27,7 +26,6 @@ final courtSlotDetailsViewModel = Provider.autoDispose(
     teamRepo: ref.watch(teamRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
     currentUserInfo: ref.watch(currentUserInfoProvider).value,
-    adminController: ref.watch(courtAdminController),
     utils: ref.watch(kasadoUtilsProvider),
   ),
 );
@@ -39,7 +37,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required this.courtSlotRepo,
     required this.userInfoRepo,
     required this.teamRepo,
-    required this.adminController,
     required this.currentUser,
     required this.currentUserInfo,
     required this.utils,
@@ -49,7 +46,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
   final CourtSlotRepository courtSlotRepo;
   final UserInfoRepository userInfoRepo;
   final TeamRepository teamRepo;
-  final CourtAdminController adminController;
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;
   final KasadoUtils utils;

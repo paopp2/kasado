@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
+import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_state.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -29,13 +30,13 @@ class CourtSlotDetailsView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(courtSlotDetailsViewModel);
+    final adminController = ref.watch(courtAdminController);
     final courtSlotStream = ref.watch(
       courtSlotStreamProvider('${court.id}|${baseCourtSlot.slotId}'),
     );
     final currentUser = ref.watch(currentUserProvider)!;
     final currentUserInfo = ref.watch(currentUserInfoProvider).value;
     final isSuperAdmin = currentUserInfo?.isSuperAdmin ?? false;
-    final adminController = model.adminController;
     final utils = ref.watch(kasadoUtilsProvider);
     final isModifyingSlot = useState(false);
     final tabIndex = useState(0);
