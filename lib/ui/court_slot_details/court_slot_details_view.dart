@@ -7,7 +7,7 @@ import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.da
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
-import 'package:kasado/ui/court_details/components/slot_player_tile.dart';
+import 'package:kasado/ui/court_slot_details/components/slot_player_tile.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class CourtSlotDetailsView extends HookConsumerWidget {
