@@ -206,18 +206,25 @@ class CourtDetailsViewModel extends ViewModel {
     required double courtTicketPrice,
     BuildContext? context,
   }) async {
-    if (isTeamCaptain) {
-      await courtSlotRepo.addTeamToCourtSlot(
-        teamId: teamId,
-        courtSlot: baseCourtSlot,
-        courtTicketPrice: courtTicketPrice,
-      );
-      if (context != null) Navigator.pop(context);
-    } else {
-      Fluttertoast.showToast(
-        msg: 'Only the team captain can join a game for the team',
-      );
-    }
+    await getSlotAndUserState(baseCourtSlot).when(
+      userReservedAtAnotherSlot: () => Fluttertoast.showToast(
+        msg: "Your team is already reserved at another slot",
+      ),
+      orElse: () async {
+        if (isTeamCaptain) {
+          await courtSlotRepo.addTeamToCourtSlot(
+            teamId: teamId,
+            courtSlot: baseCourtSlot,
+            courtTicketPrice: courtTicketPrice,
+          );
+          if (context != null) Navigator.pop(context);
+        } else {
+          Fluttertoast.showToast(
+            msg: 'Only the team captain can join a game for the team',
+          );
+        }
+      },
+    );
   }
 
   Future<void> removeTeamFromCourtSlot({
