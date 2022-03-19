@@ -37,101 +37,96 @@ class KasadoTable<T extends Object> extends StatelessWidget {
         : null;
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
-      child: Container(
-        color: Colors.grey.shade100,
-        height: height,
-        width: width,
-        child: SfDataGridTheme(
-          data: SfDataGridThemeData(
-            selectionColor: Colors.blue.shade100.withOpacity(0.4),
-          ),
-          child: SfDataGrid(
-            allowSorting: true,
-            allowTriStateSorting: true,
-            isScrollbarAlwaysShown: true,
-            frozenColumnsCount: frozenColumnCount,
-            columnWidthMode: defaultColumnWidthMode,
-            columnWidthCalculationRange: ColumnWidthCalculationRange.allRows,
-            selectionMode: (onRowSelected != null)
-                ? SelectionMode.singleDeselect
-                : SelectionMode.none,
-            onSelectionChanged: (onRowSelected != null)
-                ? (addedRows, _) {
-                    if (addedRows.isEmpty) {
-                      onRowSelected!(null);
-                    } else {
-                      final selectedRow = addedRows.first;
-                      selectedRow as MarnikkoDataGridRow<T>;
-                      onRowSelected!.call(selectedRow.data);
-                    }
+      child: SfDataGridTheme(
+        data: SfDataGridThemeData(
+          selectionColor: Colors.blue.shade100.withOpacity(0.4),
+        ),
+        child: SfDataGrid(
+          allowSorting: true,
+          allowTriStateSorting: true,
+          frozenColumnsCount: frozenColumnCount,
+          columnWidthMode: defaultColumnWidthMode,
+          columnWidthCalculationRange: ColumnWidthCalculationRange.allRows,
+          verticalScrollPhysics: const NeverScrollableScrollPhysics(),
+          selectionMode: (onRowSelected != null)
+              ? SelectionMode.singleDeselect
+              : SelectionMode.none,
+          onSelectionChanged: (onRowSelected != null)
+              ? (addedRows, _) {
+                  if (addedRows.isEmpty) {
+                    onRowSelected!(null);
+                  } else {
+                    final selectedRow = addedRows.first;
+                    selectedRow as MarnikkoDataGridRow<T>;
+                    onRowSelected!.call(selectedRow.data);
                   }
-                : null,
-            columns: columnDataList.map((colData) {
-              return GridColumn(
-                columnWidthMode: (dataAsList.isEmpty)
-                    ? defaultColumnWidthMode
-                    : colData.columnWidthMode,
-                columnName: colData.columnName,
-                visible: colData.isVisible,
-                label: Container(
-                  color: Colors.grey.shade200,
-                  child: Tooltip(
-                    preferBelow: false,
-                    message: colData.headerTooltip,
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        colData.columnName,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                }
+              : null,
+          columns: columnDataList.map((colData) {
+            return GridColumn(
+              columnWidthMode: (dataAsList.isEmpty)
+                  ? defaultColumnWidthMode
+                  : colData.columnWidthMode,
+              columnName: colData.columnName,
+              visible: colData.isVisible,
+              label: Container(
+                color: Colors.grey.shade200,
+                child: Tooltip(
+                  preferBelow: false,
+                  message: colData.headerTooltip,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Text(
+                      colData.columnName,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
-              );
-            }).toList(),
-            source: MarnikkoDataGridSource<T>(
-              columnDataList: columnDataList,
-              dataAsList: dataAsList,
-            ),
-            tableSummaryRows: (colIndexToSummaryType.isNotEmpty &&
-                        dataAsList.isNotEmpty ||
-                    needCountSummary)
-                ? [
-                    GridTableSummaryRow(
-                      color: Colors.grey.shade200,
-                      showSummaryInRow: false,
-                      title: (needCountSummary) ? 'Total Count: {count}' : null,
-                      titleColumnSpan: (needCountSummary)
-                          ? (leastSummaryIndex != null)
-                              ? (columnDataList.length - leastSummaryIndex + 1)
-                              : columnDataList.length
-                          : 0,
-                      columns: colIndexToSummaryType.entries.map((i2sEntry) {
-                        final colData = columnDataList[i2sEntry.key];
-                        final summaryType = i2sEntry.value;
-                        return GridSummaryColumn(
-                          name: colData.columnName,
-                          columnName: colData.columnName,
-                          summaryType: summaryType,
-                        );
-                      }).toList()
-                        ..addAll(
-                          (needCountSummary)
-                              ? [
-                                  GridSummaryColumn(
-                                    name: 'count',
-                                    columnName: columnDataList.first.columnName,
-                                    summaryType: GridSummaryType.count,
-                                  )
-                                ]
-                              : [],
-                        ),
-                      position: GridTableSummaryRowPosition.bottom,
-                    )
-                  ]
-                : [],
+              ),
+            );
+          }).toList(),
+          source: MarnikkoDataGridSource<T>(
+            columnDataList: columnDataList,
+            dataAsList: dataAsList,
           ),
+          tableSummaryRows: (colIndexToSummaryType.isNotEmpty &&
+                      dataAsList.isNotEmpty ||
+                  needCountSummary)
+              ? [
+                  GridTableSummaryRow(
+                    color: Colors.grey.shade200,
+                    showSummaryInRow: false,
+                    title: (needCountSummary) ? 'Total Count: {count}' : null,
+                    titleColumnSpan: (needCountSummary)
+                        ? (leastSummaryIndex != null)
+                            ? (columnDataList.length - leastSummaryIndex + 1)
+                            : columnDataList.length
+                        : 0,
+                    columns: colIndexToSummaryType.entries.map((i2sEntry) {
+                      final colData = columnDataList[i2sEntry.key];
+                      final summaryType = i2sEntry.value;
+                      return GridSummaryColumn(
+                        name: colData.columnName,
+                        columnName: colData.columnName,
+                        summaryType: summaryType,
+                      );
+                    }).toList()
+                      ..addAll(
+                        (needCountSummary)
+                            ? [
+                                GridSummaryColumn(
+                                  name: 'count',
+                                  columnName: columnDataList.first.columnName,
+                                  summaryType: GridSummaryType.count,
+                                )
+                              ]
+                            : [],
+                      ),
+                    position: GridTableSummaryRowPosition.bottom,
+                  )
+                ]
+              : [],
         ),
       ),
     );
