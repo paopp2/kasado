@@ -1,0 +1,24 @@
+{
+    "courtsList": [
+        {
+            "id": "ccae7919-fe46-47ad-b2d3-86bd2a24aedd",
+            "name": "NPP Court",
+            "address": "Pitogo Lacion",
+            "photoUrl": "https://media.architecturaldigest.com/photos/61de0f60019f04fb969292e1/master/pass/Amiryakoby-34.jpg",
+            "ticketPrice": 20.0,
+            "allowedWeekDays": [
+                "monday"
+            ],
+            "allowedTimeSlots": [
+                {
+                    "startsAt": "2022-01-01T08:00:00.000",
+                    "endsAt": "2022-01-01T10:00:00.000"
+                }
+            ],
+            "adminIds": [
+                "wtkLFeagttMal66WvwDfZSheJjK2",
+                "nqo4ouLRb9PWOydZMQK1EgtUqmn1"
+            ]
+        }
+    ]
+}
