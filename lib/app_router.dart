@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kasado/model/court/court.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/admin/player_manager/player_manager_view.dart';
 import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
 import 'package:kasado/ui/admin/court_manager/courts_owned_view.dart';
+import 'package:kasado/ui/court_slot_details/court_slot_details_view.dart';
 import 'package:kasado/ui/home/home_view.dart';
 import 'package:kasado/ui/notifs/notifs_view.dart';
 import 'package:kasado/ui/profile/user_profile_view.dart';
@@ -37,6 +40,19 @@ class AppRouter {
           return CourtDetailsView(
             courtId: state.params['courtId']!,
             isAdmin: (isAdmin ?? false),
+          );
+        },
+      ),
+      GoRoute(
+        name: Routes.courtSlotDetailsView,
+        path: '/slot-details',
+        builder: (context, state) {
+          final extraMap = state.extra as Map<String, Object?>;
+          return CourtSlotDetailsView(
+            isAdmin: extraMap['isAdmin']! as bool,
+            baseCourtSlot: extraMap['baseCourtSlot']! as CourtSlot,
+            court: extraMap['court']! as Court,
+            isDone: extraMap['isDone']! as bool,
           );
         },
       ),
@@ -88,6 +104,7 @@ class Routes {
   static const homeView = 'home_view';
   static const loginView = 'login_view';
   static const courtDetailsView = 'court_details_view';
+  static const courtSlotDetailsView = 'court_slot_details_view';
   static const courtsOwnedView = 'courts_owned_view';
   static const userProfileView = 'user_profile_view';
   static const playerManagerView = 'player_manager_view';
