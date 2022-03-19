@@ -36,6 +36,14 @@ class CourtSlotDetailsView extends HookConsumerWidget {
     final adminController = model.adminController;
     final utils = ref.watch(kasadoUtilsProvider);
     final isModifyingSlot = useState(false);
+    final tabIndex = useState(0);
+    final tabController = useTabController(initialLength: 2);
+
+    useEffect(() {
+      tabController.addListener(() => (tabIndex.value = tabController.index));
+      model.initState({'court_id': baseCourtSlot.courtId});
+      return model.dispose;
+    }, []);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -93,85 +101,119 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                     ],
                     const Divider(thickness: 2),
                     Expanded(
-                      child: (fetchedCourtSlot.isClosedByAdmin)
-                          ? const Center(child: Text('Closed by admin'))
-                          : (players.isEmpty)
-                              ? const Center(child: Text('No players'))
-                              : Material(
-                                  child: ListView.builder(
-                                    itemCount: players.length,
-                                    itemBuilder: (context, index) {
-                                      final player = players[index];
-                                      return SlotPlayerTile(
-                                        isMvp: index == 0 &&
-                                            (player.mvpVoteCount != 0),
-                                        model: model,
-                                        player: player,
-                                        currentPlayer: currentPlayer,
-                                        court: court,
-                                        fetchedCourtSlot: fetchedCourtSlot,
-                                        isAdmin: isAdmin,
-                                        isSuperAdmin: isSuperAdmin,
-                                        adminController: adminController,
-                                      );
-                                    },
-                                  ),
-                                ),
-                    ),
-                    if (!isDone) ...[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      child: TabBarView(
+                        controller: tabController,
                         children: [
-                          if (isAdmin) ...[
-                            TextButton(
-                              child: Text(
-                                (fetchedCourtSlot.isClosedByAdmin)
-                                    ? 'OPEN SLOT'
-                                    : 'CLOSE SLOT',
-                              ),
-                              onPressed: () =>
-                                  adminController.setCourtSlotClosed(
-                                context: context,
-                                courtSlot: fetchedCourtSlot,
-                                closeCourt: !fetchedCourtSlot.isClosedByAdmin,
-                                courtTicketPrice: court.ticketPrice,
-                              ),
-                            )
-                          ],
-                          (isModifyingSlot.value)
-                              ? const LoadingWidget()
-                              : Visibility(
-                                  visible: !fetchedCourtSlot.isClosedByAdmin,
-                                  child: TextButton(
-                                    child: Text(
-                                      fetchedCourtSlot.hasPlayer(currentUser)
-                                          ? 'LEAVE GAME'
-                                          : 'JOIN GAME',
-                                    ),
-                                    onPressed: () async {
-                                      isModifyingSlot.value = true;
-                                      await model.joinLeaveCourtSlot(
-                                        baseCourtSlot: fetchedCourtSlot,
-                                        slotHasPlayer:
-                                            fetchedCourtSlot.hasPlayer(
-                                          currentUser,
+                          Column(
+                            children: [
+                              Expanded(
+                                child: (players.isEmpty)
+                                    ? const Center(child: Text('No players'))
+                                    : Material(
+                                        child: ListView.builder(
+                                          itemCount: players.length,
+                                          itemBuilder: (context, index) {
+                                            final player = players[index];
+                                            return SlotPlayerTile(
+                                              isMvp: index == 0 &&
+                                                  (player.mvpVoteCount != 0),
+                                              model: model,
+                                              player: player,
+                                              currentPlayer: currentPlayer,
+                                              court: court,
+                                              fetchedCourtSlot:
+                                                  fetchedCourtSlot,
+                                              isAdmin: isAdmin,
+                                              isSuperAdmin: isSuperAdmin,
+                                              adminController: adminController,
+                                            );
+                                          },
                                         ),
-                                        courtTicketPrice: court.ticketPrice,
-                                        teamId: currentUserInfo!.teamId,
-                                        isTeamCaptain:
-                                            currentUserInfo.isTeamCaptain,
-                                      );
-                                      isModifyingSlot.value = false;
-                                    },
-                                  ),
+                                      ),
+                              ),
+                              if (!isDone) ...[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    if (isAdmin) ...[
+                                      TextButton(
+                                        child: Text(
+                                          (fetchedCourtSlot.isClosedByAdmin)
+                                              ? 'OPEN SLOT'
+                                              : 'CLOSE SLOT',
+                                        ),
+                                        onPressed: () =>
+                                            adminController.setCourtSlotClosed(
+                                          context: context,
+                                          courtSlot: fetchedCourtSlot,
+                                          closeCourt:
+                                              !fetchedCourtSlot.isClosedByAdmin,
+                                          courtTicketPrice: court.ticketPrice,
+                                        ),
+                                      )
+                                    ],
+                                    (isModifyingSlot.value)
+                                        ? const LoadingWidget()
+                                        : Visibility(
+                                            visible: !fetchedCourtSlot
+                                                .isClosedByAdmin,
+                                            child: TextButton(
+                                              child: Text(
+                                                fetchedCourtSlot
+                                                        .hasPlayer(currentUser)
+                                                    ? 'LEAVE GAME'
+                                                    : 'JOIN GAME',
+                                              ),
+                                              onPressed: () async {
+                                                isModifyingSlot.value = true;
+                                                await model.joinLeaveCourtSlot(
+                                                  baseCourtSlot:
+                                                      fetchedCourtSlot,
+                                                  slotHasPlayer:
+                                                      fetchedCourtSlot
+                                                          .hasPlayer(
+                                                    currentUser,
+                                                  ),
+                                                  courtTicketPrice:
+                                                      court.ticketPrice,
+                                                  teamId:
+                                                      currentUserInfo!.teamId,
+                                                  isTeamCaptain: currentUserInfo
+                                                      .isTeamCaptain,
+                                                );
+                                                isModifyingSlot.value = false;
+                                              },
+                                            ),
+                                          ),
+                                  ],
                                 ),
+                              ],
+                            ],
+                          ),
+                          Container(),
                         ],
                       ),
-                    ],
+                    ),
                   ],
                 );
               },
             ),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: tabController.animateTo,
+            currentIndex: tabIndex.value,
+            selectedItemColor: Colors.black,
+            items: const [
+              BottomNavigationBarItem(
+                label: "Players",
+                icon: Icon(Icons.people),
+              ),
+              BottomNavigationBarItem(
+                label: "Box Score",
+                icon: Icon(Icons.bar_chart),
+              ),
+            ],
           ),
         );
       },
