@@ -116,7 +116,6 @@ class CourtDetailsViewModel extends ViewModel {
     required double courtTicketPrice,
     required String? teamId,
     required bool isTeamCaptain,
-    BuildContext? context,
   }) async {
     if (teamId == null) {
       // If player is not part of a team
@@ -125,14 +124,12 @@ class CourtDetailsViewModel extends ViewModel {
           playerToRemove: currentUserInfo!.user,
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: courtTicketPrice,
-          context: context,
         );
       } else {
         await addToCourtSlot(
           userInfo: currentUserInfo!,
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: courtTicketPrice,
-          context: context,
         );
       }
     } else {
@@ -143,7 +140,6 @@ class CourtDetailsViewModel extends ViewModel {
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: courtTicketPrice,
-          context: context,
         );
       } else {
         await addTeamToCourtSlot(
@@ -151,7 +147,6 @@ class CourtDetailsViewModel extends ViewModel {
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: courtTicketPrice,
-          context: context,
         );
       }
     }
@@ -161,7 +156,6 @@ class CourtDetailsViewModel extends ViewModel {
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
     required KasadoUserInfo userInfo,
-    BuildContext? context,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       slotFull: () => Fluttertoast.showToast(msg: 'Slot is full'),
@@ -175,8 +169,6 @@ class CourtDetailsViewModel extends ViewModel {
           player: userInfo.user,
           courtTicketPrice: courtTicketPrice,
         );
-
-        if (context != null) Navigator.pop(context);
       },
     );
   }
@@ -185,7 +177,6 @@ class CourtDetailsViewModel extends ViewModel {
     required KasadoUser playerToRemove,
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
-    BuildContext? context,
   }) async {
     final KasadoUser player =
         baseCourtSlot.players.singleWhere((p) => (p.id == playerToRemove.id));
@@ -195,8 +186,6 @@ class CourtDetailsViewModel extends ViewModel {
       courtSlot: baseCourtSlot,
       courtTicketPrice: courtTicketPrice,
     );
-
-    if (context != null) Navigator.pop(context);
   }
 
   Future<void> addTeamToCourtSlot({
@@ -204,7 +193,6 @@ class CourtDetailsViewModel extends ViewModel {
     required bool isTeamCaptain,
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
-    BuildContext? context,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       userReservedAtAnotherSlot: () => Fluttertoast.showToast(
@@ -217,7 +205,6 @@ class CourtDetailsViewModel extends ViewModel {
             courtSlot: baseCourtSlot,
             courtTicketPrice: courtTicketPrice,
           );
-          if (context != null) Navigator.pop(context);
         } else {
           Fluttertoast.showToast(
             msg: 'Only the team captain can join a game for the team',

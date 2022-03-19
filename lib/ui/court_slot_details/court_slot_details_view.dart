@@ -157,7 +157,6 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                                           currentUser,
                                         ),
                                         courtTicketPrice: court.ticketPrice,
-                                        context: context,
                                         teamId: currentUserInfo!.teamId,
                                         isTeamCaptain:
                                             currentUserInfo.isTeamCaptain,
