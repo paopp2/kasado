@@ -260,20 +260,19 @@ class CourtDetailsViewModel extends ViewModel {
 
     final isVoteForSelf = myMvpIndex == currentPlayerIndex;
 
-    await courtSlotRepo.pushCourtSlot(
-      courtSlot: baseCourtSlot.copyWith(
-        players: (isVoteForSelf)
-            ? (slotPlayers
-              ..[currentPlayerIndex] = currentPlayer.copyWith(
-                mvpVoteCount: currentPlayer.mvpVoteCount + 1,
-                votedMvpId: currentPlayer.id,
-              ))
-            : (slotPlayers
-              ..[currentPlayerIndex] =
-                  currentPlayer.copyWith(votedMvpId: myMvp.id)
-              ..[myMvpIndex] =
-                  myMvp.copyWith(mvpVoteCount: myMvp.mvpVoteCount + 1)),
-      ),
+    await courtSlotRepo.updateCourtSlotPlayers(
+      courtSlot: baseCourtSlot,
+      updatedPlayers: (isVoteForSelf)
+          ? (slotPlayers
+            ..[currentPlayerIndex] = currentPlayer.copyWith(
+              mvpVoteCount: currentPlayer.mvpVoteCount + 1,
+              votedMvpId: currentPlayer.id,
+            ))
+          : (slotPlayers
+            ..[currentPlayerIndex] =
+                currentPlayer.copyWith(votedMvpId: myMvp.id)
+            ..[myMvpIndex] =
+                myMvp.copyWith(mvpVoteCount: myMvp.mvpVoteCount + 1)),
     );
 
     // TODO: Optimize and clean code IF and ONLY IF this clicks with users
