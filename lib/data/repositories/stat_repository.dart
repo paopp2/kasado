@@ -39,6 +39,7 @@ class StatRepository {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colGameStats(courtId, slotId),
       builder: (data, _) => GameStats.fromJson(data),
+      queryBuilder: (query) => query.orderBy("recordedAt"),
     );
   }
 
