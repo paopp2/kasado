@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 class GameTeamsSetupDialog extends HookConsumerWidget {
   const GameTeamsSetupDialog({
     Key? key,
     required this.players,
+    required this.courtSlot,
   }) : super(key: key);
 
   final List<KasadoUser> players;
+  final CourtSlot courtSlot;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -89,7 +92,7 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
           ),
           TextButton(
             child: const Text('OK'),
-            onPressed: () {},
+            onPressed: () => controller.initStatsForGame(courtSlot),
           ),
         ],
       ),

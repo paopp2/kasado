@@ -24,7 +24,10 @@ class StatControllerTab extends StatelessWidget {
               child: const Text('START GAME'),
               onPressed: () => showDialog(
                 context: context,
-                builder: (_) => GameTeamsSetupDialog(players: players),
+                builder: (_) => GameTeamsSetupDialog(
+                  players: players,
+                  courtSlot: courtSlot,
+                ),
               ),
             ),
           ),
