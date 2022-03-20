@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
+import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 
-class GameTeamsSetupDialog extends StatelessWidget {
+class GameTeamsSetupDialog extends HookConsumerWidget {
   const GameTeamsSetupDialog({
     Key? key,
     required this.players,
@@ -10,7 +13,11 @@ class GameTeamsSetupDialog extends StatelessWidget {
   final List<KasadoUser> players;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(gameStatController);
+    final homeTeamPlayers = ref.watch(homeTeamPlayersProvider);
+    final awayTeamPlayers = ref.watch(awayTeamPlayersProvider);
+
     return Dialog(
       child: Column(
         children: [
@@ -20,13 +27,12 @@ class GameTeamsSetupDialog extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  CircleAvatar(radius: 20),
-                  CircleAvatar(radius: 20),
-                  CircleAvatar(radius: 20),
-                  CircleAvatar(radius: 20),
-                  CircleAvatar(radius: 20),
-                ],
+                children: homeTeamPlayers
+                    .map((player) => CircleAvatar(
+                          backgroundImage: NetworkImage(player.photoUrl!),
+                          radius: 20,
+                        ))
+                    .toList(),
               ),
             ),
           ),
@@ -36,13 +42,12 @@ class GameTeamsSetupDialog extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  CircleAvatar(radius: 20),
-                  CircleAvatar(radius: 20),
-                  CircleAvatar(radius: 20),
-                  CircleAvatar(radius: 20),
-                  CircleAvatar(radius: 20),
-                ],
+                children: awayTeamPlayers
+                    .map((player) => CircleAvatar(
+                          backgroundImage: NetworkImage(player.photoUrl!),
+                          radius: 20,
+                        ))
+                    .toList(),
               ),
             ),
           ),
@@ -67,18 +72,14 @@ class GameTeamsSetupDialog extends StatelessWidget {
                           Icons.arrow_left,
                           color: Colors.blue,
                         ),
-                        onPressed: () {
-                          // Add to HOME Team
-                        },
+                        onPressed: () => controller.addPlayerToHomeTeam(player),
                       ),
                       IconButton(
                         icon: const Icon(
                           Icons.arrow_right,
                           color: Colors.red,
                         ),
-                        onPressed: () {
-                          // Add to AWAY Team
-                        },
+                        onPressed: () => controller.addPlayerToAwayTeam(player),
                       )
                     ],
                   ),
