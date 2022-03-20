@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
-import 'package:kasado/model/column_data/column_data.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
-import 'package:kasado/model/stats/stats.dart';
-import 'package:kasado/ui/shared/kasado_table.dart';
+import 'package:kasado/ui/court_slot_details/tabs/components/team_stat_table.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class BoxScoreTab extends HookConsumerWidget {
@@ -43,49 +41,11 @@ class BoxScoreTab extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    KasadoTable<Stats>(
-                      height: constraints.maxHeight * 0.5,
-                      width: constraints.maxWidth,
-                      frozenColumnCount: 1,
-                      dataAsList: selectedStatsState
-                          .value!.homeTeamStats.entries
+                    TeamStatTable(
+                      constraints: constraints,
+                      statsList: selectedStatsState.value!.homeTeamStats.entries
                           .map((statEntry) => statEntry.value)
                           .toList(),
-                      columnDataList: [
-                        ColumnData(
-                          columnName: "PLAYER",
-                          // Value not required as this column will only show the user's CircleAvatar
-                          dataValueCallback: (stats) => '',
-                          valueToStringCallback: (playerPhoto, stats) =>
-                              playerPhoto as String,
-                          isImage: true,
-                        ),
-                        ColumnData(
-                          columnName: "NAME",
-                          dataValueCallback: (stats) =>
-                              stats.player.displayName,
-                          valueToStringCallback: (playerName, stats) =>
-                              playerName as String,
-                        ),
-                        ColumnData(
-                          columnName: "PTS",
-                          dataValueCallback: (stats) => stats.points,
-                          valueToStringCallback: (points, stats) =>
-                              points.toString(),
-                        ),
-                        ColumnData(
-                          columnName: "REB",
-                          dataValueCallback: (stats) => stats.rebounds,
-                          valueToStringCallback: (rebounds, stats) =>
-                              rebounds.toString(),
-                        ),
-                        ColumnData(
-                          columnName: "AST",
-                          dataValueCallback: (stats) => stats.ast,
-                          valueToStringCallback: (assists, stats) =>
-                              assists.toString(),
-                        ),
-                      ],
                     ),
                     const SizedBox(height: 30),
                     Padding(
@@ -99,49 +59,11 @@ class BoxScoreTab extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    KasadoTable<Stats>(
-                      height: constraints.maxHeight * 0.5,
-                      width: constraints.maxWidth,
-                      frozenColumnCount: 1,
-                      dataAsList: selectedStatsState
-                          .value!.awayTeamStats.entries
+                    TeamStatTable(
+                      constraints: constraints,
+                      statsList: selectedStatsState.value!.awayTeamStats.entries
                           .map((statEntry) => statEntry.value)
                           .toList(),
-                      columnDataList: [
-                        ColumnData(
-                          columnName: "PLAYER",
-                          // Value not required as this column will only show the user's CircleAvatar
-                          dataValueCallback: (stats) => '',
-                          valueToStringCallback: (playerPhoto, stats) =>
-                              playerPhoto as String,
-                          isImage: true,
-                        ),
-                        ColumnData(
-                          columnName: "NAME",
-                          dataValueCallback: (stats) =>
-                              stats.player.displayName,
-                          valueToStringCallback: (playerName, stats) =>
-                              playerName as String,
-                        ),
-                        ColumnData(
-                          columnName: "PTS",
-                          dataValueCallback: (stats) => stats.points,
-                          valueToStringCallback: (points, stats) =>
-                              points.toString(),
-                        ),
-                        ColumnData(
-                          columnName: "REB",
-                          dataValueCallback: (stats) => stats.rebounds,
-                          valueToStringCallback: (rebounds, stats) =>
-                              rebounds.toString(),
-                        ),
-                        ColumnData(
-                          columnName: "AST",
-                          dataValueCallback: (stats) => stats.ast,
-                          valueToStringCallback: (assists, stats) =>
-                              assists.toString(),
-                        ),
-                      ],
                     ),
                   ],
                 ),
