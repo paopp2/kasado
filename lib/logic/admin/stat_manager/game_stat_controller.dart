@@ -6,6 +6,7 @@ import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/stats/stats.dart';
+import 'package:kasado/ui/admin/stat_manager/components/stat_player_chooser_dialog.dart';
 import 'package:uuid/uuid.dart';
 
 final gameStatController = Provider.autoDispose(
@@ -31,6 +32,78 @@ class GameStatController {
   void addPlayerToAwayTeam(KasadoUser player) {
     read(awayTeamPlayersProvider.notifier)
         .update((state) => [...state, player]);
+  }
+
+  bool isHomePlayer(KasadoUser player) {
+    return read(homeTeamPlayersProvider).contains(player);
+  }
+
+  Future<void> onPlayerShot({
+    required BuildContext context,
+    required bool isThree, // isTwo otherwise
+    required bool wasMade,
+  }) async {
+    final player = await showDialog(
+      context: context,
+      builder: (_) => const StatPlayerChooserDialog(),
+    ) as KasadoUser;
+
+    final _isHomePlayer = isHomePlayer(player);
+
+    if (wasMade) {
+      final playerWhoAssisted = await showDialog(
+        context: context,
+        builder: (_) => StatPlayerChooserDialog(
+          showOneAndShowHome: _isHomePlayer,
+        ),
+      ) as KasadoUser?;
+
+      // Increment relevant point stat for player scored
+      // Increment assist for player assisted
+    } else {
+      final playerWhoBlocked = await showDialog(
+        context: context,
+        builder: (_) => StatPlayerChooserDialog(
+          showOneAndShowHome: !_isHomePlayer,
+        ),
+      ) as KasadoUser?;
+
+      // Increment relevant point stat for player missed
+      // Give block to playerBlocked if any
+    }
+  }
+
+  Future<void> onPlayerShotFT({
+    required BuildContext context,
+    required bool wasMade,
+  }) async {
+    final player = await showDialog(
+      context: context,
+      builder: (_) => const StatPlayerChooserDialog(),
+    ) as KasadoUser;
+
+    // Increment FT stat depending if FT [wasMade]
+  }
+
+  Future<void> onPlayerRebounded({
+    required BuildContext context,
+    required bool isDefensive,
+  }) async {
+    final player = await showDialog(
+      context: context,
+      builder: (_) => const StatPlayerChooserDialog(),
+    ) as KasadoUser;
+
+    // Increment REB stat depending if rebound [isDefensive]
+  }
+
+  Future<void> onPlayerSteal({required BuildContext context}) async {
+    final player = await showDialog(
+      context: context,
+      builder: (_) => const StatPlayerChooserDialog(),
+    ) as KasadoUser;
+
+    // Increment STL stat
   }
 
   Future<void> initStatsForGame(

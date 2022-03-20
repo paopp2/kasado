@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/admin/stat_manager/components/game_teams_setup_dialog.dart';
 import 'package:kasado/ui/admin/stat_manager/components/stat_button.dart';
-import 'package:kasado/ui/admin/stat_manager/components/stat_player_chooser_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class StatsControllerTab extends HookConsumerWidget {
@@ -19,6 +19,7 @@ class StatsControllerTab extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(gameStatController);
     final players = courtSlot.players;
     final slotStatsPath = ref.watch(slotGameStatsPathProvider);
     final gameSlotStream =
@@ -57,37 +58,37 @@ class StatsControllerTab extends HookConsumerWidget {
                 StatButton(
                   color: Colors.green,
                   content: '3',
-                  onPressed: () {
-                    // Show dialog with all to select player who scored
-                    // Show dialog with only the teammates of player who scored for the assist (if any)
-                    showDialog(
-                      context: context,
-                      builder: (context) => const StatPlayerChooserDialog(),
-                    );
-                  },
+                  onPressed: () => controller.onPlayerShot(
+                    context: context,
+                    isThree: true,
+                    wasMade: true,
+                  ),
                 ),
                 StatButton(
                   color: Colors.red,
                   content: '3',
-                  onPressed: () {
-                    // Show dialog with all to select player who missed
-                    // Show dialog with only enemies of player who missed for block (if any)
-                  },
+                  onPressed: () => controller.onPlayerShot(
+                    context: context,
+                    isThree: true,
+                    wasMade: false,
+                  ),
                 ),
                 const Spacer(),
                 StatButton(
                   color: Colors.red,
                   content: 'OREB',
-                  onPressed: () {
-                    // Show dialog with all
-                  },
+                  onPressed: () => controller.onPlayerRebounded(
+                    context: context,
+                    isDefensive: false,
+                  ),
                 ),
                 StatButton(
                   color: Colors.green,
                   content: 'DREB',
-                  onPressed: () {
-                    // Show dialog with all
-                  },
+                  onPressed: () => controller.onPlayerRebounded(
+                    context: context,
+                    isDefensive: true,
+                  ),
                 ),
               ],
             ),
@@ -96,20 +97,26 @@ class StatsControllerTab extends HookConsumerWidget {
                 StatButton(
                   color: Colors.green,
                   content: '2',
-                  onPressed: () {},
+                  onPressed: () => controller.onPlayerShot(
+                    context: context,
+                    isThree: false,
+                    wasMade: true,
+                  ),
                 ),
                 StatButton(
                   color: Colors.red,
                   content: '2',
-                  onPressed: () {},
+                  onPressed: () => controller.onPlayerShot(
+                    context: context,
+                    isThree: false,
+                    wasMade: false,
+                  ),
                 ),
                 const Spacer(),
                 StatButton(
                   color: Colors.red,
                   content: 'STL',
-                  onPressed: () {
-                    // Show dialog with all
-                  },
+                  onPressed: () => controller.onPlayerSteal(context: context),
                 ),
               ],
             ),
@@ -118,12 +125,18 @@ class StatsControllerTab extends HookConsumerWidget {
                 StatButton(
                   color: Colors.green,
                   content: '1',
-                  onPressed: () {},
+                  onPressed: () => controller.onPlayerShotFT(
+                    context: context,
+                    wasMade: true,
+                  ),
                 ),
                 StatButton(
                   color: Colors.red,
                   content: '1',
-                  onPressed: () {},
+                  onPressed: () => controller.onPlayerShotFT(
+                    context: context,
+                    wasMade: false,
+                  ),
                 ),
               ],
             ),

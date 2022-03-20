@@ -17,9 +17,11 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
     return Dialog(
       child: Column(
         children: [
-          if (showOneAndShowHome == null || showOneAndShowHome == true) ...[
-            const Text('HOME', textAlign: TextAlign.center),
-            Expanded(
+          const Text('HOME', textAlign: TextAlign.center),
+          Expanded(
+            child: Visibility(
+              visible:
+                  (showOneAndShowHome == null || showOneAndShowHome == true),
               child: ListView.builder(
                 itemCount: 5,
                 itemBuilder: (context, i) {
@@ -36,11 +38,12 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
                 },
               ),
             ),
-          ],
-          const Divider(),
-          if (showOneAndShowHome == null || showOneAndShowHome == false) ...[
-            const Text('AWAY', textAlign: TextAlign.center),
-            Expanded(
+          ),
+          const Text('AWAY', textAlign: TextAlign.center),
+          Expanded(
+            child: Visibility(
+              visible:
+                  (showOneAndShowHome == null || showOneAndShowHome == false),
               child: ListView.builder(
                 itemCount: 5,
                 itemBuilder: (context, i) {
@@ -57,7 +60,14 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
                 },
               ),
             ),
-          ],
+          ),
+          Visibility(
+            visible: showOneAndShowHome != null,
+            child: TextButton(
+              child: const Text('NONE'),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
         ],
       ),
     );
