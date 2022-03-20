@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/admin/stat_manager/components/game_teams_setup_dialog.dart';
+import 'package:kasado/ui/admin/stat_manager/components/stat_button.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class StatControllerTab extends HookConsumerWidget {
@@ -52,96 +53,60 @@ class StatControllerTab extends HookConsumerWidget {
           children: [
             Row(
               children: [
-                ElevatedButton(
-                  child: const Text('3'),
+                StatButton(
+                  color: Colors.green,
+                  content: '3',
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    fixedSize: const Size(75, 75),
-                    shape: const CircleBorder(),
-                  ),
                 ),
-                ElevatedButton(
-                  child: const Text('3'),
+                StatButton(
+                  color: Colors.red,
+                  content: '3',
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                    fixedSize: const Size(75, 75),
-                    shape: const CircleBorder(),
-                  ),
                 ),
                 const Spacer(),
-                ElevatedButton(
-                  child: const Text('OREB'),
+                StatButton(
+                  color: Colors.red,
+                  content: 'OREB',
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                    fixedSize: const Size(75, 75),
-                    shape: const CircleBorder(),
-                  ),
                 ),
-                ElevatedButton(
-                  child: const Text('DREB'),
+                StatButton(
+                  color: Colors.green,
+                  content: 'DREB',
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    fixedSize: const Size(75, 75),
-                    shape: const CircleBorder(),
-                  ),
                 ),
               ],
             ),
             Row(
               children: [
-                ElevatedButton(
-                  child: const Text('2'),
+                StatButton(
+                  color: Colors.green,
+                  content: '2',
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    fixedSize: const Size(75, 75),
-                    shape: const CircleBorder(),
-                  ),
                 ),
-                ElevatedButton(
-                  child: const Text('2'),
+                StatButton(
+                  color: Colors.red,
+                  content: '2',
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                    fixedSize: const Size(75, 75),
-                    shape: const CircleBorder(),
-                  ),
                 ),
                 const Spacer(),
-                ElevatedButton(
-                  child: const Text('STL'),
+                StatButton(
+                  color: Colors.red,
+                  content: 'STL',
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                    fixedSize: const Size(75, 75),
-                    shape: const CircleBorder(),
-                  ),
                 ),
               ],
             ),
             Row(
               children: [
-                ElevatedButton(
-                  child: const Text('1'),
+                StatButton(
+                  color: Colors.green,
+                  content: '1',
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                    fixedSize: const Size(75, 75),
-                    shape: const CircleBorder(),
-                  ),
                 ),
-                ElevatedButton(
-                  child: const Text('1'),
+                StatButton(
+                  color: Colors.red,
+                  content: '1',
                   onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                    fixedSize: const Size(75, 75),
-                    shape: const CircleBorder(),
-                  ),
                 ),
               ],
             ),
