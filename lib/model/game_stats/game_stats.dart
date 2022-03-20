@@ -15,6 +15,16 @@ class GameStats with _$GameStats {
     bool? isHomeWinner,
   }) = _GameStats;
 
+  int get homeScore => homeTeamStats.entries
+      .map((statEntry) => statEntry.value.points)
+      .toList()
+      .reduce((a, b) => a + b);
+
+  int get awayScore => awayTeamStats.entries
+      .map((statEntry) => statEntry.value.points)
+      .toList()
+      .reduce((a, b) => a + b);
+
   factory GameStats.fromJson(Map<String, dynamic> json) =>
       _$GameStatsFromJson(json);
 }

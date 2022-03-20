@@ -32,12 +32,12 @@ class BoxScoreTab extends HookConsumerWidget {
               ? const Center(child: Text('No stats available'))
               : ListView(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "HOME",
+                        "HOME : ${selectedStatsState.value!.homeScore}",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -53,7 +53,7 @@ class BoxScoreTab extends HookConsumerWidget {
                           .toList(),
                       columnDataList: [
                         ColumnData(
-                          columnName: "Player",
+                          columnName: "PLAYER",
                           // Value not required as this column will only show the user's CircleAvatar
                           dataValueCallback: (stats) => '',
                           valueToStringCallback: (playerPhoto, stats) =>
@@ -61,7 +61,7 @@ class BoxScoreTab extends HookConsumerWidget {
                           isImage: true,
                         ),
                         ColumnData(
-                          columnName: "Name",
+                          columnName: "NAME",
                           dataValueCallback: (stats) =>
                               stats.player.displayName,
                           valueToStringCallback: (playerName, stats) =>
@@ -88,12 +88,12 @@ class BoxScoreTab extends HookConsumerWidget {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "AWAY",
+                        "AWAY : ${selectedStatsState.value!.awayScore}",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -109,7 +109,7 @@ class BoxScoreTab extends HookConsumerWidget {
                           .toList(),
                       columnDataList: [
                         ColumnData(
-                          columnName: "Player",
+                          columnName: "PLAYER",
                           // Value not required as this column will only show the user's CircleAvatar
                           dataValueCallback: (stats) => '',
                           valueToStringCallback: (playerPhoto, stats) =>
@@ -117,7 +117,7 @@ class BoxScoreTab extends HookConsumerWidget {
                           isImage: true,
                         ),
                         ColumnData(
-                          columnName: "Name",
+                          columnName: "NAME",
                           dataValueCallback: (stats) =>
                               stats.player.displayName,
                           valueToStringCallback: (playerName, stats) =>
