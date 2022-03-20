@@ -102,16 +102,24 @@ class GameStatController {
     );
   }
 
-  Future<void> onPlayerRebounded({
-    required BuildContext context,
-    required bool isDefensive,
-  }) async {
+  Future<void> onPlayerRebounded(
+      {required BuildContext context,
+      required bool isDefensive,
+      required GameStats baseGameStats,
+      required CourtSlot courtSlot,
+      required}) async {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
     ) as KasadoUser;
 
-    // Increment REB stat depending if rebound [isDefensive]
+    await statRepo.recordPlayerRebound(
+      reboundingPlayer: player,
+      baseGameStats: baseGameStats,
+      courtSlot: courtSlot,
+      isHomePlayer: isHomePlayer(player),
+      isDefensive: isDefensive,
+    );
   }
 
   Future<void> onPlayerSteal({

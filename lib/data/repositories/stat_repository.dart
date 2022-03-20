@@ -221,4 +221,34 @@ class StatRepository {
       merge: true,
     );
   }
+
+  Future<void> recordPlayerRebound({
+    required KasadoUser reboundingPlayer,
+    required GameStats baseGameStats,
+    required CourtSlot courtSlot,
+    required bool isHomePlayer,
+    required bool isDefensive,
+  }) async {
+    final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
+
+    final playerBaseStats = (isHomePlayer)
+        ? baseGameStats.homeTeamStats[reboundingPlayer.id]!
+        : baseGameStats.awayTeamStats[reboundingPlayer.id]!;
+
+    await firestoreHelper.setData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        baseGameStats.id,
+      ),
+      data: {
+        fieldPrefix: {
+          reboundingPlayer.id: (isDefensive)
+              ? {"dReb": playerBaseStats.dReb + 1}
+              : {"oReb": playerBaseStats.oReb + 1},
+        }
+      },
+      merge: true,
+    );
+  }
 }

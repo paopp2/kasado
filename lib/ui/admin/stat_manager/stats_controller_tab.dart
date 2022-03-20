@@ -80,6 +80,8 @@ class StatsControllerTab extends HookConsumerWidget {
                       onPressed: () => controller.onPlayerRebounded(
                         context: context,
                         isDefensive: false,
+                        baseGameStats: gameStats!,
+                        courtSlot: courtSlot,
                       ),
                     ),
                     StatButton(
@@ -88,6 +90,8 @@ class StatsControllerTab extends HookConsumerWidget {
                       onPressed: () => controller.onPlayerRebounded(
                         context: context,
                         isDefensive: true,
+                        baseGameStats: gameStats!,
+                        courtSlot: courtSlot,
                       ),
                     ),
                   ],
