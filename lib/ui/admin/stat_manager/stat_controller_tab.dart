@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/ui/admin/stat_manager/components/game_teams_setup_dialog.dart';
 
 class StatControllerTab extends StatelessWidget {
   const StatControllerTab({
     Key? key,
+    required this.constraints,
+    required this.courtSlot,
   }) : super(key: key);
+
+  final BoxConstraints constraints;
+  final CourtSlot courtSlot;
 
   @override
   Widget build(BuildContext context) {
+    final players = courtSlot.players;
+
     return Column(
       children: [
-        const Expanded(
-          child: Center(child: Text('Hello world')),
+        Expanded(
+          child: Center(
+            child: TextButton(
+              child: const Text('START GAME'),
+              onPressed: () => showDialog(
+                context: context,
+                builder: (_) => GameTeamsSetupDialog(players: players),
+              ),
+            ),
+          ),
         ),
         Column(
           children: [
