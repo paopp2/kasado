@@ -42,14 +42,14 @@ class TeamStatTable extends StatelessWidget {
           valueToStringCallback: (points, stats) => points.toString(),
         ),
         ColumnData(
-          columnName: "REB",
-          dataValueCallback: (stats) => stats.rebounds,
-          valueToStringCallback: (rebounds, stats) => rebounds.toString(),
-        ),
-        ColumnData(
           columnName: "AST",
           dataValueCallback: (stats) => stats.ast,
           valueToStringCallback: (assists, stats) => assists.toString(),
+        ),
+        ColumnData(
+          columnName: "REB",
+          dataValueCallback: (stats) => stats.rebounds,
+          valueToStringCallback: (rebounds, stats) => rebounds.toString(),
         ),
         ColumnData(
           columnName: "FGM / FGA",
