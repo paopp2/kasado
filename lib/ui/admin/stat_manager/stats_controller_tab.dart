@@ -45,7 +45,37 @@ class StatsControllerTab extends HookConsumerWidget {
                         ),
                       ),
                     )
-                  : const Center(child: Text('Game started')),
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                const Text('HOME'),
+                                Text(gameStats.homeScore.toString()),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                const Text('AWAY'),
+                                Text(gameStats.awayScore.toString()),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text('END GAME'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
             ),
             Column(
               children: [
