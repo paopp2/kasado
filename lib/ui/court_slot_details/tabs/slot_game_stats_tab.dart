@@ -5,6 +5,7 @@ import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/column_data/column_data.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
+import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/ui/shared/kasado_table.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
@@ -22,57 +23,59 @@ class SlotGameStatsTab extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final allGameStatsStream = ref.watch(allSlotGamesStatsStreamProvider(
         '${courtSlot.courtId}|${courtSlot.slotId}'));
-    final selectedGameStatsState = useState<GameStats?>(null);
+    final selectedStatsState = useState<GameStats?>(null);
 
     return Column(
       children: [
         Expanded(
-          child: (selectedGameStatsState.value == null)
+          child: (selectedStatsState.value == null)
               ? const Text('Hello po')
               : ListView(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text(
-                        selectedGameStatsState.value!.id,
+                        "HOME",
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    KasadoTable<String>(
+                    KasadoTable<Stats>(
                       height: constraints.maxHeight * 0.5,
                       width: constraints.maxWidth,
                       frozenColumnCount: 1,
-                      dataAsList: const [
-                        "Hello",
-                        "Po",
-                        "Hello",
-                        "Po",
-                        "Hello",
-                      ],
+                      dataAsList: selectedStatsState
+                          .value!.homeTeamStats.entries
+                          .map((statEntry) => statEntry.value)
+                          .toList(),
                       columnDataList: [
                         ColumnData(
-                          columnName: "Name",
-                          dataValueCallback: (val) => val,
-                          valueToStringCallback: (val, valu) => valu,
+                          columnName: "Player",
+                          dataValueCallback: (stats) =>
+                              stats.player.displayName,
+                          valueToStringCallback: (playerName, stats) =>
+                              playerName as String,
                         ),
                         ColumnData(
-                          columnName: "Name 2",
-                          dataValueCallback: (val) => val,
-                          valueToStringCallback: (val, valu) => valu,
+                          columnName: "PTS",
+                          dataValueCallback: (stats) => stats.points,
+                          valueToStringCallback: (points, stats) =>
+                              points.toString(),
                         ),
                         ColumnData(
-                          columnName: "Name 3",
-                          dataValueCallback: (val) => val,
-                          valueToStringCallback: (val, valu) => valu,
+                          columnName: "REB",
+                          dataValueCallback: (stats) => stats.rebounds,
+                          valueToStringCallback: (rebounds, stats) =>
+                              rebounds.toString(),
                         ),
                         ColumnData(
-                          columnName: "Name 4",
-                          dataValueCallback: (val) => val,
-                          valueToStringCallback: (val, valu) => valu,
+                          columnName: "AST",
+                          dataValueCallback: (stats) => stats.ast,
+                          valueToStringCallback: (assists, stats) =>
+                              assists.toString(),
                         ),
                       ],
                     ),
@@ -88,37 +91,39 @@ class SlotGameStatsTab extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    KasadoTable<String>(
-                      height: constraints.maxHeight,
+                    KasadoTable<Stats>(
+                      height: constraints.maxHeight * 0.5,
                       width: constraints.maxWidth,
                       frozenColumnCount: 1,
-                      dataAsList: const [
-                        "Hello",
-                        "Po",
-                        "Hello",
-                        "Po",
-                        "Hello",
-                      ],
+                      dataAsList: selectedStatsState
+                          .value!.awayTeamStats.entries
+                          .map((statEntry) => statEntry.value)
+                          .toList(),
                       columnDataList: [
                         ColumnData(
-                          columnName: "Name",
-                          dataValueCallback: (val) => val,
-                          valueToStringCallback: (val, valu) => valu,
+                          columnName: "Player",
+                          dataValueCallback: (stats) =>
+                              stats.player.displayName,
+                          valueToStringCallback: (playerName, stats) =>
+                              playerName as String,
                         ),
                         ColumnData(
-                          columnName: "Name 2",
-                          dataValueCallback: (val) => val,
-                          valueToStringCallback: (val, valu) => valu,
+                          columnName: "PTS",
+                          dataValueCallback: (stats) => stats.points,
+                          valueToStringCallback: (points, stats) =>
+                              points.toString(),
                         ),
                         ColumnData(
-                          columnName: "Name 3",
-                          dataValueCallback: (val) => val,
-                          valueToStringCallback: (val, valu) => valu,
+                          columnName: "REB",
+                          dataValueCallback: (stats) => stats.rebounds,
+                          valueToStringCallback: (rebounds, stats) =>
+                              rebounds.toString(),
                         ),
                         ColumnData(
-                          columnName: "Name 4",
-                          dataValueCallback: (val) => val,
-                          valueToStringCallback: (val, valu) => valu,
+                          columnName: "AST",
+                          dataValueCallback: (stats) => stats.ast,
+                          valueToStringCallback: (assists, stats) =>
+                              assists.toString(),
                         ),
                       ],
                     ),
@@ -133,12 +138,12 @@ class SlotGameStatsTab extends HookConsumerWidget {
               loading: () => const LoadingWidget(),
               data: (allGameStats) {
                 if (allGameStats.isNotEmpty &&
-                    (selectedGameStatsState.value == null)) {
+                    (selectedStatsState.value == null)) {
                   // If gameStats is not empty and no game stats had been
                   // selected yet, show the stats of the first game by default.
                   // Update asynchronously to avoid UI rebuild errors or "clashes"
                   Future.delayed(Duration.zero, () {
-                    selectedGameStatsState.value = allGameStats.first;
+                    selectedStatsState.value = allGameStats.first;
                   });
                 }
                 return Row(
@@ -150,15 +155,15 @@ class SlotGameStatsTab extends HookConsumerWidget {
                           child: Text(
                             'G${gameStatEntry.key + 1}',
                             style: TextStyle(
-                              color: (selectedGameStatsState.value ==
+                              color: (selectedStatsState.value ==
                                       gameStatEntry.value)
                                   ? Colors.green
                                   : null,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          onPressed: () => (selectedGameStatsState.value =
-                              gameStatEntry.value),
+                          onPressed: () =>
+                              (selectedStatsState.value = gameStatEntry.value),
                         ),
                       )
                       .toList(),
