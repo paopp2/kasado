@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/ui/court_slot_details/tabs/components/team_stat_table.dart';
@@ -22,6 +23,7 @@ class BoxScoreTab extends HookConsumerWidget {
     final allGameStatsStream = ref.watch(allSlotGamesStatsStreamProvider(
         '${courtSlot.courtId}|${courtSlot.slotId}'));
     final selectedStatsState = useState<GameStats?>(null);
+    final utils = ref.watch(kasadoUtilsProvider);
 
     return Column(
       children: [
@@ -46,6 +48,7 @@ class BoxScoreTab extends HookConsumerWidget {
                       statsList: selectedStatsState.value!.homeTeamStats.entries
                           .map((statEntry) => statEntry.value)
                           .toList(),
+                      utils: utils,
                     ),
                     const SizedBox(height: 30),
                     Padding(
@@ -64,6 +67,7 @@ class BoxScoreTab extends HookConsumerWidget {
                       statsList: selectedStatsState.value!.awayTeamStats.entries
                           .map((statEntry) => statEntry.value)
                           .toList(),
+                      utils: utils,
                     ),
                   ],
                 ),

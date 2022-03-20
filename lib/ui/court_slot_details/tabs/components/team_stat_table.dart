@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/column_data/column_data.dart';
 import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/ui/shared/kasado_table.dart';
@@ -8,10 +9,12 @@ class TeamStatTable extends StatelessWidget {
     Key? key,
     required this.constraints,
     required this.statsList,
+    required this.utils,
   }) : super(key: key);
 
   final BoxConstraints constraints;
   final List<Stats> statsList;
+  final KasadoUtils utils;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +50,18 @@ class TeamStatTable extends StatelessWidget {
           columnName: "AST",
           dataValueCallback: (stats) => stats.ast,
           valueToStringCallback: (assists, stats) => assists.toString(),
+        ),
+        ColumnData(
+          columnName: "FGM / FGA",
+          dataValueCallback: (stats) => stats.totalAttempts,
+          valueToStringCallback: (_, stats) =>
+              "${stats.totalMade} / ${stats.totalAttempts}",
+        ),
+        ColumnData(
+          columnName: "FG %",
+          dataValueCallback: (stats) => stats.fgPercent,
+          valueToStringCallback: (fgPercent, stats) =>
+              utils.getPercentageFormat(fgPercent as double),
         ),
       ],
     );

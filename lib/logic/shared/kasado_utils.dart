@@ -135,4 +135,9 @@ class KasadoUtils {
     final endTimeFormat = DateFormat('h:mm a');
     return "${startTimeFormat.format(timeRange.startsAt)} - ${endTimeFormat.format(timeRange.endsAt)}";
   }
+
+  String getPercentageFormat(double number) {
+    if (number.isNaN) return "N/A";
+    return "${number.toStringAsFixed(1)} %";
+  }
 }
