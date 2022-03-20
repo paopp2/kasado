@@ -54,6 +54,14 @@ class BoxScoreTab extends HookConsumerWidget {
                       columnDataList: [
                         ColumnData(
                           columnName: "Player",
+                          // Value not required as this column will only show the user's CircleAvatar
+                          dataValueCallback: (stats) => '',
+                          valueToStringCallback: (playerPhoto, stats) =>
+                              playerPhoto as String,
+                          isImage: true,
+                        ),
+                        ColumnData(
+                          columnName: "Name",
                           dataValueCallback: (stats) =>
                               stats.player.displayName,
                           valueToStringCallback: (playerName, stats) =>
@@ -102,6 +110,14 @@ class BoxScoreTab extends HookConsumerWidget {
                       columnDataList: [
                         ColumnData(
                           columnName: "Player",
+                          // Value not required as this column will only show the user's CircleAvatar
+                          dataValueCallback: (stats) => '',
+                          valueToStringCallback: (playerPhoto, stats) =>
+                              playerPhoto as String,
+                          isImage: true,
+                        ),
+                        ColumnData(
+                          columnName: "Name",
                           dataValueCallback: (stats) =>
                               stats.player.displayName,
                           valueToStringCallback: (playerName, stats) =>

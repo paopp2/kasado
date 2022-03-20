@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:kasado/model/column_data/column_data.dart';
+import 'package:kasado/model/stats/stats.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 
@@ -196,11 +197,31 @@ class MarnikkoDataGridSource<T extends Object> extends DataGridSource {
       return Tooltip(
         message: columnData.contentTooltip?.call(cell.value, row.data) ?? '',
         padding: const EdgeInsets.all(8.0),
-        child: Container(
-          alignment: columnData.contentAlignment,
-          padding: const EdgeInsets.all(8.0),
-          child: Text(columnData.valueToStringCallback(cell.value, row.data)),
-        ),
+        child: (columnData.isImage)
+            ? Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        // TODO: Hardcoding this works as of writing as the KasadoTable
+                        // is only useful for showing stats as of now. Might change
+                        // in the future. Refactor if necessary
+                        (row.data as Stats).player.photoUrl!,
+                      ),
+                      fit: BoxFit.contain,
+                    ),
+                    color: Colors.transparent,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              )
+            : Container(
+                alignment: columnData.contentAlignment,
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                    columnData.valueToStringCallback(cell.value, row.data)),
+              ),
       );
     }).toList());
   }

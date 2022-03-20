@@ -11,6 +11,7 @@ class ColumnData<T extends Object?> {
     this.isVisible = true,
     this.headerTooltip = '',
     this.contentTooltip,
+    this.isImage = false,
   });
 
   final String columnName;
@@ -21,4 +22,5 @@ class ColumnData<T extends Object?> {
   final String Function(Object?, T) valueToStringCallback;
   final ColumnWidthMode columnWidthMode;
   final bool isVisible;
+  final bool isImage;
 }
