@@ -63,6 +63,39 @@ class TeamStatTable extends StatelessWidget {
           valueToStringCallback: (fgPercent, stats) =>
               utils.getPercentageFormat(fgPercent as double),
         ),
+        ColumnData(
+          columnName: "3PM / 3PA",
+          dataValueCallback: (stats) => stats.totalAttempts,
+          valueToStringCallback: (_, stats) =>
+              "${stats.threePM} / ${stats.threePA}",
+        ),
+        ColumnData(
+          columnName: "3PT%",
+          dataValueCallback: (stats) => stats.threePtPercent,
+          valueToStringCallback: (threePtPer, stats) =>
+              utils.getPercentageFormat(threePtPer as double),
+        ),
+        ColumnData(
+          columnName: "FTM / FTA",
+          dataValueCallback: (stats) => stats.totalAttempts,
+          valueToStringCallback: (_, stats) => "${stats.ftM} / ${stats.ftA}",
+        ),
+        ColumnData(
+          columnName: "FT %",
+          dataValueCallback: (stats) => stats.ftPercent,
+          valueToStringCallback: (ftPercent, stats) =>
+              utils.getPercentageFormat(ftPercent as double),
+        ),
+        ColumnData(
+          columnName: "STL",
+          dataValueCallback: (stats) => stats.stl,
+          valueToStringCallback: (stl, stats) => stl.toString(),
+        ),
+        ColumnData(
+          columnName: "BLK",
+          dataValueCallback: (stats) => stats.blk,
+          valueToStringCallback: (blk, stats) => blk.toString(),
+        ),
       ],
     );
   }
