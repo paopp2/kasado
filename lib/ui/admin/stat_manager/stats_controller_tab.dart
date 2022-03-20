@@ -6,8 +6,8 @@ import 'package:kasado/ui/admin/stat_manager/components/game_teams_setup_dialog.
 import 'package:kasado/ui/admin/stat_manager/components/stat_button.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
-class StatControllerTab extends HookConsumerWidget {
-  const StatControllerTab({
+class StatsControllerTab extends HookConsumerWidget {
+  const StatsControllerTab({
     Key? key,
     required this.constraints,
     required this.courtSlot,
