@@ -10,6 +10,7 @@ class GameStats with _$GameStats {
   const GameStats._();
   const factory GameStats({
     required String id,
+    required DateTime recordedAt,
     required Map<String, Stats> homeTeamStats,
     required Map<String, Stats> awayTeamStats,
     bool? isHomeWinner,

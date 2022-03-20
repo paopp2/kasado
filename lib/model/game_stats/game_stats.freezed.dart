@@ -24,11 +24,13 @@ class _$GameStatsTearOff {
 
   _GameStats call(
       {required String id,
+      required DateTime recordedAt,
       required Map<String, Stats> homeTeamStats,
       required Map<String, Stats> awayTeamStats,
       bool? isHomeWinner}) {
     return _GameStats(
       id: id,
+      recordedAt: recordedAt,
       homeTeamStats: homeTeamStats,
       awayTeamStats: awayTeamStats,
       isHomeWinner: isHomeWinner,
@@ -46,6 +48,7 @@ const $GameStats = _$GameStatsTearOff();
 /// @nodoc
 mixin _$GameStats {
   String get id => throw _privateConstructorUsedError;
+  DateTime get recordedAt => throw _privateConstructorUsedError;
   Map<String, Stats> get homeTeamStats => throw _privateConstructorUsedError;
   Map<String, Stats> get awayTeamStats => throw _privateConstructorUsedError;
   bool? get isHomeWinner => throw _privateConstructorUsedError;
@@ -62,6 +65,7 @@ abstract class $GameStatsCopyWith<$Res> {
       _$GameStatsCopyWithImpl<$Res>;
   $Res call(
       {String id,
+      DateTime recordedAt,
       Map<String, Stats> homeTeamStats,
       Map<String, Stats> awayTeamStats,
       bool? isHomeWinner});
@@ -78,6 +82,7 @@ class _$GameStatsCopyWithImpl<$Res> implements $GameStatsCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
+    Object? recordedAt = freezed,
     Object? homeTeamStats = freezed,
     Object? awayTeamStats = freezed,
     Object? isHomeWinner = freezed,
@@ -87,6 +92,10 @@ class _$GameStatsCopyWithImpl<$Res> implements $GameStatsCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      recordedAt: recordedAt == freezed
+          ? _value.recordedAt
+          : recordedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       homeTeamStats: homeTeamStats == freezed
           ? _value.homeTeamStats
           : homeTeamStats // ignore: cast_nullable_to_non_nullable
@@ -111,6 +120,7 @@ abstract class _$GameStatsCopyWith<$Res> implements $GameStatsCopyWith<$Res> {
   @override
   $Res call(
       {String id,
+      DateTime recordedAt,
       Map<String, Stats> homeTeamStats,
       Map<String, Stats> awayTeamStats,
       bool? isHomeWinner});
@@ -128,6 +138,7 @@ class __$GameStatsCopyWithImpl<$Res> extends _$GameStatsCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? recordedAt = freezed,
     Object? homeTeamStats = freezed,
     Object? awayTeamStats = freezed,
     Object? isHomeWinner = freezed,
@@ -137,6 +148,10 @@ class __$GameStatsCopyWithImpl<$Res> extends _$GameStatsCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      recordedAt: recordedAt == freezed
+          ? _value.recordedAt
+          : recordedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       homeTeamStats: homeTeamStats == freezed
           ? _value.homeTeamStats
           : homeTeamStats // ignore: cast_nullable_to_non_nullable
@@ -158,6 +173,7 @@ class __$GameStatsCopyWithImpl<$Res> extends _$GameStatsCopyWithImpl<$Res>
 class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
   const _$_GameStats(
       {required this.id,
+      required this.recordedAt,
       required this.homeTeamStats,
       required this.awayTeamStats,
       this.isHomeWinner})
@@ -169,6 +185,8 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
   @override
   final String id;
   @override
+  final DateTime recordedAt;
+  @override
   final Map<String, Stats> homeTeamStats;
   @override
   final Map<String, Stats> awayTeamStats;
@@ -177,7 +195,7 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GameStats(id: $id, homeTeamStats: $homeTeamStats, awayTeamStats: $awayTeamStats, isHomeWinner: $isHomeWinner)';
+    return 'GameStats(id: $id, recordedAt: $recordedAt, homeTeamStats: $homeTeamStats, awayTeamStats: $awayTeamStats, isHomeWinner: $isHomeWinner)';
   }
 
   @override
@@ -186,6 +204,7 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'GameStats'))
       ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('recordedAt', recordedAt))
       ..add(DiagnosticsProperty('homeTeamStats', homeTeamStats))
       ..add(DiagnosticsProperty('awayTeamStats', awayTeamStats))
       ..add(DiagnosticsProperty('isHomeWinner', isHomeWinner));
@@ -198,6 +217,8 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
             other is _GameStats &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality()
+                .equals(other.recordedAt, recordedAt) &&
+            const DeepCollectionEquality()
                 .equals(other.homeTeamStats, homeTeamStats) &&
             const DeepCollectionEquality()
                 .equals(other.awayTeamStats, awayTeamStats) &&
@@ -209,6 +230,7 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(recordedAt),
       const DeepCollectionEquality().hash(homeTeamStats),
       const DeepCollectionEquality().hash(awayTeamStats),
       const DeepCollectionEquality().hash(isHomeWinner));
@@ -227,6 +249,7 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
 abstract class _GameStats extends GameStats {
   const factory _GameStats(
       {required String id,
+      required DateTime recordedAt,
       required Map<String, Stats> homeTeamStats,
       required Map<String, Stats> awayTeamStats,
       bool? isHomeWinner}) = _$_GameStats;
@@ -237,6 +260,8 @@ abstract class _GameStats extends GameStats {
 
   @override
   String get id;
+  @override
+  DateTime get recordedAt;
   @override
   Map<String, Stats> get homeTeamStats;
   @override

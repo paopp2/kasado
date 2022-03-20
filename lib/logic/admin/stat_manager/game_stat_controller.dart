@@ -149,6 +149,7 @@ class GameStatController {
     final gameStatId = const Uuid().v4();
     final initializedGameStats = GameStats(
       id: gameStatId,
+      recordedAt: DateTime.now(),
       homeTeamStats: {
         for (final player in homeTeamPlayers)
           player.id: Stats(player: player, courtSlot: courtSlot)
