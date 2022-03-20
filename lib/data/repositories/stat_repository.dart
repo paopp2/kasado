@@ -30,4 +30,14 @@ class StatRepository {
       data: gameStats.toJson(),
     );
   }
+
+  Stream<List<GameStats>> getSlotGameStatsStream(
+    String courtId,
+    String slotId,
+  ) {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colGameStats(courtId, slotId),
+      builder: (data, _) => GameStats.fromJson(data),
+    );
+  }
 }

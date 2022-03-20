@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/column_data/column_data.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/shared/kasado_table.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
-class SlotGameStatsTab extends StatelessWidget {
+class SlotGameStatsTab extends HookConsumerWidget {
   const SlotGameStatsTab({
     Key? key,
     required this.constraints,
+    required this.courtSlot,
   }) : super(key: key);
 
   final BoxConstraints constraints;
+  final CourtSlot courtSlot;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final allGameStatsStream = ref.watch(slotGamesStatsStreamProvider(
+        '${courtSlot.courtId}|${courtSlot.slotId}'));
+
     return Column(
       children: [
         Expanded(
@@ -114,48 +123,29 @@ class SlotGameStatsTab extends StatelessWidget {
         const Divider(),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'G1',
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('G2'),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('G3'),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('G4'),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('G5'),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('G6'),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('G7'),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('G8'),
-              ),
-            ],
-          ),
+          child: allGameStatsStream.when(
+              error: (e, _) => Text(e.toString()),
+              loading: () => const LoadingWidget(),
+              data: (allGameStats) {
+                return Row(
+                  children: allGameStats
+                      .asMap()
+                      .entries
+                      .map(
+                        (gameStatEntry) => TextButton(
+                          child: Text(
+                            'G${gameStatEntry.key + 1}',
+                            style: const TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: () {},
+                        ),
+                      )
+                      .toList(),
+                );
+              }),
         ),
       ],
     );
