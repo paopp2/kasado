@@ -31,12 +31,23 @@ class StatRepository {
     );
   }
 
-  Stream<List<GameStats>> getSlotGameStatsStream(
+  Stream<List<GameStats>> getAllSlotGameStatsStream(
     String courtId,
     String slotId,
   ) {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colGameStats(courtId, slotId),
+      builder: (data, _) => GameStats.fromJson(data),
+    );
+  }
+
+  Stream<GameStats?> getSlotGameStatsStream(
+    String courtId,
+    String slotId,
+    String statsId,
+  ) {
+    return firestoreHelper.documentStream(
+      path: FirestorePath.docGameStats(courtId, slotId, statsId),
       builder: (data, _) => GameStats.fromJson(data),
     );
   }

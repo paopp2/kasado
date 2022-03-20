@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/admin/stat_manager/components/game_teams_setup_dialog.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
-class StatControllerTab extends StatelessWidget {
+class StatControllerTab extends HookConsumerWidget {
   const StatControllerTab({
     Key? key,
     required this.constraints,
@@ -13,23 +16,36 @@ class StatControllerTab extends StatelessWidget {
   final CourtSlot courtSlot;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final players = courtSlot.players;
+    final slotStatsPath = ref.watch(slotGameStatsPathProvider);
+    final gameSlotStream =
+        ref.watch(slotGameStatsStreamProvider(slotStatsPath));
 
     return Column(
       children: [
         Expanded(
-          child: Center(
-            child: TextButton(
-              child: const Text('START GAME'),
-              onPressed: () => showDialog(
-                context: context,
-                builder: (_) => GameTeamsSetupDialog(
-                  players: players,
-                  courtSlot: courtSlot,
-                ),
-              ),
-            ),
+          child: gameSlotStream.when(
+            error: (e, _) => Text(e.toString()),
+            loading: () => const LoadingWidget(),
+            data: (gameSlot) {
+              return (gameSlot == null)
+                  ? Center(
+                      child: TextButton(
+                        child: const Text('START GAME'),
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (_) => GameTeamsSetupDialog(
+                            players: players,
+                            courtSlot: courtSlot,
+                          ),
+                        ),
+                      ),
+                    )
+                  : const Center(
+                      child: Text('Game started'),
+                    );
+            },
           ),
         ),
         Column(

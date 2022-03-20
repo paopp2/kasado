@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
@@ -32,11 +33,15 @@ class GameStatController {
         .update((state) => [...state, player]);
   }
 
-  Future<void> initStatsForGame(CourtSlot courtSlot) async {
+  Future<void> initStatsForGame(
+    BuildContext context,
+    CourtSlot courtSlot,
+  ) async {
     final homeTeamPlayers = read(homeTeamPlayersProvider);
     final awayTeamPlayers = read(awayTeamPlayersProvider);
+    final gameStatId = const Uuid().v4();
     final initializedGameStats = GameStats(
-      id: const Uuid().v4(),
+      id: gameStatId,
       homeTeamStats: {
         for (final player in homeTeamPlayers)
           player.id: Stats(player: player, courtSlot: courtSlot)
@@ -50,5 +55,9 @@ class GameStatController {
       courtSlot: courtSlot,
       gameStats: initializedGameStats,
     );
+    // Set the slotGameStatsPathProvider to the just pushed game
+    read(slotGameStatsPathProvider.notifier).state =
+        "${courtSlot.courtId}|${courtSlot.slotId}|$gameStatId";
+    Navigator.pop(context);
   }
 }

@@ -92,7 +92,7 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
           ),
           TextButton(
             child: const Text('OK'),
-            onPressed: () => controller.initStatsForGame(courtSlot),
+            onPressed: () => controller.initStatsForGame(context, courtSlot),
           ),
         ],
       ),

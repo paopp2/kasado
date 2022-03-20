@@ -18,7 +18,7 @@ class SlotGameStatsTab extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final allGameStatsStream = ref.watch(slotGamesStatsStreamProvider(
+    final allGameStatsStream = ref.watch(allSlotGamesStatsStreamProvider(
         '${courtSlot.courtId}|${courtSlot.slotId}'));
 
     return Column(
