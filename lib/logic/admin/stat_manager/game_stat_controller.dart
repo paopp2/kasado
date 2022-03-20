@@ -85,13 +85,23 @@ class GameStatController {
   Future<void> onPlayerShotFT({
     required BuildContext context,
     required bool wasMade,
+    required GameStats baseGameStats,
+    required CourtSlot courtSlot,
   }) async {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
     ) as KasadoUser;
 
-    // Increment FT stat depending if FT [wasMade]
+    final _isHomePlayer = isHomePlayer(player);
+
+    await statRepo.recordPlayerFT(
+      shootingPlayer: player,
+      baseGameStats: baseGameStats,
+      courtSlot: courtSlot,
+      isHomePlayer: _isHomePlayer,
+      wasMade: wasMade,
+    );
   }
 
   Future<void> onPlayerRebounded({

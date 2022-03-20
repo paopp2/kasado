@@ -133,6 +133,8 @@ class StatsControllerTab extends HookConsumerWidget {
                       onPressed: () => controller.onPlayerShotFT(
                         context: context,
                         wasMade: true,
+                        baseGameStats: gameStats!,
+                        courtSlot: courtSlot,
                       ),
                     ),
                     StatButton(
@@ -141,6 +143,8 @@ class StatsControllerTab extends HookConsumerWidget {
                       onPressed: () => controller.onPlayerShotFT(
                         context: context,
                         wasMade: false,
+                        baseGameStats: gameStats!,
+                        courtSlot: courtSlot,
                       ),
                     ),
                   ],
