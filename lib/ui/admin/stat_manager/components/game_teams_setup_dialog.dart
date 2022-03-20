@@ -14,6 +14,39 @@ class GameTeamsSetupDialog extends StatelessWidget {
     return Dialog(
       child: Column(
         children: [
+          Container(
+            color: Colors.blue,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  CircleAvatar(radius: 20),
+                  CircleAvatar(radius: 20),
+                  CircleAvatar(radius: 20),
+                  CircleAvatar(radius: 20),
+                  CircleAvatar(radius: 20),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            color: Colors.red,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  CircleAvatar(radius: 20),
+                  CircleAvatar(radius: 20),
+                  CircleAvatar(radius: 20),
+                  CircleAvatar(radius: 20),
+                  CircleAvatar(radius: 20),
+                ],
+              ),
+            ),
+          ),
+          const Divider(),
           Expanded(
             child: ListView.builder(
               itemCount: players.length,
@@ -52,6 +85,10 @@ class GameTeamsSetupDialog extends StatelessWidget {
                 );
               },
             ),
+          ),
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () {},
           ),
         ],
       ),
