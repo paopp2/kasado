@@ -9,8 +9,8 @@ import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/ui/shared/kasado_table.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
-class SlotGameStatsTab extends HookConsumerWidget {
-  const SlotGameStatsTab({
+class BoxScoreTab extends HookConsumerWidget {
+  const BoxScoreTab({
     Key? key,
     required this.constraints,
     required this.courtSlot,

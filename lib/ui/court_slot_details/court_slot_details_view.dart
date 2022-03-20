@@ -10,7 +10,7 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/admin/stat_manager/stat_controller_tab.dart';
 import 'package:kasado/ui/court_slot_details/components/slot_player_tile.dart';
-import 'package:kasado/ui/court_slot_details/tabs/slot_game_stats_tab.dart';
+import 'package:kasado/ui/court_slot_details/tabs/box_score_tab.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class CourtSlotDetailsView extends HookConsumerWidget {
@@ -194,7 +194,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                               ],
                             ],
                           ),
-                          SlotGameStatsTab(
+                          BoxScoreTab(
                             constraints: constraints,
                             courtSlot: baseCourtSlot,
                           ),
