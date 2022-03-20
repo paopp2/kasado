@@ -8,6 +8,8 @@ class FirestorePath {
   static String colNotifs() => 'notifs';
   static String colUserNotifs(String userId) => 'user_info/$userId/notifs';
   static String colTeams() => 'teams';
+  static String colGameStats(String courtId, String slotId) =>
+      'courts/$courtId/court_slots/$slotId/stats';
 
   // DOCUMENT paths
   static String docAppMeta() => 'app_meta/app_meta';
@@ -19,4 +21,6 @@ class FirestorePath {
   static String docUserNotif(String userId, String notifId) =>
       'user_info/$userId/notifs/$notifId';
   static String docTeam(String teamId) => 'teams/$teamId';
+  static String docGameStats(String courtId, String slotId, String statsId) =>
+      'courts/$courtId/court_slots/$slotId/stats/$statsId';
 }
