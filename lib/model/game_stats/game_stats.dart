@@ -2,18 +2,19 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kasado/model/stats/stats.dart';
 
-part 'mini_game.freezed.dart';
-part 'mini_game.g.dart';
+part 'game_stats.freezed.dart';
+part 'game_stats.g.dart';
 
 @freezed
-class MiniGame with _$MiniGame {
-  const MiniGame._();
-  const factory MiniGame({
+class GameStats with _$GameStats {
+  const GameStats._();
+  const factory GameStats({
+    required String id,
     required Map<String, Stats> homeTeamStats,
     required Map<String, Stats> awayTeamStats,
     bool? isHomeWinner,
-  }) = _MiniGame;
+  }) = _GameStats;
 
-  factory MiniGame.fromJson(Map<String, dynamic> json) =>
-      _$MiniGameFromJson(json);
+  factory GameStats.fromJson(Map<String, dynamic> json) =>
+      _$GameStatsFromJson(json);
 }

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'mini_game.dart';
+part of 'game_stats.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,70 +14,79 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-MiniGame _$MiniGameFromJson(Map<String, dynamic> json) {
-  return _MiniGame.fromJson(json);
+GameStats _$GameStatsFromJson(Map<String, dynamic> json) {
+  return _GameStats.fromJson(json);
 }
 
 /// @nodoc
-class _$MiniGameTearOff {
-  const _$MiniGameTearOff();
+class _$GameStatsTearOff {
+  const _$GameStatsTearOff();
 
-  _MiniGame call(
-      {required Map<String, Stats> homeTeamStats,
+  _GameStats call(
+      {required String id,
+      required Map<String, Stats> homeTeamStats,
       required Map<String, Stats> awayTeamStats,
       bool? isHomeWinner}) {
-    return _MiniGame(
+    return _GameStats(
+      id: id,
       homeTeamStats: homeTeamStats,
       awayTeamStats: awayTeamStats,
       isHomeWinner: isHomeWinner,
     );
   }
 
-  MiniGame fromJson(Map<String, Object?> json) {
-    return MiniGame.fromJson(json);
+  GameStats fromJson(Map<String, Object?> json) {
+    return GameStats.fromJson(json);
   }
 }
 
 /// @nodoc
-const $MiniGame = _$MiniGameTearOff();
+const $GameStats = _$GameStatsTearOff();
 
 /// @nodoc
-mixin _$MiniGame {
+mixin _$GameStats {
+  String get id => throw _privateConstructorUsedError;
   Map<String, Stats> get homeTeamStats => throw _privateConstructorUsedError;
   Map<String, Stats> get awayTeamStats => throw _privateConstructorUsedError;
   bool? get isHomeWinner => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $MiniGameCopyWith<MiniGame> get copyWith =>
+  $GameStatsCopyWith<GameStats> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MiniGameCopyWith<$Res> {
-  factory $MiniGameCopyWith(MiniGame value, $Res Function(MiniGame) then) =
-      _$MiniGameCopyWithImpl<$Res>;
+abstract class $GameStatsCopyWith<$Res> {
+  factory $GameStatsCopyWith(GameStats value, $Res Function(GameStats) then) =
+      _$GameStatsCopyWithImpl<$Res>;
   $Res call(
-      {Map<String, Stats> homeTeamStats,
+      {String id,
+      Map<String, Stats> homeTeamStats,
       Map<String, Stats> awayTeamStats,
       bool? isHomeWinner});
 }
 
 /// @nodoc
-class _$MiniGameCopyWithImpl<$Res> implements $MiniGameCopyWith<$Res> {
-  _$MiniGameCopyWithImpl(this._value, this._then);
+class _$GameStatsCopyWithImpl<$Res> implements $GameStatsCopyWith<$Res> {
+  _$GameStatsCopyWithImpl(this._value, this._then);
 
-  final MiniGame _value;
+  final GameStats _value;
   // ignore: unused_field
-  final $Res Function(MiniGame) _then;
+  final $Res Function(GameStats) _then;
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? homeTeamStats = freezed,
     Object? awayTeamStats = freezed,
     Object? isHomeWinner = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       homeTeamStats: homeTeamStats == freezed
           ? _value.homeTeamStats
           : homeTeamStats // ignore: cast_nullable_to_non_nullable
@@ -95,32 +104,39 @@ class _$MiniGameCopyWithImpl<$Res> implements $MiniGameCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$MiniGameCopyWith<$Res> implements $MiniGameCopyWith<$Res> {
-  factory _$MiniGameCopyWith(_MiniGame value, $Res Function(_MiniGame) then) =
-      __$MiniGameCopyWithImpl<$Res>;
+abstract class _$GameStatsCopyWith<$Res> implements $GameStatsCopyWith<$Res> {
+  factory _$GameStatsCopyWith(
+          _GameStats value, $Res Function(_GameStats) then) =
+      __$GameStatsCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Map<String, Stats> homeTeamStats,
+      {String id,
+      Map<String, Stats> homeTeamStats,
       Map<String, Stats> awayTeamStats,
       bool? isHomeWinner});
 }
 
 /// @nodoc
-class __$MiniGameCopyWithImpl<$Res> extends _$MiniGameCopyWithImpl<$Res>
-    implements _$MiniGameCopyWith<$Res> {
-  __$MiniGameCopyWithImpl(_MiniGame _value, $Res Function(_MiniGame) _then)
-      : super(_value, (v) => _then(v as _MiniGame));
+class __$GameStatsCopyWithImpl<$Res> extends _$GameStatsCopyWithImpl<$Res>
+    implements _$GameStatsCopyWith<$Res> {
+  __$GameStatsCopyWithImpl(_GameStats _value, $Res Function(_GameStats) _then)
+      : super(_value, (v) => _then(v as _GameStats));
 
   @override
-  _MiniGame get _value => super._value as _MiniGame;
+  _GameStats get _value => super._value as _GameStats;
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? homeTeamStats = freezed,
     Object? awayTeamStats = freezed,
     Object? isHomeWinner = freezed,
   }) {
-    return _then(_MiniGame(
+    return _then(_GameStats(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       homeTeamStats: homeTeamStats == freezed
           ? _value.homeTeamStats
           : homeTeamStats // ignore: cast_nullable_to_non_nullable
@@ -139,16 +155,19 @@ class __$MiniGameCopyWithImpl<$Res> extends _$MiniGameCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MiniGame extends _MiniGame with DiagnosticableTreeMixin {
-  const _$_MiniGame(
-      {required this.homeTeamStats,
+class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
+  const _$_GameStats(
+      {required this.id,
+      required this.homeTeamStats,
       required this.awayTeamStats,
       this.isHomeWinner})
       : super._();
 
-  factory _$_MiniGame.fromJson(Map<String, dynamic> json) =>
-      _$$_MiniGameFromJson(json);
+  factory _$_GameStats.fromJson(Map<String, dynamic> json) =>
+      _$$_GameStatsFromJson(json);
 
+  @override
+  final String id;
   @override
   final Map<String, Stats> homeTeamStats;
   @override
@@ -158,14 +177,15 @@ class _$_MiniGame extends _MiniGame with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MiniGame(homeTeamStats: $homeTeamStats, awayTeamStats: $awayTeamStats, isHomeWinner: $isHomeWinner)';
+    return 'GameStats(id: $id, homeTeamStats: $homeTeamStats, awayTeamStats: $awayTeamStats, isHomeWinner: $isHomeWinner)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'MiniGame'))
+      ..add(DiagnosticsProperty('type', 'GameStats'))
+      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('homeTeamStats', homeTeamStats))
       ..add(DiagnosticsProperty('awayTeamStats', awayTeamStats))
       ..add(DiagnosticsProperty('isHomeWinner', isHomeWinner));
@@ -175,7 +195,8 @@ class _$_MiniGame extends _MiniGame with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _MiniGame &&
+            other is _GameStats &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality()
                 .equals(other.homeTeamStats, homeTeamStats) &&
             const DeepCollectionEquality()
@@ -187,30 +208,35 @@ class _$_MiniGame extends _MiniGame with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(homeTeamStats),
       const DeepCollectionEquality().hash(awayTeamStats),
       const DeepCollectionEquality().hash(isHomeWinner));
 
   @JsonKey(ignore: true)
   @override
-  _$MiniGameCopyWith<_MiniGame> get copyWith =>
-      __$MiniGameCopyWithImpl<_MiniGame>(this, _$identity);
+  _$GameStatsCopyWith<_GameStats> get copyWith =>
+      __$GameStatsCopyWithImpl<_GameStats>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MiniGameToJson(this);
+    return _$$_GameStatsToJson(this);
   }
 }
 
-abstract class _MiniGame extends MiniGame {
-  const factory _MiniGame(
-      {required Map<String, Stats> homeTeamStats,
+abstract class _GameStats extends GameStats {
+  const factory _GameStats(
+      {required String id,
+      required Map<String, Stats> homeTeamStats,
       required Map<String, Stats> awayTeamStats,
-      bool? isHomeWinner}) = _$_MiniGame;
-  const _MiniGame._() : super._();
+      bool? isHomeWinner}) = _$_GameStats;
+  const _GameStats._() : super._();
 
-  factory _MiniGame.fromJson(Map<String, dynamic> json) = _$_MiniGame.fromJson;
+  factory _GameStats.fromJson(Map<String, dynamic> json) =
+      _$_GameStats.fromJson;
 
+  @override
+  String get id;
   @override
   Map<String, Stats> get homeTeamStats;
   @override
@@ -219,6 +245,6 @@ abstract class _MiniGame extends MiniGame {
   bool? get isHomeWinner;
   @override
   @JsonKey(ignore: true)
-  _$MiniGameCopyWith<_MiniGame> get copyWith =>
+  _$GameStatsCopyWith<_GameStats> get copyWith =>
       throw _privateConstructorUsedError;
 }
