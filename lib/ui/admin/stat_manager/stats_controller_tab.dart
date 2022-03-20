@@ -4,6 +4,7 @@ import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/admin/stat_manager/components/game_teams_setup_dialog.dart';
 import 'package:kasado/ui/admin/stat_manager/components/stat_button.dart';
+import 'package:kasado/ui/admin/stat_manager/components/stat_player_chooser_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class StatsControllerTab extends HookConsumerWidget {
@@ -56,23 +57,37 @@ class StatsControllerTab extends HookConsumerWidget {
                 StatButton(
                   color: Colors.green,
                   content: '3',
-                  onPressed: () {},
+                  onPressed: () {
+                    // Show dialog with all to select player who scored
+                    // Show dialog with only the teammates of player who scored for the assist (if any)
+                    showDialog(
+                      context: context,
+                      builder: (context) => const StatPlayerChooserDialog(),
+                    );
+                  },
                 ),
                 StatButton(
                   color: Colors.red,
                   content: '3',
-                  onPressed: () {},
+                  onPressed: () {
+                    // Show dialog with all to select player who missed
+                    // Show dialog with only enemies of player who missed for block (if any)
+                  },
                 ),
                 const Spacer(),
                 StatButton(
                   color: Colors.red,
                   content: 'OREB',
-                  onPressed: () {},
+                  onPressed: () {
+                    // Show dialog with all
+                  },
                 ),
                 StatButton(
                   color: Colors.green,
                   content: 'DREB',
-                  onPressed: () {},
+                  onPressed: () {
+                    // Show dialog with all
+                  },
                 ),
               ],
             ),
@@ -92,7 +107,9 @@ class StatsControllerTab extends HookConsumerWidget {
                 StatButton(
                   color: Colors.red,
                   content: 'STL',
-                  onPressed: () {},
+                  onPressed: () {
+                    // Show dialog with all
+                  },
                 ),
               ],
             ),

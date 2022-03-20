@@ -35,8 +35,16 @@ final slotGameStatsPathProvider = StateProvider.autoDispose<String?>((ref) {
   return null;
 });
 
-final homeTeamPlayersProvider =
-    StateProvider.autoDispose<List<KasadoUser>>((ref) => []);
+final homeTeamPlayersProvider = StateProvider.autoDispose<List<KasadoUser>>(
+  (ref) {
+    ref.maintainState = true;
+    return [];
+  },
+);
 
-final awayTeamPlayersProvider =
-    StateProvider.autoDispose<List<KasadoUser>>((ref) => []);
+final awayTeamPlayersProvider = StateProvider.autoDispose<List<KasadoUser>>(
+  (ref) {
+    ref.maintainState = true;
+    return [];
+  },
+);
