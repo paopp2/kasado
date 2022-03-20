@@ -22,17 +22,17 @@ class StatsControllerTab extends HookConsumerWidget {
     final controller = ref.watch(gameStatController);
     final players = courtSlot.players;
     final slotStatsPath = ref.watch(slotGameStatsPathProvider);
-    final gameSlotStream =
+    final gameStatsStream =
         ref.watch(slotGameStatsStreamProvider(slotStatsPath));
 
-    return Column(
-      children: [
-        Expanded(
-          child: gameSlotStream.when(
-            error: (e, _) => Text(e.toString()),
-            loading: () => const LoadingWidget(),
-            data: (gameSlot) {
-              return (gameSlot == null)
+    return gameStatsStream.when(
+      error: (e, _) => Text(e.toString()),
+      loading: () => const LoadingWidget(),
+      data: (gameStats) {
+        return Column(
+          children: [
+            Expanded(
+              child: (gameStats == null)
                   ? Center(
                       child: TextButton(
                         child: const Text('START GAME'),
@@ -45,104 +45,111 @@ class StatsControllerTab extends HookConsumerWidget {
                         ),
                       ),
                     )
-                  : const Center(
-                      child: Text('Game started'),
-                    );
-            },
-          ),
-        ),
-        Column(
-          children: [
-            Row(
-              children: [
-                StatButton(
-                  color: Colors.green,
-                  content: '3',
-                  onPressed: () => controller.onPlayerShot(
-                    context: context,
-                    isThree: true,
-                    wasMade: true,
-                  ),
-                ),
-                StatButton(
-                  color: Colors.red,
-                  content: '3',
-                  onPressed: () => controller.onPlayerShot(
-                    context: context,
-                    isThree: true,
-                    wasMade: false,
-                  ),
-                ),
-                const Spacer(),
-                StatButton(
-                  color: Colors.red,
-                  content: 'OREB',
-                  onPressed: () => controller.onPlayerRebounded(
-                    context: context,
-                    isDefensive: false,
-                  ),
-                ),
-                StatButton(
-                  color: Colors.green,
-                  content: 'DREB',
-                  onPressed: () => controller.onPlayerRebounded(
-                    context: context,
-                    isDefensive: true,
-                  ),
-                ),
-              ],
+                  : const Center(child: Text('Game started')),
             ),
-            Row(
+            Column(
               children: [
-                StatButton(
-                  color: Colors.green,
-                  content: '2',
-                  onPressed: () => controller.onPlayerShot(
-                    context: context,
-                    isThree: false,
-                    wasMade: true,
-                  ),
+                Row(
+                  children: [
+                    StatButton(
+                      color: Colors.green,
+                      content: '3',
+                      onPressed: () => controller.onPlayerShot(
+                        context: context,
+                        isThree: true,
+                        wasMade: true,
+                        baseGameStats: gameStats!,
+                        courtSlot: courtSlot,
+                      ),
+                    ),
+                    StatButton(
+                      color: Colors.red,
+                      content: '3',
+                      onPressed: () => controller.onPlayerShot(
+                        context: context,
+                        isThree: true,
+                        wasMade: false,
+                        baseGameStats: gameStats!,
+                        courtSlot: courtSlot,
+                      ),
+                    ),
+                    const Spacer(),
+                    StatButton(
+                      color: Colors.red,
+                      content: 'OREB',
+                      onPressed: () => controller.onPlayerRebounded(
+                        context: context,
+                        isDefensive: false,
+                      ),
+                    ),
+                    StatButton(
+                      color: Colors.green,
+                      content: 'DREB',
+                      onPressed: () => controller.onPlayerRebounded(
+                        context: context,
+                        isDefensive: true,
+                      ),
+                    ),
+                  ],
                 ),
-                StatButton(
-                  color: Colors.red,
-                  content: '2',
-                  onPressed: () => controller.onPlayerShot(
-                    context: context,
-                    isThree: false,
-                    wasMade: false,
-                  ),
+                Row(
+                  children: [
+                    StatButton(
+                      color: Colors.green,
+                      content: '2',
+                      onPressed: () => controller.onPlayerShot(
+                        context: context,
+                        isThree: false,
+                        wasMade: true,
+                        baseGameStats: gameStats!,
+                        courtSlot: courtSlot,
+                      ),
+                    ),
+                    StatButton(
+                      color: Colors.red,
+                      content: '2',
+                      onPressed: () => controller.onPlayerShot(
+                        context: context,
+                        isThree: false,
+                        wasMade: false,
+                        baseGameStats: gameStats!,
+                        courtSlot: courtSlot,
+                      ),
+                    ),
+                    const Spacer(),
+                    StatButton(
+                      color: Colors.red,
+                      content: 'STL',
+                      onPressed: () =>
+                          controller.onPlayerSteal(context: context),
+                    ),
+                  ],
                 ),
-                const Spacer(),
-                StatButton(
-                  color: Colors.red,
-                  content: 'STL',
-                  onPressed: () => controller.onPlayerSteal(context: context),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                StatButton(
-                  color: Colors.green,
-                  content: '1',
-                  onPressed: () => controller.onPlayerShotFT(
-                    context: context,
-                    wasMade: true,
-                  ),
-                ),
-                StatButton(
-                  color: Colors.red,
-                  content: '1',
-                  onPressed: () => controller.onPlayerShotFT(
-                    context: context,
-                    wasMade: false,
-                  ),
+                Row(
+                  children: [
+                    StatButton(
+                      color: Colors.green,
+                      content: '1',
+                      onPressed: () => controller.onPlayerShotFT(
+                        context: context,
+                        wasMade: true,
+                      ),
+                    ),
+                    StatButton(
+                      color: Colors.red,
+                      content: '1',
+                      onPressed: () => controller.onPlayerShotFT(
+                        context: context,
+                        wasMade: false,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ],
-        ),
-      ],
+        );
+      },
     );
   }
 }

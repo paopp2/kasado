@@ -42,6 +42,8 @@ class GameStatController {
     required BuildContext context,
     required bool isThree, // isTwo otherwise
     required bool wasMade,
+    required CourtSlot courtSlot,
+    required GameStats baseGameStats,
   }) async {
     final player = await showDialog(
       context: context,
@@ -50,27 +52,34 @@ class GameStatController {
 
     final _isHomePlayer = isHomePlayer(player);
 
+    KasadoUser? playerWhoAssisted; // If shot was made
+    KasadoUser? playerWhoBlocked; // If shot was missed
     if (wasMade) {
-      final playerWhoAssisted = await showDialog(
+      playerWhoAssisted = await showDialog(
         context: context,
         builder: (_) => StatPlayerChooserDialog(
           showOneAndShowHome: _isHomePlayer,
         ),
       ) as KasadoUser?;
-
-      // Increment relevant point stat for player scored
-      // Increment assist for player assisted
     } else {
-      final playerWhoBlocked = await showDialog(
+      playerWhoBlocked = await showDialog(
         context: context,
         builder: (_) => StatPlayerChooserDialog(
           showOneAndShowHome: !_isHomePlayer,
         ),
       ) as KasadoUser?;
-
-      // Increment relevant point stat for player missed
-      // Give block to playerBlocked if any
     }
+
+    await statRepo.recordPlayerShotAttempt(
+      playerWhoScored: player,
+      playerWhoAssisted: playerWhoAssisted,
+      playerWhoBlocked: playerWhoBlocked,
+      isThree: isThree,
+      baseGameStats: baseGameStats,
+      courtSlot: courtSlot,
+      isHomePlayer: _isHomePlayer,
+      wasMade: wasMade,
+    );
   }
 
   Future<void> onPlayerShotFT({
