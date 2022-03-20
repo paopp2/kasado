@@ -29,7 +29,7 @@ class BoxScoreTab extends HookConsumerWidget {
       children: [
         Expanded(
           child: (selectedStatsState.value == null)
-              ? const Text('Hello po')
+              ? const Center(child: Text('No stats available'))
               : ListView(
                   children: [
                     const Padding(
