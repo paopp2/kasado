@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/model/court/court.dart';
@@ -47,12 +49,14 @@ class AppRouter {
         name: Routes.courtSlotDetailsView,
         path: '/slot-details',
         builder: (context, state) {
-          final extraMap = state.extra as Map<String, Object?>;
+          final params = state.queryParams;
           return CourtSlotDetailsView(
-            isAdmin: extraMap['isAdmin']! as bool,
-            baseCourtSlot: extraMap['baseCourtSlot']! as CourtSlot,
-            court: extraMap['court']! as Court,
-            isDone: extraMap['isDone']! as bool,
+            isAdmin: (state.extra as bool?) ?? false,
+            baseCourtSlot: CourtSlot.fromJson(
+              jsonDecode(params['baseCourtSlot']!),
+            ),
+            court: Court.fromJson(jsonDecode(params['court']!)),
+            isDone: (params['isDone'] as String) == 'true',
           );
         },
       ),
