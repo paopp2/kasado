@@ -4,6 +4,9 @@ import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/overview_stats/overview_stats.dart';
+import 'package:kasado/model/stats/stats.dart';
 
 final statRepositoryProvider = Provider.autoDispose(
   (ref) => StatRepository(
@@ -248,6 +251,79 @@ class StatRepository {
               ? {"dReb": playerBaseStats.dReb + 1}
               : {"oReb": playerBaseStats.oReb + 1},
         }
+      },
+      merge: true,
+    );
+  }
+
+  Future<void> publishPlayerStats(GameStats gameStats) async {
+    final gamePlayerIds = [
+      ...gameStats.homeTeamStats.keys,
+      ...gameStats.awayTeamStats.keys,
+    ];
+    assert(gamePlayerIds.length == 10); // Game players can only be 10
+
+    // Get all userinfos of players at game
+    final gamePlayerUserInfos = await firestoreHelper.collectionToList(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, _) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query.where('id', whereIn: gamePlayerIds),
+    );
+
+    // Remap to a Map of the players' id to their overview stats
+    final Map<String, OverviewStats> gamePlayerOverviewStats = {
+      for (final player in gamePlayerUserInfos) player.id: player.overviewStats
+    };
+
+    // For all players in homeTeamStats, set hasWonGame to isHomeWinner
+    final Map<String, Stats> updatedHomeTeamStats = gameStats.homeTeamStats.map(
+      (playerId, stats) => MapEntry(
+        playerId,
+        stats.copyWith(hasWonGame: gameStats.isHomeWinner),
+      ),
+    );
+
+    // For all players in awayTeamStats, set hasWonGame to !isHomeWinner
+    final Map<String, Stats> updatedAwayTeamStats = gameStats.awayTeamStats.map(
+      (playerId, stats) => MapEntry(
+        playerId,
+        stats.copyWith(hasWonGame: !gameStats.isHomeWinner),
+      ),
+    );
+
+    // Merge the stats of all game players to a single Map<playerId, Stats>
+    final Map<String, Stats> updatedGameStats = {
+      ...updatedHomeTeamStats,
+      ...updatedAwayTeamStats,
+    };
+
+    // Update the overviewStats based on updated gameStats
+    // Batch setData to each of the userInfo.overviewStats
+    await firestoreHelper.setBatchDataForDocInList(
+      docIdList: gamePlayerIds,
+      baseColPath: FirestorePath.colUserInfos(),
+      dataFromId: (playerId) {
+        final baseStats = gamePlayerOverviewStats[playerId]!;
+        final newStats = updatedGameStats[playerId]!;
+        return {
+          "overviewStats": baseStats
+              .copyWith(
+                totalThreePA: baseStats.totalThreePA + newStats.threePA,
+                totalThreePM: baseStats.totalThreePM + newStats.threePM,
+                totalTwoPA: baseStats.totalTwoPA + newStats.twoPA,
+                totalTwoPM: baseStats.totalTwoPM + newStats.twoPM,
+                totalFta: baseStats.totalFta + newStats.ftA,
+                totalFtm: baseStats.totalFtm + newStats.ftM,
+                totalOReb: baseStats.totalOReb + newStats.oReb,
+                totalDReb: baseStats.totalDReb + newStats.dReb,
+                totalAst: baseStats.totalAst + newStats.ast,
+                totalStl: baseStats.totalStl + newStats.stl,
+                totalBlk: baseStats.totalBlk + newStats.blk,
+                totalWins: baseStats.totalWins + (newStats.hasWonGame! ? 1 : 0),
+                gamesPlayed: baseStats.gamesPlayed + 1,
+              )
+              .toJson()
+        };
       },
       merge: true,
     );

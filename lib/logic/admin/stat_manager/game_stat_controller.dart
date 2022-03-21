@@ -151,7 +151,7 @@ class GameStatController {
     read(homeTeamPlayersProvider.notifier).state = [];
     read(awayTeamPlayersProvider.notifier).state = [];
 
-    // Publish results to user info
+    await statRepo.publishPlayerStats(gameStats);
   }
 
   Future<void> initStatsForGame(
