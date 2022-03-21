@@ -22,9 +22,36 @@ OverviewStats _$OverviewStatsFromJson(Map<String, dynamic> json) {
 class _$OverviewStatsTearOff {
   const _$OverviewStatsTearOff();
 
-  _OverviewStats call({int mvpVoteCount = 0}) {
+  _OverviewStats call(
+      {int mvpVoteCount = 0,
+      int totalThreePA = 0,
+      int totalThreePM = 0,
+      int totalTwoPA = 0,
+      int totalTwoPM = 0,
+      int totalFta = 0,
+      int totalFtm = 0,
+      int totalOReb = 0,
+      int totalDReb = 0,
+      int totalAst = 0,
+      int totalStl = 0,
+      int totalBlk = 0,
+      int totalWins = 0,
+      int gamesPlayed = 0}) {
     return _OverviewStats(
       mvpVoteCount: mvpVoteCount,
+      totalThreePA: totalThreePA,
+      totalThreePM: totalThreePM,
+      totalTwoPA: totalTwoPA,
+      totalTwoPM: totalTwoPM,
+      totalFta: totalFta,
+      totalFtm: totalFtm,
+      totalOReb: totalOReb,
+      totalDReb: totalDReb,
+      totalAst: totalAst,
+      totalStl: totalStl,
+      totalBlk: totalBlk,
+      totalWins: totalWins,
+      gamesPlayed: gamesPlayed,
     );
   }
 
@@ -39,6 +66,19 @@ const $OverviewStats = _$OverviewStatsTearOff();
 /// @nodoc
 mixin _$OverviewStats {
   int get mvpVoteCount => throw _privateConstructorUsedError;
+  int get totalThreePA => throw _privateConstructorUsedError;
+  int get totalThreePM => throw _privateConstructorUsedError;
+  int get totalTwoPA => throw _privateConstructorUsedError;
+  int get totalTwoPM => throw _privateConstructorUsedError;
+  int get totalFta => throw _privateConstructorUsedError;
+  int get totalFtm => throw _privateConstructorUsedError;
+  int get totalOReb => throw _privateConstructorUsedError;
+  int get totalDReb => throw _privateConstructorUsedError;
+  int get totalAst => throw _privateConstructorUsedError;
+  int get totalStl => throw _privateConstructorUsedError;
+  int get totalBlk => throw _privateConstructorUsedError;
+  int get totalWins => throw _privateConstructorUsedError;
+  int get gamesPlayed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +91,21 @@ abstract class $OverviewStatsCopyWith<$Res> {
   factory $OverviewStatsCopyWith(
           OverviewStats value, $Res Function(OverviewStats) then) =
       _$OverviewStatsCopyWithImpl<$Res>;
-  $Res call({int mvpVoteCount});
+  $Res call(
+      {int mvpVoteCount,
+      int totalThreePA,
+      int totalThreePM,
+      int totalTwoPA,
+      int totalTwoPM,
+      int totalFta,
+      int totalFtm,
+      int totalOReb,
+      int totalDReb,
+      int totalAst,
+      int totalStl,
+      int totalBlk,
+      int totalWins,
+      int gamesPlayed});
 }
 
 /// @nodoc
@@ -66,11 +120,76 @@ class _$OverviewStatsCopyWithImpl<$Res>
   @override
   $Res call({
     Object? mvpVoteCount = freezed,
+    Object? totalThreePA = freezed,
+    Object? totalThreePM = freezed,
+    Object? totalTwoPA = freezed,
+    Object? totalTwoPM = freezed,
+    Object? totalFta = freezed,
+    Object? totalFtm = freezed,
+    Object? totalOReb = freezed,
+    Object? totalDReb = freezed,
+    Object? totalAst = freezed,
+    Object? totalStl = freezed,
+    Object? totalBlk = freezed,
+    Object? totalWins = freezed,
+    Object? gamesPlayed = freezed,
   }) {
     return _then(_value.copyWith(
       mvpVoteCount: mvpVoteCount == freezed
           ? _value.mvpVoteCount
           : mvpVoteCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalThreePA: totalThreePA == freezed
+          ? _value.totalThreePA
+          : totalThreePA // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalThreePM: totalThreePM == freezed
+          ? _value.totalThreePM
+          : totalThreePM // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalTwoPA: totalTwoPA == freezed
+          ? _value.totalTwoPA
+          : totalTwoPA // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalTwoPM: totalTwoPM == freezed
+          ? _value.totalTwoPM
+          : totalTwoPM // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalFta: totalFta == freezed
+          ? _value.totalFta
+          : totalFta // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalFtm: totalFtm == freezed
+          ? _value.totalFtm
+          : totalFtm // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalOReb: totalOReb == freezed
+          ? _value.totalOReb
+          : totalOReb // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalDReb: totalDReb == freezed
+          ? _value.totalDReb
+          : totalDReb // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalAst: totalAst == freezed
+          ? _value.totalAst
+          : totalAst // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalStl: totalStl == freezed
+          ? _value.totalStl
+          : totalStl // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalBlk: totalBlk == freezed
+          ? _value.totalBlk
+          : totalBlk // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalWins: totalWins == freezed
+          ? _value.totalWins
+          : totalWins // ignore: cast_nullable_to_non_nullable
+              as int,
+      gamesPlayed: gamesPlayed == freezed
+          ? _value.gamesPlayed
+          : gamesPlayed // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -83,7 +202,21 @@ abstract class _$OverviewStatsCopyWith<$Res>
           _OverviewStats value, $Res Function(_OverviewStats) then) =
       __$OverviewStatsCopyWithImpl<$Res>;
   @override
-  $Res call({int mvpVoteCount});
+  $Res call(
+      {int mvpVoteCount,
+      int totalThreePA,
+      int totalThreePM,
+      int totalTwoPA,
+      int totalTwoPM,
+      int totalFta,
+      int totalFtm,
+      int totalOReb,
+      int totalDReb,
+      int totalAst,
+      int totalStl,
+      int totalBlk,
+      int totalWins,
+      int gamesPlayed});
 }
 
 /// @nodoc
@@ -100,11 +233,76 @@ class __$OverviewStatsCopyWithImpl<$Res>
   @override
   $Res call({
     Object? mvpVoteCount = freezed,
+    Object? totalThreePA = freezed,
+    Object? totalThreePM = freezed,
+    Object? totalTwoPA = freezed,
+    Object? totalTwoPM = freezed,
+    Object? totalFta = freezed,
+    Object? totalFtm = freezed,
+    Object? totalOReb = freezed,
+    Object? totalDReb = freezed,
+    Object? totalAst = freezed,
+    Object? totalStl = freezed,
+    Object? totalBlk = freezed,
+    Object? totalWins = freezed,
+    Object? gamesPlayed = freezed,
   }) {
     return _then(_OverviewStats(
       mvpVoteCount: mvpVoteCount == freezed
           ? _value.mvpVoteCount
           : mvpVoteCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalThreePA: totalThreePA == freezed
+          ? _value.totalThreePA
+          : totalThreePA // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalThreePM: totalThreePM == freezed
+          ? _value.totalThreePM
+          : totalThreePM // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalTwoPA: totalTwoPA == freezed
+          ? _value.totalTwoPA
+          : totalTwoPA // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalTwoPM: totalTwoPM == freezed
+          ? _value.totalTwoPM
+          : totalTwoPM // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalFta: totalFta == freezed
+          ? _value.totalFta
+          : totalFta // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalFtm: totalFtm == freezed
+          ? _value.totalFtm
+          : totalFtm // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalOReb: totalOReb == freezed
+          ? _value.totalOReb
+          : totalOReb // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalDReb: totalDReb == freezed
+          ? _value.totalDReb
+          : totalDReb // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalAst: totalAst == freezed
+          ? _value.totalAst
+          : totalAst // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalStl: totalStl == freezed
+          ? _value.totalStl
+          : totalStl // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalBlk: totalBlk == freezed
+          ? _value.totalBlk
+          : totalBlk // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalWins: totalWins == freezed
+          ? _value.totalWins
+          : totalWins // ignore: cast_nullable_to_non_nullable
+              as int,
+      gamesPlayed: gamesPlayed == freezed
+          ? _value.gamesPlayed
+          : gamesPlayed // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -113,7 +311,22 @@ class __$OverviewStatsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
-  const _$_OverviewStats({this.mvpVoteCount = 0}) : super._();
+  const _$_OverviewStats(
+      {this.mvpVoteCount = 0,
+      this.totalThreePA = 0,
+      this.totalThreePM = 0,
+      this.totalTwoPA = 0,
+      this.totalTwoPM = 0,
+      this.totalFta = 0,
+      this.totalFtm = 0,
+      this.totalOReb = 0,
+      this.totalDReb = 0,
+      this.totalAst = 0,
+      this.totalStl = 0,
+      this.totalBlk = 0,
+      this.totalWins = 0,
+      this.gamesPlayed = 0})
+      : super._();
 
   factory _$_OverviewStats.fromJson(Map<String, dynamic> json) =>
       _$$_OverviewStatsFromJson(json);
@@ -121,10 +334,49 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final int mvpVoteCount;
+  @JsonKey()
+  @override
+  final int totalThreePA;
+  @JsonKey()
+  @override
+  final int totalThreePM;
+  @JsonKey()
+  @override
+  final int totalTwoPA;
+  @JsonKey()
+  @override
+  final int totalTwoPM;
+  @JsonKey()
+  @override
+  final int totalFta;
+  @JsonKey()
+  @override
+  final int totalFtm;
+  @JsonKey()
+  @override
+  final int totalOReb;
+  @JsonKey()
+  @override
+  final int totalDReb;
+  @JsonKey()
+  @override
+  final int totalAst;
+  @JsonKey()
+  @override
+  final int totalStl;
+  @JsonKey()
+  @override
+  final int totalBlk;
+  @JsonKey()
+  @override
+  final int totalWins;
+  @JsonKey()
+  @override
+  final int gamesPlayed;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OverviewStats(mvpVoteCount: $mvpVoteCount)';
+    return 'OverviewStats(mvpVoteCount: $mvpVoteCount, totalThreePA: $totalThreePA, totalThreePM: $totalThreePM, totalTwoPA: $totalTwoPA, totalTwoPM: $totalTwoPM, totalFta: $totalFta, totalFtm: $totalFtm, totalOReb: $totalOReb, totalDReb: $totalDReb, totalAst: $totalAst, totalStl: $totalStl, totalBlk: $totalBlk, totalWins: $totalWins, gamesPlayed: $gamesPlayed)';
   }
 
   @override
@@ -132,7 +384,20 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'OverviewStats'))
-      ..add(DiagnosticsProperty('mvpVoteCount', mvpVoteCount));
+      ..add(DiagnosticsProperty('mvpVoteCount', mvpVoteCount))
+      ..add(DiagnosticsProperty('totalThreePA', totalThreePA))
+      ..add(DiagnosticsProperty('totalThreePM', totalThreePM))
+      ..add(DiagnosticsProperty('totalTwoPA', totalTwoPA))
+      ..add(DiagnosticsProperty('totalTwoPM', totalTwoPM))
+      ..add(DiagnosticsProperty('totalFta', totalFta))
+      ..add(DiagnosticsProperty('totalFtm', totalFtm))
+      ..add(DiagnosticsProperty('totalOReb', totalOReb))
+      ..add(DiagnosticsProperty('totalDReb', totalDReb))
+      ..add(DiagnosticsProperty('totalAst', totalAst))
+      ..add(DiagnosticsProperty('totalStl', totalStl))
+      ..add(DiagnosticsProperty('totalBlk', totalBlk))
+      ..add(DiagnosticsProperty('totalWins', totalWins))
+      ..add(DiagnosticsProperty('gamesPlayed', gamesPlayed));
   }
 
   @override
@@ -141,12 +406,44 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is _OverviewStats &&
             const DeepCollectionEquality()
-                .equals(other.mvpVoteCount, mvpVoteCount));
+                .equals(other.mvpVoteCount, mvpVoteCount) &&
+            const DeepCollectionEquality()
+                .equals(other.totalThreePA, totalThreePA) &&
+            const DeepCollectionEquality()
+                .equals(other.totalThreePM, totalThreePM) &&
+            const DeepCollectionEquality()
+                .equals(other.totalTwoPA, totalTwoPA) &&
+            const DeepCollectionEquality()
+                .equals(other.totalTwoPM, totalTwoPM) &&
+            const DeepCollectionEquality().equals(other.totalFta, totalFta) &&
+            const DeepCollectionEquality().equals(other.totalFtm, totalFtm) &&
+            const DeepCollectionEquality().equals(other.totalOReb, totalOReb) &&
+            const DeepCollectionEquality().equals(other.totalDReb, totalDReb) &&
+            const DeepCollectionEquality().equals(other.totalAst, totalAst) &&
+            const DeepCollectionEquality().equals(other.totalStl, totalStl) &&
+            const DeepCollectionEquality().equals(other.totalBlk, totalBlk) &&
+            const DeepCollectionEquality().equals(other.totalWins, totalWins) &&
+            const DeepCollectionEquality()
+                .equals(other.gamesPlayed, gamesPlayed));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(mvpVoteCount));
+      runtimeType,
+      const DeepCollectionEquality().hash(mvpVoteCount),
+      const DeepCollectionEquality().hash(totalThreePA),
+      const DeepCollectionEquality().hash(totalThreePM),
+      const DeepCollectionEquality().hash(totalTwoPA),
+      const DeepCollectionEquality().hash(totalTwoPM),
+      const DeepCollectionEquality().hash(totalFta),
+      const DeepCollectionEquality().hash(totalFtm),
+      const DeepCollectionEquality().hash(totalOReb),
+      const DeepCollectionEquality().hash(totalDReb),
+      const DeepCollectionEquality().hash(totalAst),
+      const DeepCollectionEquality().hash(totalStl),
+      const DeepCollectionEquality().hash(totalBlk),
+      const DeepCollectionEquality().hash(totalWins),
+      const DeepCollectionEquality().hash(gamesPlayed));
 
   @JsonKey(ignore: true)
   @override
@@ -160,7 +457,21 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
 }
 
 abstract class _OverviewStats extends OverviewStats {
-  const factory _OverviewStats({int mvpVoteCount}) = _$_OverviewStats;
+  const factory _OverviewStats(
+      {int mvpVoteCount,
+      int totalThreePA,
+      int totalThreePM,
+      int totalTwoPA,
+      int totalTwoPM,
+      int totalFta,
+      int totalFtm,
+      int totalOReb,
+      int totalDReb,
+      int totalAst,
+      int totalStl,
+      int totalBlk,
+      int totalWins,
+      int gamesPlayed}) = _$_OverviewStats;
   const _OverviewStats._() : super._();
 
   factory _OverviewStats.fromJson(Map<String, dynamic> json) =
@@ -168,6 +479,32 @@ abstract class _OverviewStats extends OverviewStats {
 
   @override
   int get mvpVoteCount;
+  @override
+  int get totalThreePA;
+  @override
+  int get totalThreePM;
+  @override
+  int get totalTwoPA;
+  @override
+  int get totalTwoPM;
+  @override
+  int get totalFta;
+  @override
+  int get totalFtm;
+  @override
+  int get totalOReb;
+  @override
+  int get totalDReb;
+  @override
+  int get totalAst;
+  @override
+  int get totalStl;
+  @override
+  int get totalBlk;
+  @override
+  int get totalWins;
+  @override
+  int get gamesPlayed;
   @override
   @JsonKey(ignore: true)
   _$OverviewStatsCopyWith<_OverviewStats> get copyWith =>

@@ -57,7 +57,7 @@ class SlotPlayerTile extends HookConsumerWidget {
         courtTicketPrice: court.ticketPrice,
         baseCourtSlot: fetchedCourtSlot,
       ),
-      direction: isAdmin ? DismissDirection.horizontal : DismissDirection.none,
+      direction: isAdmin ? DismissDirection.startToEnd : DismissDirection.none,
       child: Padding(
         padding: const EdgeInsets.all(3.0),
         child: ListTile(

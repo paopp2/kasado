@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -49,13 +51,14 @@ class CourtSlotTile extends HookConsumerWidget {
                 ? null
                 : () => context.pushNamed(
                       Routes.courtSlotDetailsView,
-                      extra: {
-                        'isAdmin': isAdmin,
-                        'court': court,
-                        'baseCourtSlot': courtSlot,
+                      queryParams: {
+                        'court': jsonEncode(court.toJson()),
+                        'baseCourtSlot': jsonEncode(courtSlot.toJson()),
                         'isDone':
-                            slotAndUserState == SlotAndUserState.slotEnded,
+                            (slotAndUserState == SlotAndUserState.slotEnded)
+                                .toString(),
                       },
+                      extra: isAdmin,
                     ),
             child: Center(
               child: ListTile(
