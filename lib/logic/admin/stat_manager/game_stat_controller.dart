@@ -140,6 +140,20 @@ class GameStatController {
     );
   }
 
+  Future<void> endGame({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+  }) async {
+    // Set the slotGameStatsPathProvider to null (unlistens to the just ended game)
+    read(slotGameStatsPathProvider.notifier).state = null;
+
+    // Reset homeTeam and awayTeam players
+    read(homeTeamPlayersProvider.notifier).state = [];
+    read(awayTeamPlayersProvider.notifier).state = [];
+
+    // Publish results to user info
+  }
+
   Future<void> initStatsForGame(
     BuildContext context,
     CourtSlot courtSlot,

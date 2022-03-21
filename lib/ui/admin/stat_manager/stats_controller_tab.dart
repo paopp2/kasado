@@ -69,8 +69,11 @@ class StatsControllerTab extends HookConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             TextButton(
-                              onPressed: () {},
                               child: const Text('END GAME'),
+                              onPressed: () => controller.endGame(
+                                courtSlot: courtSlot,
+                                gameStats: gameStats,
+                              ),
                             ),
                           ],
                         ),
