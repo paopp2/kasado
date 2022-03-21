@@ -165,6 +165,12 @@ class UserProfilePane extends HookConsumerWidget {
                                 userStats.aveThreePtPercent,
                               ),
                             ),
+                            PlayerStatTile(
+                              statDescription: "FT %",
+                              statValue: utils.getPercentageFormat(
+                                userStats.aveFtPercent,
+                              ),
+                            ),
                           ],
                         ),
                       ),
