@@ -138,6 +138,6 @@ class KasadoUtils {
 
   String getPercentageFormat(double number) {
     if (number.isNaN) return "N/A";
-    return "${number.toStringAsFixed(1)} %";
+    return "${number.toStringAsFixed(0)}%";
   }
 }
