@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/column_data/column_data.dart';
 import 'package:kasado/model/stats/stats.dart';
@@ -23,6 +25,10 @@ class TeamStatTable extends StatelessWidget {
       width: constraints.maxWidth,
       frozenColumnCount: 1,
       dataAsList: statsList,
+      onRowSelected: (stats) => context.pushNamed(
+        Routes.userProfileView,
+        params: {'uid': stats!.player.id},
+      ),
       columnDataList: [
         ColumnData(
           columnName: "PLAYER",
