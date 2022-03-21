@@ -36,6 +36,17 @@ class CourtSlotRepository {
     );
   }
 
+  Future<void> updateCourtSlotPlayers({
+    required CourtSlot courtSlot,
+    required List<KasadoUser> updatedPlayers,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
+      data: {'players': updatedPlayers.map((u) => u.toJson()).toList()},
+      merge: true,
+    );
+  }
+
   Future<void> addPlayerToCourtSlot({
     required KasadoUser player,
     required CourtSlot courtSlot,
@@ -94,10 +105,9 @@ class CourtSlotRepository {
       await removeCourtSlot(courtSlot.courtId, courtSlot.slotId);
     } else {
       // Otherwise, push the updated list with the leaving user removed
-      await firestoreHelper.setData(
-        path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
-        data: {'players': updatedPlayerList.map((u) => u.toJson()).toList()},
-        merge: true,
+      await updateCourtSlotPlayers(
+        courtSlot: courtSlot,
+        updatedPlayers: updatedPlayerList,
       );
     }
   }
@@ -209,10 +219,9 @@ class CourtSlotRepository {
       await removeCourtSlot(courtSlot.courtId, courtSlot.slotId);
     } else {
       // Otherwise, push the updated list with the leaving team players removed
-      await firestoreHelper.setData(
-        path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
-        data: {'players': updatedPlayerList.map((u) => u.toJson()).toList()},
-        merge: true,
+      await updateCourtSlotPlayers(
+        courtSlot: courtSlot,
+        updatedPlayers: updatedPlayerList,
       );
     }
   }
@@ -254,7 +263,8 @@ class CourtSlotRepository {
         await userInfoRepo.reserveUserAt(userId: userInfo.id, reservedAt: null);
       }
 
-      // Flag court as closedByAdmin
+      // Flag court as closedByAdmin (the whole court slot must be pushed to cover
+      // for cases wherein courtslot doesn't exist yet (no players))
       await pushCourtSlot(courtSlot: courtSlot.copyWith(isClosedByAdmin: true));
     } else {
       // When a CourtSlot is reopened from being previously closed, remove it.

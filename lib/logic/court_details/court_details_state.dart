@@ -13,14 +13,3 @@ final courtSlotsStreamProvider =
   (ref, courtId) =>
       ref.watch(courtSlotRepositoryProvider).getCourtSlotsStream(courtId),
 );
-
-/// For combinedPathIds, follow the following format: "[courtId]|[slotId]"
-///
-/// Reason: For consistent hashcode as per the Riverpod's .family documentation
-final courtSlotStreamProvider = StreamProvider.autoDispose
-    .family<CourtSlot?, String>((ref, combinedPathIds) {
-  final List<String> pathIdList = combinedPathIds.split('|');
-  return ref
-      .watch(courtSlotRepositoryProvider)
-      .getCourtSlotStream(pathIdList[0], pathIdList[1]);
-});

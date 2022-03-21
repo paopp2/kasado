@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/logic/court_details/court_details_view_model.dart';
-import 'package:kasado/logic/court_details/slot_and_user_state.dart';
+import 'package:kasado/app_router.dart';
+import 'package:kasado/constants/enums.dart';
+import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
-import 'package:kasado/ui/court_details/components/court_slot_details_dialog.dart';
 
 class CourtSlotTile extends HookConsumerWidget {
   const CourtSlotTile({
@@ -19,7 +22,7 @@ class CourtSlotTile extends HookConsumerWidget {
 
   final BoxConstraints constraints;
   final bool isAdmin;
-  final CourtDetailsViewModel model;
+  final CourtSlotDetailsViewModel model;
   final CourtSlot courtSlot;
   final Court court;
 
@@ -46,22 +49,17 @@ class CourtSlotTile extends HookConsumerWidget {
           child: InkWell(
             onTap: (courtSlot.isClosedByAdmin && !isAdmin)
                 ? null
-                : () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return CourtSlotDetailsDialog(
-                          constraints: constraints,
-                          model: model,
-                          isAdmin: isAdmin,
-                          court: court,
-                          baseCourtSlot: courtSlot,
-                          isDone:
-                              slotAndUserState == SlotAndUserState.slotEnded,
-                        );
+                : () => context.pushNamed(
+                      Routes.courtSlotDetailsView,
+                      queryParams: {
+                        'court': jsonEncode(court.toJson()),
+                        'baseCourtSlot': jsonEncode(courtSlot.toJson()),
+                        'isDone':
+                            (slotAndUserState == SlotAndUserState.slotEnded)
+                                .toString(),
                       },
-                    );
-                  },
+                      extra: isAdmin,
+                    ),
             child: Center(
               child: ListTile(
                 shape: RoundedRectangleBorder(

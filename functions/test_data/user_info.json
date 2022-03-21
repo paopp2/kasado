@@ -1,0 +1,257 @@
+{
+    "userInfoList": [
+        {
+            "id": "wtkLFeagttMal66WvwDfZSheJjK2",
+            "user": {
+                "id": "wtkLFeagttMal66WvwDfZSheJjK2",
+                "displayName": "Nicolas Paolo Pepito",
+                "email": "npaolopepito@gmail.com",
+                "phoneNumber": null,
+                "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14Giu-sl28xIRH8ydopT7QakhCMqHfLt18pHM6F1v=s96-c",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": true,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": true,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": "5aa071fa-85c1-407d-9f7a-c1e974dccdf9",
+            "reservedAt": null
+        },
+        {
+            "id": "njZvKhumuBwVcBruGOTT1kUwh5p6",
+            "user": {
+                "id": "njZvKhumuBwVcBruGOTT1kUwh5p6",
+                "displayName": "Billy Butcher",
+                "email": "billybutcher@usc.edu.ph",
+                "phoneNumber": "",
+                "photoUrl": "https://www.looper.com/img/gallery/this-is-the-worst-thing-billy-butcher-has-done-on-the-boys/intro-1616676416.jpg",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": false,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": false,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": null,
+            "reservedAt": null
+        },
+        {
+            "id": "EB55n43tR4epE18aq8IZxIm4T1Eu",
+            "user": {
+                "displayName": "Dominic Toretto",
+                "email": "fastnfurious4eva@usc.com",
+                "id": "EB55n43tR4epE18aq8IZxIm4T1Eu",
+                "phoneNumber": "",
+                "photoUrl": "https://static.wikia.nocookie.net/fastandfurious/images/5/59/Dom_-_Fast9Profile.jpeg/revision/latest?cb=20200310093642",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": false,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": false,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": null,
+            "reservedAt": null
+        },
+        {
+            "id": "oEMIyKdPlsgJh7vk42FhMD7EG418",
+            "user": {
+                "id": "oEMIyKdPlsgJh7vk42FhMD7EG418",
+                "displayName": "Hughie Campbell",
+                "email": "hughiecampbell@usc.edu.ph",
+                "phoneNumber": "",
+                "photoUrl": "https://static.wikia.nocookie.net/amazons-the-boys/images/9/90/Hughie_Campbell_S2.jpg/revision/latest?cb=20200906153928",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": false,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": false,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": null,
+            "reservedAt": null
+        },
+        {
+            "id": "sRunm1rBKTyRPIe2uEzKQfHH3y0G",
+            "user": {
+                "id": "sRunm1rBKTyRPIe2uEzKQfHH3y0G",
+                "displayName": "Julius Caesar",
+                "email": "juliuscaesar@usc.edu.ph",
+                "phoneNumber": "",
+                "photoUrl": "https://cdn.britannica.com/11/196711-050-FA58D50D/Julius-Caesar-marble-sculpture-Andrea-di-Pietro.jpg",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": false,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": false,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": null,
+            "reservedAt": null
+        },
+        {
+            "id": "XeM3HP9Im58OSpmHpYC5eI3jXV2n",
+            "user": {
+                "id": "XeM3HP9Im58OSpmHpYC5eI3jXV2n",
+                "displayName": "Mark Antony",
+                "email": "markantony@usc.edu.ph",
+                "phoneNumber": "",
+                "photoUrl": "https://cdn.britannica.com/21/13421-050-0D5FAC1F/Mark-Antony-detail-marble-bust-Vatican-City.jpg",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": false,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": false,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": null,
+            "reservedAt": null
+        },
+        {
+            "id": "3WO9ATwspsMwYCRCgdbXnfpp5r83",
+            "user": {
+                "displayName": "Charles Jr. Ausejo",
+                "email": "16100938@usc.edu.ph",
+                "id": "3WO9ATwspsMwYCRCgdbXnfpp5r83",
+                "phoneNumber": "",
+                "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14Gjh4llC1Ytss067CwoSHmRmHaY31OblZIjSdywz=s96-c",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": false,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": false,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": null,
+            "reservedAt": null
+        },
+        {
+            "id": "TNZyDLzIrLhS4Bklz5yG1rCoDoF2",
+            "user": {
+                "displayName": "Christian Benedict Gonzales",
+                "email": "18105024@gmail.com",
+                "id": "TNZyDLzIrLhS4Bklz5yG1rCoDoF2",
+                "phoneNumber": "",
+                "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14Gi6RZJXfmElWMUsZUJ0O7zZwQboH7mEH3Hcnxmc=s96-c",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": false,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": false,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": null,
+            "reservedAt": null
+        },
+        {
+            "id": "31jNtDbgk9xJ2w9TyCIK7Qw9AJzt",
+            "user": {
+                "displayName": "Mad Max",
+                "email": "mad_max69@gmail.com",
+                "id": "31jNtDbgk9xJ2w9TyCIK7Qw9AJzt",
+                "phoneNumber": "",
+                "photoUrl": "https://c4.wallpaperflare.com/wallpaper/210/209/106/movie-mad-max-fury-road-max-rockatansky-tom-hardy-wallpaper-preview.jpg",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": false,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": false,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": null,
+            "reservedAt": null
+        },
+        {
+            "id": "s26b3o1rpuiw1lzebv88llz7zt2m",
+            "user": {
+                "displayName": "Omni Man",
+                "email": "omni_man_420@gmail.com",
+                "id": "s26b3o1rpuiw1lzebv88llz7zt2m",
+                "phoneNumber": "",
+                "photoUrl": "https://cdnb.artstation.com/p/assets/video_clips/images/037/231/373/large/sebastian-montecinos-thumb.jpg?1619826532",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": false,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": false,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": null,
+            "reservedAt": null
+        },
+        {
+            "id": "nqo4ouLRb9PWOydZMQK1EgtUqmn1",
+            "user": {
+                "id": "nqo4ouLRb9PWOydZMQK1EgtUqmn1",
+                "displayName": "Nicolas Paolo Pepito",
+                "email": "16100825@usc.edu.ph",
+                "phoneNumber": null,
+                "photoUrl": "https://lh3.googleusercontent.com/a-/AOh14GhoQ2pytZ4kx2_MyWLFd1-lAht5b6rtEGvTpj9L=s96-c",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "isAdmin": true,
+            "isSuperAdmin": true,
+            "pondo": 0.0,
+            "isTeamCaptain": true,
+            "overviewStats": {
+                "mvpVoteCount": 0
+            },
+            "teamId": "d0c754f2-5d23-427c-850c-f66afaf75397",
+            "reservedAt": null
+        }
+    ]
+}

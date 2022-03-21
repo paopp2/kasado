@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/data/core/core_providers.dart';
-import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_state.dart';
 import 'package:kasado/ui/admin/court_manager/components/court_input_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
@@ -14,7 +14,7 @@ class CourtsOwnedView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUserInfo = ref.watch(currentUserInfoProvider).value;
-    final adminController = ref.watch(courtDetailsViewModel).adminController;
+    final adminController = ref.watch(courtAdminController);
     final courtsOwnedList = ref.watch(courtsOwnedListProvider);
 
     return LayoutBuilder(

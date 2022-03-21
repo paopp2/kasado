@@ -1,9 +1,52 @@
 const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+const user_info_data = require("./test_data/user_info.json");
+const courts_data = require("./test_data/courts.json");
+const teams_data = require("./test_data/teams.json");
+const test_data = Object.assign({},teams_data, courts_data, user_info_data);
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+admin.initializeApp();
+const db = admin.firestore();
+const userInfoRef = db.collection('user_info');
+const courtsRef = db.collection('courts');
+const teamsRef = db.collection('teams');
+
+exports.populateAll = functions.https.onRequest(async (req, res) =>  {
+    test_data.userInfoList.forEach(addUserInfo);
+    async function addUserInfo(userInfo) {
+        await userInfoRef.doc(userInfo.id).set(userInfo);
+    }
+    test_data.courtsList.forEach(addCourt);
+    async function addCourt(court) {
+        await courtsRef.doc(court.id).set(court);
+    }
+    test_data.teamsList.forEach(addTeam);
+    async function addTeam(team) {
+        await teamsRef.doc(team.id).set(team);
+    }
+    res.json({result: "Populated ALL"});
+});
+
+exports.populateUserInfo = functions.https.onRequest(async (req, res) =>  {
+    test_data.userInfoList.forEach(addUserInfo);
+    async function addUserInfo(userInfo) {
+        await userInfoRef.doc(userInfo.id).set(userInfo);
+    }
+    res.json({result: "Populated 'user_info'"});
+});
+
+exports.populateCourts = functions.https.onRequest(async (req, res) =>  {
+    test_data.courtsList.forEach(addCourt);
+    async function addCourt(court) {
+        await courtsRef.doc(court.id).set(court);
+    }
+    res.json({result: "Populated 'courts'"});
+});
+
+exports.populateTeams = functions.https.onRequest(async (req, res) =>  {
+    test_data.teamsList.forEach(addTeam);
+    async function addTeam(team) {
+        await teamsRef.doc(court.id).set(team);
+    }
+    res.json({result: "Populated 'teams'"});
+});

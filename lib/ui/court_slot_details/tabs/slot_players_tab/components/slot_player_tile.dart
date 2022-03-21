@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
-import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -26,7 +26,7 @@ class SlotPlayerTile extends HookConsumerWidget {
     required this.isMvp,
   }) : super(key: key);
 
-  final CourtDetailsViewModel model;
+  final CourtSlotDetailsViewModel model;
   final KasadoUser? currentPlayer;
   final KasadoUser player;
   final Court court;
@@ -57,7 +57,7 @@ class SlotPlayerTile extends HookConsumerWidget {
         courtTicketPrice: court.ticketPrice,
         baseCourtSlot: fetchedCourtSlot,
       ),
-      direction: isAdmin ? DismissDirection.horizontal : DismissDirection.none,
+      direction: isAdmin ? DismissDirection.startToEnd : DismissDirection.none,
       child: Padding(
         padding: const EdgeInsets.all(3.0),
         child: ListTile(

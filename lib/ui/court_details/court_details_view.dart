@@ -2,8 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
+import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/ui/court_details/components/court_admins_panel.dart';
 import 'package:kasado/ui/court_details/components/court_schedule_panel.dart';
 import 'package:kasado/ui/admin/court_manager/components/court_input_dialog.dart';
@@ -22,7 +24,8 @@ class CourtDetailsView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courtDetailsModel = ref.watch(courtDetailsViewModel);
-    final adminController = courtDetailsModel.adminController;
+    final courtSlotDetailsModel = ref.watch(courtSlotDetailsViewModel);
+    final adminController = ref.watch(courtAdminController);
 
     final courtStream = ref.watch(courtStreamProvider(courtId));
     final tabIndex = useState(0);
@@ -98,7 +101,7 @@ class CourtDetailsView extends HookConsumerWidget {
                       children: [
                         CourtSchedulePanel(
                           constraints: constraints,
-                          model: courtDetailsModel,
+                          model: courtSlotDetailsModel,
                           isAdmin: isAdmin,
                           court: court,
                         ),

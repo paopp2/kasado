@@ -107,7 +107,7 @@ class UserInfoRepository {
     await firestoreHelper.setBatchDataForDocInList(
       baseColPath: FirestorePath.colUserInfos(),
       docIdList: teamPlayersIdList,
-      data: {'reservedAt': reservedAt?.toJson()},
+      dataFromId: (_) => {'reservedAt': reservedAt?.toJson()},
       merge: true,
     );
   }
