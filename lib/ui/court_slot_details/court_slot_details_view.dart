@@ -94,14 +94,6 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                       visible: isAdmin,
                       child: const Text('ADMIN MODE'),
                     ),
-                    if (utils.isCurrentSlotClosed(fetchedCourtSlot.timeRange) &&
-                        currentPlayer != null &&
-                        !currentPlayer.hasVotedForMvp) ...[
-                      const Text(
-                        'Pick your MVP to show results',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )
-                    ],
                     const Divider(thickness: 2),
                     Expanded(
                       child: TabBarView(
@@ -109,6 +101,20 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                         children: [
                           Column(
                             children: [
+                              if (utils.isCurrentSlotClosed(
+                                      fetchedCourtSlot.timeRange) &&
+                                  currentPlayer != null &&
+                                  !currentPlayer.hasVotedForMvp) ...[
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Pick your MVP to show results',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
+                              ],
                               Expanded(
                                 child: (players.isEmpty)
                                     ? const Center(child: Text('No players'))
