@@ -32,8 +32,12 @@ class OverviewStats with _$OverviewStats {
   double get aveThreePtPercent => (totalThreePM / totalThreePA) * 100;
   double get aveFtPercent => (totalFtm / totalFta) * 100;
   double get avePointsPerGame => totalPoints / gamesPlayed;
+  double get aveAssistsPerGame => totalAst / gamesPlayed;
+  double get aveReboundsPerGame => totalRebounds / gamesPlayed;
+  double get aveBlocksPerGame => totalBlk / gamesPlayed;
+  double get aveStlPerGame => totalStl / gamesPlayed;
   int get totalLosses => gamesPlayed - totalWins;
-  double get winPercent => totalWins / gamesPlayed;
+  double get winPercent => (totalWins / gamesPlayed) * 100;
 
   factory OverviewStats.fromJson(Map<String, dynamic> json) =>
       _$OverviewStatsFromJson(json);
