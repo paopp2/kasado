@@ -35,7 +35,8 @@ class _$StatsTearOff {
       int dReb = 0,
       int ast = 0,
       int stl = 0,
-      int blk = 0}) {
+      int blk = 0,
+      bool? hasWonGame}) {
     return _Stats(
       player: player,
       courtSlot: courtSlot,
@@ -50,6 +51,7 @@ class _$StatsTearOff {
       ast: ast,
       stl: stl,
       blk: blk,
+      hasWonGame: hasWonGame,
     );
   }
 
@@ -76,6 +78,7 @@ mixin _$Stats {
   int get ast => throw _privateConstructorUsedError;
   int get stl => throw _privateConstructorUsedError;
   int get blk => throw _privateConstructorUsedError;
+  bool? get hasWonGame => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -99,7 +102,8 @@ abstract class $StatsCopyWith<$Res> {
       int dReb,
       int ast,
       int stl,
-      int blk});
+      int blk,
+      bool? hasWonGame});
 
   $KasadoUserCopyWith<$Res> get player;
   $CourtSlotCopyWith<$Res> get courtSlot;
@@ -128,6 +132,7 @@ class _$StatsCopyWithImpl<$Res> implements $StatsCopyWith<$Res> {
     Object? ast = freezed,
     Object? stl = freezed,
     Object? blk = freezed,
+    Object? hasWonGame = freezed,
   }) {
     return _then(_value.copyWith(
       player: player == freezed
@@ -182,6 +187,10 @@ class _$StatsCopyWithImpl<$Res> implements $StatsCopyWith<$Res> {
           ? _value.blk
           : blk // ignore: cast_nullable_to_non_nullable
               as int,
+      hasWonGame: hasWonGame == freezed
+          ? _value.hasWonGame
+          : hasWonGame // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 
@@ -218,7 +227,8 @@ abstract class _$StatsCopyWith<$Res> implements $StatsCopyWith<$Res> {
       int dReb,
       int ast,
       int stl,
-      int blk});
+      int blk,
+      bool? hasWonGame});
 
   @override
   $KasadoUserCopyWith<$Res> get player;
@@ -250,6 +260,7 @@ class __$StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res>
     Object? ast = freezed,
     Object? stl = freezed,
     Object? blk = freezed,
+    Object? hasWonGame = freezed,
   }) {
     return _then(_Stats(
       player: player == freezed
@@ -304,6 +315,10 @@ class __$StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res>
           ? _value.blk
           : blk // ignore: cast_nullable_to_non_nullable
               as int,
+      hasWonGame: hasWonGame == freezed
+          ? _value.hasWonGame
+          : hasWonGame // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -324,7 +339,8 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
       this.dReb = 0,
       this.ast = 0,
       this.stl = 0,
-      this.blk = 0})
+      this.blk = 0,
+      this.hasWonGame})
       : super._();
 
   factory _$_Stats.fromJson(Map<String, dynamic> json) =>
@@ -367,10 +383,12 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final int blk;
+  @override
+  final bool? hasWonGame;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Stats(player: $player, courtSlot: $courtSlot, threePA: $threePA, threePM: $threePM, twoPA: $twoPA, twoPM: $twoPM, ftA: $ftA, ftM: $ftM, oReb: $oReb, dReb: $dReb, ast: $ast, stl: $stl, blk: $blk)';
+    return 'Stats(player: $player, courtSlot: $courtSlot, threePA: $threePA, threePM: $threePM, twoPA: $twoPA, twoPM: $twoPM, ftA: $ftA, ftM: $ftM, oReb: $oReb, dReb: $dReb, ast: $ast, stl: $stl, blk: $blk, hasWonGame: $hasWonGame)';
   }
 
   @override
@@ -390,7 +408,8 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('dReb', dReb))
       ..add(DiagnosticsProperty('ast', ast))
       ..add(DiagnosticsProperty('stl', stl))
-      ..add(DiagnosticsProperty('blk', blk));
+      ..add(DiagnosticsProperty('blk', blk))
+      ..add(DiagnosticsProperty('hasWonGame', hasWonGame));
   }
 
   @override
@@ -410,7 +429,9 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.dReb, dReb) &&
             const DeepCollectionEquality().equals(other.ast, ast) &&
             const DeepCollectionEquality().equals(other.stl, stl) &&
-            const DeepCollectionEquality().equals(other.blk, blk));
+            const DeepCollectionEquality().equals(other.blk, blk) &&
+            const DeepCollectionEquality()
+                .equals(other.hasWonGame, hasWonGame));
   }
 
   @override
@@ -428,7 +449,8 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(dReb),
       const DeepCollectionEquality().hash(ast),
       const DeepCollectionEquality().hash(stl),
-      const DeepCollectionEquality().hash(blk));
+      const DeepCollectionEquality().hash(blk),
+      const DeepCollectionEquality().hash(hasWonGame));
 
   @JsonKey(ignore: true)
   @override
@@ -455,7 +477,8 @@ abstract class _Stats extends Stats {
       int dReb,
       int ast,
       int stl,
-      int blk}) = _$_Stats;
+      int blk,
+      bool? hasWonGame}) = _$_Stats;
   const _Stats._() : super._();
 
   factory _Stats.fromJson(Map<String, dynamic> json) = _$_Stats.fromJson;
@@ -486,6 +509,8 @@ abstract class _Stats extends Stats {
   int get stl;
   @override
   int get blk;
+  @override
+  bool? get hasWonGame;
   @override
   @JsonKey(ignore: true)
   _$StatsCopyWith<_Stats> get copyWith => throw _privateConstructorUsedError;
