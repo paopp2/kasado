@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
@@ -27,7 +28,7 @@ class UserProfilePane extends HookConsumerWidget {
     final userStats = userInfo?.overviewStats;
 
     return (user == null)
-        ? const Text('No user info')
+        ? const Center(child: Text('No user info'))
         : Column(
             children: [
               const SizedBox(height: 10),
@@ -36,11 +37,18 @@ class UserProfilePane extends HookConsumerWidget {
                 radius: 50,
               ),
               const SizedBox(height: 10),
-              Text(
-                user.displayName!,
-                style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15.0,
+                  vertical: 8.0,
+                ),
+                child: AutoSizeText(
+                  user.displayName!,
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 1,
                 ),
               ),
               Text(user.email!),
