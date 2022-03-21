@@ -20,6 +20,7 @@ _$_OverviewStats _$$_OverviewStatsFromJson(Map<String, dynamic> json) =>
       totalAst: json['totalAst'] as int? ?? 0,
       totalStl: json['totalStl'] as int? ?? 0,
       totalBlk: json['totalBlk'] as int? ?? 0,
+      totalWins: json['totalWins'] as int? ?? 0,
       gamesPlayed: json['gamesPlayed'] as int? ?? 0,
     );
 
@@ -37,5 +38,6 @@ Map<String, dynamic> _$$_OverviewStatsToJson(_$_OverviewStats instance) =>
       'totalAst': instance.totalAst,
       'totalStl': instance.totalStl,
       'totalBlk': instance.totalBlk,
+      'totalWins': instance.totalWins,
       'gamesPlayed': instance.gamesPlayed,
     };

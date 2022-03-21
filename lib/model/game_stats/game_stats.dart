@@ -13,7 +13,6 @@ class GameStats with _$GameStats {
     required DateTime recordedAt,
     required Map<String, Stats> homeTeamStats,
     required Map<String, Stats> awayTeamStats,
-    bool? isHomeWinner,
   }) = _GameStats;
 
   int get homeScore => homeTeamStats.entries
@@ -25,6 +24,8 @@ class GameStats with _$GameStats {
       .map((statEntry) => statEntry.value.points)
       .toList()
       .reduce((a, b) => a + b);
+
+  bool get isHomeWinner => homeScore > awayScore;
 
   factory GameStats.fromJson(Map<String, dynamic> json) =>
       _$GameStatsFromJson(json);

@@ -20,6 +20,7 @@ class OverviewStats with _$OverviewStats {
     @Default(0) int totalAst,
     @Default(0) int totalStl,
     @Default(0) int totalBlk,
+    @Default(0) int totalWins,
     @Default(0) int gamesPlayed,
   }) = _OverviewStats;
 
@@ -31,6 +32,8 @@ class OverviewStats with _$OverviewStats {
   double get aveThreePtPercent => (totalThreePM / totalThreePA) * 100;
   double get aveFtPercent => (totalFtm / totalFta) * 100;
   double get avePointsPerGame => totalPoints / gamesPlayed;
+  int get totalLosses => gamesPlayed - totalWins;
+  double get winPercent => totalWins / gamesPlayed;
 
   factory OverviewStats.fromJson(Map<String, dynamic> json) =>
       _$OverviewStatsFromJson(json);
