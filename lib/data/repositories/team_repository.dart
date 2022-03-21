@@ -35,7 +35,7 @@ class TeamRepository {
     await firestoreHelper.setBatchDataForDocInList(
       docIdList: team.players.map((p) => p.id).toList(),
       baseColPath: FirestorePath.colUserInfos(),
-      data: {'teamId': team.id},
+      dataFromId: (_) => {'teamId': team.id},
       merge: true,
     );
   }
@@ -65,7 +65,7 @@ class TeamRepository {
     await firestoreHelper.setBatchDataForDocInList(
       baseColPath: FirestorePath.colUserInfos(),
       docIdList: playerIdList,
-      data: {
+      dataFromId: (_) => {
         'teamId': null,
         'isTeamCaptain': false,
       },
@@ -85,7 +85,7 @@ class TeamRepository {
     await firestoreHelper.setBatchDataForDocInList(
       baseColPath: FirestorePath.colUserInfos(),
       docIdList: team.players.map((u) => u.id).toList(),
-      data: {'teamId': null},
+      dataFromId: (_) => {'teamId': null},
       merge: true,
     );
   }
