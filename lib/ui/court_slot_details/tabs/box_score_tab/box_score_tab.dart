@@ -5,7 +5,7 @@ import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
-import 'package:kasado/ui/court_slot_details/tabs/components/team_stat_table.dart';
+import 'package:kasado/ui/court_slot_details/tabs/box_score_tab/components/team_stat_table.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class BoxScoreTab extends HookConsumerWidget {
