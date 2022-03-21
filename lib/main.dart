@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       title: 'Kasado',
       theme: ThemeData(
         textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.blueGrey,
       ),
       routeInformationParser: appRouter.routeInformationParser,
       routerDelegate: appRouter.routerDelegate,
