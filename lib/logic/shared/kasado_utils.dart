@@ -140,4 +140,9 @@ class KasadoUtils {
     if (number.isNaN) return "N/A";
     return "${number.toStringAsFixed(0)}%";
   }
+
+  String getDoubleFormat(double number) {
+    if (number.isNaN) return "N/A";
+    return number.toStringAsFixed(1);
+  }
 }

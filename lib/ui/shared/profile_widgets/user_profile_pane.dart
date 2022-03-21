@@ -92,33 +92,39 @@ class UserProfilePane extends HookConsumerWidget {
                             ),
                             PlayerStatTile(
                               statDescription: "WIN RATE",
-                              statValue: utils
-                                  .getPercentageFormat(userStats.winPercent),
+                              statValue: utils.getPercentageFormat(
+                                userStats.winPercent,
+                              ),
                             ),
                             PlayerStatTile(
                               statDescription: "POINTS PER GAME",
-                              statValue:
-                                  userStats.avePointsPerGame.toStringAsFixed(1),
+                              statValue: utils.getDoubleFormat(
+                                userStats.avePointsPerGame,
+                              ),
                             ),
                             PlayerStatTile(
                               statDescription: "ASSISTS PER GAME",
-                              statValue: userStats.aveAssistsPerGame
-                                  .toStringAsFixed(1),
+                              statValue: utils.getDoubleFormat(
+                                userStats.aveAssistsPerGame,
+                              ),
                             ),
                             PlayerStatTile(
                               statDescription: "REBOUNDS PER GAME",
-                              statValue: userStats.aveReboundsPerGame
-                                  .toStringAsFixed(1),
+                              statValue: utils.getDoubleFormat(
+                                userStats.aveReboundsPerGame,
+                              ),
                             ),
                             PlayerStatTile(
                               statDescription: "BLOCKS PER GAME",
-                              statValue:
-                                  userStats.aveBlocksPerGame.toStringAsFixed(1),
+                              statValue: utils.getDoubleFormat(
+                                userStats.aveBlocksPerGame,
+                              ),
                             ),
                             PlayerStatTile(
                               statDescription: "STEALS PER GAME",
-                              statValue:
-                                  userStats.aveStlPerGame.toStringAsFixed(1),
+                              statValue: utils.getDoubleFormat(
+                                userStats.aveStlPerGame,
+                              ),
                             ),
                             PlayerStatTile(
                               statDescription: "TOTAL POINTS",
