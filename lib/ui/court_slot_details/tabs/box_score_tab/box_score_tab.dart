@@ -100,8 +100,11 @@ class BoxScoreTab extends HookConsumerWidget {
                               color: (selectedStatsState.value ==
                                       gameStatEntry.value)
                                   ? Colors.green
+                                  : Colors.grey.shade400,
+                              fontWeight: (selectedStatsState.value ==
+                                      gameStatEntry.value)
+                                  ? FontWeight.bold
                                   : null,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           onPressed: () =>
