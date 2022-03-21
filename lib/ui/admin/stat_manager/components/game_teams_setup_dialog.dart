@@ -31,9 +31,13 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: homeTeamPlayers
-                    .map((player) => CircleAvatar(
-                          backgroundImage: NetworkImage(player.photoUrl!),
-                          radius: 20,
+                    .map((player) => GestureDetector(
+                          onTap: () =>
+                              controller.removePlayerFromHomeTeam(player),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(player.photoUrl!),
+                            radius: 20,
+                          ),
                         ))
                     .toList(),
               ),
@@ -46,9 +50,13 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: awayTeamPlayers
-                    .map((player) => CircleAvatar(
-                          backgroundImage: NetworkImage(player.photoUrl!),
-                          radius: 20,
+                    .map((player) => GestureDetector(
+                          onTap: () =>
+                              controller.removePlayerFromAwayTeam(player),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(player.photoUrl!),
+                            radius: 20,
+                          ),
                         ))
                     .toList(),
               ),

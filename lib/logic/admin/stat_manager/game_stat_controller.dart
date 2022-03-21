@@ -29,9 +29,19 @@ class GameStatController {
         .update((state) => [...state, player]);
   }
 
+  void removePlayerFromHomeTeam(KasadoUser player) {
+    read(homeTeamPlayersProvider.notifier)
+        .update((state) => [...state]..remove(player));
+  }
+
   void addPlayerToAwayTeam(KasadoUser player) {
     read(awayTeamPlayersProvider.notifier)
         .update((state) => [...state, player]);
+  }
+
+  void removePlayerFromAwayTeam(KasadoUser player) {
+    read(awayTeamPlayersProvider.notifier)
+        .update((state) => [...state]..remove(player));
   }
 
   bool isHomePlayer(KasadoUser player) {
