@@ -139,6 +139,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   currentUser: currentUser,
                   currentUserInfo: currentUserInfo!,
                   model: model,
+                  allowLeave: false,
                 ),
               ),
               const SizedBox(height: 10),
