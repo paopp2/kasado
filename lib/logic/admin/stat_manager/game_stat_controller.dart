@@ -48,6 +48,10 @@ class GameStatController {
     return read(homeTeamPlayersProvider).contains(player);
   }
 
+  void selectSlotGameStats(GameStats gameStats) {
+    read(selectedGameStatsProvider.notifier).state = gameStats;
+  }
+
   Future<void> onPlayerShot({
     required BuildContext context,
     required bool isThree, // isTwo otherwise
