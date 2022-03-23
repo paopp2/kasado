@@ -143,6 +143,78 @@
                     "votedMvpId": ""
                 }
             ]
+        },
+        {
+            "id": "aefb6548-73f1-4e19-81a8-3ef77ac93364",
+            "teamCaptain": {
+                "id": "sIhi6pnvk7XcOtQEFS2WG1yg2oV2",
+                "displayName": "Paolo Pepito",
+                "email": "014paolopepito@gmail.com",
+                "phoneNumber": "",
+                "photoUrl": "https://lh3.googleusercontent.com/a/AATXAJy7ejdtbEcuW9SNPErVWDEsIRMSd_OGblXmtg5W=s96-c",
+                "teamName": "",
+                "hasPaid": false,
+                "mvpVoteCount": 0,
+                "votedMvpId": ""
+            },
+            "customTeamName": "BANSI",
+            "players": [
+                {
+                    "id": "sIhi6pnvk7XcOtQEFS2WG1yg2oV2",
+                    "displayName": "Paolo Pepito",
+                    "email": "014paolopepito@gmail.com",
+                    "phoneNumber": "",
+                    "photoUrl": "https://lh3.googleusercontent.com/a/AATXAJy7ejdtbEcuW9SNPErVWDEsIRMSd_OGblXmtg5W=s96-c",
+                    "teamName": "",
+                    "hasPaid": false,
+                    "mvpVoteCount": 0,
+                    "votedMvpId": ""
+                },
+                {
+                    "id": "QVeUtU6YxWjGkkOulRU3gG5xyAmT",
+                    "displayName": "Robot",
+                    "email": "robot@robot.com",
+                    "phoneNumber": "",
+                    "photoUrl": "https://static.wikia.nocookie.net/villains/images/0/01/Robot-Amazon%27s-Invincible.png/revision/latest/scale-to-width-down/250?cb=20210520183238",
+                    "teamName": "",
+                    "hasPaid": false,
+                    "mvpVoteCount": 0,
+                    "votedMvpId": ""
+                },
+                {
+                    "id": "a1b23o1rpuiw1lzebv88llz7zt2m",
+                    "displayName": "Naughty Man",
+                    "email": "naughty_man_420@gmail.com",
+                    "phoneNumber": "",
+                    "photoUrl": "https://i.kym-cdn.com/entries/icons/original/000/037/984/thiccomniman.png",
+                    "teamName": "",
+                    "hasPaid": false,
+                    "mvpVoteCount": 0,
+                    "votedMvpId": ""
+                },
+                {
+                    "id": "yEWNzz8ExMC7NJxVjV6555jm8pkg",
+                    "displayName": "Rex Splosive",
+                    "email": "rex_splosive@email.com",
+                    "phoneNumber": "",
+                    "photoUrl": "https://64.media.tumblr.com/5daa81c7b1dcf6c4a754a6303e23e8d1/9cc46217a3893558-81/s400x600/f0e88ca74f765342b58d581580e13abcfe3f9285.png",
+                    "teamName": "",
+                    "hasPaid": false,
+                    "mvpVoteCount": 0,
+                    "votedMvpId": ""
+                },
+                {
+                    "id": "33fGEjWCLdu6CMvXOF8WJOAb0sUh",
+                    "displayName": "Atom Eve",
+                    "email": "atom_eve_23@email.com",
+                    "phoneNumber": "",
+                    "photoUrl": "https://static.wikia.nocookie.net/superheroes/images/c/cf/Atom_Eve.jpg/revision/latest?cb=20140727161239",
+                    "teamName": "",
+                    "hasPaid": false,
+                    "mvpVoteCount": 0,
+                    "votedMvpId": ""
+                }
+            ]
         }
     ]
 }
