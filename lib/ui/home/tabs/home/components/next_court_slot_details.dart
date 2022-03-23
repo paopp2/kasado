@@ -12,6 +12,7 @@ import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/time_range/time_range.dart';
+import 'package:kasado/ui/shared/join_leave_slot_button.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 import 'package:time/time.dart';
 
@@ -41,7 +42,6 @@ class NextCourtSlotDetails extends HookConsumerWidget {
         "${court.id}|${CourtSlot.getIdFromTimeRange(nextTimeSlot)}",
       ),
     );
-    final isModifyingSlot = useState(false);
 
     useEffect(() {
       // TODO: Improve performance for this feature
@@ -133,29 +133,13 @@ class NextCourtSlotDetails extends HookConsumerWidget {
               ),
               SizedBox(
                 height: constraints.maxHeight * 0.08,
-                child: (isModifyingSlot.value)
-                    ? const LoadingWidget()
-                    : TextButton(
-                        child: Text(
-                          (nextCourtSlot.hasPlayer(currentUser))
-                              ? 'LEAVE GAME'
-                              : 'JOIN GAME',
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                        onPressed: () async {
-                          isModifyingSlot.value = true;
-                          await model.joinLeaveCourtSlot(
-                            baseCourtSlot: nextCourtSlot,
-                            slotHasPlayer: nextCourtSlot.hasPlayer(
-                              currentUser,
-                            ),
-                            courtTicketPrice: court.ticketPrice,
-                            teamId: currentUserInfo!.teamId,
-                            isTeamCaptain: currentUserInfo.isTeamCaptain,
-                          );
-                          isModifyingSlot.value = false;
-                        },
-                      ),
+                child: JoinLeaveSlotButton(
+                  court: court,
+                  courtSlot: nextCourtSlot,
+                  currentUser: currentUser,
+                  currentUserInfo: currentUserInfo!,
+                  model: model,
+                ),
               ),
               const SizedBox(height: 10),
             ],
