@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
@@ -8,7 +7,7 @@ import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/court_slot_details/tabs/slot_players_tab/components/slot_player_tile.dart';
-import 'package:kasado/ui/shared/loading_widget.dart';
+import 'package:kasado/ui/shared/join_leave_slot_button.dart';
 
 class SlotPlayersTab extends HookConsumerWidget {
   const SlotPlayersTab({
@@ -34,7 +33,6 @@ class SlotPlayersTab extends HookConsumerWidget {
     final currentUserInfo = ref.watch(currentUserInfoProvider).value;
     final isSuperAdmin = currentUserInfo?.isSuperAdmin ?? false;
     final adminController = ref.watch(courtAdminController);
-    final isModifyingSlot = useState(false);
     final isSlotClosed = utils.isCurrentSlotClosed(courtSlot.timeRange);
     final players = courtSlot.players;
     final currentPlayer = courtSlot.hasPlayer(currentUser)
@@ -99,31 +97,14 @@ class SlotPlayersTab extends HookConsumerWidget {
                   ),
                 )
               ],
-              (isModifyingSlot.value)
-                  ? const LoadingWidget()
-                  : Visibility(
-                      visible: !courtSlot.isClosedByAdmin,
-                      child: TextButton(
-                        child: Text(
-                          courtSlot.hasPlayer(currentUser)
-                              ? 'LEAVE GAME'
-                              : 'JOIN GAME',
-                        ),
-                        onPressed: () async {
-                          isModifyingSlot.value = true;
-                          await model.joinLeaveCourtSlot(
-                            baseCourtSlot: courtSlot,
-                            slotHasPlayer: courtSlot.hasPlayer(
-                              currentUser,
-                            ),
-                            courtTicketPrice: court.ticketPrice,
-                            teamId: currentUserInfo!.teamId,
-                            isTeamCaptain: currentUserInfo.isTeamCaptain,
-                          );
-                          isModifyingSlot.value = false;
-                        },
-                      ),
-                    ),
+              JoinLeaveSlotButton(
+                court: court,
+                courtSlot: courtSlot,
+                model: model,
+                currentUser: currentUser,
+                currentUserInfo: currentUserInfo!,
+                showButton: !courtSlot.isClosedByAdmin,
+              ),
             ],
           ),
         ],
