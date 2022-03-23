@@ -17,6 +17,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
     required this.currentUser,
     required this.currentUserInfo,
     this.showButton = true,
+    this.allowLeave = true,
   }) : super(key: key);
 
   final CourtSlot courtSlot;
@@ -25,6 +26,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
   final KasadoUser currentUser;
   final KasadoUserInfo currentUserInfo;
   final bool showButton;
+  final bool allowLeave;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,33 +35,48 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
         ? const LoadingWidget()
         : Visibility(
             visible: showButton,
-            child: TextButton(
-              child: (courtSlot.hasPlayer(currentUser))
-                  ? Text(
-                      'LEAVE GAME',
-                      style: TextStyle(color: Colors.red.shade200),
-                    )
-                  : const Text(
-                      'JOIN GAME',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                      ),
+            // TODO: Might have to be refactored to be cleaner
+            child: (courtSlot.hasPlayer(currentUser) && !allowLeave)
+                ? TextButton(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.check, color: Colors.green.shade300),
+                        Text(
+                          'JOINED',
+                          style: TextStyle(color: Colors.green.shade300),
+                        ),
+                      ],
                     ),
-              onPressed: () async {
-                isModifyingSlot.value = true;
-                await model.joinLeaveCourtSlot(
-                  baseCourtSlot: courtSlot,
-                  slotHasPlayer: courtSlot.hasPlayer(
-                    currentUser,
+                    onPressed: null,
+                  )
+                : TextButton(
+                    child: (courtSlot.hasPlayer(currentUser))
+                        ? Text(
+                            'LEAVE GAME',
+                            style: TextStyle(color: Colors.red.shade200),
+                          )
+                        : const Text(
+                            'JOIN GAME',
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                    onPressed: () async {
+                      isModifyingSlot.value = true;
+                      await model.joinLeaveCourtSlot(
+                        baseCourtSlot: courtSlot,
+                        slotHasPlayer: courtSlot.hasPlayer(
+                          currentUser,
+                        ),
+                        courtTicketPrice: court.ticketPrice,
+                        teamId: currentUserInfo.teamId,
+                        isTeamCaptain: currentUserInfo.isTeamCaptain,
+                      );
+                      isModifyingSlot.value = false;
+                    },
                   ),
-                  courtTicketPrice: court.ticketPrice,
-                  teamId: currentUserInfo.teamId,
-                  isTeamCaptain: currentUserInfo.isTeamCaptain,
-                );
-                isModifyingSlot.value = false;
-              },
-            ),
           );
   }
 }
