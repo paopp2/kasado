@@ -14,8 +14,8 @@ class FeedbacksView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(feedbacksViewModel);
     final currentUserInfo = ref.watch(currentUserInfoProvider);
-    final feedbacksStream = ref.watch(feedbacksStreamProvider);
     final isSuperAdmin = currentUserInfo.value?.isSuperAdmin ?? false;
+    final feedbacksStream = ref.watch(feedbacksStreamProvider(isSuperAdmin));
 
     return SafeArea(
       child: LayoutBuilder(
