@@ -26,6 +26,7 @@ class FeedbacksViewModel extends ViewModel with FeedbacksTecMixin {
 
   final FeedbacksRepository feedbacksRepo;
   final KasadoUser currentUser;
+  final feedbackInputFormKey = GlobalKey<FormState>();
 
   @override
   Future<void> initState([Map<String, Object?>? params]) async {
@@ -33,15 +34,17 @@ class FeedbacksViewModel extends ViewModel with FeedbacksTecMixin {
   }
 
   Future<void> pushFeedback(BuildContext context) async {
-    await feedbacksRepo.pushFeedback(
-      kasado.Feedback(
-        id: const Uuid().v4(),
-        sender: currentUser,
-        sentAt: DateTime.now(),
-        title: tecFeedbackTitle.text,
-        body: tecFeedbackBody.text,
-      ),
-    );
-    Navigator.pop(context);
+    if (feedbackInputFormKey.currentState!.validate()) {
+      await feedbacksRepo.pushFeedback(
+        kasado.Feedback(
+          id: const Uuid().v4(),
+          sender: currentUser,
+          sentAt: DateTime.now(),
+          title: tecFeedbackTitle.text,
+          body: tecFeedbackBody.text,
+        ),
+      );
+      Navigator.pop(context);
+    }
   }
 }

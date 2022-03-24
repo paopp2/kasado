@@ -26,33 +26,37 @@ class FeedbackInputDialog extends HookConsumerWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            DataEntryField(
-              hint: 'Title',
-              tec: model.tecFeedbackTitle,
-            ),
-            DataEntryField(
-              hint: 'Body',
-              tec: model.tecFeedbackBody,
-              maxLines: 10,
-            ),
-            const SizedBox(height: 20),
-            (isLoadingState.value)
-                ? const LoadingWidget()
-                : TextButton(
-                    onPressed: () async {
-                      isLoadingState.value = true;
-                      await model.pushFeedback(context);
-                      isLoadingState.value = false;
-                    },
-                    child: Text(
-                      'SEND FEEDBACK',
-                      style: TextStyle(color: Colors.green.shade500),
+        child: Form(
+          key: model.feedbackInputFormKey,
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              DataEntryField(
+                validator: null,
+                hint: 'Title',
+                tec: model.tecFeedbackTitle,
+              ),
+              DataEntryField(
+                hint: 'Body',
+                tec: model.tecFeedbackBody,
+                maxLines: 10,
+              ),
+              const SizedBox(height: 20),
+              (isLoadingState.value)
+                  ? const LoadingWidget()
+                  : TextButton(
+                      onPressed: () async {
+                        isLoadingState.value = true;
+                        await model.pushFeedback(context);
+                        isLoadingState.value = false;
+                      },
+                      child: Text(
+                        'SEND FEEDBACK',
+                        style: TextStyle(color: Colors.green.shade500),
+                      ),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
     );
