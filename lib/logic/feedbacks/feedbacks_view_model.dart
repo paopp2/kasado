@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
@@ -25,6 +26,11 @@ class FeedbacksViewModel extends ViewModel with FeedbacksTecMixin {
 
   final FeedbacksRepository feedbacksRepo;
   final KasadoUser currentUser;
+
+  @override
+  Future<void> initState([Map<String, Object?>? params]) async {
+    FirebaseAnalytics.instance.logEvent(name: 'feedbacks_view');
+  }
 
   Future<void> pushFeedback(BuildContext context) async {
     await feedbacksRepo.pushFeedback(

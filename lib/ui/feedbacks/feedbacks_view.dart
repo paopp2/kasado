@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/feedbacks/feedbacks_state.dart';
@@ -16,6 +17,11 @@ class FeedbacksView extends HookConsumerWidget {
     final currentUserInfo = ref.watch(currentUserInfoProvider);
     final isSuperAdmin = currentUserInfo.value?.isSuperAdmin ?? false;
     final feedbacksStream = ref.watch(feedbacksStreamProvider(isSuperAdmin));
+
+    useEffect(() {
+      model.initState();
+      return model.dispose;
+    }, []);
 
     return SafeArea(
       child: LayoutBuilder(
