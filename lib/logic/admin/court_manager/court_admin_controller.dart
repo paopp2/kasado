@@ -153,7 +153,6 @@ class CourtAdminController with CourtAdminTecMixin {
       ),
     );
 
-    // TODO: Implement better routing on NewCourtInput through GoRouter
     Navigator.pop(context);
   }
 
