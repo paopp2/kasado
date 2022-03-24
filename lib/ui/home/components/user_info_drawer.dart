@@ -103,15 +103,20 @@ class UserInfoDrawer extends HookConsumerWidget {
                     Visibility(
                       visible: isCurrentUserAdmin,
                       child: ListTile(
-                        onTap: () => context.pushNamed(Routes.courtsOwnedView),
                         title: const Text('Manage courts'),
                         leading: const Icon(Icons.settings),
+                        onTap: () => context.pushNamed(Routes.courtsOwnedView),
                       ),
                     ),
                     ListTile(
-                      onTap: model.signOut,
+                      title: const Text('Give feedback'),
+                      leading: const Icon(Icons.feedback),
+                      onTap: () => context.pushNamed(Routes.feedbacksView),
+                    ),
+                    ListTile(
                       title: const Text('Logout'),
                       leading: const Icon(Icons.logout),
+                      onTap: model.signOut,
                     ),
                     const Spacer(),
                     Padding(

@@ -112,21 +112,6 @@ class CourtSlotRepository {
     }
   }
 
-  Future<List<KasadoUserInfo>> getUserInfosOfPlayersWithEnoughPondo({
-    required double pondoToPay,
-    required List<KasadoUser> teamPlayers,
-  }) async {
-    return firestoreHelper.collectionToList(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, docId) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query
-          // TODO: Limited to 10 teamPlayers only as per Firebase docs
-          // (Might have to to fix in the future)
-          .where('id', whereIn: teamPlayers.map((u) => u.id).toList())
-          .where('pondo', isGreaterThanOrEqualTo: pondoToPay),
-    );
-  }
-
   Future<void> addTeamToCourtSlot({
     required String teamId,
     required CourtSlot courtSlot,
