@@ -5,6 +5,7 @@ import 'package:kasado/logic/feedbacks/feedbacks_state.dart';
 import 'package:kasado/logic/feedbacks/feedbacks_view_model.dart';
 import 'package:kasado/ui/feedbacks/components/feedback_input_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class FeedbacksView extends HookConsumerWidget {
   const FeedbacksView({Key? key}) : super(key: key);
@@ -12,9 +13,9 @@ class FeedbacksView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(feedbacksViewModel);
-    final currentUser = ref.watch(currentUserProvider);
     final currentUserInfo = ref.watch(currentUserInfoProvider);
     final feedbacksStream = ref.watch(feedbacksStreamProvider);
+    final isSuperAdmin = currentUserInfo.value?.isSuperAdmin ?? false;
 
     return SafeArea(
       child: LayoutBuilder(
@@ -56,10 +57,29 @@ class FeedbacksView extends HookConsumerWidget {
                               itemBuilder: (context, i) {
                                 final feedback = feedbacks[i];
                                 return ListTile(
-                                  title: Text(
-                                    (feedback.title.isEmpty)
-                                        ? 'Untitled'
-                                        : feedback.title,
+                                  leading: (isSuperAdmin)
+                                      ? CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                            feedback.sender!.photoUrl!,
+                                          ),
+                                        )
+                                      : null,
+                                  title: Row(
+                                    children: [
+                                      Text(
+                                        (feedback.title.isEmpty)
+                                            ? 'Untitled'
+                                            : feedback.title,
+                                      ),
+                                      const Spacer(),
+                                      Text(
+                                        timeago.format(
+                                          feedback.sentAt,
+                                          locale: 'en_short',
+                                        ),
+                                        style: const TextStyle(fontSize: 12),
+                                      )
+                                    ],
                                   ),
                                   subtitle: Text(feedback.body),
                                 );
