@@ -41,7 +41,7 @@ class FirestoreHelper {
   Future<void> setBatchData({
     required String baseColPath,
     String endPath = '',
-    required Map<String, dynamic> data,
+    required Map<String, dynamic> Function(String) dataFromId,
     Query Function(Query query)? queryBuilder,
     bool merge = false,
   }) async {
@@ -55,7 +55,7 @@ class FirestoreHelper {
     for (final docId in docIdList) {
       final path = baseColPath + '/$docId/$endPath';
       final reference = FirebaseFirestore.instance.doc(path);
-      batch.set(reference, data, SetOptions(merge: merge));
+      batch.set(reference, dataFromId(docId), SetOptions(merge: merge));
     }
 
     return batch.commit();

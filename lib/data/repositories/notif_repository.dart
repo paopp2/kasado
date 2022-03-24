@@ -77,7 +77,7 @@ class NotifRepository {
     await firestoreHelper.setBatchData(
       baseColPath: FirestorePath.colUserInfos(),
       endPath: FirestorePath.docNotif(notif.id),
-      data: notif.toJson(),
+      dataFromId: (_) => notif.toJson(),
     );
   }
 

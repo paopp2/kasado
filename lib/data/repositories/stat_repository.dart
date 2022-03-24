@@ -297,7 +297,7 @@ class StatRepository {
       ...updatedAwayTeamStats,
     };
 
-    // Update the overviewStats based on updated gameStats
+    // Update each player's overviewStats based on the updated gameStats
     // Batch setData to each of the userInfo.overviewStats
     await firestoreHelper.setBatchDataForDocInList(
       docIdList: gamePlayerIds,
@@ -326,6 +326,15 @@ class StatRepository {
         };
       },
       merge: true,
+    );
+
+    // Save each of the player's stats to their corresponding userInfos
+    await firestoreHelper.setBatchData(
+      baseColPath: FirestorePath.colUserInfos(),
+      endPath: FirestorePath.docPartialUserStats(gameStats.id),
+      dataFromId: (playerId) => updatedGameStats[playerId]!.toJson(),
+      queryBuilder: (query) =>
+          query.where('id', whereIn: updatedGameStats.keys.toList()),
     );
   }
 }
