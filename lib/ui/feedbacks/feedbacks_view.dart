@@ -44,7 +44,7 @@ class FeedbacksView extends HookConsumerWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text('Only you will be able to see your feedbacks'),
+                      const Text('Help us make the app better for you'),
                     ],
                   ),
                 ),
