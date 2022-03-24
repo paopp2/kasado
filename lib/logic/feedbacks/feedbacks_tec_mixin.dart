@@ -5,7 +5,7 @@ mixin FeedbacksTecMixin {
   final tecFeedbackBody = TextEditingController();
 
   void clearAllTecs() {
-    tecFeedbackBody.clear();
+    tecFeedbackTitle.clear();
     tecFeedbackBody.clear();
   }
 }

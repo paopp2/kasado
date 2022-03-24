@@ -17,32 +17,43 @@ class FeedbackInputDialog extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoadingState = useState(false);
 
+    useEffect(() {
+      // Clear TECs on dialog closed
+      return model.clearAllTecs;
+    }, []);
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      child: ListView(
-        shrinkWrap: true,
-        children: const [
-          DataEntryField(
-            hint: 'Title',
-            // tec: model.tecNotifTitle,
-          ),
-          DataEntryField(
-            hint: 'Body',
-            // tec: model.tecNotifBody,
-            maxLines: 10,
-          ),
-          SizedBox(height: 20),
-          // (isLoadingState.value)
-          //     ? const LoadingWidget()
-          //     : TextButton(
-          //         onPressed: () async {
-          //           isLoadingState.value = true;
-          //           await model.pushNotifications(context);
-          //           isLoadingState.value = false;
-          //         },
-          //         child: const Text('PUSH NOTIF'),
-          //       ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            DataEntryField(
+              hint: 'Title',
+              tec: model.tecFeedbackTitle,
+            ),
+            DataEntryField(
+              hint: 'Body',
+              tec: model.tecFeedbackBody,
+              maxLines: 10,
+            ),
+            const SizedBox(height: 20),
+            (isLoadingState.value)
+                ? const LoadingWidget()
+                : TextButton(
+                    onPressed: () async {
+                      isLoadingState.value = true;
+                      await model.pushFeedback(context);
+                      isLoadingState.value = false;
+                    },
+                    child: Text(
+                      'SEND FEEDBACK',
+                      style: TextStyle(color: Colors.green.shade500),
+                    ),
+                  ),
+          ],
+        ),
       ),
     );
   }
