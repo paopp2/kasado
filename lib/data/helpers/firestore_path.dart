@@ -25,4 +25,5 @@ class FirestorePath {
   static String docGameStats(String courtId, String slotId, String statsId) =>
       'courts/$courtId/court_slots/$slotId/stats/$statsId';
   static String docFeedbacks(String feedbackId) => 'feedbacks/$feedbackId';
+  static String docUserStats(String gameStatsId) => 'user_stats/$gameStatsId';
 }
