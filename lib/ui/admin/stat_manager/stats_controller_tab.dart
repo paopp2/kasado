@@ -34,8 +34,11 @@ class StatsControllerTab extends HookConsumerWidget {
             Expanded(
               child: (gameStats == null)
                   ? Center(
-                      child: TextButton(
-                        child: const Text('START GAME'),
+                      child: ElevatedButton(
+                        child: const Text(
+                          'START GAME',
+                          style: TextStyle(color: Colors.white),
+                        ),
                         onPressed: () => showDialog(
                           context: context,
                           builder: (_) => GameTeamsSetupDialog(
@@ -51,29 +54,39 @@ class StatsControllerTab extends HookConsumerWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Column(
-                              children: [
-                                const Text('HOME'),
-                                Text(gameStats.homeScore.toString()),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                const Text('AWAY'),
-                                Text(gameStats.awayScore.toString()),
-                              ],
+                            ElevatedButton(
+                              child: const Text(
+                                'END GAME',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              onPressed: null, // To avoid accidental presses
+                              onLongPress: () => controller.endGame(
+                                courtSlot: courtSlot,
+                                gameStats: gameStats,
+                              ),
                             ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            TextButton(
-                              child: const Text('END GAME'),
-                              onPressed: () => controller.endGame(
-                                courtSlot: courtSlot,
-                                gameStats: gameStats,
-                              ),
+                            Column(
+                              children: [
+                                const Text('HOME'),
+                                Text(
+                                  gameStats.homeScore.toString(),
+                                  style: const TextStyle(fontSize: 30),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                const Text('AWAY'),
+                                Text(
+                                  gameStats.awayScore.toString(),
+                                  style: const TextStyle(fontSize: 30),
+                                ),
+                              ],
                             ),
                           ],
                         ),
