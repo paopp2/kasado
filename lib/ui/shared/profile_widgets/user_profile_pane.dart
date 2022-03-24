@@ -155,18 +155,18 @@ class UserProfilePane extends HookConsumerWidget {
                               statValue: userStats.totalStl.toString(),
                             ),
                             PlayerStatTile(
-                              statDescription: "FG %",
+                              statDescription: "AVERAGE FG%",
                               statValue: utils
                                   .getPercentageFormat(userStats.aveFgPercent),
                             ),
                             PlayerStatTile(
-                              statDescription: "3PT %",
+                              statDescription: "AVERAGE 3PT%",
                               statValue: utils.getPercentageFormat(
                                 userStats.aveThreePtPercent,
                               ),
                             ),
                             PlayerStatTile(
-                              statDescription: "FT %",
+                              statDescription: "AVERAGE FT%",
                               statValue: utils.getPercentageFormat(
                                 userStats.aveFtPercent,
                               ),
