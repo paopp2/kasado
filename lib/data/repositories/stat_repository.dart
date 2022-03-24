@@ -331,7 +331,7 @@ class StatRepository {
     // Save each of the player's stats to their corresponding userInfos
     await firestoreHelper.setBatchData(
       baseColPath: FirestorePath.colUserInfos(),
-      endPath: FirestorePath.docUserStats(gameStats.id),
+      endPath: FirestorePath.docPartialUserStats(gameStats.id),
       dataFromId: (playerId) => updatedGameStats[playerId]!.toJson(),
       queryBuilder: (query) =>
           query.where('id', whereIn: updatedGameStats.keys.toList()),
