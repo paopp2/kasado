@@ -61,7 +61,7 @@ class StatRepository {
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(userId),
       data: {
-        'overviewStats': {'mvpCount': FieldValue.increment(1)}
+        'overviewStats': {'mvpVoteCount': FieldValue.increment(1)}
       },
       merge: true,
     );
@@ -242,7 +242,7 @@ class StatRepository {
       ...gameStats.homeTeamStats.keys,
       ...gameStats.awayTeamStats.keys,
     ];
-    assert(gamePlayerIds.length == 10); // Game players can only be 10
+    // assert(gamePlayerIds.length == 10); // Game players can only be 10
 
     // For all players in homeTeamStats, set hasWonGame to isHomeWinner
     final Map<String, Stats> updatedHomeTeamStats = gameStats.homeTeamStats.map(
