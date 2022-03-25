@@ -28,7 +28,6 @@ class TeamTabModel extends ViewModel {
   final KasadoUser currentUser;
   final TeamRepository teamRepo;
 
-  // TODO: Might be doable without the teamId for checking if player is at another team
   void addUserToTeam({
     required KasadoUserInfo userInfo,
     required String? teamId,
