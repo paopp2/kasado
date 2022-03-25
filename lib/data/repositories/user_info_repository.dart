@@ -31,17 +31,6 @@ class UserInfoRepository {
     }
   }
 
-  Future<void> updateUserOverviewStats({
-    required String userId,
-    required OverviewStats stats,
-  }) async {
-    await firestoreHelper.setData(
-      path: FirestorePath.docUserInfo(userId),
-      data: {'overviewStats': stats.toJson()},
-      merge: true,
-    );
-  }
-
   Future<KasadoUserInfo?> getUserInfo(String userId) async {
     return await firestoreHelper.getData(
       path: FirestorePath.docUserInfo(userId),

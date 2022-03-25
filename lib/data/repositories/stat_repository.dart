@@ -57,6 +57,20 @@ class StatRepository {
     );
   }
 
+  // TODO: Optimize and clean code IF and ONLY IF this clicks with users
+  Future<void> incMvpCount({
+    required String userId,
+    required int mvpCount,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docUserInfo(userId),
+      data: {
+        'overviewStats': {'mvpCount': mvpCount + 1}
+      },
+      merge: true,
+    );
+  }
+
   Future<void> recordPlayerShotAttempt({
     required KasadoUser playerWhoScored,
     required KasadoUser? playerWhoAssisted,
