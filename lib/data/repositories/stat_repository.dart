@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
@@ -58,14 +59,11 @@ class StatRepository {
   }
 
   // TODO: Optimize and clean code IF and ONLY IF this clicks with users
-  Future<void> incMvpCount({
-    required String userId,
-    required int mvpCount,
-  }) async {
+  Future<void> incMvpCount(String userId) async {
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(userId),
       data: {
-        'overviewStats': {'mvpCount': mvpCount + 1}
+        'overviewStats': {'mvpCount': FieldValue.increment(1)}
       },
       merge: true,
     );

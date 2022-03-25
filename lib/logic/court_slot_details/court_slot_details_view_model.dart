@@ -261,11 +261,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
                 myMvp.copyWith(mvpVoteCount: myMvp.mvpVoteCount + 1)),
     );
 
-    // TODO: Optimize and clean code IF and ONLY IF this clicks with users
-    final userInfoBase = await userInfoRepo.getUserInfo(myMvp.id);
-    statRepo.incMvpCount(
-      userId: myMvp.id,
-      mvpCount: userInfoBase!.overviewStats.mvpVoteCount,
-    );
+    statRepo.incMvpCount(myMvp.id);
   }
 }
