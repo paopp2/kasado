@@ -1,11 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
-import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
-import 'package:kasado/model/overview_stats/overview_stats.dart';
 import 'package:kasado/model/stats/stats.dart';
 
 final statRepositoryProvider = Provider.autoDispose(
@@ -57,38 +56,45 @@ class StatRepository {
     );
   }
 
+  // TODO: Optimize and clean code IF and ONLY IF this clicks with users
+  Future<void> incMvpCount(String userId) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docUserInfo(userId),
+      data: {
+        'overviewStats': {'mvpVoteCount': FieldValue.increment(1)}
+      },
+      merge: true,
+    );
+  }
+
   Future<void> recordPlayerShotAttempt({
     required KasadoUser playerWhoScored,
     required KasadoUser? playerWhoAssisted,
     required KasadoUser? playerWhoBlocked,
     required bool isThree, // isTwo if otherwise
-    required GameStats baseGameStats,
+    required String gameStatsId,
     required CourtSlot courtSlot,
     required bool isHomePlayer,
     required bool wasMade,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
 
-    final playerBaseStats = (isHomePlayer)
-        ? baseGameStats.homeTeamStats[playerWhoScored.id]!
-        : baseGameStats.awayTeamStats[playerWhoScored.id]!;
-
     await firestoreHelper.setData(
       path: FirestorePath.docGameStats(
         courtSlot.courtId,
         courtSlot.slotId,
-        baseGameStats.id,
+        gameStatsId,
       ),
       data: {
         fieldPrefix: {
           playerWhoScored.id: (isThree)
               ? {
-                  "threePA": playerBaseStats.threePA + 1,
-                  if (wasMade) ...{"threePM": playerBaseStats.threePM + 1}
+                  "threePA": FieldValue.increment(1),
+                  if (wasMade) ...{"threePM": FieldValue.increment(1)}
                 }
               : {
-                  "twoPA": playerBaseStats.twoPA + 1,
-                  if (wasMade) ...{"twoPM": playerBaseStats.twoPM + 1}
+                  "twoPA": FieldValue.increment(1),
+                  if (wasMade) ...{"twoPM": FieldValue.increment(1)}
                 }
         }
       },
@@ -98,7 +104,7 @@ class StatRepository {
     if (playerWhoAssisted != null) {
       recordPlayerAssist(
         playerWhoAssisted: playerWhoAssisted,
-        baseGameStats: baseGameStats,
+        gameStatsId: gameStatsId,
         courtSlot: courtSlot,
         isHomePlayer: isHomePlayer,
       );
@@ -107,7 +113,7 @@ class StatRepository {
     if (playerWhoBlocked != null) {
       recordPlayerBlock(
         playerWhoBlocked: playerWhoBlocked,
-        baseGameStats: baseGameStats,
+        gameStatsId: gameStatsId,
         courtSlot: courtSlot,
         isHomePlayer: !isHomePlayer, // Blocker can only be from the other team
       );
@@ -116,25 +122,20 @@ class StatRepository {
 
   Future<void> recordPlayerAssist({
     required KasadoUser playerWhoAssisted,
-    required GameStats baseGameStats,
+    required String gameStatsId,
     required CourtSlot courtSlot,
     required bool isHomePlayer,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
-
-    final playerBaseStats = (isHomePlayer)
-        ? baseGameStats.homeTeamStats[playerWhoAssisted.id]!
-        : baseGameStats.awayTeamStats[playerWhoAssisted.id]!;
-
     await firestoreHelper.setData(
       path: FirestorePath.docGameStats(
         courtSlot.courtId,
         courtSlot.slotId,
-        baseGameStats.id,
+        gameStatsId,
       ),
       data: {
         fieldPrefix: {
-          playerWhoAssisted.id: {"ast": playerBaseStats.ast + 1}
+          playerWhoAssisted.id: {"ast": FieldValue.increment(1)}
         }
       },
       merge: true,
@@ -143,25 +144,20 @@ class StatRepository {
 
   Future<void> recordPlayerBlock({
     required KasadoUser playerWhoBlocked,
-    required GameStats baseGameStats,
+    required String gameStatsId,
     required CourtSlot courtSlot,
     required bool isHomePlayer,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
-
-    final playerBaseStats = (isHomePlayer)
-        ? baseGameStats.homeTeamStats[playerWhoBlocked.id]!
-        : baseGameStats.awayTeamStats[playerWhoBlocked.id]!;
-
     await firestoreHelper.setData(
       path: FirestorePath.docGameStats(
         courtSlot.courtId,
         courtSlot.slotId,
-        baseGameStats.id,
+        gameStatsId,
       ),
       data: {
         fieldPrefix: {
-          playerWhoBlocked.id: {"blk": playerBaseStats.blk + 1}
+          playerWhoBlocked.id: {"blk": FieldValue.increment(1)}
         }
       },
       merge: true,
@@ -170,25 +166,20 @@ class StatRepository {
 
   Future<void> recordPlayerSteal({
     required KasadoUser playerWhoStealed,
-    required GameStats baseGameStats,
+    required String gameStatsId,
     required CourtSlot courtSlot,
     required bool isHomePlayer,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
-
-    final playerBaseStats = (isHomePlayer)
-        ? baseGameStats.homeTeamStats[playerWhoStealed.id]!
-        : baseGameStats.awayTeamStats[playerWhoStealed.id]!;
-
     await firestoreHelper.setData(
       path: FirestorePath.docGameStats(
         courtSlot.courtId,
         courtSlot.slotId,
-        baseGameStats.id,
+        gameStatsId,
       ),
       data: {
         fieldPrefix: {
-          playerWhoStealed.id: {"stl": playerBaseStats.stl + 1}
+          playerWhoStealed.id: {"stl": FieldValue.increment(1)}
         }
       },
       merge: true,
@@ -197,28 +188,23 @@ class StatRepository {
 
   Future<void> recordPlayerFT({
     required KasadoUser shootingPlayer,
-    required GameStats baseGameStats,
+    required String gameStatsId,
     required CourtSlot courtSlot,
     required bool isHomePlayer,
     required bool wasMade,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
-
-    final playerBaseStats = (isHomePlayer)
-        ? baseGameStats.homeTeamStats[shootingPlayer.id]!
-        : baseGameStats.awayTeamStats[shootingPlayer.id]!;
-
     await firestoreHelper.setData(
       path: FirestorePath.docGameStats(
         courtSlot.courtId,
         courtSlot.slotId,
-        baseGameStats.id,
+        gameStatsId,
       ),
       data: {
         fieldPrefix: {
           shootingPlayer.id: {
-            "ftA": playerBaseStats.ftA + 1,
-            if (wasMade) ...{"ftM": playerBaseStats.ftM + 1}
+            "ftA": FieldValue.increment(1),
+            if (wasMade) ...{"ftM": FieldValue.increment(1)}
           }
         }
       },
@@ -228,28 +214,23 @@ class StatRepository {
 
   Future<void> recordPlayerRebound({
     required KasadoUser reboundingPlayer,
-    required GameStats baseGameStats,
+    required String gameStatsId,
     required CourtSlot courtSlot,
     required bool isHomePlayer,
     required bool isDefensive,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
-
-    final playerBaseStats = (isHomePlayer)
-        ? baseGameStats.homeTeamStats[reboundingPlayer.id]!
-        : baseGameStats.awayTeamStats[reboundingPlayer.id]!;
-
     await firestoreHelper.setData(
       path: FirestorePath.docGameStats(
         courtSlot.courtId,
         courtSlot.slotId,
-        baseGameStats.id,
+        gameStatsId,
       ),
       data: {
         fieldPrefix: {
           reboundingPlayer.id: (isDefensive)
-              ? {"dReb": playerBaseStats.dReb + 1}
-              : {"oReb": playerBaseStats.oReb + 1},
+              ? {"dReb": FieldValue.increment(1)}
+              : {"oReb": FieldValue.increment(1)},
         }
       },
       merge: true,
@@ -261,19 +242,7 @@ class StatRepository {
       ...gameStats.homeTeamStats.keys,
       ...gameStats.awayTeamStats.keys,
     ];
-    assert(gamePlayerIds.length == 10); // Game players can only be 10
-
-    // Get all userinfos of players at game
-    final gamePlayerUserInfos = await firestoreHelper.collectionToList(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, _) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query.where('id', whereIn: gamePlayerIds),
-    );
-
-    // Remap to a Map of the players' id to their overview stats
-    final Map<String, OverviewStats> gamePlayerOverviewStats = {
-      for (final player in gamePlayerUserInfos) player.id: player.overviewStats
-    };
+    // assert(gamePlayerIds.length == 10); // Game players can only be 10
 
     // For all players in homeTeamStats, set hasWonGame to isHomeWinner
     final Map<String, Stats> updatedHomeTeamStats = gameStats.homeTeamStats.map(
@@ -303,26 +272,23 @@ class StatRepository {
       docIdList: gamePlayerIds,
       baseColPath: FirestorePath.colUserInfos(),
       dataFromId: (playerId) {
-        final baseStats = gamePlayerOverviewStats[playerId]!;
         final newStats = updatedGameStats[playerId]!;
         return {
-          "overviewStats": baseStats
-              .copyWith(
-                totalThreePA: baseStats.totalThreePA + newStats.threePA,
-                totalThreePM: baseStats.totalThreePM + newStats.threePM,
-                totalTwoPA: baseStats.totalTwoPA + newStats.twoPA,
-                totalTwoPM: baseStats.totalTwoPM + newStats.twoPM,
-                totalFta: baseStats.totalFta + newStats.ftA,
-                totalFtm: baseStats.totalFtm + newStats.ftM,
-                totalOReb: baseStats.totalOReb + newStats.oReb,
-                totalDReb: baseStats.totalDReb + newStats.dReb,
-                totalAst: baseStats.totalAst + newStats.ast,
-                totalStl: baseStats.totalStl + newStats.stl,
-                totalBlk: baseStats.totalBlk + newStats.blk,
-                totalWins: baseStats.totalWins + (newStats.hasWonGame! ? 1 : 0),
-                gamesPlayed: baseStats.gamesPlayed + 1,
-              )
-              .toJson()
+          "overviewStats": {
+            "totalThreePA": FieldValue.increment(newStats.threePA),
+            "totalThreePM": FieldValue.increment(newStats.threePM),
+            "totalTwoPA": FieldValue.increment(newStats.twoPA),
+            "totalTwoPM": FieldValue.increment(newStats.twoPM),
+            "totalFta": FieldValue.increment(newStats.ftA),
+            "totalFtm": FieldValue.increment(newStats.ftM),
+            "totalOReb": FieldValue.increment(newStats.oReb),
+            "totalDReb": FieldValue.increment(newStats.dReb),
+            "totalAst": FieldValue.increment(newStats.ast),
+            "totalStl": FieldValue.increment(newStats.stl),
+            "totalBlk": FieldValue.increment(newStats.blk),
+            "totalWins": FieldValue.increment(newStats.hasWonGame! ? 1 : 0),
+            "gamesPlayed": FieldValue.increment(1),
+          }
         };
       },
       merge: true,

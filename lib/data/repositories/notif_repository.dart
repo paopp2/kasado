@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
@@ -18,12 +19,17 @@ class NotifRepository {
     required bool isLike,
     required bool isAdd,
   }) async {
-    final notif = await getNotifMeta(notifId: notifId);
     await firestoreHelper.setData(
       path: FirestorePath.docNotif(notifId),
       data: (isLike)
-          ? {'yesCount': (isAdd) ? notif.yesCount + 1 : notif.yesCount - 1}
-          : {'noCount': (isAdd) ? notif.noCount + 1 : notif.noCount - 1},
+          ? {
+              'yesCount':
+                  (isAdd) ? FieldValue.increment(1) : FieldValue.increment(-1)
+            }
+          : {
+              'noCount':
+                  (isAdd) ? FieldValue.increment(1) : FieldValue.increment(-1)
+            },
       merge: true,
     );
   }

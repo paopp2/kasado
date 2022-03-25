@@ -6,6 +6,7 @@ import 'package:kasado/constants/enums.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
+import 'package:kasado/data/repositories/stat_repository.dart';
 import 'package:kasado/data/repositories/team_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -13,7 +14,6 @@ import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
-import 'package:kasado/model/overview_stats/overview_stats.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -24,6 +24,7 @@ final courtSlotDetailsViewModel = Provider.autoDispose(
     courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
     teamRepo: ref.watch(teamRepositoryProvider),
+    statRepo: ref.watch(statRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
     currentUserInfo: ref.watch(currentUserInfoProvider).value,
     utils: ref.watch(kasadoUtilsProvider),
@@ -40,12 +41,14 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required this.currentUser,
     required this.currentUserInfo,
     required this.utils,
+    required this.statRepo,
   }) : super(read);
 
   final CourtRepository courtRepo;
   final CourtSlotRepository courtSlotRepo;
   final UserInfoRepository userInfoRepo;
   final TeamRepository teamRepo;
+  final StatRepository statRepo;
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;
   final KasadoUtils utils;
@@ -258,13 +261,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
                 myMvp.copyWith(mvpVoteCount: myMvp.mvpVoteCount + 1)),
     );
 
-    // TODO: Optimize and clean code IF and ONLY IF this clicks with users
-    final userInfoBase = await userInfoRepo.getUserInfo(myMvp.id);
-    userInfoRepo.updateUserOverviewStats(
-      userId: myMvp.id,
-      stats: OverviewStats(
-        mvpVoteCount: userInfoBase!.overviewStats.mvpVoteCount + 1,
-      ),
-    );
+    statRepo.incMvpCount(myMvp.id);
   }
 }

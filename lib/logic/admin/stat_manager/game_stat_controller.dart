@@ -57,7 +57,7 @@ class GameStatController {
     required bool isThree, // isTwo otherwise
     required bool wasMade,
     required CourtSlot courtSlot,
-    required GameStats baseGameStats,
+    required GameStats gameStats,
   }) async {
     final player = await showDialog(
       context: context,
@@ -89,7 +89,7 @@ class GameStatController {
       playerWhoAssisted: playerWhoAssisted,
       playerWhoBlocked: playerWhoBlocked,
       isThree: isThree,
-      baseGameStats: baseGameStats,
+      gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: _isHomePlayer,
       wasMade: wasMade,
@@ -99,7 +99,7 @@ class GameStatController {
   Future<void> onPlayerShotFT({
     required BuildContext context,
     required bool wasMade,
-    required GameStats baseGameStats,
+    required GameStats gameStats,
     required CourtSlot courtSlot,
   }) async {
     final player = await showDialog(
@@ -109,7 +109,7 @@ class GameStatController {
 
     await statRepo.recordPlayerFT(
       shootingPlayer: player,
-      baseGameStats: baseGameStats,
+      gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
       wasMade: wasMade,
@@ -119,7 +119,7 @@ class GameStatController {
   Future<void> onPlayerRebounded(
       {required BuildContext context,
       required bool isDefensive,
-      required GameStats baseGameStats,
+      required GameStats gameStats,
       required CourtSlot courtSlot,
       required}) async {
     final player = await showDialog(
@@ -129,7 +129,7 @@ class GameStatController {
 
     await statRepo.recordPlayerRebound(
       reboundingPlayer: player,
-      baseGameStats: baseGameStats,
+      gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
       isDefensive: isDefensive,
@@ -138,7 +138,7 @@ class GameStatController {
 
   Future<void> onPlayerSteal({
     required BuildContext context,
-    required GameStats baseGameStats,
+    required GameStats gameStats,
     required CourtSlot courtSlot,
   }) async {
     final player = await showDialog(
@@ -148,7 +148,7 @@ class GameStatController {
 
     await statRepo.recordPlayerSteal(
       playerWhoStealed: player,
-      baseGameStats: baseGameStats,
+      gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
     );
