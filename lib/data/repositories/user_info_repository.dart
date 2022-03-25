@@ -5,7 +5,6 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
-import 'package:kasado/model/overview_stats/overview_stats.dart';
 
 final userInfoRepositoryProvider = Provider.autoDispose(
   (ref) => UserInfoRepository(firestoreHelper: FirestoreHelper.instance),
