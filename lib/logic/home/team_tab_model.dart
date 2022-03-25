@@ -76,7 +76,6 @@ class TeamTabModel extends ViewModel {
     }
   }
 
-  // TODO: Optimize removing of players from a team
   Future<void> pushTeam({
     required BuildContext context,
     required String teamName,
