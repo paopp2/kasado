@@ -67,16 +67,13 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
               ),
             ),
           ),
-          Visibility(
-            visible: showOneAndShowHome != null,
-            child: ElevatedButton(
-              child: const Text(
-                'NONE',
-                style: TextStyle(color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(primary: Colors.red),
-              onPressed: () => Navigator.pop(context),
+          ElevatedButton(
+            child: const Text(
+              'NONE',
+              style: TextStyle(color: Colors.white),
             ),
+            style: ElevatedButton.styleFrom(primary: Colors.red),
+            onPressed: () => Navigator.pop(context),
           ),
         ],
       ),
