@@ -67,8 +67,7 @@ class GameStatController {
 
     final _isHomePlayer = isHomePlayer(player);
 
-    KasadoUser? playerWhoAssisted; // If shot was made
-    KasadoUser? playerWhoBlocked; // If shot was missed
+    KasadoUser? playerWhoAssisted;
     if (wasMade) {
       playerWhoAssisted = await showDialog(
         context: context,
@@ -76,19 +75,11 @@ class GameStatController {
           showOneAndShowHome: _isHomePlayer,
         ),
       ) as KasadoUser?;
-    } else {
-      playerWhoBlocked = await showDialog(
-        context: context,
-        builder: (_) => StatPlayerChooserDialog(
-          showOneAndShowHome: !_isHomePlayer,
-        ),
-      ) as KasadoUser?;
     }
 
     await statRepo.recordPlayerShotAttempt(
       playerWhoScored: player,
       playerWhoAssisted: playerWhoAssisted,
-      playerWhoBlocked: playerWhoBlocked,
       isThree: isThree,
       gameStatsId: gameStats.id,
       courtSlot: courtSlot,
@@ -136,6 +127,25 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
       isDefensive: isDefensive,
+    );
+  }
+
+  Future<void> onPlayerBlock({
+    required BuildContext context,
+    required GameStats gameStats,
+    required CourtSlot courtSlot,
+  }) async {
+    final player = await showDialog(
+      context: context,
+      builder: (_) => const StatPlayerChooserDialog(),
+    ) as KasadoUser?;
+    if (player == null) return;
+
+    await statRepo.recordPlayerBlock(
+      playerWhoBlocked: player,
+      gameStatsId: gameStats.id,
+      courtSlot: courtSlot,
+      isHomePlayer: isHomePlayer(player),
     );
   }
 

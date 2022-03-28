@@ -70,7 +70,6 @@ class StatRepository {
   Future<void> recordPlayerShotAttempt({
     required KasadoUser playerWhoScored,
     required KasadoUser? playerWhoAssisted,
-    required KasadoUser? playerWhoBlocked,
     required bool isThree, // isTwo if otherwise
     required String gameStatsId,
     required CourtSlot courtSlot,
@@ -107,15 +106,6 @@ class StatRepository {
         gameStatsId: gameStatsId,
         courtSlot: courtSlot,
         isHomePlayer: isHomePlayer,
-      );
-    }
-
-    if (playerWhoBlocked != null) {
-      recordPlayerBlock(
-        playerWhoBlocked: playerWhoBlocked,
-        gameStatsId: gameStatsId,
-        courtSlot: courtSlot,
-        isHomePlayer: !isHomePlayer, // Blocker can only be from the other team
       );
     }
   }

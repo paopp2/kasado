@@ -168,7 +168,16 @@ class StatsControllerTab extends HookConsumerWidget {
                     ),
                     const Spacer(),
                     StatButton(
-                      color: Colors.red,
+                      color: Colors.grey,
+                      content: 'BLK',
+                      onPressed: () => controller.onPlayerBlock(
+                        context: context,
+                        gameStats: gameStats!,
+                        courtSlot: courtSlot,
+                      ),
+                    ),
+                    StatButton(
+                      color: Colors.blue,
                       content: 'STL',
                       onPressed: () => controller.onPlayerSteal(
                         context: context,
