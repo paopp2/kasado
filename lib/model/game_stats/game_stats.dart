@@ -13,6 +13,7 @@ class GameStats with _$GameStats {
     required DateTime recordedAt,
     required Map<String, Stats> homeTeamStats,
     required Map<String, Stats> awayTeamStats,
+    @Default(false) bool isLive,
   }) = _GameStats;
 
   int get homeScore => homeTeamStats.entries
