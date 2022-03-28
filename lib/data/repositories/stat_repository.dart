@@ -237,7 +237,22 @@ class StatRepository {
     );
   }
 
-  Future<void> publishPlayerStats(GameStats gameStats) async {
+  /// Finalize game stats and publish each player's individual stats to their corresponding userInfos
+  Future<void> concludeGameStats({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+  }) async {
+    // Set gameStats.isLive to false
+    await firestoreHelper.setData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStats.id,
+      ),
+      data: {'isLive': false},
+      merge: true,
+    );
+
     final gamePlayerIds = [
       ...gameStats.homeTeamStats.keys,
       ...gameStats.awayTeamStats.keys,

@@ -165,7 +165,10 @@ class GameStatController {
     read(homeTeamPlayersProvider.notifier).state = [];
     read(awayTeamPlayersProvider.notifier).state = [];
 
-    await statRepo.publishPlayerStats(gameStats);
+    await statRepo.concludeGameStats(
+      gameStats: gameStats,
+      courtSlot: courtSlot,
+    );
   }
 
   Future<void> initStatsForGame(
@@ -186,6 +189,7 @@ class GameStatController {
         for (final player in awayTeamPlayers)
           player.id: Stats(player: player, courtSlot: courtSlot)
       },
+      isLive: true,
     );
     await statRepo.pushGameStats(
       courtSlot: courtSlot,
