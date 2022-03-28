@@ -27,13 +27,15 @@ class _$CourtSlotTearOff {
       required String courtId,
       required TimeRange timeRange,
       List<KasadoUser> players = const [],
-      bool isClosedByAdmin = false}) {
+      bool isClosedByAdmin = false,
+      String? liveGameStatsId = null}) {
     return _CourtSlot(
       slotId: slotId,
       courtId: courtId,
       timeRange: timeRange,
       players: players,
       isClosedByAdmin: isClosedByAdmin,
+      liveGameStatsId: liveGameStatsId,
     );
   }
 
@@ -52,6 +54,7 @@ mixin _$CourtSlot {
   TimeRange get timeRange => throw _privateConstructorUsedError;
   List<KasadoUser> get players => throw _privateConstructorUsedError;
   bool get isClosedByAdmin => throw _privateConstructorUsedError;
+  String? get liveGameStatsId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -68,7 +71,8 @@ abstract class $CourtSlotCopyWith<$Res> {
       String courtId,
       TimeRange timeRange,
       List<KasadoUser> players,
-      bool isClosedByAdmin});
+      bool isClosedByAdmin,
+      String? liveGameStatsId});
 
   $TimeRangeCopyWith<$Res> get timeRange;
 }
@@ -88,6 +92,7 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
     Object? timeRange = freezed,
     Object? players = freezed,
     Object? isClosedByAdmin = freezed,
+    Object? liveGameStatsId = freezed,
   }) {
     return _then(_value.copyWith(
       slotId: slotId == freezed
@@ -110,6 +115,10 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
           ? _value.isClosedByAdmin
           : isClosedByAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
+      liveGameStatsId: liveGameStatsId == freezed
+          ? _value.liveGameStatsId
+          : liveGameStatsId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 
@@ -132,7 +141,8 @@ abstract class _$CourtSlotCopyWith<$Res> implements $CourtSlotCopyWith<$Res> {
       String courtId,
       TimeRange timeRange,
       List<KasadoUser> players,
-      bool isClosedByAdmin});
+      bool isClosedByAdmin,
+      String? liveGameStatsId});
 
   @override
   $TimeRangeCopyWith<$Res> get timeRange;
@@ -154,6 +164,7 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
     Object? timeRange = freezed,
     Object? players = freezed,
     Object? isClosedByAdmin = freezed,
+    Object? liveGameStatsId = freezed,
   }) {
     return _then(_CourtSlot(
       slotId: slotId == freezed
@@ -176,6 +187,10 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
           ? _value.isClosedByAdmin
           : isClosedByAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
+      liveGameStatsId: liveGameStatsId == freezed
+          ? _value.liveGameStatsId
+          : liveGameStatsId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -188,7 +203,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       required this.courtId,
       required this.timeRange,
       this.players = const [],
-      this.isClosedByAdmin = false})
+      this.isClosedByAdmin = false,
+      this.liveGameStatsId = null})
       : super._();
 
   factory _$_CourtSlot.fromJson(Map<String, dynamic> json) =>
@@ -206,10 +222,13 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final bool isClosedByAdmin;
+  @JsonKey()
+  @override
+  final String? liveGameStatsId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CourtSlot(slotId: $slotId, courtId: $courtId, timeRange: $timeRange, players: $players, isClosedByAdmin: $isClosedByAdmin)';
+    return 'CourtSlot(slotId: $slotId, courtId: $courtId, timeRange: $timeRange, players: $players, isClosedByAdmin: $isClosedByAdmin, liveGameStatsId: $liveGameStatsId)';
   }
 
   @override
@@ -221,7 +240,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('courtId', courtId))
       ..add(DiagnosticsProperty('timeRange', timeRange))
       ..add(DiagnosticsProperty('players', players))
-      ..add(DiagnosticsProperty('isClosedByAdmin', isClosedByAdmin));
+      ..add(DiagnosticsProperty('isClosedByAdmin', isClosedByAdmin))
+      ..add(DiagnosticsProperty('liveGameStatsId', liveGameStatsId));
   }
 
   @override
@@ -234,7 +254,9 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.timeRange, timeRange) &&
             const DeepCollectionEquality().equals(other.players, players) &&
             const DeepCollectionEquality()
-                .equals(other.isClosedByAdmin, isClosedByAdmin));
+                .equals(other.isClosedByAdmin, isClosedByAdmin) &&
+            const DeepCollectionEquality()
+                .equals(other.liveGameStatsId, liveGameStatsId));
   }
 
   @override
@@ -244,7 +266,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(courtId),
       const DeepCollectionEquality().hash(timeRange),
       const DeepCollectionEquality().hash(players),
-      const DeepCollectionEquality().hash(isClosedByAdmin));
+      const DeepCollectionEquality().hash(isClosedByAdmin),
+      const DeepCollectionEquality().hash(liveGameStatsId));
 
   @JsonKey(ignore: true)
   @override
@@ -263,7 +286,8 @@ abstract class _CourtSlot extends CourtSlot {
       required String courtId,
       required TimeRange timeRange,
       List<KasadoUser> players,
-      bool isClosedByAdmin}) = _$_CourtSlot;
+      bool isClosedByAdmin,
+      String? liveGameStatsId}) = _$_CourtSlot;
   const _CourtSlot._() : super._();
 
   factory _CourtSlot.fromJson(Map<String, dynamic> json) =
@@ -279,6 +303,8 @@ abstract class _CourtSlot extends CourtSlot {
   List<KasadoUser> get players;
   @override
   bool get isClosedByAdmin;
+  @override
+  String? get liveGameStatsId;
   @override
   @JsonKey(ignore: true)
   _$CourtSlotCopyWith<_CourtSlot> get copyWith =>

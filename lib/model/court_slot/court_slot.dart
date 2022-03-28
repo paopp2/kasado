@@ -15,6 +15,7 @@ class CourtSlot with _$CourtSlot {
     required TimeRange timeRange,
     @Default([]) List<KasadoUser> players,
     @Default(false) bool isClosedByAdmin,
+    @Default(null) String? liveGameStatsId,
   }) = _CourtSlot;
 
   int get maxPlayerCount => 25;
