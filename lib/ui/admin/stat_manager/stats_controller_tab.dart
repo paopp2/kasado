@@ -21,7 +21,8 @@ class StatsControllerTab extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(gameStatController);
     final players = courtSlot.players;
-    final slotStatsPath = ref.watch(slotGameStatsPathProvider);
+    final slotStatsPath =
+        "${courtSlot.courtId}|${courtSlot.slotId}|${courtSlot.liveGameStatsId}";
     final gameStatsStream =
         ref.watch(slotGameStatsStreamProvider(slotStatsPath));
 

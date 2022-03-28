@@ -36,6 +36,17 @@ class CourtSlotRepository {
     );
   }
 
+  Future<void> setCourtSlotLiveGameStatsId({
+    required CourtSlot courtSlot,
+    required String? gameStatsId,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
+      data: {"liveGameStatsId": gameStatsId},
+      merge: true,
+    );
+  }
+
   Future<void> updateCourtSlotPlayers({
     required CourtSlot courtSlot,
     required List<KasadoUser> updatedPlayers,

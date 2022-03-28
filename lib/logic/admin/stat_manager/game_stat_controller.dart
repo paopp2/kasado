@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -13,6 +14,7 @@ final gameStatController = Provider.autoDispose(
   (ref) => GameStatController(
     read: ref.read,
     statRepo: ref.watch(statRepositoryProvider),
+    courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
   ),
 );
 
@@ -20,9 +22,11 @@ class GameStatController {
   GameStatController({
     required this.read,
     required this.statRepo,
+    required this.courtSlotRepo,
   });
   final Reader read;
   final StatRepository statRepo;
+  final CourtSlotRepository courtSlotRepo;
 
   void addPlayerToHomeTeam(KasadoUser player) {
     read(homeTeamPlayersProvider.notifier)
@@ -172,8 +176,10 @@ class GameStatController {
     required CourtSlot courtSlot,
     required GameStats gameStats,
   }) async {
-    // Set the slotGameStatsPathProvider to null (unlistens to the just ended game)
-    read(slotGameStatsPathProvider.notifier).state = null;
+    await courtSlotRepo.setCourtSlotLiveGameStatsId(
+      courtSlot: courtSlot,
+      gameStatsId: null,
+    );
 
     // Reset homeTeam and awayTeam players
     read(homeTeamPlayersProvider.notifier).state = [];
@@ -209,9 +215,13 @@ class GameStatController {
       courtSlot: courtSlot,
       gameStats: initializedGameStats,
     );
-    // Set the slotGameStatsPathProvider to the just pushed game
-    read(slotGameStatsPathProvider.notifier).state =
-        "${courtSlot.courtId}|${courtSlot.slotId}|$gameStatId";
+
+    // Set the courtSlot.liveGameStatsId to refer to just pushed gameStats
+    await courtSlotRepo.setCourtSlotLiveGameStatsId(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatId,
+    );
+
     Navigator.pop(context);
   }
 }

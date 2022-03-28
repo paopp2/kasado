@@ -33,13 +33,6 @@ final selectedGameStatsProvider = StateProvider.autoDispose<GameStats?>((ref) {
   return null;
 });
 
-// If a game is started at StatsController, this will be set to :
-// "[courtId]|[slotId]|[statsId]" (null if no game currently occurring)
-final slotGameStatsPathProvider = StateProvider.autoDispose<String?>((ref) {
-  ref.maintainState = true;
-  return null;
-});
-
 final homeTeamPlayersProvider = StateProvider.autoDispose<List<KasadoUser>>(
   (ref) {
     ref.maintainState = true;

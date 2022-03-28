@@ -97,7 +97,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                           if (isAdmin) ...[
                             StatsControllerTab(
                               constraints: constraints,
-                              courtSlot: baseCourtSlot,
+                              courtSlot: fetchedCourtSlot,
                             ),
                           ],
                         ],
