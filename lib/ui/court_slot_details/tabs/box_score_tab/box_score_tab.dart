@@ -37,48 +37,76 @@ class BoxScoreTab extends HookConsumerWidget {
             data: (gameStats) {
               return (gameStats == null)
                   ? const Center(child: Text('No stats available'))
-                  : ListView(
+                  : Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "HOME : ${gameStats.homeScore}",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'HOME',
+                                    style:
+                                        TextStyle(color: Colors.blue.shade200),
+                                  ),
+                                  Text(
+                                    gameStats.homeScore.toString(),
+                                    style: TextStyle(
+                                      color: Colors.blue.shade200,
+                                      fontSize: 50,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'AWAY',
+                                    style:
+                                        TextStyle(color: Colors.red.shade200),
+                                  ),
+                                  Text(
+                                    gameStats.awayScore.toString(),
+                                    style: TextStyle(
+                                      color: Colors.red.shade200,
+                                      fontSize: 50,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        TeamStatTable(
-                          constraints: constraints,
-                          statsList: gameStats.homeTeamStats.entries
-                              .map((statEntry) => statEntry.value)
-                              .toList()
-                            ..sort((a, b) => a.player.displayName!
-                                .compareTo(b.player.displayName!)),
-                          utils: utils,
-                        ),
-                        const SizedBox(height: 30),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "AWAY : ${gameStats.awayScore}",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              TeamStatTable(
+                                constraints: constraints,
+                                statsList: gameStats.homeTeamStats.entries
+                                    .map((statEntry) => statEntry.value)
+                                    .toList()
+                                  ..sort((a, b) => a.player.displayName!
+                                      .compareTo(b.player.displayName!)),
+                                isHome: true,
+                                utils: utils,
+                              ),
+                              const SizedBox(height: 25),
+                              TeamStatTable(
+                                constraints: constraints,
+                                statsList: gameStats.awayTeamStats.entries
+                                    .map((statEntry) => statEntry.value)
+                                    .toList()
+                                  ..sort((a, b) => a.player.displayName!
+                                      .compareTo(b.player.displayName!)),
+                                isHome: false,
+                                utils: utils,
+                              ),
+                            ],
                           ),
-                        ),
-                        TeamStatTable(
-                          constraints: constraints,
-                          statsList: gameStats.awayTeamStats.entries
-                              .map((statEntry) => statEntry.value)
-                              .toList()
-                            ..sort((a, b) => a.player.displayName!
-                                .compareTo(b.player.displayName!)),
-                          utils: utils,
                         ),
                       ],
                     );
