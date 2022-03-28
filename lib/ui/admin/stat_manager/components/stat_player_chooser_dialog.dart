@@ -67,13 +67,22 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
               ),
             ),
           ),
-          ElevatedButton(
-            child: const Text(
-              'NONE',
-              style: TextStyle(color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                child: const Text(
+                  'NONE',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(primary: Colors.red),
+                onPressed: () => Navigator.pop(context),
+              ),
             ),
-            style: ElevatedButton.styleFrom(primary: Colors.red),
-            onPressed: () => Navigator.pop(context),
           ),
         ],
       ),

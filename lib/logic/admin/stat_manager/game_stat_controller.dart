@@ -62,7 +62,8 @@ class GameStatController {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
-    ) as KasadoUser;
+    ) as KasadoUser?;
+    if (player == null) return;
 
     final _isHomePlayer = isHomePlayer(player);
 
@@ -105,7 +106,8 @@ class GameStatController {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
-    ) as KasadoUser;
+    ) as KasadoUser?;
+    if (player == null) return;
 
     await statRepo.recordPlayerFT(
       shootingPlayer: player,
@@ -125,7 +127,8 @@ class GameStatController {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
-    ) as KasadoUser;
+    ) as KasadoUser?;
+    if (player == null) return;
 
     await statRepo.recordPlayerRebound(
       reboundingPlayer: player,
@@ -144,7 +147,8 @@ class GameStatController {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
-    ) as KasadoUser;
+    ) as KasadoUser?;
+    if (player == null) return;
 
     await statRepo.recordPlayerSteal(
       playerWhoStealed: player,
