@@ -18,6 +18,7 @@ class KasadoTable<T extends Object> extends StatelessWidget {
     required this.columnDataList,
     this.colIndexToSummaryType = const {},
     this.needCountSummary = false,
+    this.columnHeaderColor = Colors.grey,
   }) : super(key: key);
 
   final double height;
@@ -28,6 +29,7 @@ class KasadoTable<T extends Object> extends StatelessWidget {
   final List<ColumnData<T>> columnDataList;
   final Map<int, GridSummaryType> colIndexToSummaryType;
   final bool needCountSummary;
+  final Color columnHeaderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,7 @@ class KasadoTable<T extends Object> extends StatelessWidget {
               columnName: colData.columnName,
               visible: colData.isVisible,
               label: Container(
-                color: Colors.grey.shade200,
+                color: columnHeaderColor,
                 child: Tooltip(
                   preferBelow: false,
                   message: colData.headerTooltip,

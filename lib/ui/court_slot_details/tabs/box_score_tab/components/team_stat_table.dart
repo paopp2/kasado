@@ -12,17 +12,20 @@ class TeamStatTable extends StatelessWidget {
     required this.constraints,
     required this.statsList,
     required this.utils,
+    required this.isHome,
   }) : super(key: key);
 
   final BoxConstraints constraints;
   final List<Stats> statsList;
   final KasadoUtils utils;
+  final bool isHome;
 
   @override
   Widget build(BuildContext context) {
     return KasadoTable<Stats>(
       height: constraints.maxHeight * 0.5,
       width: constraints.maxWidth,
+      columnHeaderColor: isHome ? Colors.blue.shade100 : Colors.red.shade100,
       frozenColumnCount: 1,
       dataAsList: statsList,
       onRowSelected: (stats) => context.pushNamed(
