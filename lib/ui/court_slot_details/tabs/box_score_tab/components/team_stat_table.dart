@@ -61,6 +61,16 @@ class TeamStatTable extends StatelessWidget {
           valueToStringCallback: (rebounds, stats) => rebounds.toString(),
         ),
         ColumnData(
+          columnName: "STL",
+          dataValueCallback: (stats) => stats.stl,
+          valueToStringCallback: (stl, stats) => stl.toString(),
+        ),
+        ColumnData(
+          columnName: "BLK",
+          dataValueCallback: (stats) => stats.blk,
+          valueToStringCallback: (blk, stats) => blk.toString(),
+        ),
+        ColumnData(
           columnName: "FGM / FGA",
           dataValueCallback: (stats) => stats.totalAttempts,
           valueToStringCallback: (_, stats) =>
@@ -94,16 +104,6 @@ class TeamStatTable extends StatelessWidget {
           dataValueCallback: (stats) => stats.ftPercent,
           valueToStringCallback: (ftPercent, stats) =>
               utils.getPercentageFormat(ftPercent as double),
-        ),
-        ColumnData(
-          columnName: "STL",
-          dataValueCallback: (stats) => stats.stl,
-          valueToStringCallback: (stl, stats) => stl.toString(),
-        ),
-        ColumnData(
-          columnName: "BLK",
-          dataValueCallback: (stats) => stats.blk,
-          valueToStringCallback: (blk, stats) => blk.toString(),
         ),
       ],
     );
