@@ -33,16 +33,35 @@ final selectedGameStatsProvider = StateProvider.autoDispose<GameStats?>((ref) {
   return null;
 });
 
-final homeTeamPlayersProvider = StateProvider.autoDispose<List<KasadoUser>>(
+// If a game is started at StatsController, this will be set to :
+// "[courtId]|[slotId]|[statsId]" (null if no game currently occurring)
+final slotGameStatsPathProvider = StateProvider.autoDispose<String?>((ref) {
+  ref.maintainState = true;
+  return null;
+});
+
+final homeTeamPlayersProvider = Provider.autoDispose<List<KasadoUser>>(
   (ref) {
-    ref.maintainState = true;
-    return [];
+    final gameStatPath = ref.watch(slotGameStatsPathProvider);
+    final slotGameStats =
+        ref.watch(slotGameStatsStreamProvider(gameStatPath)).value;
+
+    if (slotGameStats == null) return [];
+    return slotGameStats.homeTeamStats.values
+        .map((stat) => stat.player)
+        .toList();
   },
 );
 
-final awayTeamPlayersProvider = StateProvider.autoDispose<List<KasadoUser>>(
+final awayTeamPlayersProvider = Provider.autoDispose<List<KasadoUser>>(
   (ref) {
-    ref.maintainState = true;
-    return [];
+    final gameStatPath = ref.watch(slotGameStatsPathProvider);
+    final slotGameStats =
+        ref.watch(slotGameStatsStreamProvider(gameStatPath)).value;
+
+    if (slotGameStats == null) return [];
+    return slotGameStats.awayTeamStats.values
+        .map((stat) => stat.player)
+        .toList();
   },
 );

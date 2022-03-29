@@ -28,26 +28,6 @@ class GameStatController {
   final StatRepository statRepo;
   final CourtSlotRepository courtSlotRepo;
 
-  void addPlayerToHomeTeam(KasadoUser player) {
-    read(homeTeamPlayersProvider.notifier)
-        .update((state) => [...state, player]);
-  }
-
-  void removePlayerFromHomeTeam(KasadoUser player) {
-    read(homeTeamPlayersProvider.notifier)
-        .update((state) => [...state]..remove(player));
-  }
-
-  void addPlayerToAwayTeam(KasadoUser player) {
-    read(awayTeamPlayersProvider.notifier)
-        .update((state) => [...state, player]);
-  }
-
-  void removePlayerFromAwayTeam(KasadoUser player) {
-    read(awayTeamPlayersProvider.notifier)
-        .update((state) => [...state]..remove(player));
-  }
-
   bool isHomePlayer(KasadoUser player) {
     return read(homeTeamPlayersProvider).contains(player);
   }
@@ -181,22 +161,18 @@ class GameStatController {
       gameStatsId: null,
     );
 
-    // Reset homeTeam and awayTeam players
-    read(homeTeamPlayersProvider.notifier).state = [];
-    read(awayTeamPlayersProvider.notifier).state = [];
-
     await statRepo.concludeGameStats(
       gameStats: gameStats,
       courtSlot: courtSlot,
     );
   }
 
-  Future<void> initStatsForGame(
-    BuildContext context,
-    CourtSlot courtSlot,
-  ) async {
-    final homeTeamPlayers = read(homeTeamPlayersProvider);
-    final awayTeamPlayers = read(awayTeamPlayersProvider);
+  Future<void> initStatsForGame({
+    required BuildContext context,
+    required CourtSlot courtSlot,
+    required List<KasadoUser> homeTeamPlayers,
+    required List<KasadoUser> awayTeamPlayers,
+  }) async {
     final gameStatId = const Uuid().v4();
     final initializedGameStats = GameStats(
       id: gameStatId,
