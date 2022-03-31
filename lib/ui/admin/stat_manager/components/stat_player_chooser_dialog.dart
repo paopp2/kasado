@@ -17,7 +17,6 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
     return Dialog(
       child: Column(
         children: [
-          const Text('HOME', textAlign: TextAlign.center),
           Expanded(
             child: Visibility(
               visible:
@@ -26,20 +25,23 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
                 itemCount: 5,
                 itemBuilder: (context, i) {
                   final homePlayer = homeTeamPlayers[i];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        homePlayer.photoUrl!,
+                  return Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: ListTile(
+                      tileColor: Colors.blue.shade50,
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          homePlayer.photoUrl!,
+                        ),
                       ),
+                      title: Text(homePlayer.displayName!),
+                      onTap: () => Navigator.pop(context, homePlayer),
                     ),
-                    title: Text(homePlayer.displayName!),
-                    onTap: () => Navigator.pop(context, homePlayer),
                   );
                 },
               ),
             ),
           ),
-          const Text('AWAY', textAlign: TextAlign.center),
           Expanded(
             child: Visibility(
               visible:
@@ -48,28 +50,38 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
                 itemCount: 5,
                 itemBuilder: (context, i) {
                   final awayPlayer = awayTeamPlayers[i];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        awayPlayer.photoUrl!,
+                  return Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: ListTile(
+                      tileColor: Colors.red.shade50,
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          awayPlayer.photoUrl!,
+                        ),
                       ),
+                      title: Text(awayPlayer.displayName!),
+                      onTap: () => Navigator.pop(context, awayPlayer),
                     ),
-                    title: Text(awayPlayer.displayName!),
-                    onTap: () => Navigator.pop(context, awayPlayer),
                   );
                 },
               ),
             ),
           ),
-          Visibility(
-            visible: showOneAndShowHome != null,
-            child: ElevatedButton(
-              child: const Text(
-                'NONE',
-                style: TextStyle(color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                child: const Text(
+                  'NONE',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(primary: Colors.red),
+                onPressed: () => Navigator.pop(context),
               ),
-              style: ElevatedButton.styleFrom(primary: Colors.red),
-              onPressed: () => Navigator.pop(context),
             ),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -13,6 +14,7 @@ final gameStatController = Provider.autoDispose(
   (ref) => GameStatController(
     read: ref.read,
     statRepo: ref.watch(statRepositoryProvider),
+    courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
   ),
 );
 
@@ -20,29 +22,11 @@ class GameStatController {
   GameStatController({
     required this.read,
     required this.statRepo,
+    required this.courtSlotRepo,
   });
   final Reader read;
   final StatRepository statRepo;
-
-  void addPlayerToHomeTeam(KasadoUser player) {
-    read(homeTeamPlayersProvider.notifier)
-        .update((state) => [...state, player]);
-  }
-
-  void removePlayerFromHomeTeam(KasadoUser player) {
-    read(homeTeamPlayersProvider.notifier)
-        .update((state) => [...state]..remove(player));
-  }
-
-  void addPlayerToAwayTeam(KasadoUser player) {
-    read(awayTeamPlayersProvider.notifier)
-        .update((state) => [...state, player]);
-  }
-
-  void removePlayerFromAwayTeam(KasadoUser player) {
-    read(awayTeamPlayersProvider.notifier)
-        .update((state) => [...state]..remove(player));
-  }
+  final CourtSlotRepository courtSlotRepo;
 
   bool isHomePlayer(KasadoUser player) {
     return read(homeTeamPlayersProvider).contains(player);
@@ -62,12 +46,12 @@ class GameStatController {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
-    ) as KasadoUser;
+    ) as KasadoUser?;
+    if (player == null) return;
 
     final _isHomePlayer = isHomePlayer(player);
 
-    KasadoUser? playerWhoAssisted; // If shot was made
-    KasadoUser? playerWhoBlocked; // If shot was missed
+    KasadoUser? playerWhoAssisted;
     if (wasMade) {
       playerWhoAssisted = await showDialog(
         context: context,
@@ -75,19 +59,11 @@ class GameStatController {
           showOneAndShowHome: _isHomePlayer,
         ),
       ) as KasadoUser?;
-    } else {
-      playerWhoBlocked = await showDialog(
-        context: context,
-        builder: (_) => StatPlayerChooserDialog(
-          showOneAndShowHome: !_isHomePlayer,
-        ),
-      ) as KasadoUser?;
     }
 
     await statRepo.recordPlayerShotAttempt(
       playerWhoScored: player,
       playerWhoAssisted: playerWhoAssisted,
-      playerWhoBlocked: playerWhoBlocked,
       isThree: isThree,
       gameStatsId: gameStats.id,
       courtSlot: courtSlot,
@@ -105,7 +81,8 @@ class GameStatController {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
-    ) as KasadoUser;
+    ) as KasadoUser?;
+    if (player == null) return;
 
     await statRepo.recordPlayerFT(
       shootingPlayer: player,
@@ -125,7 +102,8 @@ class GameStatController {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
-    ) as KasadoUser;
+    ) as KasadoUser?;
+    if (player == null) return;
 
     await statRepo.recordPlayerRebound(
       reboundingPlayer: player,
@@ -133,6 +111,25 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
       isDefensive: isDefensive,
+    );
+  }
+
+  Future<void> onPlayerBlock({
+    required BuildContext context,
+    required GameStats gameStats,
+    required CourtSlot courtSlot,
+  }) async {
+    final player = await showDialog(
+      context: context,
+      builder: (_) => const StatPlayerChooserDialog(),
+    ) as KasadoUser?;
+    if (player == null) return;
+
+    await statRepo.recordPlayerBlock(
+      playerWhoBlocked: player,
+      gameStatsId: gameStats.id,
+      courtSlot: courtSlot,
+      isHomePlayer: isHomePlayer(player),
     );
   }
 
@@ -144,7 +141,8 @@ class GameStatController {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
-    ) as KasadoUser;
+    ) as KasadoUser?;
+    if (player == null) return;
 
     await statRepo.recordPlayerSteal(
       playerWhoStealed: player,
@@ -158,22 +156,23 @@ class GameStatController {
     required CourtSlot courtSlot,
     required GameStats gameStats,
   }) async {
-    // Set the slotGameStatsPathProvider to null (unlistens to the just ended game)
-    read(slotGameStatsPathProvider.notifier).state = null;
+    await courtSlotRepo.setCourtSlotLiveGameStatsId(
+      courtSlot: courtSlot,
+      gameStatsId: null,
+    );
 
-    // Reset homeTeam and awayTeam players
-    read(homeTeamPlayersProvider.notifier).state = [];
-    read(awayTeamPlayersProvider.notifier).state = [];
-
-    await statRepo.publishPlayerStats(gameStats);
+    await statRepo.concludeGameStats(
+      gameStats: gameStats,
+      courtSlot: courtSlot,
+    );
   }
 
-  Future<void> initStatsForGame(
-    BuildContext context,
-    CourtSlot courtSlot,
-  ) async {
-    final homeTeamPlayers = read(homeTeamPlayersProvider);
-    final awayTeamPlayers = read(awayTeamPlayersProvider);
+  Future<void> initStatsForGame({
+    required BuildContext context,
+    required CourtSlot courtSlot,
+    required List<KasadoUser> homeTeamPlayers,
+    required List<KasadoUser> awayTeamPlayers,
+  }) async {
     final gameStatId = const Uuid().v4();
     final initializedGameStats = GameStats(
       id: gameStatId,
@@ -186,14 +185,19 @@ class GameStatController {
         for (final player in awayTeamPlayers)
           player.id: Stats(player: player, courtSlot: courtSlot)
       },
+      isLive: true,
     );
     await statRepo.pushGameStats(
       courtSlot: courtSlot,
       gameStats: initializedGameStats,
     );
-    // Set the slotGameStatsPathProvider to the just pushed game
-    read(slotGameStatsPathProvider.notifier).state =
-        "${courtSlot.courtId}|${courtSlot.slotId}|$gameStatId";
+
+    // Set the courtSlot.liveGameStatsId to refer to just pushed gameStats
+    await courtSlotRepo.setCourtSlotLiveGameStatsId(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatId,
+    );
+
     Navigator.pop(context);
   }
 }

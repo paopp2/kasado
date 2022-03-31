@@ -40,16 +40,28 @@ final slotGameStatsPathProvider = StateProvider.autoDispose<String?>((ref) {
   return null;
 });
 
-final homeTeamPlayersProvider = StateProvider.autoDispose<List<KasadoUser>>(
+final homeTeamPlayersProvider = Provider.autoDispose<List<KasadoUser>>(
   (ref) {
-    ref.maintainState = true;
-    return [];
+    final gameStatPath = ref.watch(slotGameStatsPathProvider);
+    final slotGameStats =
+        ref.watch(slotGameStatsStreamProvider(gameStatPath)).value;
+
+    if (slotGameStats == null) return [];
+    return slotGameStats.homeTeamStats.values
+        .map((stat) => stat.player)
+        .toList();
   },
 );
 
-final awayTeamPlayersProvider = StateProvider.autoDispose<List<KasadoUser>>(
+final awayTeamPlayersProvider = Provider.autoDispose<List<KasadoUser>>(
   (ref) {
-    ref.maintainState = true;
-    return [];
+    final gameStatPath = ref.watch(slotGameStatsPathProvider);
+    final slotGameStats =
+        ref.watch(slotGameStatsStreamProvider(gameStatPath)).value;
+
+    if (slotGameStats == null) return [];
+    return slotGameStats.awayTeamStats.values
+        .map((stat) => stat.player)
+        .toList();
   },
 );

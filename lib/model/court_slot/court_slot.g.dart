@@ -15,6 +15,7 @@ _$_CourtSlot _$$_CourtSlotFromJson(Map<String, dynamic> json) => _$_CourtSlot(
               .toList() ??
           const [],
       isClosedByAdmin: json['isClosedByAdmin'] as bool? ?? false,
+      liveGameStatsId: json['liveGameStatsId'] as String? ?? null,
     );
 
 Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
       'timeRange': instance.timeRange.toJson(),
       'players': instance.players.map((e) => e.toJson()).toList(),
       'isClosedByAdmin': instance.isClosedByAdmin,
+      'liveGameStatsId': instance.liveGameStatsId,
     };

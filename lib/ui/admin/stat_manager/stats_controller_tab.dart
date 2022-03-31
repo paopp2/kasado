@@ -21,6 +21,15 @@ class StatsControllerTab extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(gameStatController);
     final players = courtSlot.players;
+
+    // Update provider asynchronously to avoid UI rebuild errors or "clashes"
+    Future.delayed(Duration.zero, () {
+      ref.read(slotGameStatsPathProvider.notifier).update((s) {
+        if (courtSlot.liveGameStatsId == null) return null;
+        return "${courtSlot.courtId}|${courtSlot.slotId}|${courtSlot.liveGameStatsId}";
+      });
+    });
+
     final slotStatsPath = ref.watch(slotGameStatsPathProvider);
     final gameStatsStream =
         ref.watch(slotGameStatsStreamProvider(slotStatsPath));
@@ -168,7 +177,16 @@ class StatsControllerTab extends HookConsumerWidget {
                     ),
                     const Spacer(),
                     StatButton(
-                      color: Colors.red,
+                      color: Colors.grey,
+                      content: 'BLK',
+                      onPressed: () => controller.onPlayerBlock(
+                        context: context,
+                        gameStats: gameStats!,
+                        courtSlot: courtSlot,
+                      ),
+                    ),
+                    StatButton(
+                      color: Colors.blue,
                       content: 'STL',
                       onPressed: () => controller.onPlayerSteal(
                         context: context,

@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
@@ -42,16 +43,21 @@ class SlotGameSelectorRow extends HookConsumerWidget {
                 .entries
                 .map(
                   (gameStatEntry) => TextButton(
-                    child: Text(
-                      'G${gameStatEntry.key + 1}',
-                      style: TextStyle(
-                        color: (selectedGameStats?.id == gameStatEntry.value.id)
-                            ? Colors.green
-                            : Colors.grey.shade400,
-                        fontWeight:
-                            (selectedGameStats?.id == gameStatEntry.value.id)
-                                ? FontWeight.bold
-                                : null,
+                    child: Badge(
+                      badgeColor: Colors.green,
+                      showBadge: gameStatEntry.value.isLive,
+                      child: Text(
+                        'G${gameStatEntry.key + 1}',
+                        style: TextStyle(
+                          color:
+                              (selectedGameStats?.id == gameStatEntry.value.id)
+                                  ? Colors.green
+                                  : Colors.grey.shade400,
+                          fontWeight:
+                              (selectedGameStats?.id == gameStatEntry.value.id)
+                                  ? FontWeight.bold
+                                  : null,
+                        ),
                       ),
                     ),
                     onPressed: () =>

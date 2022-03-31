@@ -70,7 +70,6 @@ class StatRepository {
   Future<void> recordPlayerShotAttempt({
     required KasadoUser playerWhoScored,
     required KasadoUser? playerWhoAssisted,
-    required KasadoUser? playerWhoBlocked,
     required bool isThree, // isTwo if otherwise
     required String gameStatsId,
     required CourtSlot courtSlot,
@@ -107,15 +106,6 @@ class StatRepository {
         gameStatsId: gameStatsId,
         courtSlot: courtSlot,
         isHomePlayer: isHomePlayer,
-      );
-    }
-
-    if (playerWhoBlocked != null) {
-      recordPlayerBlock(
-        playerWhoBlocked: playerWhoBlocked,
-        gameStatsId: gameStatsId,
-        courtSlot: courtSlot,
-        isHomePlayer: !isHomePlayer, // Blocker can only be from the other team
       );
     }
   }
@@ -237,7 +227,22 @@ class StatRepository {
     );
   }
 
-  Future<void> publishPlayerStats(GameStats gameStats) async {
+  /// Finalize game stats and publish each player's individual stats to their corresponding userInfos
+  Future<void> concludeGameStats({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+  }) async {
+    // Set gameStats.isLive to false
+    await firestoreHelper.setData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStats.id,
+      ),
+      data: {'isLive': false},
+      merge: true,
+    );
+
     final gamePlayerIds = [
       ...gameStats.homeTeamStats.keys,
       ...gameStats.awayTeamStats.keys,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
-import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 
@@ -18,8 +18,28 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(gameStatController);
-    final homeTeamPlayers = ref.watch(homeTeamPlayersProvider);
-    final awayTeamPlayers = ref.watch(awayTeamPlayersProvider);
+    final homeTeamPlayers = useState<List<KasadoUser>>([]);
+    final awayTeamPlayers = useState<List<KasadoUser>>([]);
+
+    void _addPlayerToHomeTeam(KasadoUser player) {
+      final currentHomeTeamPlayers = homeTeamPlayers.value;
+      homeTeamPlayers.value = [...currentHomeTeamPlayers, player];
+    }
+
+    void _removePlayerFromHomeTeam(KasadoUser player) {
+      final currentHomeTeamPlayers = homeTeamPlayers.value;
+      homeTeamPlayers.value = [...currentHomeTeamPlayers]..remove(player);
+    }
+
+    void _addPlayerToAwayTeam(KasadoUser player) {
+      final currentAwayTeamPlayers = awayTeamPlayers.value;
+      awayTeamPlayers.value = [...currentAwayTeamPlayers, player];
+    }
+
+    void _removePlayerFromAwayTeam(KasadoUser player) {
+      final currentAwayTeamPlayers = awayTeamPlayers.value;
+      awayTeamPlayers.value = [...currentAwayTeamPlayers]..remove(player);
+    }
 
     return Dialog(
       child: Column(
@@ -30,10 +50,9 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: homeTeamPlayers
+                children: homeTeamPlayers.value
                     .map((player) => GestureDetector(
-                          onTap: () =>
-                              controller.removePlayerFromHomeTeam(player),
+                          onTap: () => _removePlayerFromHomeTeam(player),
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(player.photoUrl!),
                             radius: 20,
@@ -49,10 +68,9 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: awayTeamPlayers
+                children: awayTeamPlayers.value
                     .map((player) => GestureDetector(
-                          onTap: () =>
-                              controller.removePlayerFromAwayTeam(player),
+                          onTap: () => _removePlayerFromAwayTeam(player),
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(player.photoUrl!),
                             radius: 20,
@@ -83,14 +101,14 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
                           Icons.arrow_left,
                           color: Colors.blue,
                         ),
-                        onPressed: () => controller.addPlayerToHomeTeam(player),
+                        onPressed: () => _addPlayerToHomeTeam(player),
                       ),
                       IconButton(
                         icon: const Icon(
                           Icons.arrow_right,
                           color: Colors.red,
                         ),
-                        onPressed: () => controller.addPlayerToAwayTeam(player),
+                        onPressed: () => _addPlayerToAwayTeam(player),
                       )
                     ],
                   ),
@@ -100,7 +118,12 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
           ),
           TextButton(
             child: const Text('OK'),
-            onPressed: () => controller.initStatsForGame(context, courtSlot),
+            onPressed: () => controller.initStatsForGame(
+              context: context,
+              courtSlot: courtSlot,
+              awayTeamPlayers: awayTeamPlayers.value,
+              homeTeamPlayers: homeTeamPlayers.value,
+            ),
           ),
         ],
       ),
