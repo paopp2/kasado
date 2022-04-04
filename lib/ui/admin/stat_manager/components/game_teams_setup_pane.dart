@@ -128,17 +128,28 @@ class GameTeamsSetupPane extends StatelessWidget {
             ),
           ),
         ),
-        TextButton(
-          child: const Text(
-            'START GAME',
-            style: TextStyle(color: Colors.green),
-          ),
-          onPressed: () => controller.initStatsForGame(
-            context: context,
-            courtSlot: courtSlot,
-            awayTeamPlayers: awayTeamPlayers,
-            homeTeamPlayers: homeTeamPlayers,
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton(
+              child: const Text('RESET', style: TextStyle(color: Colors.red)),
+              onPressed: () => controller.resetAllStageTeams(
+                courtSlot: courtSlot,
+              ),
+            ),
+            TextButton(
+              child: const Text(
+                'START GAME',
+                style: TextStyle(color: Colors.green),
+              ),
+              onPressed: () => controller.initStatsForGame(
+                context: context,
+                courtSlot: courtSlot,
+                awayTeamPlayers: awayTeamPlayers,
+                homeTeamPlayers: homeTeamPlayers,
+              ),
+            ),
+          ],
         ),
       ],
     );

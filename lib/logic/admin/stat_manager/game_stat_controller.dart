@@ -226,4 +226,19 @@ class GameStatController {
       isHome: isHome,
     );
   }
+
+  Future<void> resetAllStageTeams({required CourtSlot courtSlot}) async {
+    await courtSlotRepo.updateStageTeamPlayers(
+      courtId: courtSlot.courtId,
+      slotId: courtSlot.slotId,
+      teamPlayers: [],
+      isHome: true,
+    );
+    await courtSlotRepo.updateStageTeamPlayers(
+      courtId: courtSlot.courtId,
+      slotId: courtSlot.slotId,
+      teamPlayers: [],
+      isHome: false,
+    );
+  }
 }
