@@ -86,6 +86,10 @@ class SlotPlayersTab extends HookConsumerWidget {
             children: [
               if (isAdmin) ...[
                 TextButton(
+                  child: const Text('HIDE SLOT'),
+                  onPressed: () => adminController.hideCourtSlot(courtSlot),
+                ),
+                TextButton(
                   child: Text(
                     (courtSlot.isClosedByAdmin) ? 'OPEN SLOT' : 'CLOSE SLOT',
                   ),
@@ -95,7 +99,7 @@ class SlotPlayersTab extends HookConsumerWidget {
                     closeCourt: !courtSlot.isClosedByAdmin,
                     courtTicketPrice: court.ticketPrice,
                   ),
-                )
+                ),
               ],
               JoinLeaveSlotButton(
                 court: court,
