@@ -291,4 +291,20 @@ class CourtSlotRepository {
       path: FirestorePath.docCourtSlot(courtId, slotId),
     );
   }
+
+  Future<void> updateStageTeamPlayers({
+    required String courtId,
+    required String slotId,
+    required List<KasadoUser> teamPlayers,
+    required bool isHome,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docCourtSlot(courtId, slotId),
+      data: {
+        "stage${(isHome) ? 'Home' : 'Away'}TeamPlayers":
+            teamPlayers.map((u) => u.toJson()).toList()
+      },
+      merge: true,
+    );
+  }
 }
