@@ -29,6 +29,17 @@ class LiveStatsInputPane extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     child: const Text(
+                      'CANCEL GAME',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: null, // To avoid accidental presses
+                    onLongPress: () => controller.cancelGame(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                    ),
+                  ),
+                  ElevatedButton(
+                    child: const Text(
                       'END GAME',
                       style: TextStyle(color: Colors.white),
                     ),

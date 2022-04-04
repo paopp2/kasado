@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
@@ -156,6 +157,18 @@ class GameStatController {
     );
   }
 
+  Future<void> cancelGame({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+  }) async {
+    await courtSlotRepo.setCourtSlotLiveGameStatsId(
+      courtSlot: courtSlot,
+      gameStatsId: null,
+    );
+
+    await statRepo.cancelGame(courtSlot: courtSlot, gameStats: gameStats);
+  }
+
   Future<void> endGame({
     required CourtSlot courtSlot,
     required GameStats gameStats,
@@ -177,6 +190,11 @@ class GameStatController {
     required List<KasadoUser> homeTeamPlayers,
     required List<KasadoUser> awayTeamPlayers,
   }) async {
+    if (homeTeamPlayers.length != 5 || awayTeamPlayers.length != 5) {
+      Fluttertoast.showToast(msg: "Incorrect number of players");
+      return;
+    }
+
     final gameStatId = const Uuid().v4();
     final initializedGameStats = GameStats(
       id: gameStatId,

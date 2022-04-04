@@ -227,6 +227,19 @@ class StatRepository {
     );
   }
 
+  Future<void> cancelGame({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+  }) async {
+    await firestoreHelper.deleteData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStats.id,
+      ),
+    );
+  }
+
   /// Finalize game stats and publish each player's individual stats to their corresponding userInfos
   Future<void> concludeGameStats({
     required CourtSlot courtSlot,
