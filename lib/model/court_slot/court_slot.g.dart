@@ -16,6 +16,14 @@ _$_CourtSlot _$$_CourtSlotFromJson(Map<String, dynamic> json) => _$_CourtSlot(
           const [],
       isClosedByAdmin: json['isClosedByAdmin'] as bool? ?? false,
       liveGameStatsId: json['liveGameStatsId'] as String? ?? null,
+      stageHomeTeamPlayers: (json['stageHomeTeamPlayers'] as List<dynamic>?)
+              ?.map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      stageAwayTeamPlayers: (json['stageAwayTeamPlayers'] as List<dynamic>?)
+              ?.map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
@@ -26,4 +34,8 @@ Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
       'players': instance.players.map((e) => e.toJson()).toList(),
       'isClosedByAdmin': instance.isClosedByAdmin,
       'liveGameStatsId': instance.liveGameStatsId,
+      'stageHomeTeamPlayers':
+          instance.stageHomeTeamPlayers?.map((e) => e.toJson()).toList(),
+      'stageAwayTeamPlayers':
+          instance.stageAwayTeamPlayers?.map((e) => e.toJson()).toList(),
     };

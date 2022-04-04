@@ -16,6 +16,8 @@ class CourtSlot with _$CourtSlot {
     @Default([]) List<KasadoUser> players,
     @Default(false) bool isClosedByAdmin,
     @Default(null) String? liveGameStatsId,
+    @Default([]) List<KasadoUser>? stageHomeTeamPlayers,
+    @Default([]) List<KasadoUser>? stageAwayTeamPlayers,
   }) = _CourtSlot;
 
   int get maxPlayerCount => 25;
