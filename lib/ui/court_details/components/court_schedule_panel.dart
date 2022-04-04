@@ -94,6 +94,9 @@ _AppointmentDataSource _getCalendarDataSource(Court court) {
     return Appointment(
       startTime: tRange.startsAt,
       endTime: tRange.endsAt,
+      recurrenceExceptionDates: court.hiddenCourtSlots!
+          .map((slot) => slot.timeRange.startsAt)
+          .toList(),
       recurrenceRule: SfCalendar.generateRRule(
         RecurrenceProperties(
           recurrenceType: RecurrenceType.weekly,
