@@ -30,6 +30,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isSuperAdmin = currentUserInfo.isSuperAdmin;
     final isModifyingSlot = useState(false);
     return (isModifyingSlot.value)
         ? const LoadingWidget()
@@ -76,6 +77,13 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                       );
                       isModifyingSlot.value = false;
                     },
+                    onLongPress: (isSuperAdmin)
+                        ? () => model.joinAsAnotherPlayer(
+                              baseCourtSlot: courtSlot,
+                              courtTicketPrice: court.ticketPrice,
+                              context: context,
+                            )
+                        : null,
                   ),
           );
   }

@@ -1,5 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/enums.dart';
@@ -15,6 +15,7 @@ import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/time_range/time_range.dart';
+import 'package:kasado/ui/shared/user_search/user_search_pane.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 final courtSlotDetailsViewModel = Provider.autoDispose(
@@ -105,6 +106,26 @@ class CourtSlotDetailsViewModel extends ViewModel {
         slotId: CourtSlot.getIdFromTimeRange(aTimeRange),
         timeRange: aTimeRange,
       ),
+    );
+  }
+
+  Future<void> joinAsAnotherPlayer({
+    required CourtSlot baseCourtSlot,
+    required double courtTicketPrice,
+    required BuildContext context,
+  }) async {
+    final playerUserInfo = await showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        child: UserSearchPane(
+          onUserTapped: (userInfo) => Navigator.pop(context, userInfo),
+        ),
+      ),
+    );
+    await addToCourtSlot(
+      baseCourtSlot: baseCourtSlot,
+      courtTicketPrice: courtTicketPrice,
+      userInfo: playerUserInfo,
     );
   }
 
