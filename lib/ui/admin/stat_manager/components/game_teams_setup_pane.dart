@@ -22,99 +22,117 @@ class GameTeamsSetupPane extends StatelessWidget {
     return Column(
       children: [
         Container(
-          color: Colors.blue,
+          color: Colors.blue.shade200,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: homeTeamPlayers
-                  .map((player) => GestureDetector(
-                        onTap: () => controller.updateTeamStage(
-                          courtSlot: courtSlot,
-                          player: player,
-                          isHome: true,
-                          isPlayerAdd: false,
-                        ),
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(player.photoUrl!),
-                          radius: 20,
-                        ),
-                      ))
-                  .toList(),
+            child: SizedBox(
+              height: 40,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: homeTeamPlayers
+                    .map((player) => GestureDetector(
+                          onTap: () => controller.updateTeamStage(
+                            courtSlot: courtSlot,
+                            player: player,
+                            isHome: true,
+                            isPlayerAdd: false,
+                          ),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(player.photoUrl!),
+                          ),
+                        ))
+                    .toList(),
+              ),
             ),
           ),
         ),
         Container(
-          color: Colors.red,
+          color: Colors.red.shade200,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: awayTeamPlayers
-                  .map((player) => GestureDetector(
-                        onTap: () => controller.updateTeamStage(
-                          courtSlot: courtSlot,
-                          player: player,
-                          isHome: false,
-                          isPlayerAdd: false,
-                        ),
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(player.photoUrl!),
-                          radius: 20,
-                        ),
-                      ))
-                  .toList(),
+            child: SizedBox(
+              height: 40,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: awayTeamPlayers
+                    .map((player) => GestureDetector(
+                          onTap: () => controller.updateTeamStage(
+                            courtSlot: courtSlot,
+                            player: player,
+                            isHome: false,
+                            isPlayerAdd: false,
+                          ),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(player.photoUrl!),
+                            radius: 20,
+                          ),
+                        ))
+                    .toList(),
+              ),
             ),
           ),
         ),
         const Divider(),
         Expanded(
-          child: ListView.builder(
-            itemCount: players.length,
-            itemBuilder: (context, i) {
-              final player = players[i];
-              return ListTile(
-                leading: CircleAvatar(
-                  radius: 20,
-                  backgroundImage: NetworkImage(player.photoUrl!),
-                ),
-                title: Text(player.displayName!),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.arrow_left,
-                        color: Colors.blue,
-                      ),
-                      onPressed: () => controller.updateTeamStage(
-                        courtSlot: courtSlot,
-                        player: player,
-                        isHome: true,
-                        isPlayerAdd: true,
-                      ),
+          child: Material(
+            child: ListView.builder(
+              itemCount: players.length,
+              itemBuilder: (context, i) {
+                final player = players[i];
+                return Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: ListTile(
+                    tileColor: homeTeamPlayers.contains(player)
+                        ? Colors.blue.shade100
+                        : awayTeamPlayers.contains(player)
+                            ? Colors.red.shade100
+                            : null,
+                    leading: CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(player.photoUrl!),
                     ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.arrow_right,
-                        color: Colors.red,
-                      ),
-                      onPressed: () => controller.updateTeamStage(
-                        courtSlot: courtSlot,
-                        player: player,
-                        isHome: false,
-                        isPlayerAdd: true,
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
+                    title: Text(player.displayName!),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.arrow_left,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () => controller.updateTeamStage(
+                            courtSlot: courtSlot,
+                            player: player,
+                            isHome: true,
+                            isPlayerAdd: true,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.arrow_right,
+                            color: Colors.red,
+                          ),
+                          onPressed: () => controller.updateTeamStage(
+                            courtSlot: courtSlot,
+                            player: player,
+                            isHome: false,
+                            isPlayerAdd: true,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ),
         TextButton(
-          child: const Text('OK'),
+          child: const Text(
+            'START GAME',
+            style: TextStyle(color: Colors.green),
+          ),
           onPressed: () => controller.initStatsForGame(
             context: context,
             courtSlot: courtSlot,

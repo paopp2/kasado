@@ -32,6 +32,10 @@ class GameStatController {
     return read(homeTeamPlayersProvider).contains(player);
   }
 
+  bool isAwayPlayer(KasadoUser player) {
+    return read(awayTeamPlayersProvider).contains(player);
+  }
+
   void selectSlotGameStats(GameStats gameStats) {
     read(selectedGameStatsProvider.notifier).state = gameStats;
   }
