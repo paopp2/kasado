@@ -20,6 +20,10 @@ _$_Court _$$_CourtFromJson(Map<String, dynamic> json) => _$_Court(
           .toList(),
       adminIds:
           (json['adminIds'] as List<dynamic>).map((e) => e as String).toList(),
+      hiddenCourtSlots: (json['hiddenCourtSlots'] as List<dynamic>?)
+              ?.map((e) => CourtSlot.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$_CourtToJson(_$_Court instance) => <String, dynamic>{
@@ -33,6 +37,8 @@ Map<String, dynamic> _$$_CourtToJson(_$_Court instance) => <String, dynamic>{
       'allowedTimeSlots':
           instance.allowedTimeSlots.map((e) => e.toJson()).toList(),
       'adminIds': instance.adminIds,
+      'hiddenCourtSlots':
+          instance.hiddenCourtSlots?.map((e) => e.toJson()).toList(),
     };
 
 const _$WeekDaysEnumMap = {

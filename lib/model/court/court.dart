@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -17,6 +18,7 @@ class Court with _$Court {
     required List<WeekDays> allowedWeekDays,
     required List<TimeRange> allowedTimeSlots,
     required List<String> adminIds,
+    @Default([]) List<CourtSlot>? hiddenCourtSlots,
   }) = _Court;
 
   factory Court.fromJson(Map<String, dynamic> json) => _$CourtFromJson(json);
