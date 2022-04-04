@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
-import 'package:kasado/ui/admin/stat_manager/components/game_teams_setup_dialog.dart';
+import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/ui/admin/stat_manager/components/stat_button.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
@@ -20,7 +21,11 @@ class StatsControllerTab extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(gameStatController);
-    final players = courtSlot.players;
+    final players = courtSlot.players
+      ..sort((a, b) => a.displayName!.compareTo(b.displayName!));
+
+    final homeTeamPlayers = useState<List<KasadoUser>>([]);
+    final awayTeamPlayers = useState<List<KasadoUser>>([]);
 
     // Update provider asynchronously to avoid UI rebuild errors or "clashes"
     Future.delayed(Duration.zero, () {
@@ -34,30 +39,124 @@ class StatsControllerTab extends HookConsumerWidget {
     final gameStatsStream =
         ref.watch(slotGameStatsStreamProvider(slotStatsPath));
 
+    void _addPlayerToHomeTeam(KasadoUser player) {
+      final currentHomeTeamPlayers = homeTeamPlayers.value;
+      homeTeamPlayers.value = [...currentHomeTeamPlayers, player];
+    }
+
+    void _removePlayerFromHomeTeam(KasadoUser player) {
+      final currentHomeTeamPlayers = homeTeamPlayers.value;
+      homeTeamPlayers.value = [...currentHomeTeamPlayers]..remove(player);
+    }
+
+    void _addPlayerToAwayTeam(KasadoUser player) {
+      final currentAwayTeamPlayers = awayTeamPlayers.value;
+      awayTeamPlayers.value = [...currentAwayTeamPlayers, player];
+    }
+
+    void _removePlayerFromAwayTeam(KasadoUser player) {
+      final currentAwayTeamPlayers = awayTeamPlayers.value;
+      awayTeamPlayers.value = [...currentAwayTeamPlayers]..remove(player);
+    }
+
     return gameStatsStream.when(
       error: (e, _) => Text(e.toString()),
       loading: () => const LoadingWidget(),
       data: (gameStats) {
-        return Column(
-          children: [
-            Expanded(
-              child: (gameStats == null)
-                  ? Center(
-                      child: ElevatedButton(
-                        child: const Text(
-                          'START GAME',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () => showDialog(
-                          context: context,
-                          builder: (_) => GameTeamsSetupDialog(
-                            players: players,
-                            courtSlot: courtSlot,
-                          ),
-                        ),
+        return (gameStats == null)
+            ? Column(
+                children: [
+                  Container(
+                    color: Colors.blue,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: homeTeamPlayers.value
+                            .map((player) => GestureDetector(
+                                  onTap: () =>
+                                      _removePlayerFromHomeTeam(player),
+                                  child: CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(player.photoUrl!),
+                                    radius: 20,
+                                  ),
+                                ))
+                            .toList(),
                       ),
-                    )
-                  : Column(
+                    ),
+                  ),
+                  Container(
+                    color: Colors.red,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: awayTeamPlayers.value
+                            .map((player) => GestureDetector(
+                                  onTap: () =>
+                                      _removePlayerFromAwayTeam(player),
+                                  child: CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(player.photoUrl!),
+                                    radius: 20,
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                  const Divider(),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: players.length,
+                      itemBuilder: (context, i) {
+                        final player = players[i];
+                        return ListTile(
+                          leading: CircleAvatar(
+                            radius: 20,
+                            backgroundImage: NetworkImage(player.photoUrl!),
+                          ),
+                          title: Text(player.displayName!),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.arrow_left,
+                                  color: Colors.blue,
+                                ),
+                                onPressed: () => _addPlayerToHomeTeam(player),
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.arrow_right,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () => _addPlayerToAwayTeam(player),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () => controller.initStatsForGame(
+                      context: context,
+                      courtSlot: courtSlot,
+                      awayTeamPlayers: awayTeamPlayers.value,
+                      homeTeamPlayers: homeTeamPlayers.value,
+                    ),
+                  ),
+                ],
+              )
+            : Column(
+                children: [
+                  Expanded(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Row(
@@ -101,129 +200,129 @@ class StatsControllerTab extends HookConsumerWidget {
                         ),
                       ],
                     ),
-            ),
-            Column(
-              children: [
-                Row(
-                  children: [
-                    StatButton(
-                      color: Colors.green,
-                      content: '3',
-                      onPressed: () => controller.onPlayerShot(
-                        context: context,
-                        isThree: true,
-                        wasMade: true,
-                        gameStats: gameStats!,
-                        courtSlot: courtSlot,
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          StatButton(
+                            color: Colors.green,
+                            content: '3',
+                            onPressed: () => controller.onPlayerShot(
+                              context: context,
+                              isThree: true,
+                              wasMade: true,
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                          ),
+                          StatButton(
+                            color: Colors.red,
+                            content: '3',
+                            onPressed: () => controller.onPlayerShot(
+                              context: context,
+                              isThree: true,
+                              wasMade: false,
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                          ),
+                          const Spacer(),
+                          StatButton(
+                            color: Colors.red,
+                            content: 'OREB',
+                            onPressed: () => controller.onPlayerRebounded(
+                              context: context,
+                              isDefensive: false,
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                          ),
+                          StatButton(
+                            color: Colors.green,
+                            content: 'DREB',
+                            onPressed: () => controller.onPlayerRebounded(
+                              context: context,
+                              isDefensive: true,
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    StatButton(
-                      color: Colors.red,
-                      content: '3',
-                      onPressed: () => controller.onPlayerShot(
-                        context: context,
-                        isThree: true,
-                        wasMade: false,
-                        gameStats: gameStats!,
-                        courtSlot: courtSlot,
+                      Row(
+                        children: [
+                          StatButton(
+                            color: Colors.green,
+                            content: '2',
+                            onPressed: () => controller.onPlayerShot(
+                              context: context,
+                              isThree: false,
+                              wasMade: true,
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                          ),
+                          StatButton(
+                            color: Colors.red,
+                            content: '2',
+                            onPressed: () => controller.onPlayerShot(
+                              context: context,
+                              isThree: false,
+                              wasMade: false,
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                          ),
+                          const Spacer(),
+                          StatButton(
+                            color: Colors.grey,
+                            content: 'BLK',
+                            onPressed: () => controller.onPlayerBlock(
+                              context: context,
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                          ),
+                          StatButton(
+                            color: Colors.blue,
+                            content: 'STL',
+                            onPressed: () => controller.onPlayerSteal(
+                              context: context,
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    const Spacer(),
-                    StatButton(
-                      color: Colors.red,
-                      content: 'OREB',
-                      onPressed: () => controller.onPlayerRebounded(
-                        context: context,
-                        isDefensive: false,
-                        gameStats: gameStats!,
-                        courtSlot: courtSlot,
+                      Row(
+                        children: [
+                          StatButton(
+                            color: Colors.green,
+                            content: '1',
+                            onPressed: () => controller.onPlayerShotFT(
+                              context: context,
+                              wasMade: true,
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                          ),
+                          StatButton(
+                            color: Colors.red,
+                            content: '1',
+                            onPressed: () => controller.onPlayerShotFT(
+                              context: context,
+                              wasMade: false,
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    StatButton(
-                      color: Colors.green,
-                      content: 'DREB',
-                      onPressed: () => controller.onPlayerRebounded(
-                        context: context,
-                        isDefensive: true,
-                        gameStats: gameStats!,
-                        courtSlot: courtSlot,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    StatButton(
-                      color: Colors.green,
-                      content: '2',
-                      onPressed: () => controller.onPlayerShot(
-                        context: context,
-                        isThree: false,
-                        wasMade: true,
-                        gameStats: gameStats!,
-                        courtSlot: courtSlot,
-                      ),
-                    ),
-                    StatButton(
-                      color: Colors.red,
-                      content: '2',
-                      onPressed: () => controller.onPlayerShot(
-                        context: context,
-                        isThree: false,
-                        wasMade: false,
-                        gameStats: gameStats!,
-                        courtSlot: courtSlot,
-                      ),
-                    ),
-                    const Spacer(),
-                    StatButton(
-                      color: Colors.grey,
-                      content: 'BLK',
-                      onPressed: () => controller.onPlayerBlock(
-                        context: context,
-                        gameStats: gameStats!,
-                        courtSlot: courtSlot,
-                      ),
-                    ),
-                    StatButton(
-                      color: Colors.blue,
-                      content: 'STL',
-                      onPressed: () => controller.onPlayerSteal(
-                        context: context,
-                        gameStats: gameStats!,
-                        courtSlot: courtSlot,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    StatButton(
-                      color: Colors.green,
-                      content: '1',
-                      onPressed: () => controller.onPlayerShotFT(
-                        context: context,
-                        wasMade: true,
-                        gameStats: gameStats!,
-                        courtSlot: courtSlot,
-                      ),
-                    ),
-                    StatButton(
-                      color: Colors.red,
-                      content: '1',
-                      onPressed: () => controller.onPlayerShotFT(
-                        context: context,
-                        wasMade: false,
-                        gameStats: gameStats!,
-                        courtSlot: courtSlot,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        );
+                    ],
+                  ),
+                ],
+              );
       },
     );
   }

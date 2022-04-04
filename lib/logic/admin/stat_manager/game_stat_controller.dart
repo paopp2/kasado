@@ -197,7 +197,5 @@ class GameStatController {
       courtSlot: courtSlot,
       gameStatsId: gameStatId,
     );
-
-    Navigator.pop(context);
   }
 }
