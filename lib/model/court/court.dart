@@ -18,7 +18,15 @@ class Court with _$Court {
     required List<WeekDays> allowedWeekDays,
     required List<TimeRange> allowedTimeSlots,
     required List<String> adminIds,
-    @Default([]) List<CourtSlot>? hiddenCourtSlots,
+
+    /// Special courtSlots are courtSlots wherein all the other slots with the
+    /// same day as them are hidden. In other words, only the specialCourtSlots
+    /// are shown during the day that they occur
+    //
+    // These are in use with Syncfusion's calendar widget and its
+    // 'recurrenceExceptionDates' feature. Useful when admin has to hide some
+    // slots from the end user
+    @Default([]) List<CourtSlot>? specialCourtSlots,
   }) = _Court;
 
   factory Court.fromJson(Map<String, dynamic> json) => _$CourtFromJson(json);

@@ -86,8 +86,9 @@ class SlotPlayersTab extends HookConsumerWidget {
             children: [
               if (isAdmin) ...[
                 TextButton(
-                  child: const Text('HIDE SLOT'),
-                  onPressed: () => adminController.hideCourtSlot(courtSlot),
+                  child: const Text('HIDE OTHERS'),
+                  onPressed: () => adminController
+                      .hideOtherCourtSlotsWithSameDayAs(courtSlot),
                 ),
                 TextButton(
                   child: Text(

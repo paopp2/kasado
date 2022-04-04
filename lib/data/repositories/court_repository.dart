@@ -29,15 +29,17 @@ class CourtRepository {
     await firestoreHelper.deleteData(path: FirestorePath.docCourt(court.id));
   }
 
-  Future<void> hideCourtSlot(CourtSlot courtSlot) async {
+  Future<void> hideOtherCourtSlotsWithSameDayAs(CourtSlot courtSlot) async {
     final baseCourt = await getCourt(courtSlot.courtId);
-    final hiddenCourtSlots = [...baseCourt!.hiddenCourtSlots!, courtSlot]
+    // Special courtSlots are slots that remain shown while other slots having
+    // the same day as them are hidden
+    final specialCourtSlots = [...baseCourt!.specialCourtSlots!, courtSlot]
       ..sort((a, b) => a.timeRange.startsAt.compareTo(b.timeRange.startsAt));
     await firestoreHelper.setData(
       path: FirestorePath.docCourt(baseCourt.id),
       data: {
-        'hiddenCourtSlots':
-            hiddenCourtSlots.map((slot) => slot.toJson()).toList(),
+        'specialCourtSlots':
+            specialCourtSlots.map((slot) => slot.toJson()).toList(),
       },
       merge: true,
     );
