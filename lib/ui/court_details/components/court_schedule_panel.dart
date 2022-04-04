@@ -90,11 +90,13 @@ class CourtSchedulePanel extends HookConsumerWidget {
 
 _AppointmentDataSource _getCalendarDataSource(Court court) {
   List<Appointment> appointments = <Appointment>[];
+
   appointments.addAll(court.allowedTimeSlots.map((tRange) {
     return Appointment(
+      id: 'appointment_id',
       startTime: tRange.startsAt,
       endTime: tRange.endsAt,
-      recurrenceExceptionDates: court.hiddenCourtSlots!
+      recurrenceExceptionDates: court.specialCourtSlots!
           .map((slot) => slot.timeRange.startsAt)
           .toList(),
       recurrenceRule: SfCalendar.generateRRule(
@@ -106,6 +108,16 @@ _AppointmentDataSource _getCalendarDataSource(Court court) {
         DateTime(2015, 1, 1),
         DateTime(2015, 1, 1),
       ),
+    );
+  }));
+
+  /// Add the specialCourtSlots that was hidden due to the
+  /// 'recurrenceExceptionDates' above
+  appointments.addAll(court.specialCourtSlots!.map((slot) {
+    return Appointment(
+      recurrenceId: 'appointment_id',
+      startTime: slot.timeRange.startsAt,
+      endTime: slot.timeRange.endsAt,
     );
   }));
 
