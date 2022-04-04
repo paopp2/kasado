@@ -122,6 +122,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
         ),
       ),
     );
+    if (playerUserInfo == null) return;
     await addToCourtSlot(
       baseCourtSlot: baseCourtSlot,
       courtTicketPrice: courtTicketPrice,
