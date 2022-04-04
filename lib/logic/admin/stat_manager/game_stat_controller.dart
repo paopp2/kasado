@@ -198,4 +198,28 @@ class GameStatController {
       gameStatsId: gameStatId,
     );
   }
+
+  Future<void> updateTeamStage({
+    required CourtSlot courtSlot,
+    required KasadoUser player,
+    required bool isHome,
+    required bool isPlayerAdd,
+  }) async {
+    final currentTeamPlayers = (isHome)
+        ? courtSlot.stageHomeTeamPlayers ?? []
+        : courtSlot.stageAwayTeamPlayers ?? [];
+
+    final List<KasadoUser> updatedTeamPlayers;
+    if (isPlayerAdd) {
+      updatedTeamPlayers = [...currentTeamPlayers, player];
+    } else {
+      updatedTeamPlayers = currentTeamPlayers..remove(player);
+    }
+    await courtSlotRepo.updateStageTeamPlayers(
+      courtId: courtSlot.courtId,
+      slotId: courtSlot.slotId,
+      teamPlayers: updatedTeamPlayers,
+      isHome: isHome,
+    );
+  }
 }

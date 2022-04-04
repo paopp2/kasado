@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
-import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/ui/admin/stat_manager/components/stat_button.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
@@ -24,8 +22,8 @@ class StatsControllerTab extends HookConsumerWidget {
     final players = courtSlot.players
       ..sort((a, b) => a.displayName!.compareTo(b.displayName!));
 
-    final homeTeamPlayers = useState<List<KasadoUser>>([]);
-    final awayTeamPlayers = useState<List<KasadoUser>>([]);
+    final homeTeamPlayers = courtSlot.stageHomeTeamPlayers ?? [];
+    final awayTeamPlayers = courtSlot.stageAwayTeamPlayers ?? [];
 
     // Update provider asynchronously to avoid UI rebuild errors or "clashes"
     Future.delayed(Duration.zero, () {
@@ -38,26 +36,6 @@ class StatsControllerTab extends HookConsumerWidget {
     final slotStatsPath = ref.watch(slotGameStatsPathProvider);
     final gameStatsStream =
         ref.watch(slotGameStatsStreamProvider(slotStatsPath));
-
-    void _addPlayerToHomeTeam(KasadoUser player) {
-      final currentHomeTeamPlayers = homeTeamPlayers.value;
-      homeTeamPlayers.value = [...currentHomeTeamPlayers, player];
-    }
-
-    void _removePlayerFromHomeTeam(KasadoUser player) {
-      final currentHomeTeamPlayers = homeTeamPlayers.value;
-      homeTeamPlayers.value = [...currentHomeTeamPlayers]..remove(player);
-    }
-
-    void _addPlayerToAwayTeam(KasadoUser player) {
-      final currentAwayTeamPlayers = awayTeamPlayers.value;
-      awayTeamPlayers.value = [...currentAwayTeamPlayers, player];
-    }
-
-    void _removePlayerFromAwayTeam(KasadoUser player) {
-      final currentAwayTeamPlayers = awayTeamPlayers.value;
-      awayTeamPlayers.value = [...currentAwayTeamPlayers]..remove(player);
-    }
 
     return gameStatsStream.when(
       error: (e, _) => Text(e.toString()),
@@ -72,10 +50,14 @@ class StatsControllerTab extends HookConsumerWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: homeTeamPlayers.value
+                        children: homeTeamPlayers
                             .map((player) => GestureDetector(
-                                  onTap: () =>
-                                      _removePlayerFromHomeTeam(player),
+                                  onTap: () => controller.updateTeamStage(
+                                    courtSlot: courtSlot,
+                                    player: player,
+                                    isHome: true,
+                                    isPlayerAdd: false,
+                                  ),
                                   child: CircleAvatar(
                                     backgroundImage:
                                         NetworkImage(player.photoUrl!),
@@ -92,10 +74,14 @@ class StatsControllerTab extends HookConsumerWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: awayTeamPlayers.value
+                        children: awayTeamPlayers
                             .map((player) => GestureDetector(
-                                  onTap: () =>
-                                      _removePlayerFromAwayTeam(player),
+                                  onTap: () => controller.updateTeamStage(
+                                    courtSlot: courtSlot,
+                                    player: player,
+                                    isHome: false,
+                                    isPlayerAdd: false,
+                                  ),
                                   child: CircleAvatar(
                                     backgroundImage:
                                         NetworkImage(player.photoUrl!),
@@ -127,14 +113,24 @@ class StatsControllerTab extends HookConsumerWidget {
                                   Icons.arrow_left,
                                   color: Colors.blue,
                                 ),
-                                onPressed: () => _addPlayerToHomeTeam(player),
+                                onPressed: () => controller.updateTeamStage(
+                                  courtSlot: courtSlot,
+                                  player: player,
+                                  isHome: true,
+                                  isPlayerAdd: true,
+                                ),
                               ),
                               IconButton(
                                 icon: const Icon(
                                   Icons.arrow_right,
                                   color: Colors.red,
                                 ),
-                                onPressed: () => _addPlayerToAwayTeam(player),
+                                onPressed: () => controller.updateTeamStage(
+                                  courtSlot: courtSlot,
+                                  player: player,
+                                  isHome: false,
+                                  isPlayerAdd: true,
+                                ),
                               )
                             ],
                           ),
@@ -147,8 +143,8 @@ class StatsControllerTab extends HookConsumerWidget {
                     onPressed: () => controller.initStatsForGame(
                       context: context,
                       courtSlot: courtSlot,
-                      awayTeamPlayers: awayTeamPlayers.value,
-                      homeTeamPlayers: homeTeamPlayers.value,
+                      awayTeamPlayers: awayTeamPlayers,
+                      homeTeamPlayers: homeTeamPlayers,
                     ),
                   ),
                 ],
