@@ -80,7 +80,7 @@ class SlotPlayersTab extends HookConsumerWidget {
                   ),
                 ),
         ),
-        if (!isDone) ...[
+        if (!isDone || isSuperAdmin) ...[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

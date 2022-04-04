@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
@@ -30,6 +31,10 @@ class GameStatController {
 
   bool isHomePlayer(KasadoUser player) {
     return read(homeTeamPlayersProvider).contains(player);
+  }
+
+  bool isAwayPlayer(KasadoUser player) {
+    return read(awayTeamPlayersProvider).contains(player);
   }
 
   void selectSlotGameStats(GameStats gameStats) {
@@ -152,6 +157,18 @@ class GameStatController {
     );
   }
 
+  Future<void> cancelGame({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+  }) async {
+    await courtSlotRepo.setCourtSlotLiveGameStatsId(
+      courtSlot: courtSlot,
+      gameStatsId: null,
+    );
+
+    await statRepo.cancelGame(courtSlot: courtSlot, gameStats: gameStats);
+  }
+
   Future<void> endGame({
     required CourtSlot courtSlot,
     required GameStats gameStats,
@@ -173,6 +190,11 @@ class GameStatController {
     required List<KasadoUser> homeTeamPlayers,
     required List<KasadoUser> awayTeamPlayers,
   }) async {
+    if (homeTeamPlayers.length != 5 || awayTeamPlayers.length != 5) {
+      Fluttertoast.showToast(msg: "Incorrect number of players");
+      return;
+    }
+
     final gameStatId = const Uuid().v4();
     final initializedGameStats = GameStats(
       id: gameStatId,
@@ -197,7 +219,44 @@ class GameStatController {
       courtSlot: courtSlot,
       gameStatsId: gameStatId,
     );
+  }
 
-    Navigator.pop(context);
+  Future<void> updateTeamStage({
+    required CourtSlot courtSlot,
+    required KasadoUser player,
+    required bool isHome,
+    required bool isPlayerAdd,
+  }) async {
+    final currentTeamPlayers = (isHome)
+        ? courtSlot.stageHomeTeamPlayers ?? []
+        : courtSlot.stageAwayTeamPlayers ?? [];
+
+    final List<KasadoUser> updatedTeamPlayers;
+    if (isPlayerAdd) {
+      updatedTeamPlayers = [...currentTeamPlayers, player];
+    } else {
+      updatedTeamPlayers = currentTeamPlayers..remove(player);
+    }
+    await courtSlotRepo.updateStageTeamPlayers(
+      courtId: courtSlot.courtId,
+      slotId: courtSlot.slotId,
+      teamPlayers: updatedTeamPlayers,
+      isHome: isHome,
+    );
+  }
+
+  Future<void> resetAllStageTeams({required CourtSlot courtSlot}) async {
+    await courtSlotRepo.updateStageTeamPlayers(
+      courtId: courtSlot.courtId,
+      slotId: courtSlot.slotId,
+      teamPlayers: [],
+      isHome: true,
+    );
+    await courtSlotRepo.updateStageTeamPlayers(
+      courtId: courtSlot.courtId,
+      slotId: courtSlot.slotId,
+      teamPlayers: [],
+      isHome: false,
+    );
   }
 }
