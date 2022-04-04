@@ -26,7 +26,8 @@ class LoginErrorDialog extends StatelessWidget {
           Text("2) Naka-disabled ang popups. Try daw enable pre"),
           SizedBox(height: 20),
           Text(
-              "Og wa jud gani gihapon, e-contact si Paolo Pepito or Paul Abenaza"),
+            "Og wa jud gani gihapon, e-contact si Paolo Pepito or Fabian Pepito",
+          ),
         ],
       ),
       actions: [

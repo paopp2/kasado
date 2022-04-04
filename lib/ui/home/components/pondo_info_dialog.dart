@@ -31,7 +31,7 @@ class PondoInfoDialog extends StatelessWidget {
                 "This will be the preferred way of paying for games in the near future",
               ),
               Text(
-                'Contact Paul Abenaza or Paolo Pepito for info on adding to your PONDO (pwede Gcash, pwede ra sad tunol)',
+                'Contact Fabian Pepito or Paolo Pepito for info on adding to your PONDO (pwede Gcash, pwede ra sad tunol)',
               ),
             ],
           ),
