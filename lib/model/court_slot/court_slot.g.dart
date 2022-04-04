@@ -24,6 +24,12 @@ _$_CourtSlot _$$_CourtSlotFromJson(Map<String, dynamic> json) => _$_CourtSlot(
               ?.map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      slotInfoPerPlayer: (json['slotInfoPerPlayer'] as Map<String, dynamic>?)
+              ?.map(
+            (k, e) =>
+                MapEntry(k, SlotPlayerInfo.fromJson(e as Map<String, dynamic>)),
+          ) ??
+          const {},
     );
 
 Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
@@ -38,4 +44,6 @@ Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
           instance.stageHomeTeamPlayers?.map((e) => e.toJson()).toList(),
       'stageAwayTeamPlayers':
           instance.stageAwayTeamPlayers?.map((e) => e.toJson()).toList(),
+      'slotInfoPerPlayer':
+          instance.slotInfoPerPlayer.map((k, e) => MapEntry(k, e.toJson())),
     };
