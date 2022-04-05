@@ -15,7 +15,8 @@ class GameTeamsSetupPane extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final players = courtSlot.players
-      ..sort((a, b) => a.displayName!.compareTo(b.displayName!));
+      ..sort((a, b) =>
+          a.displayName!.toLowerCase().compareTo(b.displayName!.toLowerCase()));
     final homeTeamPlayers = courtSlot.stageHomeTeamPlayers ?? [];
     final awayTeamPlayers = courtSlot.stageAwayTeamPlayers ?? [];
 

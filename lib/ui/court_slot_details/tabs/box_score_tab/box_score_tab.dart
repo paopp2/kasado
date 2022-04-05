@@ -90,7 +90,10 @@ class BoxScoreTab extends HookConsumerWidget {
                                     .map((statEntry) => statEntry.value)
                                     .toList()
                                   ..sort((a, b) => a.player.displayName!
-                                      .compareTo(b.player.displayName!)),
+                                      .toLowerCase()
+                                      .compareTo(
+                                        b.player.displayName!.toLowerCase(),
+                                      )),
                                 isHome: true,
                                 utils: utils,
                               ),
@@ -101,7 +104,10 @@ class BoxScoreTab extends HookConsumerWidget {
                                     .map((statEntry) => statEntry.value)
                                     .toList()
                                   ..sort((a, b) => a.player.displayName!
-                                      .compareTo(b.player.displayName!)),
+                                      .toLowerCase()
+                                      .compareTo(
+                                        b.player.displayName!.toLowerCase(),
+                                      )),
                                 isHome: false,
                                 utils: utils,
                               ),
