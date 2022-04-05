@@ -69,8 +69,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
   SlotAndUserState getSlotAndUserState(CourtSlot courtSlot) {
     if (currentUserInfo == null) return SlotAndUserState.loading;
     final user = currentUserInfo!;
-    final userReservedHere = (courtSlot.courtId == user.reservedAt?.courtId) &&
-        (courtSlot.slotId == user.reservedAt?.slotId);
 
     final isSlotClosed = utils.isCurrentSlotClosed(courtSlot.timeRange);
     if (isSlotClosed) {
@@ -81,7 +79,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
       return SlotAndUserState.slotFull;
     } else if (!user.hasReserved) {
       return SlotAndUserState.userNotReserved;
-    } else if (userReservedHere) {
+    } else if (user.isReservedHere(courtSlot)) {
       return SlotAndUserState.userReservedAtThisSlot;
     } else {
       return SlotAndUserState.userReservedAtAnotherSlot;

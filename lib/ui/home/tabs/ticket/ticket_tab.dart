@@ -59,13 +59,15 @@ class TicketTab extends HookConsumerWidget {
                         currentUser!.displayName!.toUpperCase(),
                         style: const TextStyle(fontSize: 10),
                       ),
-                      Text(
-                        userInfo!.reservedAt!.courtId,
-                        style: const TextStyle(fontSize: 10),
+                      const Text(
+                        // userInfo!.reservedAt!.courtId,
+                        'Placeholder',
+                        style: TextStyle(fontSize: 10),
                       ),
-                      Text(
-                        userInfo.reservedAt!.slotId,
-                        style: const TextStyle(fontSize: 10),
+                      const Text(
+                        // userInfo.reservedAt!.slotId,
+                        'Placeholder',
+                        style: TextStyle(fontSize: 10),
                       ),
                     ],
                   ),
