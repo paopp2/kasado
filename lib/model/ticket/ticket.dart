@@ -14,5 +14,11 @@ class Ticket with _$Ticket {
     required CourtSlot courtSlot,
   }) = _Ticket;
 
+  // The reason for adding 1hr is because a slot is considered to be done only
+  // after an hour from when it started
+  DateTime get expiry {
+    return courtSlot.timeRange.startsAt.add(const Duration(hours: 1));
+  }
+
   factory Ticket.fromJson(Map<String, dynamic> json) => _$TicketFromJson(json);
 }

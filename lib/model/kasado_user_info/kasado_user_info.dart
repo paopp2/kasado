@@ -28,13 +28,7 @@ class KasadoUserInfo with _$KasadoUserInfo {
 
     final now = DateTime.now();
     // Check if user has any pending tickets reserved for the future.
-    // The reason for adding 1hr is because a slot is considered to be done only
-    // after an hour from when it started. Might have to refactor in the future.
-    return tickets.any(
-      (ticket) => ticket.courtSlot.timeRange.startsAt
-          .add(const Duration(hours: 1))
-          .isAfter(now),
-    );
+    return tickets.any((ticket) => ticket.expiry.isAfter(now));
   }
 
   bool hasSchedConflict(CourtSlot courtSlot) {
