@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
@@ -145,6 +145,7 @@ class CourtSlotRepository {
     required String teamId,
     required CourtSlot courtSlot,
     required double courtTicketPrice,
+    VoidCallback? onTeamCantFit,
   }) async {
     final team = await teamRepo.getTeam(teamId);
     final teamPlayers = team!.players;
@@ -188,9 +189,7 @@ class CourtSlotRepository {
         reservedAt: courtSlot.copyWith(players: []),
       );
     } else {
-      Fluttertoast.showToast(
-        msg: "Your team can't fit for this slot, please choose another one",
-      );
+      onTeamCantFit?.call();
     }
   }
 

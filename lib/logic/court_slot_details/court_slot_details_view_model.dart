@@ -225,6 +225,10 @@ class CourtSlotDetailsViewModel extends ViewModel {
             teamId: teamId,
             courtSlot: baseCourtSlot,
             courtTicketPrice: courtTicketPrice,
+            onTeamCantFit: () => Fluttertoast.showToast(
+              msg:
+                  "Your team can't fit for this slot, please choose another one",
+            ),
           );
         } else {
           Fluttertoast.showToast(
