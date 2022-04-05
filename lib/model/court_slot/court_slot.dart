@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:kasado/model/slot_player_info/slot_player_info.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 
 part 'court_slot.freezed.dart';
@@ -18,6 +19,7 @@ class CourtSlot with _$CourtSlot {
     @Default(null) String? liveGameStatsId,
     @Default([]) List<KasadoUser>? stageHomeTeamPlayers,
     @Default([]) List<KasadoUser>? stageAwayTeamPlayers,
+    @Default({}) Map<String, SlotPlayerInfo> slotInfoPerPlayer,
   }) = _CourtSlot;
 
   int get maxPlayerCount => 25;

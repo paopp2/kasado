@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
@@ -33,6 +34,23 @@ class CourtSlotRepository {
     await firestoreHelper.setData(
       path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
       data: courtSlot.toJson(),
+    );
+  }
+
+  Future<void> incGamesPlayedForPlayers({
+    required CourtSlot courtSlot,
+    required List<KasadoUser> gamePlayers,
+  }) async {
+    final playerIdList = gamePlayers.map((u) => u.id).toList();
+    await firestoreHelper.setData(
+      path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
+      data: {
+        "slotInfoPerPlayer": {
+          for (final playerId in playerIdList)
+            playerId: {"timesPlayed": FieldValue.increment(1)}
+        },
+      },
+      merge: true,
     );
   }
 

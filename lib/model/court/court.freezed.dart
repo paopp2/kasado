@@ -70,7 +70,7 @@ mixin _$Court {
 //
 // These are in use with Syncfusion's calendar widget and its
 // 'recurrenceExceptionDates' feature. Useful when admin has to hide some
-// slots to the end user
+// slots from the end user
   List<CourtSlot>? get specialCourtSlots => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -276,7 +276,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
 //
 // These are in use with Syncfusion's calendar widget and its
 // 'recurrenceExceptionDates' feature. Useful when admin has to hide some
-// slots to the end user
+// slots from the end user
   final List<CourtSlot>? specialCourtSlots;
 
   @override
@@ -382,7 +382,7 @@ abstract class _Court implements Court {
 //
 // These are in use with Syncfusion's calendar widget and its
 // 'recurrenceExceptionDates' feature. Useful when admin has to hide some
-// slots to the end user
+// slots from the end user
   List<CourtSlot>? get specialCourtSlots;
   @override
   @JsonKey(ignore: true)
