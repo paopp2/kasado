@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
+import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
@@ -10,15 +11,18 @@ import 'package:kasado/model/stats/stats.dart';
 final statRepositoryProvider = Provider.autoDispose(
   (ref) => StatRepository(
     firestoreHelper: FirestoreHelper.instance,
+    courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
   ),
 );
 
 class StatRepository {
   StatRepository({
     required this.firestoreHelper,
+    required this.courtSlotRepo,
   });
 
   final FirestoreHelper firestoreHelper;
+  final CourtSlotRepository courtSlotRepo;
 
   Future<void> pushGameStats({
     required CourtSlot courtSlot,
@@ -310,6 +314,11 @@ class StatRepository {
         };
       },
       merge: true,
+    );
+
+    await courtSlotRepo.incGamesPlayedForPlayers(
+      courtSlot: courtSlot,
+      gamePlayers: updatedGameStats.values.map((s) => s.player).toList(),
     );
 
     // Save each of the player's stats to their corresponding userInfos

@@ -92,6 +92,9 @@ class GameTeamsSetupPane extends StatelessWidget {
                       backgroundImage: NetworkImage(player.photoUrl!),
                     ),
                     title: Text(player.displayName!),
+                    subtitle: Text(
+                      "GP: ${courtSlot.slotInfoPerPlayer[player.id]?.timesPlayed ?? 0}",
+                    ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.end,
