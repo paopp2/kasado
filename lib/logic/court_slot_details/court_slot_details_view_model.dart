@@ -77,12 +77,12 @@ class CourtSlotDetailsViewModel extends ViewModel {
       return SlotAndUserState.slotClosedByAdmin;
     } else if (courtSlot.isFull) {
       return SlotAndUserState.slotFull;
-    } else if (!user.hasReserved) {
-      return SlotAndUserState.userNotReserved;
     } else if (user.isReservedHere(courtSlot)) {
       return SlotAndUserState.userReservedAtThisSlot;
+    } else if (user.hasSchedConflict(courtSlot)) {
+      return SlotAndUserState.userHasConflictWithOtherSlot;
     } else {
-      return SlotAndUserState.userReservedAtAnotherSlot;
+      return SlotAndUserState.userAvailable;
     }
   }
 
@@ -178,8 +178,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       slotFull: () => Fluttertoast.showToast(msg: 'Slot is full'),
-      userReservedAtAnotherSlot: () => Fluttertoast.showToast(
-        msg: 'Only 1 reservation allowed at a time',
+      userHasConflictWithOtherSlot: () => Fluttertoast.showToast(
+        msg: "In conflict with another slot you are reserved at",
       ),
       orElse: () async {
         // Add user to courtSlot
@@ -214,8 +214,9 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required double courtTicketPrice,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
-      userReservedAtAnotherSlot: () => Fluttertoast.showToast(
-        msg: "Your team is already reserved at another slot",
+      // TODO: Should only be for the team captain
+      userHasConflictWithOtherSlot: () => Fluttertoast.showToast(
+        msg: "In conflict with another slot the team is reserved at",
       ),
       orElse: () async {
         if (isTeamCaptain) {
