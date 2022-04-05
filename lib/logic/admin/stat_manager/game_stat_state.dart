@@ -50,7 +50,8 @@ final homeTeamPlayersProvider = Provider.autoDispose<List<KasadoUser>>(
     return slotGameStats.homeTeamStats.values
         .map((stat) => stat.player)
         .toList()
-      ..sort((a, b) => a.displayName!.compareTo(b.displayName!));
+      ..sort((a, b) =>
+          a.displayName!.toLowerCase().compareTo(b.displayName!.toLowerCase()));
   },
 );
 
@@ -64,6 +65,7 @@ final awayTeamPlayersProvider = Provider.autoDispose<List<KasadoUser>>(
     return slotGameStats.awayTeamStats.values
         .map((stat) => stat.player)
         .toList()
-      ..sort((a, b) => a.displayName!.compareTo(b.displayName!));
+      ..sort((a, b) =>
+          a.displayName!.toLowerCase().compareTo(b.displayName!.toLowerCase()));
   },
 );
