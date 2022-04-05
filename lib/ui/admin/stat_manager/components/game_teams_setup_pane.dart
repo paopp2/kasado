@@ -14,7 +14,10 @@ class GameTeamsSetupPane extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final players = courtSlot.players
+    // Using a spread to create a new final instance, not just a reference. This
+    // avoids messing up the original arrangement of courtSlot.players when sorting
+    final unsortedPlayers = [...courtSlot.players];
+    final players = unsortedPlayers
       ..sort((a, b) =>
           a.displayName!.toLowerCase().compareTo(b.displayName!.toLowerCase()));
     final homeTeamPlayers = courtSlot.stageHomeTeamPlayers ?? [];
