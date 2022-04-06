@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
@@ -80,6 +80,7 @@ class CourtSlotRepository {
     required KasadoUser player,
     required CourtSlot courtSlot,
     required double courtTicketPrice,
+    required String courtName,
   }) async {
     KasadoUser? paidUser;
     final userInfo = await userInfoRepo.getUserInfo(player.id);
@@ -103,10 +104,11 @@ class CourtSlotRepository {
       ),
     );
 
-    // Indicate at player's userInfo that user is already reserved at slot
-    await userInfoRepo.reserveUserAt(
-      userId: player.id,
-      reservedAt: courtSlot.copyWith(players: []),
+    // Create a new ticket for joined courtSlot
+    await userInfoRepo.createUserTicket(
+      courtName: courtName,
+      courtSlot: courtSlot,
+      userInfo: userInfo,
     );
   }
 
@@ -115,8 +117,8 @@ class CourtSlotRepository {
     required CourtSlot courtSlot,
     required double courtTicketPrice,
   }) async {
+    final baseUserInfo = await userInfoRepo.getUserInfo(player.id);
     if (player.hasPaid) {
-      final baseUserInfo = await userInfoRepo.getUserInfo(player.id);
       await userInfoRepo.addOrDeductPondo(
         currentUserInfo: baseUserInfo!,
         isAdd: true,
@@ -126,8 +128,11 @@ class CourtSlotRepository {
 
     final updatedPlayerList = courtSlot.players..remove(player);
 
-    // Nullify player's reservation at userInfo
-    await userInfoRepo.reserveUserAt(userId: player.id, reservedAt: null);
+    // Remove user ticket
+    await userInfoRepo.removeUserTicket(
+      userInfo: baseUserInfo!,
+      courtSlot: courtSlot,
+    );
 
     if (updatedPlayerList.isEmpty) {
       // If no player remains at courtSlot, remove the court slot
@@ -143,15 +148,18 @@ class CourtSlotRepository {
 
   Future<void> addTeamToCourtSlot({
     required String teamId,
+    required KasadoUserInfo teamCaptainInfo,
     required CourtSlot courtSlot,
+    required String courtName,
     required double courtTicketPrice,
+    required VoidCallback onTeamCantFit,
   }) async {
-    final team = await teamRepo.getTeam(teamId);
-    final teamPlayers = team!.players;
+    final _team = await teamRepo.getTeam(teamId);
+    final _teamPlayers = _team!.players;
 
-    if (courtSlot.availablePlayerSlots >= teamPlayers.length) {
+    if (courtSlot.availablePlayerSlots >= _teamPlayers.length) {
       final playerUserInfos = await userInfoRepo.getUserInfoList(
-        teamPlayers.map((u) => u.id).toList(),
+        _teamPlayers.map((u) => u.id).toList(),
       );
 
       List<KasadoUser> _updatedTeamPlayers = [];
@@ -170,7 +178,7 @@ class CourtSlotRepository {
         }
         _updatedTeamPlayers.add(userInfo.user.copyWith(
           hasPaid: _hasPaid,
-          teamName: team.teamName,
+          teamName: _team.teamName,
         ));
       }
 
@@ -182,21 +190,23 @@ class CourtSlotRepository {
         ),
       );
 
-      // Reserve all team players at court slot
-      await userInfoRepo.reserveTeamAt(
-        teamPlayersIdList: teamPlayers.map((u) => u.id).toList(),
-        reservedAt: courtSlot.copyWith(players: []),
+      // Create a ticket for the team
+      await teamRepo.createTeamTicket(
+        teamCaptainInfo: teamCaptainInfo,
+        team: _team,
+        courtSlot: courtSlot,
+        courtName: courtName,
       );
     } else {
-      Fluttertoast.showToast(
-        msg: "Your team can't fit for this slot, please choose another one",
-      );
+      onTeamCantFit();
     }
   }
 
   Future<void> removeTeamFromCourtSlot({
     required String teamId,
+    required KasadoUserInfo teamCaptainInfo,
     required CourtSlot courtSlot,
+    required String courtName,
     required double courtTicketPrice,
   }) async {
     final _team = await teamRepo.getTeam(teamId);
@@ -210,10 +220,11 @@ class CourtSlotRepository {
     final updatedPlayerList = courtSlot.players
       ..removeWhere((player) => _teamPlayersFromCourtSlot.contains(player));
 
-    // Nullify the whole team's court slot reservations
-    await userInfoRepo.reserveTeamAt(
-      teamPlayersIdList: _teamPlayerIds,
-      reservedAt: null,
+    // Remove this slot's ticket for the team
+    await teamRepo.removeTeamTicket(
+      teamCaptainInfo: teamCaptainInfo,
+      team: _team,
+      courtSlot: courtSlot,
     );
 
     // Return the money for players who have already paid for the slot
@@ -273,8 +284,11 @@ class CourtSlotRepository {
           );
         }
 
-        // Nullify player's reservations to allow them to reserve for another slot
-        await userInfoRepo.reserveUserAt(userId: userInfo.id, reservedAt: null);
+        // Remove user ticket
+        await userInfoRepo.removeUserTicket(
+          userInfo: userInfo,
+          courtSlot: courtSlot,
+        );
       }
 
       // Flag court as closedByAdmin (the whole court slot must be pushed to cover

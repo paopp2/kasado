@@ -45,7 +45,7 @@ class HomeBottomNavBar extends HookConsumerWidget {
               size: 20,
             ),
           ),
-          label: 'Ticket',
+          label: 'Tickets',
         ),
         const BottomNavigationBarItem(
           icon: Icon(Icons.person),

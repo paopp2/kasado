@@ -11,6 +11,7 @@ import 'package:kasado/data/repositories/team_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';
+import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
@@ -69,8 +70,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
   SlotAndUserState getSlotAndUserState(CourtSlot courtSlot) {
     if (currentUserInfo == null) return SlotAndUserState.loading;
     final user = currentUserInfo!;
-    final userReservedHere = (courtSlot.courtId == user.reservedAt?.courtId) &&
-        (courtSlot.slotId == user.reservedAt?.slotId);
 
     final isSlotClosed = utils.isCurrentSlotClosed(courtSlot.timeRange);
     if (isSlotClosed) {
@@ -79,12 +78,12 @@ class CourtSlotDetailsViewModel extends ViewModel {
       return SlotAndUserState.slotClosedByAdmin;
     } else if (courtSlot.isFull) {
       return SlotAndUserState.slotFull;
-    } else if (!user.hasReserved) {
-      return SlotAndUserState.userNotReserved;
-    } else if (userReservedHere) {
+    } else if (user.isReservedHere(courtSlot)) {
       return SlotAndUserState.userReservedAtThisSlot;
+    } else if (user.hasSchedConflict(courtSlot)) {
+      return SlotAndUserState.userHasConflictWithOtherSlot;
     } else {
-      return SlotAndUserState.userReservedAtAnotherSlot;
+      return SlotAndUserState.userAvailable;
     }
   }
 
@@ -110,9 +109,9 @@ class CourtSlotDetailsViewModel extends ViewModel {
   }
 
   Future<void> joinAsAnotherPlayer({
-    required CourtSlot baseCourtSlot,
-    required double courtTicketPrice,
     required BuildContext context,
+    required CourtSlot baseCourtSlot,
+    required Court court,
   }) async {
     final playerUserInfo = await showDialog(
       context: context,
@@ -124,9 +123,10 @@ class CourtSlotDetailsViewModel extends ViewModel {
     );
     if (playerUserInfo == null) return;
     await addToCourtSlot(
-      baseCourtSlot: baseCourtSlot,
-      courtTicketPrice: courtTicketPrice,
       userInfo: playerUserInfo,
+      baseCourtSlot: baseCourtSlot,
+      courtTicketPrice: court.ticketPrice,
+      courtName: court.name,
     );
   }
 
@@ -134,7 +134,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
   Future<void> joinLeaveCourtSlot({
     required CourtSlot baseCourtSlot,
     required bool slotHasPlayer,
-    required double courtTicketPrice,
+    required Court court,
     required String? teamId,
     required bool isTeamCaptain,
   }) async {
@@ -144,13 +144,14 @@ class CourtSlotDetailsViewModel extends ViewModel {
         await removeFromCourtSlot(
           playerToRemove: currentUserInfo!.user,
           baseCourtSlot: baseCourtSlot,
-          courtTicketPrice: courtTicketPrice,
+          courtTicketPrice: court.ticketPrice,
         );
       } else {
         await addToCourtSlot(
           userInfo: currentUserInfo!,
           baseCourtSlot: baseCourtSlot,
-          courtTicketPrice: courtTicketPrice,
+          courtTicketPrice: court.ticketPrice,
+          courtName: court.name,
         );
       }
     } else {
@@ -158,30 +159,35 @@ class CourtSlotDetailsViewModel extends ViewModel {
       if (slotHasPlayer) {
         await removeTeamFromCourtSlot(
           teamId: teamId,
+          teamCaptainInfo: currentUserInfo!,
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
-          courtTicketPrice: courtTicketPrice,
+          courtName: court.name,
+          courtTicketPrice: court.ticketPrice,
         );
       } else {
         await addTeamToCourtSlot(
           teamId: teamId,
+          teamCaptainInfo: currentUserInfo!,
+          courtName: court.name,
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
-          courtTicketPrice: courtTicketPrice,
+          courtTicketPrice: court.ticketPrice,
         );
       }
     }
   }
 
   Future<void> addToCourtSlot({
+    required KasadoUserInfo userInfo,
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
-    required KasadoUserInfo userInfo,
+    required String courtName,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       slotFull: () => Fluttertoast.showToast(msg: 'Slot is full'),
-      userReservedAtAnotherSlot: () => Fluttertoast.showToast(
-        msg: 'Only 1 reservation allowed at a time',
+      userHasConflictWithOtherSlot: () => Fluttertoast.showToast(
+        msg: "In conflict with another slot you are reserved at",
       ),
       orElse: () async {
         // Add user to courtSlot
@@ -189,6 +195,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
           courtSlot: baseCourtSlot,
           player: userInfo.user,
           courtTicketPrice: courtTicketPrice,
+          courtName: courtName,
         );
       },
     );
@@ -212,19 +219,28 @@ class CourtSlotDetailsViewModel extends ViewModel {
   Future<void> addTeamToCourtSlot({
     required String teamId,
     required bool isTeamCaptain,
+    required KasadoUserInfo teamCaptainInfo,
+    required String courtName,
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
-      userReservedAtAnotherSlot: () => Fluttertoast.showToast(
-        msg: "Your team is already reserved at another slot",
+      // TODO: Should only be for the team captain
+      userHasConflictWithOtherSlot: () => Fluttertoast.showToast(
+        msg: "In conflict with another slot the team is reserved at",
       ),
       orElse: () async {
         if (isTeamCaptain) {
           await courtSlotRepo.addTeamToCourtSlot(
             teamId: teamId,
+            teamCaptainInfo: teamCaptainInfo,
+            courtName: courtName,
             courtSlot: baseCourtSlot,
             courtTicketPrice: courtTicketPrice,
+            onTeamCantFit: () => Fluttertoast.showToast(
+              msg:
+                  "Your team can't fit for this slot, please choose another one",
+            ),
           );
         } else {
           Fluttertoast.showToast(
@@ -237,15 +253,19 @@ class CourtSlotDetailsViewModel extends ViewModel {
 
   Future<void> removeTeamFromCourtSlot({
     required String teamId,
+    required KasadoUserInfo teamCaptainInfo,
     required bool isTeamCaptain,
     required CourtSlot baseCourtSlot,
+    required String courtName,
     required double courtTicketPrice,
     BuildContext? context,
   }) async {
     if (isTeamCaptain) {
       await courtSlotRepo.removeTeamFromCourtSlot(
         teamId: teamId,
+        teamCaptainInfo: teamCaptainInfo,
         courtSlot: baseCourtSlot,
+        courtName: courtName,
         courtTicketPrice: courtTicketPrice,
       );
       if (context != null) Navigator.pop(context);

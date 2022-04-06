@@ -19,6 +19,26 @@
                 "wtkLFeagttMal66WvwDfZSheJjK2",
                 "nqo4ouLRb9PWOydZMQK1EgtUqmn1"
             ]
+        },
+        {
+            "id": "bati2222-gg66-74zz-c3r2-682dba08dead",
+            "name": "Another Court",
+            "address": "Skina Japan",
+            "photoUrl": "https://media.architecturaldigest.com/photos/61de0f60019f04fb969292e1/master/pass/Amiryakoby-34.jpg",
+            "ticketPrice": 20.0,
+            "allowedWeekDays": [
+                "monday"
+            ],
+            "allowedTimeSlots": [
+                {
+                    "startsAt": "2022-01-01T08:00:00.000",
+                    "endsAt": "2022-01-01T10:00:00.000"
+                }
+            ],
+            "adminIds": [
+                "wtkLFeagttMal66WvwDfZSheJjK2",
+                "nqo4ouLRb9PWOydZMQK1EgtUqmn1"
+            ]
         }
     ]
 }
