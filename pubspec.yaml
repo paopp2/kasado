@@ -42,6 +42,7 @@ dependencies:
   badges: ^2.0.2
   timeago: ^3.2.2
   qr_flutter: ^4.0.0
+  mixpanel_flutter: ^1.4.5
 
 dev_dependencies:
   flutter_test:
