@@ -16,67 +16,67 @@ final indexToWeekDay = [
 
 final allowedTimeRanges = [
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 6, 0),
-    endsAt: DateTime(2022, 1, 1, 8, 0),
+    startsAt: DateTime(2022, 3, 1, 6, 0),
+    endsAt: DateTime(2022, 3, 1, 8, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 8, 0),
-    endsAt: DateTime(2022, 1, 1, 10, 0),
+    startsAt: DateTime(2022, 3, 1, 8, 0),
+    endsAt: DateTime(2022, 3, 1, 10, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 10, 0),
-    endsAt: DateTime(2022, 1, 1, 12, 0),
+    startsAt: DateTime(2022, 3, 1, 10, 0),
+    endsAt: DateTime(2022, 3, 1, 12, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 12, 0),
-    endsAt: DateTime(2022, 1, 1, 14, 0),
+    startsAt: DateTime(2022, 3, 1, 12, 0),
+    endsAt: DateTime(2022, 3, 1, 14, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 14, 0),
-    endsAt: DateTime(2022, 1, 1, 16, 0),
+    startsAt: DateTime(2022, 3, 1, 14, 0),
+    endsAt: DateTime(2022, 3, 1, 16, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 16, 0),
-    endsAt: DateTime(2022, 1, 1, 18, 0),
+    startsAt: DateTime(2022, 3, 1, 16, 0),
+    endsAt: DateTime(2022, 3, 1, 18, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 18, 0),
-    endsAt: DateTime(2022, 1, 1, 20, 0),
+    startsAt: DateTime(2022, 3, 1, 18, 0),
+    endsAt: DateTime(2022, 3, 1, 20, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 20, 0),
-    endsAt: DateTime(2022, 1, 1, 22, 0),
+    startsAt: DateTime(2022, 3, 1, 20, 0),
+    endsAt: DateTime(2022, 3, 1, 22, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 5, 0),
-    endsAt: DateTime(2022, 1, 1, 7, 0),
+    startsAt: DateTime(2022, 3, 1, 5, 0),
+    endsAt: DateTime(2022, 3, 1, 7, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 7, 0),
-    endsAt: DateTime(2022, 1, 1, 9, 0),
+    startsAt: DateTime(2022, 3, 1, 7, 0),
+    endsAt: DateTime(2022, 3, 1, 9, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 9, 0),
-    endsAt: DateTime(2022, 1, 1, 11, 0),
+    startsAt: DateTime(2022, 3, 1, 9, 0),
+    endsAt: DateTime(2022, 3, 1, 11, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 11, 0),
-    endsAt: DateTime(2022, 1, 1, 13, 0),
+    startsAt: DateTime(2022, 3, 1, 11, 0),
+    endsAt: DateTime(2022, 3, 1, 13, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 13, 0),
-    endsAt: DateTime(2022, 1, 1, 15, 0),
+    startsAt: DateTime(2022, 3, 1, 13, 0),
+    endsAt: DateTime(2022, 3, 1, 15, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 15, 0),
-    endsAt: DateTime(2022, 1, 1, 17, 0),
+    startsAt: DateTime(2022, 3, 1, 15, 0),
+    endsAt: DateTime(2022, 3, 1, 17, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 17, 0),
-    endsAt: DateTime(2022, 1, 1, 19, 0),
+    startsAt: DateTime(2022, 3, 1, 17, 0),
+    endsAt: DateTime(2022, 3, 1, 19, 0),
   ),
   TimeRange(
-    startsAt: DateTime(2022, 1, 1, 19, 0),
-    endsAt: DateTime(2022, 1, 1, 21, 0),
+    startsAt: DateTime(2022, 3, 1, 19, 0),
+    endsAt: DateTime(2022, 3, 1, 21, 0),
   ),
 ];
