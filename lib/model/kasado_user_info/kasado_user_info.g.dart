@@ -19,9 +19,10 @@ _$_KasadoUserInfo _$$_KasadoUserInfoFromJson(Map<String, dynamic> json) =>
           : OverviewStats.fromJson(
               json['overviewStats'] as Map<String, dynamic>),
       teamId: json['teamId'] as String?,
-      reservedAt: json['reservedAt'] == null
-          ? null
-          : CourtSlot.fromJson(json['reservedAt'] as Map<String, dynamic>),
+      tickets: (json['tickets'] as List<dynamic>?)
+              ?.map((e) => Ticket.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$_KasadoUserInfoToJson(_$_KasadoUserInfo instance) =>
@@ -34,5 +35,5 @@ Map<String, dynamic> _$$_KasadoUserInfoToJson(_$_KasadoUserInfo instance) =>
       'isTeamCaptain': instance.isTeamCaptain,
       'overviewStats': instance.overviewStats.toJson(),
       'teamId': instance.teamId,
-      'reservedAt': instance.reservedAt?.toJson(),
+      'tickets': instance.tickets.map((e) => e.toJson()).toList(),
     };

@@ -31,7 +31,7 @@ class _$KasadoUserInfoTearOff {
       bool isTeamCaptain = false,
       OverviewStats overviewStats = const OverviewStats(),
       String? teamId,
-      CourtSlot? reservedAt}) {
+      List<Ticket> tickets = const []}) {
     return _KasadoUserInfo(
       id: id,
       user: user,
@@ -41,7 +41,7 @@ class _$KasadoUserInfoTearOff {
       isTeamCaptain: isTeamCaptain,
       overviewStats: overviewStats,
       teamId: teamId,
-      reservedAt: reservedAt,
+      tickets: tickets,
     );
   }
 
@@ -63,7 +63,7 @@ mixin _$KasadoUserInfo {
   bool get isTeamCaptain => throw _privateConstructorUsedError;
   OverviewStats get overviewStats => throw _privateConstructorUsedError;
   String? get teamId => throw _privateConstructorUsedError;
-  CourtSlot? get reservedAt => throw _privateConstructorUsedError;
+  List<Ticket> get tickets => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -85,11 +85,10 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
       bool isTeamCaptain,
       OverviewStats overviewStats,
       String? teamId,
-      CourtSlot? reservedAt});
+      List<Ticket> tickets});
 
   $KasadoUserCopyWith<$Res> get user;
   $OverviewStatsCopyWith<$Res> get overviewStats;
-  $CourtSlotCopyWith<$Res>? get reservedAt;
 }
 
 /// @nodoc
@@ -111,7 +110,7 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
     Object? isTeamCaptain = freezed,
     Object? overviewStats = freezed,
     Object? teamId = freezed,
-    Object? reservedAt = freezed,
+    Object? tickets = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -146,10 +145,10 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
               as String?,
-      reservedAt: reservedAt == freezed
-          ? _value.reservedAt
-          : reservedAt // ignore: cast_nullable_to_non_nullable
-              as CourtSlot?,
+      tickets: tickets == freezed
+          ? _value.tickets
+          : tickets // ignore: cast_nullable_to_non_nullable
+              as List<Ticket>,
     ));
   }
 
@@ -164,17 +163,6 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
   $OverviewStatsCopyWith<$Res> get overviewStats {
     return $OverviewStatsCopyWith<$Res>(_value.overviewStats, (value) {
       return _then(_value.copyWith(overviewStats: value));
-    });
-  }
-
-  @override
-  $CourtSlotCopyWith<$Res>? get reservedAt {
-    if (_value.reservedAt == null) {
-      return null;
-    }
-
-    return $CourtSlotCopyWith<$Res>(_value.reservedAt!, (value) {
-      return _then(_value.copyWith(reservedAt: value));
     });
   }
 }
@@ -195,14 +183,12 @@ abstract class _$KasadoUserInfoCopyWith<$Res>
       bool isTeamCaptain,
       OverviewStats overviewStats,
       String? teamId,
-      CourtSlot? reservedAt});
+      List<Ticket> tickets});
 
   @override
   $KasadoUserCopyWith<$Res> get user;
   @override
   $OverviewStatsCopyWith<$Res> get overviewStats;
-  @override
-  $CourtSlotCopyWith<$Res>? get reservedAt;
 }
 
 /// @nodoc
@@ -226,7 +212,7 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
     Object? isTeamCaptain = freezed,
     Object? overviewStats = freezed,
     Object? teamId = freezed,
-    Object? reservedAt = freezed,
+    Object? tickets = freezed,
   }) {
     return _then(_KasadoUserInfo(
       id: id == freezed
@@ -261,10 +247,10 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
               as String?,
-      reservedAt: reservedAt == freezed
-          ? _value.reservedAt
-          : reservedAt // ignore: cast_nullable_to_non_nullable
-              as CourtSlot?,
+      tickets: tickets == freezed
+          ? _value.tickets
+          : tickets // ignore: cast_nullable_to_non_nullable
+              as List<Ticket>,
     ));
   }
 }
@@ -281,7 +267,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       this.isTeamCaptain = false,
       this.overviewStats = const OverviewStats(),
       this.teamId,
-      this.reservedAt})
+      this.tickets = const []})
       : super._();
 
   factory _$_KasadoUserInfo.fromJson(Map<String, dynamic> json) =>
@@ -308,12 +294,13 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   final OverviewStats overviewStats;
   @override
   final String? teamId;
+  @JsonKey()
   @override
-  final CourtSlot? reservedAt;
+  final List<Ticket> tickets;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, overviewStats: $overviewStats, teamId: $teamId, reservedAt: $reservedAt)';
+    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, overviewStats: $overviewStats, teamId: $teamId, tickets: $tickets)';
   }
 
   @override
@@ -329,7 +316,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('isTeamCaptain', isTeamCaptain))
       ..add(DiagnosticsProperty('overviewStats', overviewStats))
       ..add(DiagnosticsProperty('teamId', teamId))
-      ..add(DiagnosticsProperty('reservedAt', reservedAt));
+      ..add(DiagnosticsProperty('tickets', tickets));
   }
 
   @override
@@ -348,8 +335,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.overviewStats, overviewStats) &&
             const DeepCollectionEquality().equals(other.teamId, teamId) &&
-            const DeepCollectionEquality()
-                .equals(other.reservedAt, reservedAt));
+            const DeepCollectionEquality().equals(other.tickets, tickets));
   }
 
   @override
@@ -363,7 +349,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(isTeamCaptain),
       const DeepCollectionEquality().hash(overviewStats),
       const DeepCollectionEquality().hash(teamId),
-      const DeepCollectionEquality().hash(reservedAt));
+      const DeepCollectionEquality().hash(tickets));
 
   @JsonKey(ignore: true)
   @override
@@ -386,7 +372,7 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
       bool isTeamCaptain,
       OverviewStats overviewStats,
       String? teamId,
-      CourtSlot? reservedAt}) = _$_KasadoUserInfo;
+      List<Ticket> tickets}) = _$_KasadoUserInfo;
   const _KasadoUserInfo._() : super._();
 
   factory _KasadoUserInfo.fromJson(Map<String, dynamic> json) =
@@ -409,7 +395,7 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   @override
   String? get teamId;
   @override
-  CourtSlot? get reservedAt;
+  List<Ticket> get tickets;
   @override
   @JsonKey(ignore: true)
   _$KasadoUserInfoCopyWith<_KasadoUserInfo> get copyWith =>

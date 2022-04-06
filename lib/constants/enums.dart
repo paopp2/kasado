@@ -4,9 +4,9 @@ enum SlotAndUserState {
   slotEnded,
   slotClosedByAdmin,
   slotFull,
-  userNotReserved,
+  userAvailable,
   userReservedAtThisSlot,
-  userReservedAtAnotherSlot,
+  userHasConflictWithOtherSlot,
 }
 
 extension SlotAndUserStatePatternMatching on SlotAndUserState {
@@ -18,7 +18,7 @@ extension SlotAndUserStatePatternMatching on SlotAndUserState {
     T Function()? slotFull,
     T Function()? userNotReserved,
     T Function()? userReservedAtThisSlot,
-    T Function()? userReservedAtAnotherSlot,
+    T Function()? userHasConflictWithOtherSlot,
     T Function()? orElse,
   }) {
     switch (this) {
@@ -32,12 +32,12 @@ extension SlotAndUserStatePatternMatching on SlotAndUserState {
         return slotClosedByAdmin?.call() ?? orElse!();
       case SlotAndUserState.slotFull:
         return slotFull?.call() ?? orElse!();
-      case SlotAndUserState.userNotReserved:
-        return userNotReserved?.call() ?? orElse!();
       case SlotAndUserState.userReservedAtThisSlot:
         return userReservedAtThisSlot?.call() ?? orElse!();
-      case SlotAndUserState.userReservedAtAnotherSlot:
-        return userReservedAtAnotherSlot?.call() ?? orElse!();
+      case SlotAndUserState.userHasConflictWithOtherSlot:
+        return userHasConflictWithOtherSlot?.call() ?? orElse!();
+      case SlotAndUserState.userAvailable:
+        return userNotReserved?.call() ?? orElse!();
     }
   }
 }

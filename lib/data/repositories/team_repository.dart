@@ -2,8 +2,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
+import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/team/team.dart';
+import 'package:kasado/model/ticket/ticket.dart';
 
 final teamRepositoryProvider = Provider.autoDispose(
   (ref) => TeamRepository(
@@ -53,6 +56,65 @@ class TeamRepository {
       data: {
         'teamId': null,
         'isTeamCaptain': false,
+      },
+      merge: true,
+    );
+  }
+
+  Future<void> createTeamTicket({
+    required KasadoUserInfo teamCaptainInfo,
+    required Team team,
+    required CourtSlot courtSlot,
+    required String courtName,
+  }) async {
+    final teamTickets = [...teamCaptainInfo.tickets];
+
+    // Remove expired tickets
+    final now = DateTime.now();
+    teamTickets.removeWhere((ticket) => ticket.expiry.isBefore(now));
+
+    // Add new ticket
+    teamTickets.add(Ticket(
+      id: "${courtSlot.courtId}|${courtSlot.slotId}",
+      courtSlot: courtSlot,
+      courtName: courtName,
+    ));
+
+    // Sort tickets from earliest to latest
+    teamTickets.sort((a, b) => a.courtSlot.timeRange.startsAt
+        .compareTo(b.courtSlot.timeRange.startsAt));
+
+    // Update team players' tickets
+    await firestoreHelper.setBatchDataForDocInList(
+      docIdList: team.players.map((u) => u.id).toList(),
+      baseColPath: FirestorePath.colUserInfos(),
+      dataFromId: (_) => {
+        'tickets': teamTickets.map((t) => t.toJson()).toList(),
+      },
+      merge: true,
+    );
+  }
+
+  Future<void> removeTeamTicket({
+    required KasadoUserInfo teamCaptainInfo,
+    required Team team,
+    required CourtSlot courtSlot,
+  }) async {
+    final teamTickets = [...teamCaptainInfo.tickets];
+
+    // Remove the ticket user intends to remove as well as expired tickets
+    final now = DateTime.now();
+    teamTickets.removeWhere((ticket) {
+      return (ticket.expiry.isBefore(now)) ||
+          ticket.id == "${courtSlot.courtId}|${courtSlot.slotId}";
+    });
+
+    // Update team players' tickets
+    await firestoreHelper.setBatchDataForDocInList(
+      docIdList: team.players.map((u) => u.id).toList(),
+      baseColPath: FirestorePath.colUserInfos(),
+      dataFromId: (_) => {
+        'tickets': teamTickets.map((t) => t.toJson()).toList(),
       },
       merge: true,
     );

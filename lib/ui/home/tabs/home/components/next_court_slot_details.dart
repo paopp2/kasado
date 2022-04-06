@@ -99,9 +99,11 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                           color: nextSlotState.when(
                             slotFull: () => Colors.red.shade200,
                             slotClosedByAdmin: () => Colors.red.shade200,
-                            userReservedAtAnotherSlot: () =>
-                                Colors.green.shade200,
-                            orElse: () => Colors.green.shade400,
+                            orElse: () {
+                              return (nextCourtSlot.isLackingPlayers)
+                                  ? Colors.grey
+                                  : Colors.green.shade400;
+                            },
                           ),
                         ),
                       )

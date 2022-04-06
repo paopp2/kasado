@@ -38,8 +38,7 @@ class TeamTabModel extends ViewModel {
           Fluttertoast.showToast(msg: "Player is at another team");
         } else if (userInfo.hasReserved) {
           Fluttertoast.showToast(
-            msg:
-                "Can't add player because player is currently reserved for a game",
+            msg: "Can't add player because player has slot reservations",
           );
         } else if (state.length == Team.maxPlayerCount) {
           Fluttertoast.showToast(msg: "Team already full");
