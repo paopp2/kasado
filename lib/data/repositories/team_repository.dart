@@ -67,7 +67,7 @@ class TeamRepository {
     required CourtSlot courtSlot,
     required String courtName,
   }) async {
-    final teamTickets = [...team.tickets];
+    final teamTickets = [...teamCaptainInfo.tickets];
 
     // Remove expired tickets
     final now = DateTime.now();
@@ -80,17 +80,13 @@ class TeamRepository {
       courtName: courtName,
     ));
 
-    // Update team captain's tickets (should be in sync with team's)
-    await firestoreHelper.setData(
-      path: FirestorePath.docUserInfo(teamCaptainInfo.id),
-      data: {'tickets': teamTickets.map((t) => t.toJson()).toList()},
-      merge: true,
-    );
-
-    // Update team's tickets (should be in sync with teamCaptain's)
-    await firestoreHelper.setData(
-      path: FirestorePath.docTeam(team.id),
-      data: {'tickets': teamTickets.map((t) => t.toJson()).toList()},
+    // Update team players' tickets
+    await firestoreHelper.setBatchDataForDocInList(
+      docIdList: team.players.map((u) => u.id).toList(),
+      baseColPath: FirestorePath.colUserInfos(),
+      dataFromId: (_) => {
+        'tickets': teamTickets.map((t) => t.toJson()).toList(),
+      },
       merge: true,
     );
   }
@@ -100,7 +96,7 @@ class TeamRepository {
     required Team team,
     required CourtSlot courtSlot,
   }) async {
-    final teamTickets = [...team.tickets];
+    final teamTickets = [...teamCaptainInfo.tickets];
 
     // Remove the ticket user intends to remove as well as expired tickets
     final now = DateTime.now();
@@ -109,17 +105,13 @@ class TeamRepository {
           ticket.id == "${courtSlot.courtId}|${courtSlot.slotId}";
     });
 
-    // Update team captain's tickets (should be in sync with team's)
-    await firestoreHelper.setData(
-      path: FirestorePath.docUserInfo(teamCaptainInfo.id),
-      data: {'tickets': teamTickets.map((t) => t.toJson()).toList()},
-      merge: true,
-    );
-
-    // Update team's tickets (should be in sync with teamCaptain's)
-    await firestoreHelper.setData(
-      path: FirestorePath.docTeam(team.id),
-      data: {'tickets': teamTickets.map((t) => t.toJson()).toList()},
+    // Update team players' tickets
+    await firestoreHelper.setBatchDataForDocInList(
+      docIdList: team.players.map((u) => u.id).toList(),
+      baseColPath: FirestorePath.colUserInfos(),
+      dataFromId: (_) => {
+        'tickets': teamTickets.map((t) => t.toJson()).toList(),
+      },
       merge: true,
     );
   }

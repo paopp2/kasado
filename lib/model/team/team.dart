@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
-import 'package:kasado/model/ticket/ticket.dart';
 
 part 'team.freezed.dart';
 part 'team.g.dart';
@@ -14,7 +13,6 @@ class Team with _$Team {
     required KasadoUser teamCaptain,
     @Default('') String customTeamName,
     @Default([]) List<KasadoUser> players,
-    @Default([]) List<Ticket> tickets,
   }) = _Team;
 
   String get teamName => (customTeamName.isNotEmpty)
