@@ -38,6 +38,7 @@ class GameStatController {
   }
 
   void selectSlotGameStats(GameStats gameStats) {
+    print("Mixpanel: slot game selected");
     read(selectedGameStatsProvider.notifier).state = gameStats;
   }
 

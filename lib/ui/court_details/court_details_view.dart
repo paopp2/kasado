@@ -34,9 +34,10 @@ class CourtDetailsView extends HookConsumerWidget {
     );
 
     useEffect(() {
+      print("Mixpanel: ${courtStream.value}");
       courtDetailsModel.initState({'court_id': courtId});
       return courtDetailsModel.dispose;
-    }, []);
+    }, [courtStream.value]);
 
     return LayoutBuilder(
       builder: (context, constraints) {

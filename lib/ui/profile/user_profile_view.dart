@@ -20,9 +20,10 @@ class UserProfileView extends HookConsumerWidget {
     final userInfoStream = ref.watch(userInfoStreamProvider(userId));
 
     useEffect(() {
+      print("Mixpanel: Viewed user: ${userInfoStream.value}");
       model.initState({'viewed_user_id': userId});
       return model.dispose;
-    }, []);
+    }, [userInfoStream.value]);
 
     return SafeArea(
       child: LayoutBuilder(

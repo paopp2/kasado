@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PondoInfoDialog extends StatelessWidget {
+class PondoInfoDialog extends HookConsumerWidget {
   const PondoInfoDialog({
     Key? key,
     required this.constraints,
@@ -9,7 +11,12 @@ class PondoInfoDialog extends StatelessWidget {
   final BoxConstraints constraints;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(() {
+      print("Mixpanel: Viewed pondo info dialog");
+      return;
+    }, []);
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),

@@ -25,6 +25,7 @@ class NotifsView extends HookConsumerWidget {
     final userNotifsStream = ref.watch(userNotifsStreamProvider(userId));
 
     useEffect(() {
+      print("Mixpanel: Opened notifs view");
       model.initState();
       return model.dispose;
     }, []);

@@ -36,6 +36,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
     final tabController = useTabController(initialLength: (isAdmin) ? 3 : 2);
 
     useEffect(() {
+      print("Mixpanel: Viewed CourtSlotDetails ${baseCourtSlot.toJson()}");
       tabController.addListener(() => (tabIndex.value = tabController.index));
       model.initState({'court_id': baseCourtSlot.courtId});
       return model.dispose;

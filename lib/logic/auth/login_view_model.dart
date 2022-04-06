@@ -1,5 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/services/auth_service.dart';
 import 'package:kasado/logic/shared/view_model.dart';
@@ -30,8 +31,21 @@ class LoginViewModel extends ViewModel {
   }) async {
     final authCreds = await authService.signInWithGoogle();
     authCreds.fold(
-      (error) => ifError(error),
-      (creds) => ifSuccess(creds),
+      (error) {
+        print("Mixpanel: ${error.toString()}");
+        return ifError(error);
+      },
+      (creds) {
+        print("Mixpanel: Signed in successfully");
+        return ifSuccess(creds);
+      },
+    );
+  }
+
+  Future<void> signInWithFacebook() async {
+    print("Mixpanel: Sign in with Facebook");
+    Fluttertoast.showToast(
+      msg: 'Google lng say gamita pre, butngan ra nya namo nig para FB pramis',
     );
   }
 }

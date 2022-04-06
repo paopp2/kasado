@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/logic/home/states/home_tab_state.dart';
@@ -18,6 +19,12 @@ class HomeTab extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courtsStream = ref.watch(courtsStreamProvider);
+
+    useEffect(() {
+      print("Mixpanel: Viewed home tab");
+      return;
+    }, []);
+
     return Column(
       children: [
         const Text(
