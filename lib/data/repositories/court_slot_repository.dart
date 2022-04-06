@@ -148,16 +148,18 @@ class CourtSlotRepository {
 
   Future<void> addTeamToCourtSlot({
     required String teamId,
+    required KasadoUserInfo teamCaptainInfo,
     required CourtSlot courtSlot,
+    required String courtName,
     required double courtTicketPrice,
-    VoidCallback? onTeamCantFit,
+    required VoidCallback onTeamCantFit,
   }) async {
-    final team = await teamRepo.getTeam(teamId);
-    final teamPlayers = team!.players;
+    final _team = await teamRepo.getTeam(teamId);
+    final _teamPlayers = _team!.players;
 
-    if (courtSlot.availablePlayerSlots >= teamPlayers.length) {
+    if (courtSlot.availablePlayerSlots >= _teamPlayers.length) {
       final playerUserInfos = await userInfoRepo.getUserInfoList(
-        teamPlayers.map((u) => u.id).toList(),
+        _teamPlayers.map((u) => u.id).toList(),
       );
 
       List<KasadoUser> _updatedTeamPlayers = [];
@@ -176,7 +178,7 @@ class CourtSlotRepository {
         }
         _updatedTeamPlayers.add(userInfo.user.copyWith(
           hasPaid: _hasPaid,
-          teamName: team.teamName,
+          teamName: _team.teamName,
         ));
       }
 
@@ -188,19 +190,23 @@ class CourtSlotRepository {
         ),
       );
 
-      // Reserve all team players at court slot
-      await userInfoRepo.reserveTeamAt(
-        teamPlayersIdList: teamPlayers.map((u) => u.id).toList(),
-        reservedAt: courtSlot.copyWith(players: []),
+      // Create a ticket for the team
+      await teamRepo.createTeamTicket(
+        teamCaptainInfo: teamCaptainInfo,
+        team: _team,
+        courtSlot: courtSlot,
+        courtName: courtName,
       );
     } else {
-      onTeamCantFit?.call();
+      onTeamCantFit();
     }
   }
 
   Future<void> removeTeamFromCourtSlot({
     required String teamId,
+    required KasadoUserInfo teamCaptainInfo,
     required CourtSlot courtSlot,
+    required String courtName,
     required double courtTicketPrice,
   }) async {
     final _team = await teamRepo.getTeam(teamId);
@@ -214,10 +220,11 @@ class CourtSlotRepository {
     final updatedPlayerList = courtSlot.players
       ..removeWhere((player) => _teamPlayersFromCourtSlot.contains(player));
 
-    // Nullify the whole team's court slot reservations
-    await userInfoRepo.reserveTeamAt(
-      teamPlayersIdList: _teamPlayerIds,
-      reservedAt: null,
+    // Remove this slot's ticket for the team
+    await teamRepo.removeTeamTicket(
+      teamCaptainInfo: teamCaptainInfo,
+      team: _team,
+      courtSlot: courtSlot,
     );
 
     // Return the money for players who have already paid for the slot

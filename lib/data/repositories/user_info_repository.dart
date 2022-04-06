@@ -125,18 +125,6 @@ class UserInfoRepository {
     );
   }
 
-  Future<void> reserveTeamAt({
-    required List<String> teamPlayersIdList,
-    required CourtSlot? reservedAt,
-  }) async {
-    await firestoreHelper.setBatchDataForDocInList(
-      baseColPath: FirestorePath.colUserInfos(),
-      docIdList: teamPlayersIdList,
-      dataFromId: (_) => {'reservedAt': reservedAt?.toJson()},
-      merge: true,
-    );
-  }
-
   /// Add [pondo] to user with [currentUserInfo.id] if [isAdd],
   /// deduct if otherwise
   Future<void> addOrDeductPondo({

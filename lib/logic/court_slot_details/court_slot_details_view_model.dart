@@ -159,13 +159,17 @@ class CourtSlotDetailsViewModel extends ViewModel {
       if (slotHasPlayer) {
         await removeTeamFromCourtSlot(
           teamId: teamId,
+          teamCaptainInfo: currentUserInfo!,
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
+          courtName: court.name,
           courtTicketPrice: court.ticketPrice,
         );
       } else {
         await addTeamToCourtSlot(
           teamId: teamId,
+          teamCaptainInfo: currentUserInfo!,
+          courtName: court.name,
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: court.ticketPrice,
@@ -215,6 +219,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
   Future<void> addTeamToCourtSlot({
     required String teamId,
     required bool isTeamCaptain,
+    required KasadoUserInfo teamCaptainInfo,
+    required String courtName,
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
   }) async {
@@ -227,6 +233,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
         if (isTeamCaptain) {
           await courtSlotRepo.addTeamToCourtSlot(
             teamId: teamId,
+            teamCaptainInfo: teamCaptainInfo,
+            courtName: courtName,
             courtSlot: baseCourtSlot,
             courtTicketPrice: courtTicketPrice,
             onTeamCantFit: () => Fluttertoast.showToast(
@@ -245,15 +253,19 @@ class CourtSlotDetailsViewModel extends ViewModel {
 
   Future<void> removeTeamFromCourtSlot({
     required String teamId,
+    required KasadoUserInfo teamCaptainInfo,
     required bool isTeamCaptain,
     required CourtSlot baseCourtSlot,
+    required String courtName,
     required double courtTicketPrice,
     BuildContext? context,
   }) async {
     if (isTeamCaptain) {
       await courtSlotRepo.removeTeamFromCourtSlot(
         teamId: teamId,
+        teamCaptainInfo: teamCaptainInfo,
         courtSlot: baseCourtSlot,
+        courtName: courtName,
         courtTicketPrice: courtTicketPrice,
       );
       if (context != null) Navigator.pop(context);
