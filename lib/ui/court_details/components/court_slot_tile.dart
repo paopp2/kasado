@@ -72,7 +72,7 @@ class CourtSlotTile extends HookConsumerWidget {
                     slotEnded: () => 'Slot has ended',
                     slotClosedByAdmin: () => 'Closed by admin',
                     slotFull: () => 'Full',
-                    userReservedAtThisSlot: () => 'Joined ✔️',
+                    userReservedAtThisSlot: () => 'Joined',
                     userHasConflictWithOtherSlot: () => 'In Conflict',
                     orElse: () => 'Available',
                   ),
