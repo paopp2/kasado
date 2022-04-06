@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -30,7 +31,7 @@ class BoxScoreTab extends HookConsumerWidget {
     final utils = ref.watch(kasadoUtilsProvider);
 
     useEffect(() {
-      print("Mixpanel: At BoxScoreTab");
+      ref.read(mixpanel)!.track("Viewed BoxScoreTab");
       return;
     }, []);
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
@@ -38,7 +39,7 @@ class GameStatController {
   }
 
   void selectSlotGameStats(GameStats gameStats) {
-    print("Mixpanel: slot game selected");
+    read(mixpanel)!.track("Selected a slot game");
     read(selectedGameStatsProvider.notifier).state = gameStats;
   }
 

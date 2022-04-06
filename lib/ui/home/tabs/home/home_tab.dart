@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/logic/home/states/home_tab_state.dart';
 import 'package:kasado/ui/home/tabs/home/components/next_court_slot_card.dart';
@@ -21,7 +22,7 @@ class HomeTab extends HookConsumerWidget {
     final courtsStream = ref.watch(courtsStreamProvider);
 
     useEffect(() {
-      print("Mixpanel: Viewed home tab");
+      ref.read(mixpanel)!.track("Viewed HomeTab");
       return;
     }, []);
 

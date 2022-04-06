@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/profile/user_profile_state.dart';
 import 'package:kasado/logic/profile/user_profile_view_model.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
@@ -20,7 +21,12 @@ class UserProfileView extends HookConsumerWidget {
     final userInfoStream = ref.watch(userInfoStreamProvider(userId));
 
     useEffect(() {
-      print("Mixpanel: Viewed user: ${userInfoStream.value}");
+      if (userInfoStream.value != null) {
+        ref.read(mixpanel)!.track(
+              "Navigated to UserProfileView",
+              properties: userInfoStream.value!.toJson(),
+            );
+      }
       model.initState({'viewed_user_id': userId});
       return model.dispose;
     }, [userInfoStream.value]);

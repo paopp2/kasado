@@ -21,7 +21,7 @@ class TicketTab extends HookConsumerWidget {
     final utils = ref.watch(kasadoUtilsProvider);
 
     useEffect(() {
-      print("Mixpanel: Viewed ticket tab");
+      ref.read(mixpanel)!.track("Viewed TicketsTab");
       return;
     }, []);
 
@@ -71,7 +71,7 @@ class TicketTab extends HookConsumerWidget {
                                 "${utils.getDateFormat(ticket.courtSlot.timeRange.startsAt)} / ${utils.getTimeRangeFormat(ticket.courtSlot.timeRange)}",
                               ),
                               onTap: () {
-                                print("Mixpanel: Enlarged a ticket");
+                                ref.read(mixpanel)!.track("Enlarged a ticket");
                                 showDialog(
                                   context: context,
                                   builder: (_) {

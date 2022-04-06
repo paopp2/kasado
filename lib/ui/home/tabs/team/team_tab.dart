@@ -23,7 +23,7 @@ class TeamTab extends HookConsumerWidget {
     final currentUserInfoStream = ref.watch(currentUserInfoProvider);
 
     useEffect(() {
-      print("Mixpanel: Viewed team tab");
+      ref.read(mixpanel)!.track("Viewed TeamTab");
       return;
     }, []);
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 
 class PondoInfoDialog extends HookConsumerWidget {
   const PondoInfoDialog({
@@ -13,7 +14,7 @@ class PondoInfoDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
-      print("Mixpanel: Viewed pondo info dialog");
+      ref.read(mixpanel)!.track("Viewed PondoInfoDialog");
       return;
     }, []);
 

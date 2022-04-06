@@ -19,7 +19,7 @@ class FeedbacksView extends HookConsumerWidget {
     final feedbacksStream = ref.watch(feedbacksStreamProvider(isSuperAdmin));
 
     useEffect(() {
-      print("Mixpanel: Viewed feedbacksview");
+      ref.read(mixpanel)!.track("Navigated to FeedbacksView");
       model.initState();
       return model.dispose;
     }, []);
@@ -101,7 +101,7 @@ class FeedbacksView extends HookConsumerWidget {
               label: const Text('New Feedback'),
               icon: const Icon(Icons.add),
               onPressed: () {
-                print("Mixpanel: Feedback input dialog opened");
+                ref.read(mixpanel)!.track("Feedback input dialog opened");
                 showDialog(
                   context: context,
                   builder: (_) => FeedbackInputDialog(model: model),

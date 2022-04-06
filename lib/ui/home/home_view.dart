@@ -28,6 +28,10 @@ class HomeView extends HookConsumerWidget {
         : true;
 
     useEffect(() {
+      ref.read(mixpanel)!.track(
+        "At HomeView",
+        properties: {"isUpdated": isCurrentVerGood},
+      );
       tabController.addListener(() => (tabIndex.value = tabController.index));
       model.initState();
       return model.dispose;

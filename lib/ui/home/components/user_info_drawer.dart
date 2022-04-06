@@ -25,7 +25,7 @@ class UserInfoDrawer extends HookConsumerWidget {
     final currentUserInfoStream = ref.watch(currentUserInfoProvider);
 
     useEffect(() {
-      print("Mixpanel: Opened user info drawer");
+      ref.read(mixpanel)!.track("Opened UserInfoDrawer");
       return;
     }, []);
 

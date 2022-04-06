@@ -35,7 +35,7 @@ class FeedbacksViewModel extends ViewModel with FeedbacksTecMixin {
 
   Future<void> pushFeedback(BuildContext context) async {
     if (feedbackInputFormKey.currentState!.validate()) {
-      print("Mixpanel: Sent a feedback");
+      read(mixpanel)!.track("Sent a feedback");
       await feedbacksRepo.pushFeedback(
         kasado.Feedback(
           id: const Uuid().v4(),

@@ -44,7 +44,7 @@ class SlotPlayersTab extends HookConsumerWidget {
     }
 
     useEffect(() {
-      print("Mixpanel: At SlotPlayersTab");
+      ref.read(mixpanel)!.track("Viewed SlotPlayersTab");
       return;
     }, []);
 

@@ -18,7 +18,7 @@ class LoginView extends HookConsumerWidget {
     final model = ref.watch(loginViewModel);
 
     useEffect(() {
-      print("Mixpanel: Viewed loginview");
+      ref.read(mixpanel)!.track("Navigated to LoginView");
       model.initState();
       return model.dispose;
     }, []);
