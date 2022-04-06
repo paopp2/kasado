@@ -98,6 +98,10 @@ class UserInfoRepository {
       courtName: courtName,
     ));
 
+    // Sort tickets from earliest to latest
+    userTickets.sort((a, b) => a.courtSlot.timeRange.startsAt
+        .compareTo(b.courtSlot.timeRange.startsAt));
+
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(userInfo.id),
       data: {'tickets': userTickets.map((t) => t.toJson()).toList()},

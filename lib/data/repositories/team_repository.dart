@@ -80,6 +80,10 @@ class TeamRepository {
       courtName: courtName,
     ));
 
+    // Sort tickets from earliest to latest
+    teamTickets.sort((a, b) => a.courtSlot.timeRange.startsAt
+        .compareTo(b.courtSlot.timeRange.startsAt));
+
     // Update team players' tickets
     await firestoreHelper.setBatchDataForDocInList(
       docIdList: team.players.map((u) => u.id).toList(),
