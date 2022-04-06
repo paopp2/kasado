@@ -39,7 +39,6 @@ class CourtSlotTile extends HookConsumerWidget {
             slotEnded: () => Colors.grey.shade300,
             slotClosedByAdmin: () => Colors.red.shade200,
             slotFull: () => Colors.red.shade200,
-            userReservedAtAnotherSlot: () => Colors.green.shade200,
             orElse: () => Colors.green.shade400,
           ),
           borderRadius: BorderRadius.circular(10),

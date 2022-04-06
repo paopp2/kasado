@@ -80,6 +80,7 @@ class CourtSlotRepository {
     required KasadoUser player,
     required CourtSlot courtSlot,
     required double courtTicketPrice,
+    required String courtName,
   }) async {
     KasadoUser? paidUser;
     final userInfo = await userInfoRepo.getUserInfo(player.id);
@@ -103,10 +104,11 @@ class CourtSlotRepository {
       ),
     );
 
-    // Indicate at player's userInfo that user is already reserved at slot
-    await userInfoRepo.reserveUserAt(
-      userId: player.id,
-      reservedAt: courtSlot.copyWith(players: []),
+    // Create a new ticket for joined courtSlot
+    await userInfoRepo.createUserTicket(
+      courtName: courtName,
+      courtSlot: courtSlot,
+      userInfo: userInfo,
     );
   }
 
@@ -115,8 +117,8 @@ class CourtSlotRepository {
     required CourtSlot courtSlot,
     required double courtTicketPrice,
   }) async {
+    final baseUserInfo = await userInfoRepo.getUserInfo(player.id);
     if (player.hasPaid) {
-      final baseUserInfo = await userInfoRepo.getUserInfo(player.id);
       await userInfoRepo.addOrDeductPondo(
         currentUserInfo: baseUserInfo!,
         isAdd: true,
@@ -126,8 +128,11 @@ class CourtSlotRepository {
 
     final updatedPlayerList = courtSlot.players..remove(player);
 
-    // Nullify player's reservation at userInfo
-    await userInfoRepo.reserveUserAt(userId: player.id, reservedAt: null);
+    // Remove user ticket
+    await userInfoRepo.removeUserTicket(
+      userInfo: baseUserInfo!,
+      courtSlot: courtSlot,
+    );
 
     if (updatedPlayerList.isEmpty) {
       // If no player remains at courtSlot, remove the court slot
@@ -272,8 +277,11 @@ class CourtSlotRepository {
           );
         }
 
-        // Nullify player's reservations to allow them to reserve for another slot
-        await userInfoRepo.reserveUserAt(userId: userInfo.id, reservedAt: null);
+        // Remove user ticket
+        await userInfoRepo.removeUserTicket(
+          userInfo: userInfo,
+          courtSlot: courtSlot,
+        );
       }
 
       // Flag court as closedByAdmin (the whole court slot must be pushed to cover

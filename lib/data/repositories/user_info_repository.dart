@@ -5,6 +5,7 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/ticket/ticket.dart';
 
 final userInfoRepositoryProvider = Provider.autoDispose(
   (ref) => UserInfoRepository(firestoreHelper: FirestoreHelper.instance),
@@ -79,13 +80,47 @@ class UserInfoRepository {
     );
   }
 
-  Future<void> reserveUserAt({
-    required String userId,
-    required CourtSlot? reservedAt,
+  Future<void> createUserTicket({
+    required KasadoUserInfo userInfo,
+    required CourtSlot courtSlot,
+    required String courtName,
   }) async {
+    final userTickets = [...userInfo.tickets];
+
+    // Remove expired tickets
+    final now = DateTime.now();
+    userTickets.removeWhere((ticket) => ticket.expiry.isBefore(now));
+
+    // Add new ticket
+    userTickets.add(Ticket(
+      id: "${courtSlot.courtId}|${courtSlot.slotId}",
+      courtSlot: courtSlot,
+      courtName: courtName,
+    ));
+
     await firestoreHelper.setData(
-      path: FirestorePath.docUserInfo(userId),
-      data: {'reservedAt': reservedAt?.toJson()},
+      path: FirestorePath.docUserInfo(userInfo.id),
+      data: {'tickets': userTickets.map((t) => t.toJson()).toList()},
+      merge: true,
+    );
+  }
+
+  Future<void> removeUserTicket({
+    required KasadoUserInfo userInfo,
+    required CourtSlot courtSlot,
+  }) async {
+    final userTickets = [...userInfo.tickets];
+
+    // Remove the ticket user intends to remove as well as expired tickets
+    final now = DateTime.now();
+    userTickets.removeWhere((ticket) {
+      return (ticket.expiry.isBefore(now)) ||
+          ticket.id == "${courtSlot.courtId}|${courtSlot.slotId}";
+    });
+
+    await firestoreHelper.setData(
+      path: FirestorePath.docUserInfo(userInfo.id),
+      data: {'tickets': userTickets.map((t) => t.toJson()).toList()},
       merge: true,
     );
   }

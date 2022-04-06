@@ -71,7 +71,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                         slotHasPlayer: courtSlot.hasPlayer(
                           currentUser,
                         ),
-                        courtTicketPrice: court.ticketPrice,
+                        court: court,
                         teamId: currentUserInfo.teamId,
                         isTeamCaptain: currentUserInfo.isTeamCaptain,
                       );
@@ -79,9 +79,9 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                     },
                     onLongPress: (isSuperAdmin)
                         ? () => model.joinAsAnotherPlayer(
-                              baseCourtSlot: courtSlot,
-                              courtTicketPrice: court.ticketPrice,
                               context: context,
+                              baseCourtSlot: courtSlot,
+                              court: court,
                             )
                         : null,
                   ),
