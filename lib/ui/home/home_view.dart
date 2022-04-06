@@ -61,7 +61,7 @@ class HomeView extends HookConsumerWidget {
                             'Please update to version ${appMetaStream.value?['currentVer']}',
                           ),
                           const Text(
-                            '(Try daw exit sa app nya sud balik)',
+                            '(I-sud gawas lng ang app, automatic rana mu-update)',
                           ),
                         ],
                       ),
