@@ -18,6 +18,7 @@ class LoginView extends HookConsumerWidget {
     final model = ref.watch(loginViewModel);
 
     useEffect(() {
+      ref.read(mixpanel)!.track("Navigated to LoginView");
       model.initState();
       return model.dispose;
     }, []);
@@ -93,10 +94,7 @@ class LoginView extends HookConsumerWidget {
                           width: constraints.maxWidth * 0.7,
                           child: SignInButton(
                             Buttons.FacebookNew,
-                            onPressed: () => Fluttertoast.showToast(
-                              msg:
-                                  'Google lng say gamita pre, butngan ra nya namo nig para FB pramis',
-                            ),
+                            onPressed: model.signInWithFacebook,
                             elevation: 10,
                             shape: const RoundedRectangleBorder(
                                 borderRadius:

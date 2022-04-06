@@ -45,6 +45,7 @@ class TeamTabModel extends ViewModel {
         } else if (state.contains(userInfo.user)) {
           Fluttertoast.showToast(msg: "User already added");
         } else {
+          read(mixpanel)!.track("Added a user to team build");
           return [...state, userInfo.user];
         }
         return state;
@@ -53,6 +54,7 @@ class TeamTabModel extends ViewModel {
   }
 
   void removeUserFromTeamBuild(KasadoUser user) {
+    read(mixpanel)!.track("Removed a player for team build");
     read(removedPlayersListProvider.notifier).update((state) {
       return [...state, user];
     });
@@ -68,8 +70,10 @@ class TeamTabModel extends ViewModel {
   }) async {
     if (teamHasReserved) {
       Fluttertoast.showToast(
-          msg: "Can't leave team because team has a pending reservation");
+        msg: "Can't leave team because team has a pending reservation",
+      );
     } else {
+      read(mixpanel)!.track("Left a team");
       await teamRepo.removePlayerFromTeam(team: team, player: player);
     }
   }
@@ -98,6 +102,9 @@ class TeamTabModel extends ViewModel {
         // Reset removedPlayersList state
         read(removedPlayersListProvider.notifier).state = [];
       }
+
+      read(mixpanel)!.track("Pushed a team", properties: {"isUpdate": isEdit});
+
       await teamRepo.pushTeam(
         (isEdit)
             ? team.copyWith(
@@ -126,6 +133,7 @@ class TeamTabModel extends ViewModel {
             "Please leave the game you have joined before dissolving your team",
       );
     } else {
+      read(mixpanel)!.track("Dissolved a team");
       await teamRepo.dissolveTeam(team);
       Navigator.pop(context);
     }

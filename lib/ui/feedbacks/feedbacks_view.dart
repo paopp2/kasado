@@ -19,6 +19,7 @@ class FeedbacksView extends HookConsumerWidget {
     final feedbacksStream = ref.watch(feedbacksStreamProvider(isSuperAdmin));
 
     useEffect(() {
+      ref.read(mixpanel)!.track("Navigated to FeedbacksView");
       model.initState();
       return model.dispose;
     }, []);
@@ -99,10 +100,13 @@ class FeedbacksView extends HookConsumerWidget {
             floatingActionButton: FloatingActionButton.extended(
               label: const Text('New Feedback'),
               icon: const Icon(Icons.add),
-              onPressed: () => showDialog(
-                context: context,
-                builder: (_) => FeedbackInputDialog(model: model),
-              ),
+              onPressed: () {
+                ref.read(mixpanel)!.track("Feedback input dialog opened");
+                showDialog(
+                  context: context,
+                  builder: (_) => FeedbackInputDialog(model: model),
+                );
+              },
             ),
           );
         },

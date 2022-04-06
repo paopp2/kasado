@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_details/court_details_view_model.dart';
@@ -34,9 +35,15 @@ class CourtDetailsView extends HookConsumerWidget {
     );
 
     useEffect(() {
+      if (courtStream.value != null) {
+        ref.read(mixpanel)!.track(
+              "Navigated to CourtDetailsView",
+              properties: courtStream.value!.toJson(),
+            );
+      }
       courtDetailsModel.initState({'court_id': courtId});
       return courtDetailsModel.dispose;
-    }, []);
+    }, [courtStream.value]);
 
     return LayoutBuilder(
       builder: (context, constraints) {

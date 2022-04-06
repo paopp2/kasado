@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -18,6 +19,11 @@ class TicketTab extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUserInfoStream = ref.watch(currentUserInfoProvider);
     final utils = ref.watch(kasadoUtilsProvider);
+
+    useEffect(() {
+      ref.read(mixpanel)!.track("Viewed TicketsTab");
+      return;
+    }, []);
 
     return currentUserInfoStream.when(
       error: (e, _) => Text(e.toString()),
@@ -65,6 +71,7 @@ class TicketTab extends HookConsumerWidget {
                                 "${utils.getDateFormat(ticket.courtSlot.timeRange.startsAt)} / ${utils.getTimeRangeFormat(ticket.courtSlot.timeRange)}",
                               ),
                               onTap: () {
+                                ref.read(mixpanel)!.track("Enlarged a ticket");
                                 showDialog(
                                   context: context,
                                   builder: (_) {

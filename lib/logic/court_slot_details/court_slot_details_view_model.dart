@@ -141,12 +141,16 @@ class CourtSlotDetailsViewModel extends ViewModel {
     if (teamId == null) {
       // If player is not part of a team
       if (slotHasPlayer) {
+        read(mixpanel)!
+            .track("Leave a courtSlot", properties: {"isSingle": true});
         await removeFromCourtSlot(
           playerToRemove: currentUserInfo!.user,
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: court.ticketPrice,
         );
       } else {
+        read(mixpanel)!
+            .track("Join a courtSlot", properties: {"isSingle": true});
         await addToCourtSlot(
           userInfo: currentUserInfo!,
           baseCourtSlot: baseCourtSlot,
@@ -157,6 +161,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
     } else {
       // If player is part of a team
       if (slotHasPlayer) {
+        read(mixpanel)!
+            .track("Leave a courtSlot", properties: {"isSingle": false});
         await removeTeamFromCourtSlot(
           teamId: teamId,
           teamCaptainInfo: currentUserInfo!,
@@ -166,6 +172,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
           courtTicketPrice: court.ticketPrice,
         );
       } else {
+        read(mixpanel)!
+            .track("Join a courtSlot", properties: {"isSingle": false});
         await addTeamToCourtSlot(
           teamId: teamId,
           teamCaptainInfo: currentUserInfo!,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/notifs/notifs_state.dart';
 import 'package:kasado/logic/notifs/notifs_view_model.dart';
 import 'package:kasado/model/notif/notif.dart';
@@ -25,6 +26,7 @@ class NotifsView extends HookConsumerWidget {
     final userNotifsStream = ref.watch(userNotifsStreamProvider(userId));
 
     useEffect(() {
+      ref.read(mixpanel)!.track("Navigated to NotifsView");
       model.initState();
       return model.dispose;
     }, []);
