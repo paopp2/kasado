@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_state.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -36,6 +37,10 @@ class CourtSlotDetailsView extends HookConsumerWidget {
     final tabController = useTabController(initialLength: (isAdmin) ? 3 : 2);
 
     useEffect(() {
+      ref.read(mixpanel)!.track(
+        "Navigated to CourtSlotDetailsView",
+        properties: {"isDone": isDone, "courtSlot": baseCourtSlot.toJson()},
+      );
       tabController.addListener(() => (tabIndex.value = tabController.index));
       model.initState({'court_id': baseCourtSlot.courtId});
       return model.dispose;

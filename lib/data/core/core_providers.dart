@@ -5,6 +5,7 @@ import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 final appMetaStreamProvider = StreamProvider.autoDispose((ref) {
   final firestoreHelper = FirestoreHelper.instance;
@@ -47,3 +48,6 @@ final currentUserInfoProvider = StreamProvider.autoDispose<KasadoUserInfo?>(
     }
   },
 );
+
+// Mixpanel instance for analytics
+final mixpanel = Provider<Mixpanel?>((ref) => null);

@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/firebase_options.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 // TODO: Set to false in production
@@ -31,7 +33,13 @@ Future<void> main() async {
 
   GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
 
-  runApp(const ProviderScope(child: MyApp()));
+  final mixpanelInstance =
+      await Mixpanel.init("2d8fa8dd56a27950bb14036586c618e6");
+
+  runApp(ProviderScope(
+    child: const MyApp(),
+    overrides: [mixpanel.overrideWithValue(mixpanelInstance)],
+  ));
 }
 
 class MyApp extends StatelessWidget {
