@@ -23,9 +23,11 @@ class CourtSlot with _$CourtSlot {
   }) = _CourtSlot;
 
   int get maxPlayerCount => 25;
+  int get minPlayerCount => 15;
   int get playerCount => players.length;
   int get availablePlayerSlots => (maxPlayerCount - playerCount);
   bool get isFull => (playerCount == maxPlayerCount);
+  bool get isLackingPlayers => (playerCount < minPlayerCount);
   bool hasPlayer(KasadoUser user) => players.any((p) => (p.id == user.id));
 
   static String getIdFromTimeRange(TimeRange? timeRange) {
