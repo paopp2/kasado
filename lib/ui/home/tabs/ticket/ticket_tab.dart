@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
+import 'package:kasado/ui/home/tabs/ticket/components/enlarged_ticket_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -55,41 +56,31 @@ class TicketTab extends HookConsumerWidget {
                             ),
                             child: ListTile(
                               tileColor: Colors.grey.shade100,
-                              leading: QrImage(
-                                data:
-                                    'Eacha prank! Bitaw dol mugana ra ni puhon trust me',
+                              leading: Hero(
+                                tag: ticket.id,
+                                child: QrImage(data: ticket.id),
                               ),
                               title: Text(ticket.courtName),
                               subtitle: Text(
                                 "${utils.getDateFormat(ticket.courtSlot.timeRange.startsAt)} / ${utils.getTimeRangeFormat(ticket.courtSlot.timeRange)}",
                               ),
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return EnlargedTicketDialog(
+                                      ticket: ticket,
+                                      utils: utils,
+                                      userName: userInfo!.user.displayName!,
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           );
                         },
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(20.0),
-                    //   child: QrImage(
-                    //     data:
-                    //         'Eacha prank! Bitaw dol mugana ra ni puhon trust me',
-                    //   ),
-                    // ),
-                    // const Divider(),
-                    // Text(
-                    //   currentUser!.displayName!.toUpperCase(),
-                    //   style: const TextStyle(fontSize: 10),
-                    // ),
-                    // const Text(
-                    //   // userInfo!.reservedAt!.courtId,
-                    //   'Placeholder',
-                    //   style: TextStyle(fontSize: 10),
-                    // ),
-                    // const Text(
-                    //   // userInfo.reservedAt!.slotId,
-                    //   'Placeholder',
-                    //   style: TextStyle(fontSize: 10),
-                    // ),
                   ],
                 ),
         );
