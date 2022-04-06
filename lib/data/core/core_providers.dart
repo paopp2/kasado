@@ -49,4 +49,5 @@ final currentUserInfoProvider = StreamProvider.autoDispose<KasadoUserInfo?>(
   },
 );
 
-final mixpanelProvider = Provider<Mixpanel?>((ref) => null);
+// Mixpanel instance for analytics
+final mixpanel = Provider<Mixpanel?>((ref) => null);

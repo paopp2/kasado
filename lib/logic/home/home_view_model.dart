@@ -33,7 +33,7 @@ class HomeViewModel extends ViewModel {
       name: 'home_view',
       parameters: {'user_id': currentUser.toJson().toString()},
     );
-    read(mixpanelProvider)!
+    read(mixpanel)!
       ..identify(currentUser.id)
       ..getPeople().set("\$email", currentUser.email)
       ..getPeople().set("\$name", currentUser.displayName);

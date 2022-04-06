@@ -33,14 +33,12 @@ Future<void> main() async {
 
   GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
 
-  final mixpanel = await Mixpanel.init(
-    "2d8fa8dd56a27950bb14036586c618e6",
-    optOutTrackingDefault: false,
-  );
+  final mixpanelInstance =
+      await Mixpanel.init("2d8fa8dd56a27950bb14036586c618e6");
 
   runApp(ProviderScope(
     child: const MyApp(),
-    overrides: [mixpanelProvider.overrideWithValue(mixpanel)],
+    overrides: [mixpanel.overrideWithValue(mixpanelInstance)],
   ));
 }
 
