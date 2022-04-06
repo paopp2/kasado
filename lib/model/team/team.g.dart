@@ -15,6 +15,10 @@ _$_Team _$$_TeamFromJson(Map<String, dynamic> json) => _$_Team(
               ?.map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      tickets: (json['tickets'] as List<dynamic>?)
+              ?.map((e) => Ticket.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$_TeamToJson(_$_Team instance) => <String, dynamic>{
@@ -22,4 +26,5 @@ Map<String, dynamic> _$$_TeamToJson(_$_Team instance) => <String, dynamic>{
       'teamCaptain': instance.teamCaptain.toJson(),
       'customTeamName': instance.customTeamName,
       'players': instance.players.map((e) => e.toJson()).toList(),
+      'tickets': instance.tickets.map((e) => e.toJson()).toList(),
     };
