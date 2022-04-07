@@ -39,64 +39,67 @@ class StatLeadersPane extends HookConsumerWidget {
             loading: () => const LoadingWidget(),
             error: (e, _) => Text(e.toString()),
             data: (userInfoList) {
-              return ListView.builder(
-                itemCount: userInfoList.length,
-                itemBuilder: (context, i) {
-                  final userInfo = userInfoList[i];
-                  final player = userInfo.user;
-                  final stats = userInfo.overviewStats;
-                  final double statValue;
-                  switch (statType) {
-                    case StatType.winRate:
-                      statValue = stats.winPercent;
-                      break;
-                    case StatType.ptsPerGame:
-                      statValue = stats.avePointsPerGame;
-                      break;
-                    case StatType.astPerGame:
-                      statValue = stats.aveAssistsPerGame;
-                      break;
-                    case StatType.rebPerGame:
-                      statValue = stats.aveReboundsPerGame;
-                      break;
-                  }
+              return (userInfoList.isEmpty)
+                  ? const Center(child: Text('No data available'))
+                  : ListView.builder(
+                      itemCount: userInfoList.length,
+                      itemBuilder: (context, i) {
+                        final userInfo = userInfoList[i];
+                        final player = userInfo.user;
+                        final stats = userInfo.overviewStats;
+                        final double statValue;
+                        switch (statType) {
+                          case StatType.winRate:
+                            statValue = stats.winPercent;
+                            break;
+                          case StatType.ptsPerGame:
+                            statValue = stats.avePointsPerGame;
+                            break;
+                          case StatType.astPerGame:
+                            statValue = stats.aveAssistsPerGame;
+                            break;
+                          case StatType.rebPerGame:
+                            statValue = stats.aveReboundsPerGame;
+                            break;
+                        }
 
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 30,
-                          child: Text(
-                            '${i + 1}',
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 30,
+                                child: Text(
+                                  '${i + 1}',
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Expanded(
+                                child: ListTile(
+                                  leading: CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(player.photoUrl!),
+                                  ),
+                                  title: Text(player.displayName!),
+                                  trailing: Text(
+                                    utils.getDoubleFormat(statValue),
+                                    style: const TextStyle(fontSize: 15),
+                                  ),
+                                  onTap: () => context.pushNamed(
+                                    Routes.userProfileView,
+                                    params: {'uid': player.id},
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Expanded(
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(player.photoUrl!),
-                            ),
-                            title: Text(player.displayName!),
-                            trailing: Text(
-                              utils.getDoubleFormat(statValue),
-                              style: const TextStyle(fontSize: 15),
-                            ),
-                            onTap: () => context.pushNamed(
-                              Routes.userProfileView,
-                              params: {'uid': player.id},
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
+                        );
+                      },
+                    );
             },
           ),
         ),
