@@ -15,5 +15,15 @@ final statLeadersStreamProvider = StreamProvider.autoDispose
       return statRepo.getApgLeadersStream();
     case StatType.rebPerGame:
       return statRepo.getRpgLeadersStream();
+    case StatType.blkPerGame:
+      return statRepo.getBpgLeadersStream();
+    case StatType.stlPerGame:
+      return statRepo.getSpgLeadersStream();
+    case StatType.fgPercent:
+      return statRepo.getFgPercentLeadersStream();
+    case StatType.threePtPercent:
+      return statRepo.get3ptPercentLeadersStream();
+    case StatType.threePtMade:
+      return statRepo.get3ptMadeLeadersStream();
   }
 });

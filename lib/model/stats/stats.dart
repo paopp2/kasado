@@ -42,4 +42,9 @@ enum StatType {
   ptsPerGame,
   astPerGame,
   rebPerGame,
+  blkPerGame,
+  stlPerGame,
+  fgPercent,
+  threePtPercent,
+  threePtMade,
 }

@@ -371,4 +371,54 @@ class StatRepository {
           .limit(100),
     );
   }
+
+  Stream<List<KasadoUserInfo>> getSpgLeadersStream() {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, _) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query
+          .orderBy('overviewStats.aveStlPerGame', descending: true)
+          .limit(100),
+    );
+  }
+
+  Stream<List<KasadoUserInfo>> getBpgLeadersStream() {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, _) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query
+          .orderBy('overviewStats.aveBlocksPerGame', descending: true)
+          .limit(100),
+    );
+  }
+
+  Stream<List<KasadoUserInfo>> getFgPercentLeadersStream() {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, _) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query
+          .orderBy('overviewStats.aveFgPercent', descending: true)
+          .limit(100),
+    );
+  }
+
+  Stream<List<KasadoUserInfo>> get3ptPercentLeadersStream() {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, _) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query
+          .orderBy('overviewStats.aveThreePtPercent', descending: true)
+          .limit(100),
+    );
+  }
+
+  Stream<List<KasadoUserInfo>> get3ptMadeLeadersStream() {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, _) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query
+          .orderBy('overviewStats.totalThreePM', descending: true)
+          .limit(100),
+    );
+  }
 }

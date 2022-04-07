@@ -10,7 +10,7 @@ class LeaderboardsView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tabController = useTabController(initialLength: 4);
+    final tabController = useTabController(initialLength: 9);
 
     useEffect(() {
       ref.read(mixpanel)!.track("Navigated to LeaderboardsView");
@@ -25,11 +25,17 @@ class LeaderboardsView extends HookConsumerWidget {
             elevation: 0,
             bottom: TabBar(
               controller: tabController,
+              isScrollable: true,
               tabs: const [
-                Tab(child: Text('WIN %')),
+                Tab(child: Text('WIN%')),
                 Tab(child: Text('PPG')),
-                Tab(child: Text('APG')),
                 Tab(child: Text('RPG')),
+                Tab(child: Text('APG')),
+                Tab(child: Text('FG%')),
+                Tab(child: Text('3PM')),
+                Tab(child: Text('3PT%')),
+                Tab(child: Text('SPG')),
+                Tab(child: Text('BPG')),
               ],
             ),
           ),
@@ -48,12 +54,32 @@ class LeaderboardsView extends HookConsumerWidget {
                       statType: StatType.ptsPerGame,
                     ),
                     StatLeadersPane(
+                      statDescription: "REBOUNDS PER GAME",
+                      statType: StatType.rebPerGame,
+                    ),
+                    StatLeadersPane(
                       statDescription: "ASSISTS PER GAME",
                       statType: StatType.astPerGame,
                     ),
                     StatLeadersPane(
-                      statDescription: "REBOUNDS PER GAME",
-                      statType: StatType.rebPerGame,
+                      statDescription: "FIELD GOAL PERCENTAGE",
+                      statType: StatType.fgPercent,
+                    ),
+                    StatLeadersPane(
+                      statDescription: "3 POINTS MADE",
+                      statType: StatType.threePtMade,
+                    ),
+                    StatLeadersPane(
+                      statDescription: "3 POINT PERCENTAGE",
+                      statType: StatType.threePtPercent,
+                    ),
+                    StatLeadersPane(
+                      statDescription: "STEALS PER GAME",
+                      statType: StatType.stlPerGame,
+                    ),
+                    StatLeadersPane(
+                      statDescription: "BLOCKS PER GAME",
+                      statType: StatType.blkPerGame,
                     ),
                   ],
                 ),

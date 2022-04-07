@@ -68,6 +68,21 @@ class StatLeadersPane extends HookConsumerWidget {
                           case StatType.rebPerGame:
                             statValue = stats.aveReboundsPerGame;
                             break;
+                          case StatType.blkPerGame:
+                            statValue = stats.aveBlocksPerGame;
+                            break;
+                          case StatType.stlPerGame:
+                            statValue = stats.aveStlPerGame;
+                            break;
+                          case StatType.fgPercent:
+                            statValue = stats.aveFgPercent;
+                            break;
+                          case StatType.threePtPercent:
+                            statValue = stats.aveThreePtPercent;
+                            break;
+                          case StatType.threePtMade:
+                            statValue = stats.totalThreePM.toDouble();
+                            break;
                         }
 
                         return Padding(
