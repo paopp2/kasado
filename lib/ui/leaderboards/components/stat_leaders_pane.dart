@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/leaderboards/leaderboards_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/stats/stats.dart';
@@ -83,6 +85,10 @@ class StatLeadersPane extends HookConsumerWidget {
                             trailing: Text(
                               utils.getDoubleFormat(statValue),
                               style: const TextStyle(fontSize: 15),
+                            ),
+                            onTap: () => context.pushNamed(
+                              Routes.userProfileView,
+                              params: {'uid': player.id},
                             ),
                           ),
                         ),
