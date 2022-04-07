@@ -6,6 +6,7 @@ import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/stats/stats.dart';
 
 final statRepositoryProvider = Provider.autoDispose(
@@ -328,6 +329,46 @@ class StatRepository {
       dataFromId: (playerId) => updatedGameStats[playerId]!.toJson(),
       queryBuilder: (query) =>
           query.where('id', whereIn: updatedGameStats.keys.toList()),
+    );
+  }
+
+  Stream<List<KasadoUserInfo>> getWinRateLeadersStream() {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, _) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query
+          .orderBy('overviewStats.winPercent', descending: true)
+          .limit(100),
+    );
+  }
+
+  Stream<List<KasadoUserInfo>> getPpgLeadersStream() {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, _) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query
+          .orderBy('overviewStats.avePointsPerGame', descending: true)
+          .limit(100),
+    );
+  }
+
+  Stream<List<KasadoUserInfo>> getApgLeadersStream() {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, _) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query
+          .orderBy('overviewStats.aveAssistsPerGame', descending: true)
+          .limit(100),
+    );
+  }
+
+  Stream<List<KasadoUserInfo>> getRpgLeadersStream() {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colUserInfos(),
+      builder: (data, _) => KasadoUserInfo.fromJson(data),
+      queryBuilder: (query) => query
+          .orderBy('overviewStats.aveReboundsPerGame', descending: true)
+          .limit(100),
     );
   }
 }

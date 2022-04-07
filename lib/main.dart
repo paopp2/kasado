@@ -11,7 +11,7 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 // TODO: Set to false in production
-const bool useFirebaseEmulator = false;
+const bool inDebugMode = false;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +21,7 @@ Future<void> main() async {
         : DefaultFirebaseOptions.currentPlatform,
   );
 
-  if (useFirebaseEmulator) {
+  if (inDebugMode) {
     final localHostString =
         UniversalPlatform.isAndroid ? '10.0.2.2' : 'localhost';
     FirebaseFirestore.instance.settings = Settings(
@@ -33,8 +33,10 @@ Future<void> main() async {
 
   GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
 
-  final mixpanelInstance =
-      await Mixpanel.init("2d8fa8dd56a27950bb14036586c618e6");
+  final mixpanelInstance = await Mixpanel.init(
+    "2d8fa8dd56a27950bb14036586c618e6",
+    optOutTrackingDefault: inDebugMode,
+  );
 
   runApp(ProviderScope(
     child: const MyApp(),
