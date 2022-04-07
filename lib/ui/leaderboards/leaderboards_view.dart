@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/ui/leaderboards/components/stat_leaders_pane.dart';
 
@@ -10,6 +11,12 @@ class LeaderboardsView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tabController = useTabController(initialLength: 4);
+
+    useEffect(() {
+      ref.read(mixpanel)!.track("Navigated to LeaderboardsView");
+      return;
+    }, []);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
