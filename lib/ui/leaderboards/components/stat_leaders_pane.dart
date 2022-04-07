@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/leaderboards/leaderboards_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/stats/stats.dart';
@@ -21,6 +23,11 @@ class StatLeadersPane extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final utils = ref.watch(kasadoUtilsProvider);
     final statLeadersStream = ref.watch(statLeadersStreamProvider(statType));
+
+    useEffect(() {
+      ref.read(mixpanel)!.track("Viewed ${statType.toString()} Leaders Tab");
+      return;
+    }, []);
 
     return Column(
       children: [
