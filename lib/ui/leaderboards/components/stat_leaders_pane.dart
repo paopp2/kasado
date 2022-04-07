@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/leaderboards/leaderboards_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
+import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class StatLeadersPane extends HookConsumerWidget {
   const StatLeadersPane({
     Key? key,
     required this.statDescription,
+    required this.statType,
   }) : super(key: key);
 
   final String statDescription;
+  final StatType statType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final utils = ref.watch(kasadoUtilsProvider);
-    final winRateLeadersStream = ref.watch(winRateLeadersStreamProvider);
+    final statLeadersStream = ref.watch(statLeadersStreamProvider(statType));
 
     return Column(
       children: [
@@ -30,15 +33,31 @@ class StatLeadersPane extends HookConsumerWidget {
           ),
         ),
         Expanded(
-          child: winRateLeadersStream.when(
+          child: statLeadersStream.when(
             loading: () => const LoadingWidget(),
             error: (e, _) => Text(e.toString()),
             data: (userInfoList) {
               return ListView.builder(
                 itemCount: userInfoList.length,
                 itemBuilder: (context, i) {
-                  final player = userInfoList[i].user;
-                  final statValue = userInfoList[i].overviewStats.winPercent;
+                  final userInfo = userInfoList[i];
+                  final player = userInfo.user;
+                  final stats = userInfo.overviewStats;
+                  final double statValue;
+                  switch (statType) {
+                    case StatType.winRate:
+                      statValue = stats.winPercent;
+                      break;
+                    case StatType.ptsPerGame:
+                      statValue = stats.avePointsPerGame;
+                      break;
+                    case StatType.astPerGame:
+                      statValue = stats.aveAssistsPerGame;
+                      break;
+                    case StatType.rebPerGame:
+                      statValue = stats.aveReboundsPerGame;
+                      break;
+                  }
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
