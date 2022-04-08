@@ -39,7 +39,11 @@ class CourtSlotDetailsView extends HookConsumerWidget {
     useEffect(() {
       ref.read(mixpanel)!.track(
         "Navigated to CourtSlotDetailsView",
-        properties: {"isDone": isDone, "courtSlot": baseCourtSlot.toJson()},
+        properties: {
+          "isDone": isDone,
+          "courtSlotTimerange":
+              "${utils.getDateFormat(baseCourtSlot.timeRange.startsAt)} / ${utils.getTimeRangeFormat(baseCourtSlot.timeRange)}",
+        },
       );
       tabController.addListener(() => (tabIndex.value = tabController.index));
       model.initState({'court_id': baseCourtSlot.courtId});
