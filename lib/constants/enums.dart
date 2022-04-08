@@ -43,7 +43,7 @@ extension SlotAndUserStatePatternMatching on SlotAndUserState {
 }
 
 enum StatType {
-  winRate,
+  standing,
   ptsPerGame,
   astPerGame,
   rebPerGame,

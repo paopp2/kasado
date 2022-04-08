@@ -29,7 +29,7 @@ class LeaderboardsView extends HookConsumerWidget {
               controller: tabController,
               isScrollable: true,
               tabs: const [
-                Tab(child: Text('WIN%')),
+                Tab(child: Text('W-L')),
                 Tab(child: Text('PPG')),
                 Tab(child: Text('RPG')),
                 Tab(child: Text('APG')),
@@ -49,8 +49,8 @@ class LeaderboardsView extends HookConsumerWidget {
                   children: [
                     StatLeadersPane(
                       model: model,
-                      statDescription: "WIN RATE",
-                      statType: StatType.winRate,
+                      statDescription: "STANDING",
+                      statType: StatType.standing,
                     ),
                     StatLeadersPane(
                       model: model,
