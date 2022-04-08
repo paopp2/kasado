@@ -283,34 +283,4 @@ class CourtSlotDetailsViewModel extends ViewModel {
       );
     }
   }
-
-  Future<void> votePlayerAsMvp({
-    required CourtSlot baseCourtSlot,
-    required KasadoUser currentPlayer,
-    required KasadoUser myMvp,
-  }) async {
-    assert(baseCourtSlot.hasPlayer(myMvp));
-    final slotPlayers = baseCourtSlot.players;
-    final currentPlayerIndex = slotPlayers.indexOf(currentPlayer);
-    final myMvpIndex = slotPlayers.indexOf(myMvp);
-
-    final isVoteForSelf = myMvpIndex == currentPlayerIndex;
-
-    await courtSlotRepo.updateCourtSlotPlayers(
-      courtSlot: baseCourtSlot,
-      updatedPlayers: (isVoteForSelf)
-          ? (slotPlayers
-            ..[currentPlayerIndex] = currentPlayer.copyWith(
-              mvpVoteCount: currentPlayer.mvpVoteCount + 1,
-              votedMvpId: currentPlayer.id,
-            ))
-          : (slotPlayers
-            ..[currentPlayerIndex] =
-                currentPlayer.copyWith(votedMvpId: myMvp.id)
-            ..[myMvpIndex] =
-                myMvp.copyWith(mvpVoteCount: myMvp.mvpVoteCount + 1)),
-    );
-
-    statRepo.incMvpCount(myMvp.id);
-  }
 }

@@ -15,11 +15,7 @@ class KasadoUser with _$KasadoUser {
     String? photoUrl,
     @Default('') String teamName,
     @Default(false) bool hasPaid,
-    @Default(0) int mvpVoteCount,
-    @Default('') String votedMvpId,
   }) = _KasadoUser;
-
-  bool get hasVotedForMvp => (votedMvpId.isNotEmpty);
 
   factory KasadoUser.fromJson(Map<String, dynamic> json) =>
       _$KasadoUserFromJson(json);
