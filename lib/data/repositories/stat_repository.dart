@@ -332,12 +332,13 @@ class StatRepository {
     );
   }
 
-  Stream<List<KasadoUserInfo>> getWinRateLeadersStream() {
+  Stream<List<KasadoUserInfo>> getStandingLeadersStream() {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colUserInfos(),
       builder: (data, _) => KasadoUserInfo.fromJson(data),
       queryBuilder: (query) => query
           .orderBy('overviewStats.winPercent', descending: true)
+          .orderBy('overviewStats.gamesPlayed', descending: true)
           .limit(100),
     );
   }

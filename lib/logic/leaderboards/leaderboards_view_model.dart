@@ -25,7 +25,7 @@ class LeaderboardsViewModel extends ViewModel {
   }) {
     final double statValue;
     switch (statType) {
-      case StatType.winRate:
+      case StatType.standing:
         statValue = stats.winPercent;
         break;
       case StatType.ptsPerGame:
@@ -54,8 +54,10 @@ class LeaderboardsViewModel extends ViewModel {
         break;
     }
 
-    return (statType == StatType.threePtMade)
-        ? statValue.toStringAsFixed(0) // No decimals
-        : utils.getDoubleFormat(statValue);
+    return (statType == StatType.standing)
+        ? '${stats.totalWins} - ${stats.totalLosses}'
+        : (statType == StatType.threePtMade)
+            ? statValue.toStringAsFixed(0) // No decimals
+            : utils.getDoubleFormat(statValue);
   }
 }

@@ -7,8 +7,8 @@ final statLeadersStreamProvider = StreamProvider.autoDispose
     .family<List<KasadoUserInfo>, StatType>((ref, statType) {
   final statRepo = ref.watch(statRepositoryProvider);
   switch (statType) {
-    case StatType.winRate:
-      return statRepo.getWinRateLeadersStream();
+    case StatType.standing:
+      return statRepo.getStandingLeadersStream();
     case StatType.ptsPerGame:
       return statRepo.getPpgLeadersStream();
     case StatType.astPerGame:
