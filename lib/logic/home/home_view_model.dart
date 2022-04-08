@@ -1,5 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/current_app_meta.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/data/services/auth_service.dart';
@@ -36,7 +37,8 @@ class HomeViewModel extends ViewModel {
     read(mixpanel)!
       ..identify(currentUser.id)
       ..getPeople().set("\$email", currentUser.email)
-      ..getPeople().set("\$name", currentUser.displayName);
+      ..getPeople().set("\$name", currentUser.displayName)
+      ..getPeople().set("kasadoVersion", currentVersion);
     await userInfoRepo.pushUserInfoIfNonExistent(currentUser);
   }
 
