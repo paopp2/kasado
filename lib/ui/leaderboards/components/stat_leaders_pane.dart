@@ -50,57 +50,59 @@ class StatLeadersPane extends HookConsumerWidget {
             data: (userInfoList) {
               return (userInfoList.isEmpty)
                   ? const Center(child: Text('No data available'))
-                  : ListView.builder(
-                      itemCount: userInfoList.length,
-                      itemBuilder: (context, i) {
-                        final userInfo = userInfoList[i];
-                        final player = userInfo.user;
+                  : Material(
+                      child: ListView.builder(
+                        itemCount: userInfoList.length,
+                        itemBuilder: (context, i) {
+                          final userInfo = userInfoList[i];
+                          final player = userInfo.user;
 
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 30,
-                                child: Text(
-                                  '${i + 1}',
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Expanded(
-                                child: ListTile(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  tileColor: (player.id == currentUser?.id)
-                                      ? Colors.green.shade50
-                                      : null,
-                                  leading: CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(player.photoUrl!),
-                                  ),
-                                  title: Text(player.displayName!),
-                                  trailing: Text(
-                                    model.getStatValue(
-                                      stats: userInfo.overviewStats,
-                                      statType: statType,
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 30,
+                                  child: Text(
+                                    '${i + 1}',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    style: const TextStyle(fontSize: 15),
-                                  ),
-                                  onTap: () => context.pushNamed(
-                                    Routes.userProfileView,
-                                    params: {'uid': player.id},
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                                Expanded(
+                                  child: ListTile(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    tileColor: (player.id == currentUser?.id)
+                                        ? Colors.green.shade50
+                                        : null,
+                                    leading: CircleAvatar(
+                                      backgroundImage:
+                                          NetworkImage(player.photoUrl!),
+                                    ),
+                                    title: Text(player.displayName!),
+                                    trailing: Text(
+                                      model.getStatValue(
+                                        stats: userInfo.overviewStats,
+                                        statType: statType,
+                                      ),
+                                      style: const TextStyle(fontSize: 15),
+                                    ),
+                                    onTap: () => context.pushNamed(
+                                      Routes.userProfileView,
+                                      params: {'uid': player.id},
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     );
             },
           ),
