@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/enums.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
-import 'package:kasado/model/stats/stats.dart';
 
 final statLeadersStreamProvider = StreamProvider.autoDispose
     .family<List<KasadoUserInfo>, StatType>((ref, statType) {

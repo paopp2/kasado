@@ -37,9 +37,12 @@ class CourtDetailsView extends HookConsumerWidget {
     useEffect(() {
       if (courtStream.value != null) {
         ref.read(mixpanel)!.track(
-              "Navigated to CourtDetailsView",
-              properties: courtStream.value!.toJson(),
-            );
+          "Navigated to CourtDetailsView",
+          properties: {
+            "courtName": courtStream.value!.name,
+            "courtId": courtStream.value!.id,
+          },
+        );
       }
       courtDetailsModel.initState({'court_id': courtId});
       return courtDetailsModel.dispose;

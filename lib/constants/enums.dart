@@ -41,3 +41,15 @@ extension SlotAndUserStatePatternMatching on SlotAndUserState {
     }
   }
 }
+
+enum StatType {
+  winRate,
+  ptsPerGame,
+  astPerGame,
+  rebPerGame,
+  blkPerGame,
+  stlPerGame,
+  fgPercent,
+  threePtPercent,
+  threePtMade,
+}

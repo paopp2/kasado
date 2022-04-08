@@ -3,25 +3,27 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
+import 'package:kasado/constants/enums.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/leaderboards/leaderboards_state.dart';
-import 'package:kasado/logic/shared/kasado_utils.dart';
-import 'package:kasado/model/stats/stats.dart';
+import 'package:kasado/logic/leaderboards/leaderboards_view_model.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class StatLeadersPane extends HookConsumerWidget {
   const StatLeadersPane({
     Key? key,
+    required this.model,
     required this.statDescription,
     required this.statType,
   }) : super(key: key);
 
+  final LeaderboardsViewModel model;
   final String statDescription;
   final StatType statType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final utils = ref.watch(kasadoUtilsProvider);
+    final currentUser = ref.watch(currentUserProvider);
     final statLeadersStream = ref.watch(statLeadersStreamProvider(statType));
 
     useEffect(() {
@@ -53,37 +55,6 @@ class StatLeadersPane extends HookConsumerWidget {
                       itemBuilder: (context, i) {
                         final userInfo = userInfoList[i];
                         final player = userInfo.user;
-                        final stats = userInfo.overviewStats;
-                        final double statValue;
-                        switch (statType) {
-                          case StatType.winRate:
-                            statValue = stats.winPercent;
-                            break;
-                          case StatType.ptsPerGame:
-                            statValue = stats.avePointsPerGame;
-                            break;
-                          case StatType.astPerGame:
-                            statValue = stats.aveAssistsPerGame;
-                            break;
-                          case StatType.rebPerGame:
-                            statValue = stats.aveReboundsPerGame;
-                            break;
-                          case StatType.blkPerGame:
-                            statValue = stats.aveBlocksPerGame;
-                            break;
-                          case StatType.stlPerGame:
-                            statValue = stats.aveStlPerGame;
-                            break;
-                          case StatType.fgPercent:
-                            statValue = stats.aveFgPercent;
-                            break;
-                          case StatType.threePtPercent:
-                            statValue = stats.aveThreePtPercent;
-                            break;
-                          case StatType.threePtMade:
-                            statValue = stats.totalThreePM.toDouble();
-                            break;
-                        }
 
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -102,13 +73,22 @@ class StatLeadersPane extends HookConsumerWidget {
                               ),
                               Expanded(
                                 child: ListTile(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  tileColor: (player.id == currentUser?.id)
+                                      ? Colors.green.shade50
+                                      : null,
                                   leading: CircleAvatar(
                                     backgroundImage:
                                         NetworkImage(player.photoUrl!),
                                   ),
                                   title: Text(player.displayName!),
                                   trailing: Text(
-                                    utils.getDoubleFormat(statValue),
+                                    model.getStatValue(
+                                      stats: userInfo.overviewStats,
+                                      statType: statType,
+                                    ),
                                     style: const TextStyle(fontSize: 15),
                                   ),
                                   onTap: () => context.pushNamed(
