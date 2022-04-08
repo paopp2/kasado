@@ -78,6 +78,7 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}')
             const aveStlPerGame = stats.totalStl / stats.gamesPlayed;
             const totalLosses = stats.gamesPlayed - stats.totalWins;
             const winPercent = (stats.totalWins / stats.gamesPlayed) * 100;
+            const winLossDifference = stats.totalWins - totalLosses;
 
             await userInfoRef.doc(updatedUserInfo.id).set({
                 "overviewStats": {
@@ -95,6 +96,7 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}')
                     "aveStlPerGame": aveStlPerGame,
                     "totalLosses": totalLosses,
                     "winPercent": winPercent,
+                    "winLossDifference": winLossDifference,
                 }
             }, { merge: true });
         }
