@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
@@ -136,13 +137,10 @@ class UserInfoRepository {
     required bool isAdd,
     required double pondo,
   }) async {
+    final pondoToIncrement = pondo * (isAdd ? 1 : -1);
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(currentUserInfo.id),
-      data: {
-        'pondo': (isAdd)
-            ? (currentUserInfo.pondo + pondo)
-            : (currentUserInfo.pondo - pondo),
-      },
+      data: {'pondo': FieldValue.increment(pondoToIncrement)},
       merge: true,
     );
   }

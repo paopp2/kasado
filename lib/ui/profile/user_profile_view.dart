@@ -23,9 +23,13 @@ class UserProfileView extends HookConsumerWidget {
     useEffect(() {
       if (userInfoStream.value != null) {
         ref.read(mixpanel)!.track(
-              "Navigated to UserProfileView",
-              properties: userInfoStream.value!.toJson(),
-            );
+          "Navigated to UserProfileView",
+          properties: {
+            "viewedUserName": userInfoStream.value!.user.displayName,
+            "viewedUserId": userInfoStream.value!.user.id,
+            "rawUserInfo": userInfoStream.value!.toJson()
+          },
+        );
       }
       model.initState({'viewed_user_id': userId});
       return model.dispose;
