@@ -204,6 +204,10 @@ class CourtSlotDetailsViewModel extends ViewModel {
           player: userInfo.user,
           courtTicketPrice: courtTicketPrice,
           courtName: courtName,
+          // TODO: Show a dialog regarding pondo system for this
+          onNotEnoughPondo: () => Fluttertoast.showToast(
+            msg: "Not enough pondo",
+          ),
         );
       },
     );
