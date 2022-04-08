@@ -36,15 +36,3 @@ class Stats with _$Stats {
 
   factory Stats.fromJson(Map<String, dynamic> json) => _$StatsFromJson(json);
 }
-
-enum StatType {
-  winRate,
-  ptsPerGame,
-  astPerGame,
-  rebPerGame,
-  blkPerGame,
-  stlPerGame,
-  fgPercent,
-  threePtPercent,
-  threePtMade,
-}
