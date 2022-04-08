@@ -8,7 +8,6 @@ part of 'overview_stats.dart';
 
 _$_OverviewStats _$$_OverviewStatsFromJson(Map<String, dynamic> json) =>
     _$_OverviewStats(
-      mvpVoteCount: json['mvpVoteCount'] as int? ?? 0,
       totalThreePA: json['totalThreePA'] as int? ?? 0,
       totalThreePM: json['totalThreePM'] as int? ?? 0,
       totalTwoPA: json['totalTwoPA'] as int? ?? 0,
@@ -26,7 +25,6 @@ _$_OverviewStats _$$_OverviewStatsFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_OverviewStatsToJson(_$_OverviewStats instance) =>
     <String, dynamic>{
-      'mvpVoteCount': instance.mvpVoteCount,
       'totalThreePA': instance.totalThreePA,
       'totalThreePM': instance.totalThreePM,
       'totalTwoPA': instance.totalTwoPA,

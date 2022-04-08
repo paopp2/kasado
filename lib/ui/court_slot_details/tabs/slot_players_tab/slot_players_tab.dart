@@ -34,14 +34,10 @@ class SlotPlayersTab extends HookConsumerWidget {
     final currentUserInfo = ref.watch(currentUserInfoProvider).value;
     final isSuperAdmin = currentUserInfo?.isSuperAdmin ?? false;
     final adminController = ref.watch(courtAdminController);
-    final isSlotClosed = utils.isCurrentSlotClosed(courtSlot.timeRange);
     final players = courtSlot.players;
     final currentPlayer = courtSlot.hasPlayer(currentUser)
         ? players.singleWhere((u) => (u.id == currentUser.id))
         : null;
-    if (isSlotClosed && (currentPlayer?.hasVotedForMvp ?? true)) {
-      players.sort((a, b) => b.mvpVoteCount.compareTo(a.mvpVoteCount));
-    }
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed SlotPlayersTab");
@@ -50,19 +46,6 @@ class SlotPlayersTab extends HookConsumerWidget {
 
     return Column(
       children: [
-        if (utils.isCurrentSlotClosed(courtSlot.timeRange) &&
-            currentPlayer != null &&
-            !currentPlayer.hasVotedForMvp) ...[
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Pick your MVP to show results',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          )
-        ],
         Expanded(
           child: (players.isEmpty)
               ? const Center(child: Text('No players'))
@@ -72,7 +55,6 @@ class SlotPlayersTab extends HookConsumerWidget {
                     itemBuilder: (context, index) {
                       final player = players[index];
                       return SlotPlayerTile(
-                        isMvp: index == 0 && (player.mvpVoteCount != 0),
                         model: model,
                         player: player,
                         currentPlayer: currentPlayer,
