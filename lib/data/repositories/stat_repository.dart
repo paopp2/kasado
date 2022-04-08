@@ -338,6 +338,7 @@ class StatRepository {
       builder: (data, _) => KasadoUserInfo.fromJson(data),
       queryBuilder: (query) => query
           .orderBy('overviewStats.winPercent', descending: true)
+          .orderBy('overviewStats.winLossDifference', descending: true)
           .orderBy('overviewStats.gamesPlayed', descending: true)
           .limit(100),
     );

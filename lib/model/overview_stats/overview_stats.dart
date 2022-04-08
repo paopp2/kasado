@@ -38,6 +38,7 @@ class OverviewStats with _$OverviewStats {
   double get aveStlPerGame => totalStl / gamesPlayed;
   int get totalLosses => gamesPlayed - totalWins;
   double get winPercent => (totalWins / gamesPlayed) * 100;
+  int get winLossDifference => totalWins - totalLosses;
 
   factory OverviewStats.fromJson(Map<String, dynamic> json) =>
       _$OverviewStatsFromJson(json);
