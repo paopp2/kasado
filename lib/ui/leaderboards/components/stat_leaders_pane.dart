@@ -22,6 +22,7 @@ class StatLeadersPane extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final utils = ref.watch(kasadoUtilsProvider);
+    final currentUser = ref.watch(currentUserProvider);
     final statLeadersStream = ref.watch(statLeadersStreamProvider(statType));
 
     useEffect(() {
@@ -102,6 +103,12 @@ class StatLeadersPane extends HookConsumerWidget {
                               ),
                               Expanded(
                                 child: ListTile(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  tileColor: (player.id == currentUser?.id)
+                                      ? Colors.green.shade50
+                                      : null,
                                   leading: CircleAvatar(
                                     backgroundImage:
                                         NetworkImage(player.photoUrl!),
