@@ -15,7 +15,7 @@ class StatLeadersView extends HookConsumerWidget {
     final tabController = useTabController(initialLength: 8);
 
     useEffect(() {
-      ref.read(mixpanel)!.track("Navigated to LeaderboardsView");
+      ref.read(mixpanel)!.track("Navigated to StatLeadersView");
       return;
     }, []);
 
