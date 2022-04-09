@@ -5,8 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/constants/enums.dart';
 import 'package:kasado/data/core/core_providers.dart';
-import 'package:kasado/logic/leaderboards/leaderboards_state.dart';
-import 'package:kasado/logic/leaderboards/leaderboards_view_model.dart';
+import 'package:kasado/logic/leaderboards/stat_leaders_state.dart';
+import 'package:kasado/logic/leaderboards/stat_leaders_view_model.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class StatLeadersPane extends HookConsumerWidget {
@@ -17,7 +17,7 @@ class StatLeadersPane extends HookConsumerWidget {
     required this.statType,
   }) : super(key: key);
 
-  final LeaderboardsViewModel model;
+  final StatLeadersViewModel model;
   final String statDescription;
   final StatType statType;
 

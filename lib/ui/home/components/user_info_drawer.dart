@@ -118,7 +118,7 @@ class UserInfoDrawer extends HookConsumerWidget {
                     ListTile(
                       title: const Text('Leaderboards'),
                       leading: const FaIcon(FontAwesomeIcons.crown, size: 18),
-                      onTap: () => context.pushNamed(Routes.leaderboardsView),
+                      onTap: () => context.pushNamed(Routes.statLeadersView),
                     ),
                     ListTile(
                       title: const Text('Give feedback'),

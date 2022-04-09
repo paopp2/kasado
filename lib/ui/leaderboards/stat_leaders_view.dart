@@ -3,15 +3,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/enums.dart';
 import 'package:kasado/data/core/core_providers.dart';
-import 'package:kasado/logic/leaderboards/leaderboards_view_model.dart';
+import 'package:kasado/logic/leaderboards/stat_leaders_view_model.dart';
 import 'package:kasado/ui/leaderboards/components/stat_leaders_pane.dart';
 
-class LeaderboardsView extends HookConsumerWidget {
-  const LeaderboardsView({Key? key}) : super(key: key);
+class StatLeadersView extends HookConsumerWidget {
+  const StatLeadersView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(leaderboardsViewModel);
+    final model = ref.watch(statLeadersViewModel);
     final tabController = useTabController(initialLength: 8);
 
     useEffect(() {

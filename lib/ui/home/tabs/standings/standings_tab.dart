@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/constants/enums.dart';
-import 'package:kasado/logic/leaderboards/leaderboards_view_model.dart';
+import 'package:kasado/logic/leaderboards/stat_leaders_view_model.dart';
 import 'package:kasado/ui/leaderboards/components/stat_leaders_pane.dart';
 
 class StandingsTab extends HookConsumerWidget {
@@ -12,7 +12,7 @@ class StandingsTab extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final model = ref.watch(leaderboardsViewModel);
+    final model = ref.watch(statLeadersViewModel);
 
     return Scaffold(
       body: StatLeadersPane(
@@ -28,7 +28,7 @@ class StandingsTab extends HookConsumerWidget {
         ),
         foregroundColor: Colors.black,
         label: const Text('Stat Leaders'),
-        onPressed: () => context.pushNamed(Routes.leaderboardsView),
+        onPressed: () => context.pushNamed(Routes.statLeadersView),
       ),
     );
   }

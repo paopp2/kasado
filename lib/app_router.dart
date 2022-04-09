@@ -11,7 +11,7 @@ import 'package:kasado/ui/admin/court_manager/courts_owned_view.dart';
 import 'package:kasado/ui/court_slot_details/court_slot_details_view.dart';
 import 'package:kasado/ui/feedbacks/feedbacks_view.dart';
 import 'package:kasado/ui/home/home_view.dart';
-import 'package:kasado/ui/leaderboards/leaderboards_view.dart';
+import 'package:kasado/ui/leaderboards/stat_leaders_view.dart';
 import 'package:kasado/ui/notifs/notifs_view.dart';
 import 'package:kasado/ui/profile/user_profile_view.dart';
 
@@ -93,10 +93,10 @@ class AppRouter {
         },
       ),
       GoRoute(
-        name: Routes.leaderboardsView,
-        path: '/leaderboards',
+        name: Routes.statLeadersView,
+        path: '/stat-leaders',
         builder: (context, state) {
-          return const LeaderboardsView();
+          return const StatLeadersView();
         },
       ),
     ],
@@ -130,5 +130,5 @@ class Routes {
   static const playerManagerView = 'player_manager_view';
   static const notifsView = 'notifs_view';
   static const feedbacksView = 'feedbacks_view';
-  static const leaderboardsView = 'leaderboards_view';
+  static const statLeadersView = 'stat_leaders_view';
 }
