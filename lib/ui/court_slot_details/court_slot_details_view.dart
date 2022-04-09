@@ -128,12 +128,12 @@ class CourtSlotDetailsView extends HookConsumerWidget {
               ),
               const BottomNavigationBarItem(
                 label: "Box Score",
-                icon: Icon(Icons.bar_chart),
+                icon: Icon(Icons.analytics_outlined),
               ),
               if (isAdmin) ...[
                 const BottomNavigationBarItem(
                   label: "Stats Controller",
-                  icon: Icon(Icons.auto_graph),
+                  icon: Icon(Icons.gamepad_outlined),
                 ),
               ],
             ],
