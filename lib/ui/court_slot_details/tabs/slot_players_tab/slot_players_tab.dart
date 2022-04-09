@@ -40,7 +40,13 @@ class SlotPlayersTab extends HookConsumerWidget {
         : null;
 
     useEffect(() {
-      ref.read(mixpanel)!.track("Viewed SlotPlayersTab");
+      ref.read(mixpanel)!.track("Viewed SlotPlayersTab", properties: {
+        "courtName": court.name,
+        "courtSlotTimeRange": utils.getTimeRangeFormat(
+          courtSlot.timeRange,
+          showDate: true,
+        ),
+      });
       return;
     }, []);
 
