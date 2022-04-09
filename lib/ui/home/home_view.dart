@@ -18,7 +18,7 @@ class HomeView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: 4);
+    final tabController = useTabController(initialLength: 5);
     final model = ref.watch(homeViewModel);
     final appMetaStream = ref.watch(appMetaStreamProvider);
     final isCurrentVerGood = (appMetaStream.value != null)
@@ -70,6 +70,7 @@ class HomeView extends HookConsumerWidget {
                         ],
                       ),
                 TeamTab(constraints: constraints),
+                Container(color: Colors.green),
                 TicketTab(constraints: constraints),
                 ProfileTab(constraints: constraints),
               ],
