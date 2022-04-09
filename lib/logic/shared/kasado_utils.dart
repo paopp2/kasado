@@ -130,10 +130,14 @@ class KasadoUtils {
     return DateFormat('MMM d').format(dateTime);
   }
 
-  String getTimeRangeFormat(TimeRange timeRange) {
+  String getTimeRangeFormat(TimeRange timeRange, {bool showDate = false}) {
     final startTimeFormat = DateFormat('h:mm');
     final endTimeFormat = DateFormat('h:mm a');
-    return "${startTimeFormat.format(timeRange.startsAt)} - ${endTimeFormat.format(timeRange.endsAt)}";
+    final timeRangeAsString =
+        "${startTimeFormat.format(timeRange.startsAt)} - ${endTimeFormat.format(timeRange.endsAt)}";
+    return (showDate)
+        ? "${getDateFormat(timeRange.startsAt)} / $timeRangeAsString"
+        : timeRangeAsString;
   }
 
   String getPercentageFormat(double number) {

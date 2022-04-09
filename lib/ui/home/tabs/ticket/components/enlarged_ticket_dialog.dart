@@ -49,7 +49,10 @@ class EnlargedTicketDialog extends StatelessWidget {
               ),
             ),
             Text(
-              "${utils.getDateFormat(ticket.courtSlot.timeRange.startsAt)} / ${utils.getTimeRangeFormat(ticket.courtSlot.timeRange)}",
+              utils.getTimeRangeFormat(
+                ticket.courtSlot.timeRange,
+                showDate: true,
+              ),
               style: const TextStyle(fontSize: 12),
             ),
             Text(

@@ -41,8 +41,10 @@ class CourtSlotDetailsView extends HookConsumerWidget {
         "Navigated to CourtSlotDetailsView",
         properties: {
           "isDone": isDone,
-          "courtSlotTimerange":
-              "${utils.getDateFormat(baseCourtSlot.timeRange.startsAt)} / ${utils.getTimeRangeFormat(baseCourtSlot.timeRange)}",
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            baseCourtSlot.timeRange,
+            showDate: true,
+          ),
         },
       );
       tabController.addListener(() => (tabIndex.value = tabController.index));
@@ -79,7 +81,10 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      "${utils.getDateFormat(fetchedCourtSlot.timeRange.startsAt)} / ${utils.getTimeRangeFormat(fetchedCourtSlot.timeRange)}",
+                      utils.getTimeRangeFormat(
+                        fetchedCourtSlot.timeRange,
+                        showDate: true,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Visibility(

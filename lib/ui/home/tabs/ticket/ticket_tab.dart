@@ -68,7 +68,10 @@ class TicketTab extends HookConsumerWidget {
                               ),
                               title: Text(ticket.courtName),
                               subtitle: Text(
-                                "${utils.getDateFormat(ticket.courtSlot.timeRange.startsAt)} / ${utils.getTimeRangeFormat(ticket.courtSlot.timeRange)}",
+                                utils.getTimeRangeFormat(
+                                  ticket.courtSlot.timeRange,
+                                  showDate: true,
+                                ),
                               ),
                               onTap: () {
                                 ref.read(mixpanel)!.track("Enlarged a ticket");
