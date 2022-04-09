@@ -61,8 +61,8 @@ class NotifsView extends HookConsumerWidget {
                                     : Colors.blue.shade100.withAlpha(50),
                                 leading: CircleAvatar(
                                   radius: 25,
-                                  backgroundImage: NetworkImage(
-                                    notif.sender!.photoUrl!,
+                                  child: Image.asset(
+                                    'assets/images/logo/kasado_logo_v2.png',
                                   ),
                                 ),
                                 title: Row(
