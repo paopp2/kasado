@@ -37,7 +37,7 @@ class HomeBottomNavBar extends HookConsumerWidget {
           label: 'Team',
         ),
         const BottomNavigationBarItem(
-          icon: Icon(Icons.star),
+          icon: Icon(Icons.bar_chart),
           label: 'Standings',
         ),
         BottomNavigationBarItem(
