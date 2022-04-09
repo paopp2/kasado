@@ -4,15 +4,15 @@ import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/overview_stats/overview_stats.dart';
 
-final leaderboardsViewModel = Provider.autoDispose(
-  (ref) => LeaderboardsViewModel(
+final statLeadersViewModel = Provider.autoDispose(
+  (ref) => StatLeadersViewModel(
     read: ref.read,
     utils: ref.watch(kasadoUtilsProvider),
   ),
 );
 
-class LeaderboardsViewModel extends ViewModel {
-  LeaderboardsViewModel({
+class StatLeadersViewModel extends ViewModel {
+  StatLeadersViewModel({
     required Reader read,
     required this.utils,
   }) : super(read);

@@ -36,6 +36,10 @@ class HomeBottomNavBar extends HookConsumerWidget {
           ),
           label: 'Team',
         ),
+        const BottomNavigationBarItem(
+          icon: Icon(Icons.star),
+          label: 'Standings',
+        ),
         BottomNavigationBarItem(
           icon: Badge(
             badgeColor: Colors.green,

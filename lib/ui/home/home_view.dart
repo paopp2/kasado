@@ -9,6 +9,7 @@ import 'package:kasado/ui/home/components/home_notif_button.dart';
 import 'package:kasado/ui/home/components/user_info_drawer.dart';
 import 'package:kasado/ui/home/tabs/home/home_tab.dart';
 import 'package:kasado/ui/home/tabs/profile/profile_tab.dart';
+import 'package:kasado/ui/home/tabs/standings/standings_tab.dart';
 import 'package:kasado/ui/home/tabs/team/team_tab.dart';
 import 'package:kasado/ui/home/tabs/ticket/ticket_tab.dart';
 
@@ -18,7 +19,7 @@ class HomeView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: 4);
+    final tabController = useTabController(initialLength: 5);
     final model = ref.watch(homeViewModel);
     final appMetaStream = ref.watch(appMetaStreamProvider);
     final isCurrentVerGood = (appMetaStream.value != null)
@@ -70,6 +71,7 @@ class HomeView extends HookConsumerWidget {
                         ],
                       ),
                 TeamTab(constraints: constraints),
+                const StandingsTab(),
                 TicketTab(constraints: constraints),
                 ProfileTab(constraints: constraints),
               ],
