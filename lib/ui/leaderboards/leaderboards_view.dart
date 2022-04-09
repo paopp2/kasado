@@ -12,7 +12,7 @@ class LeaderboardsView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(leaderboardsViewModel);
-    final tabController = useTabController(initialLength: 9);
+    final tabController = useTabController(initialLength: 8);
 
     useEffect(() {
       ref.read(mixpanel)!.track("Navigated to LeaderboardsView");
@@ -29,7 +29,6 @@ class LeaderboardsView extends HookConsumerWidget {
               controller: tabController,
               isScrollable: true,
               tabs: const [
-                Tab(child: Text('W-L')),
                 Tab(child: Text('PPG')),
                 Tab(child: Text('RPG')),
                 Tab(child: Text('APG')),
@@ -47,11 +46,6 @@ class LeaderboardsView extends HookConsumerWidget {
                 child: TabBarView(
                   controller: tabController,
                   children: [
-                    StatLeadersPane(
-                      model: model,
-                      statDescription: "STANDING",
-                      statType: StatType.standing,
-                    ),
                     StatLeadersPane(
                       model: model,
                       statDescription: "POINTS PER GAME",
