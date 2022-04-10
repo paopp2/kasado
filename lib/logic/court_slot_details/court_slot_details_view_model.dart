@@ -141,16 +141,29 @@ class CourtSlotDetailsViewModel extends ViewModel {
     if (teamId == null) {
       // If player is not part of a team
       if (slotHasPlayer) {
-        read(mixpanel)!
-            .track("Leave a courtSlot", properties: {"isSingle": true});
+        read(mixpanel)!.track("Leave a courtSlot", properties: {
+          "isSingle": true,
+          "courtName": court.name,
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            baseCourtSlot.timeRange,
+            showDate: true,
+          )
+        });
+
         await removeFromCourtSlot(
           playerToRemove: currentUserInfo!.user,
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: court.ticketPrice,
         );
       } else {
-        read(mixpanel)!
-            .track("Join a courtSlot", properties: {"isSingle": true});
+        read(mixpanel)!.track("Join a courtSlot", properties: {
+          "isSingle": true,
+          "courtName": court.name,
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            baseCourtSlot.timeRange,
+            showDate: true,
+          )
+        });
         await addToCourtSlot(
           userInfo: currentUserInfo!,
           baseCourtSlot: baseCourtSlot,
@@ -161,8 +174,14 @@ class CourtSlotDetailsViewModel extends ViewModel {
     } else {
       // If player is part of a team
       if (slotHasPlayer) {
-        read(mixpanel)!
-            .track("Leave a courtSlot", properties: {"isSingle": false});
+        read(mixpanel)!.track("Leave a courtSlot", properties: {
+          "isSingle": false,
+          "courtName": court.name,
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            baseCourtSlot.timeRange,
+            showDate: true,
+          )
+        });
         await removeTeamFromCourtSlot(
           teamId: teamId,
           teamCaptainInfo: currentUserInfo!,
@@ -172,8 +191,14 @@ class CourtSlotDetailsViewModel extends ViewModel {
           courtTicketPrice: court.ticketPrice,
         );
       } else {
-        read(mixpanel)!
-            .track("Join a courtSlot", properties: {"isSingle": false});
+        read(mixpanel)!.track("Join a courtSlot", properties: {
+          "isSingle": false,
+          "courtName": court.name,
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            baseCourtSlot.timeRange,
+            showDate: true,
+          )
+        });
         await addTeamToCourtSlot(
           teamId: teamId,
           teamCaptainInfo: currentUserInfo!,

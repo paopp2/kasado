@@ -31,7 +31,12 @@ class BoxScoreTab extends HookConsumerWidget {
     final utils = ref.watch(kasadoUtilsProvider);
 
     useEffect(() {
-      ref.read(mixpanel)!.track("Viewed BoxScoreTab");
+      ref.read(mixpanel)!.track("Viewed BoxScoreTab", properties: {
+        "courtSlotTimeRange": utils.getTimeRangeFormat(
+          courtSlot.timeRange,
+          showDate: true,
+        ),
+      });
       return;
     }, []);
 

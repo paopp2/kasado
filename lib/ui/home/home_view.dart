@@ -12,6 +12,7 @@ import 'package:kasado/ui/home/tabs/profile/profile_tab.dart';
 import 'package:kasado/ui/home/tabs/standings/standings_tab.dart';
 import 'package:kasado/ui/home/tabs/team/team_tab.dart';
 import 'package:kasado/ui/home/tabs/ticket/ticket_tab.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 class HomeView extends HookConsumerWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -22,11 +23,11 @@ class HomeView extends HookConsumerWidget {
     final tabController = useTabController(initialLength: 5);
     final model = ref.watch(homeViewModel);
     final appMetaStream = ref.watch(appMetaStreamProvider);
-    final isCurrentVerGood = (appMetaStream.value != null)
-        // Is the current version greater than or equal to the 'allowed' version
-        ? (currentVersion.compareTo(appMetaStream.value!['currentVer'] ?? '') >=
-            0)
-        : true;
+    final String minAllowedVersion =
+        appMetaStream.value?['currentVer'] ?? currentVersion;
+    final range = VersionConstraint.parse(">=$minAllowedVersion");
+    final currentVer = Version.parse(currentVersion);
+    final isCurrentVerGood = (range.allows(currentVer));
 
     useEffect(() {
       ref.read(mixpanel)!.track(
