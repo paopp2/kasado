@@ -138,77 +138,81 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required String? teamId,
     required bool isTeamCaptain,
   }) async {
-    if (teamId == null) {
-      // If player is not part of a team
-      if (slotHasPlayer) {
-        read(mixpanel)!.track("Leave a courtSlot", properties: {
-          "isSingle": true,
-          "courtName": court.name,
-          "courtSlotTimeRange": utils.getTimeRangeFormat(
-            baseCourtSlot.timeRange,
-            showDate: true,
-          )
-        });
+    read(mixpanel)!.track("Join CourtSlot attempt");
+    Fluttertoast.showToast(
+        msg:
+            "Maintenance ongoing. Ugma pre pramis mana ni. Update ni para atong PONDO nga systema");
+    // if (teamId == null) {
+    //   // If player is not part of a team
+    //   if (slotHasPlayer) {
+    //     read(mixpanel)!.track("Leave a courtSlot", properties: {
+    //       "isSingle": true,
+    //       "courtName": court.name,
+    //       "courtSlotTimeRange": utils.getTimeRangeFormat(
+    //         baseCourtSlot.timeRange,
+    //         showDate: true,
+    //       )
+    //     });
 
-        await removeFromCourtSlot(
-          playerToRemove: currentUserInfo!.user,
-          baseCourtSlot: baseCourtSlot,
-          courtTicketPrice: court.ticketPrice,
-        );
-      } else {
-        read(mixpanel)!.track("Join a courtSlot", properties: {
-          "isSingle": true,
-          "courtName": court.name,
-          "courtSlotTimeRange": utils.getTimeRangeFormat(
-            baseCourtSlot.timeRange,
-            showDate: true,
-          )
-        });
-        await addToCourtSlot(
-          userInfo: currentUserInfo!,
-          baseCourtSlot: baseCourtSlot,
-          courtTicketPrice: court.ticketPrice,
-          courtName: court.name,
-        );
-      }
-    } else {
-      // If player is part of a team
-      if (slotHasPlayer) {
-        read(mixpanel)!.track("Leave a courtSlot", properties: {
-          "isSingle": false,
-          "courtName": court.name,
-          "courtSlotTimeRange": utils.getTimeRangeFormat(
-            baseCourtSlot.timeRange,
-            showDate: true,
-          )
-        });
-        await removeTeamFromCourtSlot(
-          teamId: teamId,
-          teamCaptainInfo: currentUserInfo!,
-          isTeamCaptain: isTeamCaptain,
-          baseCourtSlot: baseCourtSlot,
-          courtName: court.name,
-          courtTicketPrice: court.ticketPrice,
-        );
-      } else {
-        read(mixpanel)!.track("Join a courtSlot", properties: {
-          "isSingle": false,
-          "courtName": court.name,
-          "courtSlotTimeRange": utils.getTimeRangeFormat(
-            baseCourtSlot.timeRange,
-            showDate: true,
-          )
-        });
-        await addTeamToCourtSlot(
-          teamId: teamId,
-          teamCaptainInfo: currentUserInfo!,
-          courtName: court.name,
-          isTeamCaptain: isTeamCaptain,
-          baseCourtSlot: baseCourtSlot,
-          courtTicketPrice: court.ticketPrice,
-        );
-      }
-    }
+    //     await removeFromCourtSlot(
+    //       playerToRemove: currentUserInfo!.user,
+    //       baseCourtSlot: baseCourtSlot,
+    //       courtTicketPrice: court.ticketPrice,
+    //     );
+    //   } else {
+    //     read(mixpanel)!.track("Join a courtSlot", properties: {
+    //       "isSingle": true,
+    //       "courtName": court.name,
+    //       "courtSlotTimeRange": utils.getTimeRangeFormat(
+    //         baseCourtSlot.timeRange,
+    //         showDate: true,
+    //       )
+    //     });
+    //     await addToCourtSlot(
+    //       userInfo: currentUserInfo!,
+    //       baseCourtSlot: baseCourtSlot,
+    //       courtTicketPrice: court.ticketPrice,
+    //       courtName: court.name,
+    //     );
+    //   }
+    // } else {
+    //   // If player is part of a team
+    //   if (slotHasPlayer) {
+    //     read(mixpanel)!.track("Leave a courtSlot", properties: {
+    //       "isSingle": false,
+    //       "courtName": court.name,
+    //       "courtSlotTimeRange": utils.getTimeRangeFormat(
+    //         baseCourtSlot.timeRange,
+    //         showDate: true,
+    //       )
+    //     });
+    //     await removeTeamFromCourtSlot(
+    //       teamId: teamId,
+    //       teamCaptainInfo: currentUserInfo!,
+    //       isTeamCaptain: isTeamCaptain,
+    //       baseCourtSlot: baseCourtSlot,
+    //       courtName: court.name,
+    //       courtTicketPrice: court.ticketPrice,
+    //     );
+    //   } else {
+    //     read(mixpanel)!.track("Join a courtSlot", properties: {
+    //       "isSingle": false,
+    //       "courtName": court.name,
+    //       "courtSlotTimeRange": utils.getTimeRangeFormat(
+    //         baseCourtSlot.timeRange,
+    //         showDate: true,
+    //       )
+    //     });
+    //     await addTeamToCourtSlot(
+    //       teamId: teamId,
+    //       teamCaptainInfo: currentUserInfo!,
+    //       courtName: court.name,
+    //       isTeamCaptain: isTeamCaptain,
+    //       baseCourtSlot: baseCourtSlot,
+    //       courtTicketPrice: court.ticketPrice,
+    //     );
+    //   }
+    // }
   }
 
   Future<void> addToCourtSlot({
