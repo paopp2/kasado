@@ -81,26 +81,28 @@ class CourtSlotRepository {
     required CourtSlot courtSlot,
     required double courtTicketPrice,
     required String courtName,
+    required VoidCallback onNotEnoughPondo,
   }) async {
-    KasadoUser? paidUser;
-    final userInfo = await userInfoRepo.getUserInfo(player.id);
-    // If slot is not full and user is not reserved at another slot, check
-    // if user has enough pondo to pay for joining
-    if (userInfo!.hasEnoughPondoToPay(courtTicketPrice)) {
-      // If user has enough pondo, use pondo to pay for court ticket
-      userInfoRepo.addOrDeductPondo(
-        currentUserInfo: userInfo,
-        isAdd: false,
-        pondo: courtTicketPrice,
-      );
-      paidUser = userInfo.user.copyWith(hasPaid: true);
+    final userInfo = (await userInfoRepo.getUserInfo(player.id))!;
+
+    // Ensure user has enough pondo before proceeding
+    if (!userInfo.hasEnoughPondoToPay(courtTicketPrice)) {
+      onNotEnoughPondo();
+      return;
     }
+
+    // Pay with pondo
+    userInfoRepo.addOrDeductPondo(
+      currentUserInfo: userInfo,
+      isAdd: false,
+      pondo: courtTicketPrice,
+    );
 
     // The whole courtSlot has to be pushed to cover for cases wherein the
     // courtSlot doesn't exist yet (has no players before adding [player])
     await pushCourtSlot(
       courtSlot: courtSlot.copyWith(
-        players: [...courtSlot.players, paidUser ?? player],
+        players: [...courtSlot.players, userInfo.user.copyWith(hasPaid: true)],
       ),
     );
 
@@ -153,6 +155,8 @@ class CourtSlotRepository {
     required String courtName,
     required double courtTicketPrice,
     required VoidCallback onTeamCantFit,
+    required Function(List<KasadoUserInfo> playersLackingPondo)
+        onNotAllHasEnoughPondo,
   }) async {
     final _team = await teamRepo.getTeam(teamId);
     final _teamPlayers = _team!.players;
@@ -162,22 +166,26 @@ class CourtSlotRepository {
         _teamPlayers.map((u) => u.id).toList(),
       );
 
-      List<KasadoUser> _updatedTeamPlayers = [];
+      // Ensure every player in the team has enough pondo before proceeding
+      final playersWhoLackPondo = playerUserInfos.where(
+          (playerInfo) => !playerInfo.hasEnoughPondoToPay(courtTicketPrice));
+      if (playersWhoLackPondo.isNotEmpty) {
+        onNotAllHasEnoughPondo(playersWhoLackPondo.toList());
+        return;
+      }
 
-      // Get payment for court slot from players with enough pondo and also
-      // indicate the players' team name
+      List<KasadoUser> _updatedTeamPlayers = [];
       for (final userInfo in playerUserInfos) {
-        bool _hasPaid = false;
-        if (userInfo.hasEnoughPondoToPay(courtTicketPrice)) {
-          _hasPaid = true;
-          await userInfoRepo.addOrDeductPondo(
-            currentUserInfo: userInfo,
-            isAdd: false,
-            pondo: courtTicketPrice,
-          );
-        }
+        // Pay with pondo
+        await userInfoRepo.addOrDeductPondo(
+          currentUserInfo: userInfo,
+          isAdd: false,
+          pondo: courtTicketPrice,
+        );
+
+        // Indicate team name
         _updatedTeamPlayers.add(userInfo.user.copyWith(
-          hasPaid: _hasPaid,
+          hasPaid: true,
           teamName: _team.teamName,
         ));
       }
@@ -215,7 +223,7 @@ class CourtSlotRepository {
     // Get team players from courtSlot to determine whether a player in team
     // has already paid or not
     final _teamPlayersFromCourtSlot =
-        courtSlot.players.where((p) => _teamPlayerIds.contains(p.id));
+        courtSlot.players.where((p) => _teamPlayerIds.contains(p.id)).toList();
 
     final updatedPlayerList = courtSlot.players
       ..removeWhere((player) => _teamPlayersFromCourtSlot.contains(player));

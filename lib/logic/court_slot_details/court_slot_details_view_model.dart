@@ -229,6 +229,10 @@ class CourtSlotDetailsViewModel extends ViewModel {
           player: userInfo.user,
           courtTicketPrice: courtTicketPrice,
           courtName: courtName,
+          // TODO: Show a dialog regarding pondo system for this
+          onNotEnoughPondo: () => Fluttertoast.showToast(
+            msg: "Not enough pondo",
+          ),
         );
       },
     );
@@ -274,6 +278,10 @@ class CourtSlotDetailsViewModel extends ViewModel {
               msg:
                   "Your team can't fit for this slot, please choose another one",
             ),
+            // TODO: Show a dialog regarding pondo system for this
+            onNotAllHasEnoughPondo: (players) => Fluttertoast.showToast(
+                msg:
+                    "Some players at your team doesn't have enough pondo for this court: ${players.map((u) => u.user.displayName).toString()}"),
           );
         } else {
           Fluttertoast.showToast(
