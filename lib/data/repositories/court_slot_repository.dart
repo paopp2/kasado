@@ -81,6 +81,9 @@ class CourtSlotRepository {
     required CourtSlot courtSlot,
     required double courtTicketPrice,
     required String courtName,
+    // TODO: The Future<bool> refers to user's decision whether to proceed without
+    // pondo or otherwise. In the future user should not be able to proceed without pondo
+    required Future<bool> Function() onNotEnoughPondo,
   }) async {
     KasadoUser? paidUser;
     final userInfo = await userInfoRepo.getUserInfo(player.id);
@@ -94,6 +97,9 @@ class CourtSlotRepository {
         pondo: courtTicketPrice,
       );
       paidUser = userInfo.user.copyWith(hasPaid: true);
+    } else {
+      final isProceed = await onNotEnoughPondo();
+      if (!isProceed) return;
     }
 
     // The whole courtSlot has to be pushed to cover for cases wherein the
@@ -153,6 +159,11 @@ class CourtSlotRepository {
     required String courtName,
     required double courtTicketPrice,
     required VoidCallback onTeamCantFit,
+    // TODO: The Future<bool> refers to teamCaptain's decision whether to
+    // proceed lacking pondo or otherwise. In the future user should not be able
+    // to proceed without pondo
+    required Future<bool> Function(List<KasadoUserInfo> playersLackingPondo)
+        onNotAllHasEnoughPondo,
   }) async {
     final _team = await teamRepo.getTeam(teamId);
     final _teamPlayers = _team!.players;
@@ -162,10 +173,18 @@ class CourtSlotRepository {
         _teamPlayers.map((u) => u.id).toList(),
       );
 
-      List<KasadoUser> _updatedTeamPlayers = [];
+      // Check if every player in the team has enough pondo before proceeding
+      final playersWhoLackPondo = playerUserInfos.where(
+          (playerInfo) => !playerInfo.hasEnoughPondoToPay(courtTicketPrice));
+      if (playersWhoLackPondo.isNotEmpty) {
+        final isProceed =
+            await onNotAllHasEnoughPondo(playersWhoLackPondo.toList());
+        if (!isProceed) return;
+      }
 
       // Get payment for court slot from players with enough pondo and also
       // indicate the players' team name
+      List<KasadoUser> _updatedTeamPlayers = [];
       for (final userInfo in playerUserInfos) {
         bool _hasPaid = false;
         if (userInfo.hasEnoughPondoToPay(courtTicketPrice)) {

@@ -74,15 +74,73 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                         court: court,
                         teamId: currentUserInfo.teamId,
                         isTeamCaptain: currentUserInfo.isTeamCaptain,
+                        onUserDontHaveEnoughPondo: () async {
+                          return await showDialog(
+                            context: context,
+                            builder: (_) {
+                              return AlertDialog(
+                                actions: [
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () => true,
+                                  ),
+                                  TextButton(
+                                    child: const Text('CANCEL'),
+                                    onPressed: () => false,
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        onNotAllHasEnoughPondo: (_) async {
+                          return await showDialog(
+                            context: context,
+                            builder: (_) {
+                              return AlertDialog(
+                                actions: [
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () =>
+                                        Navigator.pop(context, true),
+                                  ),
+                                  TextButton(
+                                    child: const Text('CANCEL'),
+                                    onPressed: () =>
+                                        Navigator.pop(context, false),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
                       );
                       isModifyingSlot.value = false;
                     },
                     onLongPress: (isSuperAdmin)
                         ? () => model.joinAsAnotherPlayer(
-                              context: context,
-                              baseCourtSlot: courtSlot,
-                              court: court,
-                            )
+                            context: context,
+                            baseCourtSlot: courtSlot,
+                            court: court,
+                            onNotEnoughPondo: () async {
+                              return await showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return AlertDialog(
+                                    actions: [
+                                      TextButton(
+                                        child: const Text('OK'),
+                                        onPressed: () => true,
+                                      ),
+                                      TextButton(
+                                        child: const Text('CANCEL'),
+                                        onPressed: () => false,
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            })
                         : null,
                   ),
           );

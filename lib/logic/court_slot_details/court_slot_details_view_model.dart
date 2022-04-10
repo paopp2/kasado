@@ -112,6 +112,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required BuildContext context,
     required CourtSlot baseCourtSlot,
     required Court court,
+    required Future<bool> Function() onNotEnoughPondo,
   }) async {
     final playerUserInfo = await showDialog(
       context: context,
@@ -127,6 +128,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
       baseCourtSlot: baseCourtSlot,
       courtTicketPrice: court.ticketPrice,
       courtName: court.name,
+      onNotEnoughPondo: onNotEnoughPondo,
     );
   }
 
@@ -137,6 +139,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required Court court,
     required String? teamId,
     required bool isTeamCaptain,
+    required Future<bool> Function() onUserDontHaveEnoughPondo,
+    required Future<bool> Function(List<KasadoUserInfo>) onNotAllHasEnoughPondo,
   }) async {
     if (teamId == null) {
       // If player is not part of a team
@@ -169,6 +173,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: court.ticketPrice,
           courtName: court.name,
+          onNotEnoughPondo: onUserDontHaveEnoughPondo,
         );
       }
     } else {
@@ -206,6 +211,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
           courtTicketPrice: court.ticketPrice,
+          onNotAllHasEnoughPondo: onNotAllHasEnoughPondo,
         );
       }
     }
@@ -216,6 +222,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
     required String courtName,
+    required Future<bool> Function() onNotEnoughPondo,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       slotFull: () => Fluttertoast.showToast(msg: 'Slot is full'),
@@ -229,6 +236,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
           player: userInfo.user,
           courtTicketPrice: courtTicketPrice,
           courtName: courtName,
+          onNotEnoughPondo: onNotEnoughPondo,
         );
       },
     );
@@ -256,6 +264,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required String courtName,
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
+    required Future<bool> Function(List<KasadoUserInfo>) onNotAllHasEnoughPondo,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       // TODO: Should only be for the team captain
@@ -274,6 +283,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
               msg:
                   "Your team can't fit for this slot, please choose another one",
             ),
+            onNotAllHasEnoughPondo: onNotAllHasEnoughPondo,
           );
         } else {
           Fluttertoast.showToast(
