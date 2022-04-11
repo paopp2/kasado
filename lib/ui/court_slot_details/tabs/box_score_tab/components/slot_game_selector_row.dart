@@ -1,8 +1,10 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
@@ -23,6 +25,8 @@ class SlotGameSelectorRow extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final allGameStatsStream = ref.watch(allSlotGamesStatsStreamProvider(
         '${courtSlot.courtId}|${courtSlot.slotId}'));
+    final utils = ref.watch(kasadoUtilsProvider);
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: allGameStatsStream.when(
@@ -60,8 +64,18 @@ class SlotGameSelectorRow extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    onPressed: () =>
-                        controller.selectSlotGameStats(gameStatEntry.value),
+                    onPressed: () {
+                      ref.read(mixpanel)!.track(
+                        "Selected slot game ${gameStatEntry.key + 1}",
+                        properties: {
+                          "courtSlotTimeRange": utils.getTimeRangeFormat(
+                            courtSlot.timeRange,
+                            showDate: true,
+                          )
+                        },
+                      );
+                      controller.selectSlotGameStats(gameStatEntry.value);
+                    },
                   ),
                 )
                 .toList(),
