@@ -7,6 +7,7 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/ui/home/components/pondo_info_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class JoinLeaveSlotButton extends HookConsumerWidget {
@@ -138,7 +139,10 @@ Future<bool> _showPondoImplementationAnnouncementDialog(
     btnCancelText: "Join w/o PONDO",
     btnCancelColor: Colors.grey.shade400,
     btnOkText: "ADD PONDO",
-    btnOkOnPress: () => Scaffold.of(context).openDrawer(),
+    btnOkOnPress: () => showDialog(
+      context: context,
+      builder: (_) => const PondoInfoDialog(),
+    ),
     buttonsBorderRadius: BorderRadius.circular(10),
   ).show();
 }

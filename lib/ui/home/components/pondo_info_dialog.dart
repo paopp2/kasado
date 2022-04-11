@@ -11,10 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 class PondoInfoDialog extends HookConsumerWidget {
   const PondoInfoDialog({
     Key? key,
-    required this.constraints,
   }) : super(key: key);
-
-  final BoxConstraints constraints;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +29,7 @@ class PondoInfoDialog extends HookConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SizedBox(
-          height: constraints.maxHeight * 0.5,
+          height: 350,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
