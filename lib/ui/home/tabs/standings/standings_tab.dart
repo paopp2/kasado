@@ -34,7 +34,7 @@ class StandingsTab extends HookConsumerWidget {
           size: 15,
         ),
         foregroundColor: Colors.black,
-        label: const Text('Stat Leaders'),
+        label: const Text('View Stat Leaders'),
         onPressed: () => context.pushNamed(Routes.statLeadersView),
       ),
     );
