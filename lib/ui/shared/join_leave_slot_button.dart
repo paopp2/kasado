@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -34,6 +35,55 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isSuperAdmin = currentUserInfo.isSuperAdmin;
     final isModifyingSlot = useState(false);
+
+    Future<bool> _showPondoImplementationAnnouncementDialog({
+      bool forTeamCaptain = false,
+    }) async {
+      ref.read(mixpanel)!.track(
+        "Viewed PondoImplementationAnnouncementDialog",
+        properties: {'isTeamCaptain': forTeamCaptain},
+      );
+
+      return await AwesomeDialog(
+        context: context,
+        dialogType: DialogType.NO_HEADER,
+        title: (forTeamCaptain)
+            ? "Some players at your team doesn't have enough PONDO"
+            : "Not enough PONDO",
+        desc: "Sugod karong Sunday April 17 dol, implement "
+            "na tas atoang Pondo system para pud mahapsay atoang "
+            "systema. Bale mura rakag magpaload sa imong Pondo, "
+            "pwede through GCash or bayad personal, nya kana "
+            "nga Pondo, magamit na para maka-join og mga court slot. "
+            "Ig-abots atong sched, aw wa nay hasol, duwa nalay ato. "
+            "Sa karon pwede pa man sad nuon bisag way Pondo pero mas "
+            "may jung atong hinay-hinayan hehe. Gege mao rato dol lamats!",
+        autoDismiss: false,
+        onDissmissCallback: (dismissType) {
+          Navigator.pop(
+            context,
+            dismissType == DismissType.BTN_CANCEL,
+          );
+        },
+        padding: const EdgeInsets.all(15.0),
+        dialogBorderRadius: BorderRadius.circular(20),
+        headerAnimationLoop: false,
+        btnCancelOnPress: () {
+          ref.read(mixpanel)!.track("Pressed 'Join w/o PONDO'");
+        },
+        btnCancelText: "Join w/o PONDO",
+        btnCancelColor: Colors.grey.shade400,
+        btnOkText: "ADD PONDO",
+        btnOkOnPress: () => showDialog(
+          context: context,
+          builder: (_) {
+            ref.read(mixpanel)!.track("Pressed 'ADD PONDO'");
+            return const PondoInfoDialog();
+          },
+        ),
+        buttonsBorderRadius: BorderRadius.circular(10),
+      ).show();
+    }
 
     return (isModifyingSlot.value)
         ? const LoadingWidget()
@@ -77,13 +127,10 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                         court: court,
                         teamId: currentUserInfo.teamId,
                         isTeamCaptain: currentUserInfo.isTeamCaptain,
-                        onUserDontHaveEnoughPondo: () async {
-                          return await _showPondoImplementationAnnouncementDialog(
-                              context);
-                        },
+                        onUserDontHaveEnoughPondo: () async =>
+                            await _showPondoImplementationAnnouncementDialog(),
                         onNotAllHasEnoughPondo: (_) async {
                           return await _showPondoImplementationAnnouncementDialog(
-                            context,
                             forTeamCaptain: true,
                           );
                         },
@@ -95,54 +142,11 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                               context: context,
                               baseCourtSlot: courtSlot,
                               court: court,
-                              onNotEnoughPondo: () {
-                                return _showPondoImplementationAnnouncementDialog(
-                                  context,
-                                );
-                              },
+                              onNotEnoughPondo: () =>
+                                  _showPondoImplementationAnnouncementDialog(),
                             )
                         : null,
                   ),
           );
   }
-}
-
-Future<bool> _showPondoImplementationAnnouncementDialog(
-  BuildContext context, {
-  bool forTeamCaptain = false,
-}) async {
-  return await AwesomeDialog(
-    context: context,
-    dialogType: DialogType.NO_HEADER,
-    title: (forTeamCaptain)
-        ? "Some players at your team doesn't have enough PONDO"
-        : "Not enough PONDO",
-    desc: "Sugod karong Sunday April 17 dol, implement "
-        "na tas atoang Pondo system para pud mahapsay atoang "
-        "systema. Bale mura rakag magpaload sa imong Pondo, "
-        "pwede through GCash or bayad personal, nya kana "
-        "nga Pondo, magamit na para maka-join og mga court slot. "
-        "Ig-abots atong sched, aw wa nay hasol, duwa nalay ato. "
-        "Sa karon pwede pa man sad nuon bisag way Pondo pero mas "
-        "may jung atong hinay-hinayan hehe. Gege mao rato dol lamats!",
-    autoDismiss: false,
-    onDissmissCallback: (dismissType) {
-      Navigator.pop(
-        context,
-        dismissType == DismissType.BTN_CANCEL,
-      );
-    },
-    padding: const EdgeInsets.all(15.0),
-    dialogBorderRadius: BorderRadius.circular(20),
-    headerAnimationLoop: false,
-    btnCancelOnPress: () {},
-    btnCancelText: "Join w/o PONDO",
-    btnCancelColor: Colors.grey.shade400,
-    btnOkText: "ADD PONDO",
-    btnOkOnPress: () => showDialog(
-      context: context,
-      builder: (_) => const PondoInfoDialog(),
-    ),
-    buttonsBorderRadius: BorderRadius.circular(10),
-  ).show();
 }

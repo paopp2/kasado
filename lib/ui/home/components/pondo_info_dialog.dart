@@ -46,7 +46,10 @@ class PondoInfoDialog extends HookConsumerWidget {
                   Checkbox(
                     activeColor: Colors.blue,
                     value: hasGcashState.value,
-                    onChanged: (val) => (hasGcashState.value = val!),
+                    onChanged: (val) {
+                      ref.read(mixpanel)!.track("Toggled useGcash to ${val!}");
+                      hasGcashState.value = val;
+                    },
                   ),
                 ],
               ),
@@ -74,11 +77,15 @@ class PondoInfoDialog extends HookConsumerWidget {
                                 IconButton(
                                   icon: const Icon(Icons.copy),
                                   onPressed: () {
+                                    ref
+                                        .read(mixpanel)!
+                                        .track("Gcash number copied");
                                     Clipboard.setData(
                                       const ClipboardData(text: "09164531565"),
                                     );
                                     Fluttertoast.showToast(
-                                        msg: "Copied to clipboard");
+                                      msg: "Copied to clipboard",
+                                    );
                                   },
                                 ),
                               ],
@@ -97,6 +104,9 @@ class PondoInfoDialog extends HookConsumerWidget {
                               style: const TextStyle(color: Colors.blue),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
+                                  ref
+                                      .read(mixpanel)!
+                                      .track("Pressed Kasado page (S2)");
                                   launch("https://bit.ly/kasado-2022");
                                 },
                             ),
@@ -156,6 +166,9 @@ class PondoInfoDialog extends HookConsumerWidget {
                               style: const TextStyle(color: Colors.blue),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
+                                  ref
+                                      .read(mixpanel)!
+                                      .track("Pressed Kasado page (Bottom)");
                                   launch("https://bit.ly/kasado-2022");
                                 },
                             ),
