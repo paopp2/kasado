@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -32,6 +33,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isSuperAdmin = currentUserInfo.isSuperAdmin;
     final isModifyingSlot = useState(false);
+
     return (isModifyingSlot.value)
         ? const LoadingWidget()
         : Visibility(
@@ -75,43 +77,13 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                         teamId: currentUserInfo.teamId,
                         isTeamCaptain: currentUserInfo.isTeamCaptain,
                         onUserDontHaveEnoughPondo: () async {
-                          return await showDialog(
-                            context: context,
-                            builder: (_) {
-                              return AlertDialog(
-                                actions: [
-                                  TextButton(
-                                    child: const Text('OK'),
-                                    onPressed: () => true,
-                                  ),
-                                  TextButton(
-                                    child: const Text('CANCEL'),
-                                    onPressed: () => false,
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                          return await _showPondoImplementationAnnouncementDialog(
+                              context);
                         },
                         onNotAllHasEnoughPondo: (_) async {
-                          return await showDialog(
-                            context: context,
-                            builder: (_) {
-                              return AlertDialog(
-                                actions: [
-                                  TextButton(
-                                    child: const Text('OK'),
-                                    onPressed: () =>
-                                        Navigator.pop(context, true),
-                                  ),
-                                  TextButton(
-                                    child: const Text('CANCEL'),
-                                    onPressed: () =>
-                                        Navigator.pop(context, false),
-                                  ),
-                                ],
-                              );
-                            },
+                          return await _showPondoImplementationAnnouncementDialog(
+                            context,
+                            forTeamCaptain: true,
                           );
                         },
                       );
@@ -119,30 +91,54 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                     },
                     onLongPress: (isSuperAdmin)
                         ? () => model.joinAsAnotherPlayer(
-                            context: context,
-                            baseCourtSlot: courtSlot,
-                            court: court,
-                            onNotEnoughPondo: () async {
-                              return await showDialog(
-                                context: context,
-                                builder: (_) {
-                                  return AlertDialog(
-                                    actions: [
-                                      TextButton(
-                                        child: const Text('OK'),
-                                        onPressed: () => true,
-                                      ),
-                                      TextButton(
-                                        child: const Text('CANCEL'),
-                                        onPressed: () => false,
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            })
+                              context: context,
+                              baseCourtSlot: courtSlot,
+                              court: court,
+                              onNotEnoughPondo: () {
+                                return _showPondoImplementationAnnouncementDialog(
+                                  context,
+                                );
+                              },
+                            )
                         : null,
                   ),
           );
   }
+}
+
+Future<bool> _showPondoImplementationAnnouncementDialog(
+  BuildContext context, {
+  bool forTeamCaptain = false,
+}) async {
+  return await AwesomeDialog(
+    context: context,
+    dialogType: DialogType.NO_HEADER,
+    title: (forTeamCaptain)
+        ? "Some players at your team doesn't have enough PONDO"
+        : "Not enough PONDO",
+    desc: "Sugod karong Sunday April 17 dol, implement "
+        "na tas atoang Pondo system para pud mahapsay atoang "
+        "systema. Bale mura rakag magpaload sa imong Pondo, "
+        "pwede through GCash or bayad personal, nya kana "
+        "nga Pondo, magamit na para maka-join og mga court slot. "
+        "Ig-abots atong sched, aw wa nay hasol, duwa nalay ato. "
+        "Sa karon pwede pa man sad nuon bisag way Pondo pero mas "
+        "may jung atong hinay-hinayan hehe. Gege mao rato dol lamats!",
+    autoDismiss: false,
+    onDissmissCallback: (dismissType) {
+      Navigator.pop(
+        context,
+        dismissType == DismissType.BTN_CANCEL,
+      );
+    },
+    padding: const EdgeInsets.all(15.0),
+    dialogBorderRadius: BorderRadius.circular(20),
+    headerAnimationLoop: false,
+    btnCancelOnPress: () {},
+    btnCancelText: "Join w/o PONDO",
+    btnCancelColor: Colors.grey.shade400,
+    btnOkText: "ADD PONDO",
+    btnOkOnPress: () => Scaffold.of(context).openDrawer(),
+    buttonsBorderRadius: BorderRadius.circular(10),
+  ).show();
 }
