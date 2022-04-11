@@ -20,5 +20,10 @@ class Ticket with _$Ticket {
     return courtSlot.timeRange.startsAt.add(const Duration(hours: 1));
   }
 
+  bool get isExpired {
+    final now = DateTime.now();
+    return expiry.isBefore(now);
+  }
+
   factory Ticket.fromJson(Map<String, dynamic> json) => _$TicketFromJson(json);
 }

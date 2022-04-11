@@ -29,7 +29,7 @@ class TicketTab extends HookConsumerWidget {
       error: (e, _) => Text(e.toString()),
       loading: () => const LoadingWidget(),
       data: (userInfo) {
-        final tickets = userInfo?.tickets ?? [];
+        final tickets = userInfo?.validTickets ?? [];
         return Padding(
           padding: const EdgeInsets.all(20.0),
           child: tickets.isEmpty
