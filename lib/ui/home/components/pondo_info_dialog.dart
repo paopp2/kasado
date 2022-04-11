@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -6,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class PondoInfoDialog extends HookConsumerWidget {
   const PondoInfoDialog({
@@ -29,7 +27,7 @@ class PondoInfoDialog extends HookConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SizedBox(
-          height: 350,
+          height: 400,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,25 +90,29 @@ class PondoInfoDialog extends HookConsumerWidget {
                             ),
                           ],
                         ),
+                        // TODO: Fix launching of Kasado Facebook page
                         // const Text("2. Go to the Kasado "),
-                        RichText(
-                          text: TextSpan(children: [
-                            const TextSpan(
-                              text: "2. Go to the ",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            TextSpan(
-                              text: 'Kasado FB Page',
-                              style: const TextStyle(color: Colors.blue),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  ref
-                                      .read(mixpanel)!
-                                      .track("Pressed Kasado page (S2)");
-                                  launch("https://bit.ly/kasado-2022");
-                                },
-                            ),
-                          ]),
+                        // RichText(
+                        //   text: TextSpan(children: [
+                        //     const TextSpan(
+                        //       text: "2. Go to the ",
+                        //       style: TextStyle(color: Colors.black),
+                        //     ),
+                        //     TextSpan(
+                        //       text: 'Kasado FB Page',
+                        //       style: const TextStyle(color: Colors.blue),
+                        //       recognizer: TapGestureRecognizer()
+                        //         ..onTap = () {
+                        //           ref
+                        //               .read(mixpanel)!
+                        //               .track("Pressed Kasado page (S2)");
+                        //           launch("https://bit.ly/kasado-2022");
+                        //         },
+                        //     ),
+                        //   ]),
+                        // ),
+                        const Text(
+                          "2. Go to the Kasado FB Page (Sa karon, isearch lng sa 'Kasado', nya pangitaa tong naay black version sa atong logo)",
                         ),
                         const SizedBox(height: 20),
                         Column(
@@ -150,31 +152,32 @@ class PondoInfoDialog extends HookConsumerWidget {
                   const SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const FaIcon(
+                    children: const [
+                      FaIcon(
                         FontAwesomeIcons.facebook,
-                        color: Colors.blue,
+                        color: Colors.black,
                         size: 20,
                       ),
-                      const SizedBox(width: 10),
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Kasado',
-                              style: const TextStyle(color: Colors.blue),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  ref
-                                      .read(mixpanel)!
-                                      .track("Pressed Kasado page (Bottom)");
-                                  launch("https://bit.ly/kasado-2022");
-                                },
-                            ),
-                          ],
-                        ),
-                      ),
+                      SizedBox(width: 10),
+                      // RichText(
+                      //   textAlign: TextAlign.center,
+                      //   text: TextSpan(
+                      //     children: [
+                      //       TextSpan(
+                      //         text: 'Kasado',
+                      //         style: const TextStyle(color: Colors.blue),
+                      //         recognizer: TapGestureRecognizer()
+                      //           ..onTap = () {
+                      //             ref
+                      //                 .read(mixpanel)!
+                      //                 .track("Pressed Kasado page (Bottom)");
+                      //             launch("https://bit.ly/kasado-2022");
+                      //           },
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      Text("Kasado")
                     ],
                   ),
                 ],
