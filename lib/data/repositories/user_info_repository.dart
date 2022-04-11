@@ -89,8 +89,7 @@ class UserInfoRepository {
     final userTickets = [...userInfo.tickets];
 
     // Remove expired tickets
-    final now = DateTime.now();
-    userTickets.removeWhere((ticket) => ticket.expiry.isBefore(now));
+    userTickets.removeWhere((ticket) => ticket.isExpired);
 
     // Add new ticket
     userTickets.add(Ticket(
@@ -117,9 +116,8 @@ class UserInfoRepository {
     final userTickets = [...userInfo.tickets];
 
     // Remove the ticket user intends to remove as well as expired tickets
-    final now = DateTime.now();
     userTickets.removeWhere((ticket) {
-      return (ticket.expiry.isBefore(now)) ||
+      return (ticket.isExpired) ||
           ticket.id == "${courtSlot.courtId}|${courtSlot.slotId}";
     });
 

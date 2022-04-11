@@ -70,9 +70,7 @@ class UserProfilePane extends HookConsumerWidget {
                       onPressed: () {
                         showDialog(
                           context: context,
-                          builder: (_) => PondoInfoDialog(
-                            constraints: constraints,
-                          ),
+                          builder: (_) => const PondoInfoDialog(),
                         );
                       },
                     ),

@@ -50,6 +50,8 @@ class KasadoUserInfo with _$KasadoUserInfo {
     return pondo >= pondoToPay;
   }
 
+  List<Ticket> get validTickets => tickets.where((t) => !t.isExpired).toList();
+
   factory KasadoUserInfo.fromJson(Map<String, dynamic> json) =>
       _$KasadoUserInfoFromJson(json);
 }

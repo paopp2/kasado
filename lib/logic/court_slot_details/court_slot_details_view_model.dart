@@ -112,6 +112,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required BuildContext context,
     required CourtSlot baseCourtSlot,
     required Court court,
+    required Future<bool> Function() onNotEnoughPondo,
   }) async {
     final playerUserInfo = await showDialog(
       context: context,
@@ -127,6 +128,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
       baseCourtSlot: baseCourtSlot,
       courtTicketPrice: court.ticketPrice,
       courtName: court.name,
+      onNotEnoughPondo: onNotEnoughPondo,
     );
   }
 
@@ -137,82 +139,82 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required Court court,
     required String? teamId,
     required bool isTeamCaptain,
+    required Future<bool> Function() onUserDontHaveEnoughPondo,
+    required Future<bool> Function(List<KasadoUserInfo>) onNotAllHasEnoughPondo,
   }) async {
-    read(mixpanel)!.track("Join CourtSlot attempt");
-    Fluttertoast.showToast(
-        msg:
-            "Maintenance ongoing. Ugma pre pramis mana ni. Update ni para atong PONDO nga systema");
-    // if (teamId == null) {
-    //   // If player is not part of a team
-    //   if (slotHasPlayer) {
-    //     read(mixpanel)!.track("Leave a courtSlot", properties: {
-    //       "isSingle": true,
-    //       "courtName": court.name,
-    //       "courtSlotTimeRange": utils.getTimeRangeFormat(
-    //         baseCourtSlot.timeRange,
-    //         showDate: true,
-    //       )
-    //     });
+    if (teamId == null) {
+      // If player is not part of a team
+      if (slotHasPlayer) {
+        read(mixpanel)!.track("Leave a courtSlot", properties: {
+          "isSingle": true,
+          "courtName": court.name,
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            baseCourtSlot.timeRange,
+            showDate: true,
+          )
+        });
 
-    //     await removeFromCourtSlot(
-    //       playerToRemove: currentUserInfo!.user,
-    //       baseCourtSlot: baseCourtSlot,
-    //       courtTicketPrice: court.ticketPrice,
-    //     );
-    //   } else {
-    //     read(mixpanel)!.track("Join a courtSlot", properties: {
-    //       "isSingle": true,
-    //       "courtName": court.name,
-    //       "courtSlotTimeRange": utils.getTimeRangeFormat(
-    //         baseCourtSlot.timeRange,
-    //         showDate: true,
-    //       )
-    //     });
-    //     await addToCourtSlot(
-    //       userInfo: currentUserInfo!,
-    //       baseCourtSlot: baseCourtSlot,
-    //       courtTicketPrice: court.ticketPrice,
-    //       courtName: court.name,
-    //     );
-    //   }
-    // } else {
-    //   // If player is part of a team
-    //   if (slotHasPlayer) {
-    //     read(mixpanel)!.track("Leave a courtSlot", properties: {
-    //       "isSingle": false,
-    //       "courtName": court.name,
-    //       "courtSlotTimeRange": utils.getTimeRangeFormat(
-    //         baseCourtSlot.timeRange,
-    //         showDate: true,
-    //       )
-    //     });
-    //     await removeTeamFromCourtSlot(
-    //       teamId: teamId,
-    //       teamCaptainInfo: currentUserInfo!,
-    //       isTeamCaptain: isTeamCaptain,
-    //       baseCourtSlot: baseCourtSlot,
-    //       courtName: court.name,
-    //       courtTicketPrice: court.ticketPrice,
-    //     );
-    //   } else {
-    //     read(mixpanel)!.track("Join a courtSlot", properties: {
-    //       "isSingle": false,
-    //       "courtName": court.name,
-    //       "courtSlotTimeRange": utils.getTimeRangeFormat(
-    //         baseCourtSlot.timeRange,
-    //         showDate: true,
-    //       )
-    //     });
-    //     await addTeamToCourtSlot(
-    //       teamId: teamId,
-    //       teamCaptainInfo: currentUserInfo!,
-    //       courtName: court.name,
-    //       isTeamCaptain: isTeamCaptain,
-    //       baseCourtSlot: baseCourtSlot,
-    //       courtTicketPrice: court.ticketPrice,
-    //     );
-    //   }
-    // }
+        await removeFromCourtSlot(
+          playerToRemove: currentUserInfo!.user,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: court.ticketPrice,
+        );
+      } else {
+        read(mixpanel)!.track("Join a courtSlot", properties: {
+          "isSingle": true,
+          "courtName": court.name,
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            baseCourtSlot.timeRange,
+            showDate: true,
+          )
+        });
+        await addToCourtSlot(
+          userInfo: currentUserInfo!,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: court.ticketPrice,
+          courtName: court.name,
+          onNotEnoughPondo: onUserDontHaveEnoughPondo,
+        );
+      }
+    } else {
+      // If player is part of a team
+      if (slotHasPlayer) {
+        read(mixpanel)!.track("Leave a courtSlot", properties: {
+          "isSingle": false,
+          "courtName": court.name,
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            baseCourtSlot.timeRange,
+            showDate: true,
+          )
+        });
+        await removeTeamFromCourtSlot(
+          teamId: teamId,
+          teamCaptainInfo: currentUserInfo!,
+          isTeamCaptain: isTeamCaptain,
+          baseCourtSlot: baseCourtSlot,
+          courtName: court.name,
+          courtTicketPrice: court.ticketPrice,
+        );
+      } else {
+        read(mixpanel)!.track("Join a courtSlot", properties: {
+          "isSingle": false,
+          "courtName": court.name,
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            baseCourtSlot.timeRange,
+            showDate: true,
+          )
+        });
+        await addTeamToCourtSlot(
+          teamId: teamId,
+          teamCaptainInfo: currentUserInfo!,
+          courtName: court.name,
+          isTeamCaptain: isTeamCaptain,
+          baseCourtSlot: baseCourtSlot,
+          courtTicketPrice: court.ticketPrice,
+          onNotAllHasEnoughPondo: onNotAllHasEnoughPondo,
+        );
+      }
+    }
   }
 
   Future<void> addToCourtSlot({
@@ -220,6 +222,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
     required String courtName,
+    required Future<bool> Function() onNotEnoughPondo,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       slotFull: () => Fluttertoast.showToast(msg: 'Slot is full'),
@@ -233,10 +236,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
           player: userInfo.user,
           courtTicketPrice: courtTicketPrice,
           courtName: courtName,
-          // TODO: Show a dialog regarding pondo system for this
-          onNotEnoughPondo: () => Fluttertoast.showToast(
-            msg: "Not enough pondo",
-          ),
+          onNotEnoughPondo: onNotEnoughPondo,
         );
       },
     );
@@ -264,6 +264,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required String courtName,
     required CourtSlot baseCourtSlot,
     required double courtTicketPrice,
+    required Future<bool> Function(List<KasadoUserInfo>) onNotAllHasEnoughPondo,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       // TODO: Should only be for the team captain
@@ -282,10 +283,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
               msg:
                   "Your team can't fit for this slot, please choose another one",
             ),
-            // TODO: Show a dialog regarding pondo system for this
-            onNotAllHasEnoughPondo: (players) => Fluttertoast.showToast(
-                msg:
-                    "Some players at your team doesn't have enough pondo for this court: ${players.map((u) => u.user.displayName).toString()}"),
+            onNotAllHasEnoughPondo: onNotAllHasEnoughPondo,
           );
         } else {
           Fluttertoast.showToast(
