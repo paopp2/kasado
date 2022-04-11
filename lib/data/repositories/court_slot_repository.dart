@@ -234,7 +234,7 @@ class CourtSlotRepository {
     // Get team players from courtSlot to determine whether a player in team
     // has already paid or not
     final _teamPlayersFromCourtSlot =
-        courtSlot.players.where((p) => _teamPlayerIds.contains(p.id));
+        courtSlot.players.where((p) => _teamPlayerIds.contains(p.id)).toList();
 
     final updatedPlayerList = courtSlot.players
       ..removeWhere((player) => _teamPlayersFromCourtSlot.contains(player));
