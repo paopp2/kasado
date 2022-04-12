@@ -46,21 +46,23 @@ class AppRouter {
             isAdmin: (isAdmin ?? false),
           );
         },
-      ),
-      GoRoute(
-        name: Routes.courtSlotDetailsView,
-        path: '/slot-details',
-        builder: (context, state) {
-          final params = state.queryParams;
-          return CourtSlotDetailsView(
-            isAdmin: (state.extra as bool?) ?? false,
-            baseCourtSlot: CourtSlot.fromJson(
-              jsonDecode(params['baseCourtSlot']!),
-            ),
-            court: Court.fromJson(jsonDecode(params['court']!)),
-            isDone: (params['isDone'] as String) == 'true',
-          );
-        },
+        routes: [
+          GoRoute(
+            name: Routes.courtSlotDetailsView,
+            path: 'slot-details',
+            builder: (context, state) {
+              final params = state.queryParams;
+              return CourtSlotDetailsView(
+                isAdmin: (state.extra as bool?) ?? false,
+                baseCourtSlot: CourtSlot.fromJson(
+                  jsonDecode(params['baseCourtSlot']!),
+                ),
+                court: Court.fromJson(jsonDecode(params['court']!)),
+                isDone: (params['isDone'] as String) == 'true',
+              );
+            },
+          ),
+        ],
       ),
       GoRoute(
         name: Routes.userProfileView,
