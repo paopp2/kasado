@@ -88,6 +88,7 @@ class TeamTab extends HookConsumerWidget {
                           ),
                         ),
                   floatingActionButton: FloatingActionButton.extended(
+                    backgroundColor: Colors.blue.shade200,
                     label: Text(
                       (userInfo.hasTeam)
                           ? (userInfo.isTeamCaptain)

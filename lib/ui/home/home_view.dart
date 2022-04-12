@@ -19,8 +19,8 @@ class HomeView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: 5);
+    final pageIndex = useState(0);
+    final pageController = usePageController();
     final model = ref.watch(homeViewModel);
     final appMetaStream = ref.watch(appMetaStreamProvider);
     final String minAllowedVersion =
@@ -34,7 +34,6 @@ class HomeView extends HookConsumerWidget {
         "At HomeView",
         properties: {"isUpdated": isCurrentVerGood},
       );
-      tabController.addListener(() => (tabIndex.value = tabController.index));
       model.initState({'context': context});
       return model.dispose;
     }, []);
@@ -52,8 +51,9 @@ class HomeView extends HookConsumerWidget {
               backgroundColor: Colors.transparent,
               actions: const [HomeNotifButton()],
             ),
-            body: TabBarView(
-              controller: tabController,
+            body: PageView(
+              controller: pageController,
+              onPageChanged: (i) => pageIndex.value = i,
               children: [
                 (isCurrentVerGood)
                     ? HomeTab(
@@ -78,8 +78,8 @@ class HomeView extends HookConsumerWidget {
               ],
             ),
             bottomNavigationBar: HomeBottomNavBar(
-              tabController: tabController,
-              tabIndex: tabIndex,
+              pageController: pageController,
+              pageIndex: pageIndex,
             ),
           );
         },

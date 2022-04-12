@@ -1,59 +1,51 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/data/core/core_providers.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-class HomeBottomNavBar extends HookConsumerWidget {
+class HomeBottomNavBar extends StatelessWidget {
   const HomeBottomNavBar({
     Key? key,
-    required this.tabController,
-    required this.tabIndex,
+    required this.pageController,
+    required this.pageIndex,
   }) : super(key: key);
 
-  final TabController tabController;
-  final ValueNotifier<int> tabIndex;
+  final PageController pageController;
+  final ValueNotifier<int> pageIndex;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentUserInfo = ref.watch(currentUserInfoProvider).value;
-
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      onTap: tabController.animateTo,
-      currentIndex: tabIndex.value,
+  Widget build(BuildContext context) {
+    return SalomonBottomBar(
+      onTap: (i) => pageController.animateToPage(
+        i,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      ),
+      currentIndex: pageIndex.value,
       selectedItemColor: Colors.black,
+      unselectedItemColor: Colors.grey,
       items: [
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+        SalomonBottomBarItem(
+          icon: const Icon(Icons.home),
+          title: const Text('Home'),
         ),
-        BottomNavigationBarItem(
-          icon: Badge(
-            badgeColor: Colors.green,
-            showBadge: currentUserInfo?.hasTeam ?? false,
-            child: const Icon(Icons.group_sharp),
+        SalomonBottomBarItem(
+          icon: const Icon(Icons.group_sharp),
+          title: const Text('Team'),
+        ),
+        SalomonBottomBarItem(
+          icon: const Icon(Icons.bar_chart),
+          title: const Text('Standings'),
+        ),
+        SalomonBottomBarItem(
+          icon: const FaIcon(
+            FontAwesomeIcons.ticketAlt,
+            size: 20,
           ),
-          label: 'Team',
+          title: const Text('Tickets'),
         ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.bar_chart),
-          label: 'Standings',
-        ),
-        BottomNavigationBarItem(
-          icon: Badge(
-            badgeColor: Colors.green,
-            showBadge: currentUserInfo?.hasReserved ?? false,
-            child: const FaIcon(
-              FontAwesomeIcons.ticketAlt,
-              size: 20,
-            ),
-          ),
-          label: 'Tickets',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
+        SalomonBottomBarItem(
+          icon: const Icon(Icons.person),
+          title: const Text('Profile'),
         ),
       ],
     );

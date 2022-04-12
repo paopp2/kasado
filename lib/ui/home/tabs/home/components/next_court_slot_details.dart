@@ -62,8 +62,6 @@ class NextCourtSlotDetails extends HookConsumerWidget {
         child: const LoadingWidget(),
       ),
       data: (courtSlot) {
-        // if there are no more timeSlots available for the day, then next
-        // CourtSlot is null
         final nextCourtSlot = courtSlot ??
             CourtSlot(
               courtId: court.id,
