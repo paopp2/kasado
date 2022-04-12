@@ -10,5 +10,20 @@
             "type": "dart",
             "flutterMode": "debug"
         },
+        {
+            "name": "kasado_web",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "deviceId": "chrome",
+            "args": [
+                "--web-hostname",
+                "localhost",
+                "--web-port",
+                "5000",
+                "--web-renderer",
+                "html",
+            ]
+        },
     ]
 }
