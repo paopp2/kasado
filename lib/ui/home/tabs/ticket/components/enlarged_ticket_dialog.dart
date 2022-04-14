@@ -29,15 +29,23 @@ class EnlargedTicketDialog extends StatelessWidget {
             const Text(
               "GAME TICKET",
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Hero(
-                tag: ticket.id,
-                child: QrImage(data: ticket.id),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  color: Colors.grey.shade300,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: QrImage(
+                      data: ticket.id,
+                    ),
+                  ),
+                ),
               ),
             ),
             const Divider(),

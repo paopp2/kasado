@@ -52,43 +52,77 @@ class TicketTab extends HookConsumerWidget {
                       ),
                     ),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: tickets.length,
-                        itemBuilder: (context, i) {
-                          final ticket = tickets[i];
-                          return Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: ListTile(
-                              tileColor: Colors.grey.shade100,
-                              leading: Hero(
-                                tag: ticket.id,
-                                child: QrImage(data: ticket.id),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListView.builder(
+                          itemCount: tickets.length,
+                          itemBuilder: (context, i) {
+                            final ticket = tickets[i];
+                            return Card(
+                              color: Colors.grey.shade100,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              title: Text(ticket.courtName),
-                              subtitle: Text(
-                                utils.getTimeRangeFormat(
-                                  ticket.courtSlot.timeRange,
-                                  showDate: true,
+                              child: InkWell(
+                                onTap: () {
+                                  ref
+                                      .read(mixpanel)!
+                                      .track("Enlarged a ticket");
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) {
+                                      return EnlargedTicketDialog(
+                                        ticket: ticket,
+                                        utils: utils,
+                                        userName: userInfo!.user.displayName!,
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Container(
+                                        width: 75,
+                                        height: 75,
+                                        color: Colors.grey.shade300,
+                                        child: QrImage(
+                                          data: ticket.id,
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            Text(
+                                              ticket.courtName,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              utils.getTimeRangeFormat(
+                                                ticket.courtSlot.timeRange,
+                                                showDate: true,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              onTap: () {
-                                ref.read(mixpanel)!.track("Enlarged a ticket");
-                                showDialog(
-                                  context: context,
-                                  builder: (_) {
-                                    return EnlargedTicketDialog(
-                                      ticket: ticket,
-                                      utils: utils,
-                                      userName: userInfo!.user.displayName!,
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],

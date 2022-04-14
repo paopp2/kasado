@@ -21,11 +21,15 @@ class PlayerStatTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         tileColor: Colors.grey.shade100,
-        title: Text(statDescription),
+        title: Text(
+          statDescription,
+          style: TextStyle(color: Colors.grey.shade800),
+        ),
         trailing: Text(
           statValue,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
         ),
       ),

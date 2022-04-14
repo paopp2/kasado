@@ -2,7 +2,9 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/app_router.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/states/team_tab_state.dart';
 import 'package:kasado/logic/home/team_tab_model.dart';
@@ -75,6 +77,10 @@ class TeamTab extends HookConsumerWidget {
                                       style: const TextStyle(
                                         fontSize: 18,
                                       ),
+                                    ),
+                                    onTap: () => context.pushNamed(
+                                      Routes.userProfileView,
+                                      params: {'uid': player.id},
                                     ),
                                   );
                                 },
