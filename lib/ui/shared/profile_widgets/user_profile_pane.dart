@@ -88,83 +88,79 @@ class UserProfilePane extends HookConsumerWidget {
                         child: ListView(
                           children: [
                             PlayerStatTile(
-                              statDescription: "GAMES PLAYED",
-                              statValue: userStats.gamesPlayed.toString(),
-                            ),
-                            PlayerStatTile(
-                              statDescription: "STANDING",
+                              statDescription: "Standing",
                               statValue:
                                   "${userStats.totalWins} - ${userStats.totalLosses}",
                             ),
                             PlayerStatTile(
-                              statDescription: "WIN RATE",
+                              statDescription: "Win %",
                               statValue: utils.getPercentageFormat(
                                 userStats.winPercent,
                               ),
                             ),
                             PlayerStatTile(
-                              statDescription: "POINTS PER GAME",
+                              statDescription: "Points Per Game",
                               statValue: utils.getDoubleFormat(
                                 userStats.avePointsPerGame,
                               ),
                             ),
                             PlayerStatTile(
-                              statDescription: "ASSISTS PER GAME",
+                              statDescription: "Assists Per Game",
                               statValue: utils.getDoubleFormat(
                                 userStats.aveAssistsPerGame,
                               ),
                             ),
                             PlayerStatTile(
-                              statDescription: "REBOUNDS PER GAME",
+                              statDescription: "Rebounds Per Game",
                               statValue: utils.getDoubleFormat(
                                 userStats.aveReboundsPerGame,
                               ),
                             ),
                             PlayerStatTile(
-                              statDescription: "BLOCKS PER GAME",
+                              statDescription: "Blocks Per Game",
                               statValue: utils.getDoubleFormat(
                                 userStats.aveBlocksPerGame,
                               ),
                             ),
                             PlayerStatTile(
-                              statDescription: "STEALS PER GAME",
+                              statDescription: "Steals Per Game",
                               statValue: utils.getDoubleFormat(
                                 userStats.aveStlPerGame,
                               ),
                             ),
                             PlayerStatTile(
-                              statDescription: "TOTAL POINTS",
+                              statDescription: "Total Points",
                               statValue: userStats.totalPoints.toString(),
                             ),
                             PlayerStatTile(
-                              statDescription: "TOTAL ASSISTS",
+                              statDescription: "Total Assists",
                               statValue: userStats.totalAst.toString(),
                             ),
                             PlayerStatTile(
-                              statDescription: "TOTAL REBOUNDS",
+                              statDescription: "Total Rebounds",
                               statValue: userStats.totalRebounds.toString(),
                             ),
                             PlayerStatTile(
-                              statDescription: "TOTAL BLOCKS",
+                              statDescription: "Total Blocks",
                               statValue: userStats.totalBlk.toString(),
                             ),
                             PlayerStatTile(
-                              statDescription: "TOTAL STEALS",
+                              statDescription: "Total Steals",
                               statValue: userStats.totalStl.toString(),
                             ),
                             PlayerStatTile(
-                              statDescription: "AVERAGE FG%",
+                              statDescription: "Average FG%",
                               statValue: utils
                                   .getPercentageFormat(userStats.aveFgPercent),
                             ),
                             PlayerStatTile(
-                              statDescription: "AVERAGE 3PT%",
+                              statDescription: "Average 3PT%",
                               statValue: utils.getPercentageFormat(
                                 userStats.aveThreePtPercent,
                               ),
                             ),
                             PlayerStatTile(
-                              statDescription: "AVERAGE FT%",
+                              statDescription: "Average FT%",
                               statValue: utils.getPercentageFormat(
                                 userStats.aveFtPercent,
                               ),
