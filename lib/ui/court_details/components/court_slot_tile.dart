@@ -77,7 +77,7 @@ class CourtSlotTile extends HookConsumerWidget {
                       if (courtSlot.isClosedByAdmin) {
                         return 'Closed by Admin';
                       } else if (utils
-                          .isCurrentSlotClosed(courtSlot.timeRange)) {
+                          .isCurrentSlotEnded(courtSlot.timeRange)) {
                         return 'Slot has ended';
                       } else {
                         return 'Available';

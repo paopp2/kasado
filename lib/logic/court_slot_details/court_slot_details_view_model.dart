@@ -71,8 +71,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
     if (currentUserInfo == null) return SlotAndUserState.loading;
     final user = currentUserInfo!;
 
-    final isSlotClosed = utils.isCurrentSlotClosed(courtSlot.timeRange);
-    if (isSlotClosed) {
+    final isSlotEnded = utils.isCurrentSlotEnded(courtSlot.timeRange);
+    if (isSlotEnded) {
       return SlotAndUserState.slotEnded;
     } else if (courtSlot.isClosedByAdmin) {
       return SlotAndUserState.slotClosedByAdmin;
