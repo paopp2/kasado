@@ -78,7 +78,7 @@ class StatLeadersPane extends HookConsumerWidget {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     tileColor: (player.id == currentUser?.id)
-                                        ? Colors.green.shade50
+                                        ? Colors.amber.shade100
                                         : null,
                                     leading: CircleAvatar(
                                       backgroundImage:

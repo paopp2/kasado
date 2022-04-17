@@ -120,7 +120,7 @@ class KasadoUtils {
     );
   }
 
-  bool isCurrentSlotClosed(TimeRange timeRange) {
+  bool isCurrentSlotEnded(TimeRange timeRange) {
     final now = DateTime.now();
     return timeRange.startsAt.difference(now).abs() >
         timeRange.endsAt.difference(now).abs();
