@@ -70,12 +70,19 @@ class CourtSlotTile extends HookConsumerWidget {
                 textColor: Colors.white,
                 title: Text(
                   slotAndUserState.when(
-                    slotEnded: () => 'Slot has ended',
-                    slotClosedByAdmin: () => 'Closed by admin',
                     slotFull: () => 'Full',
                     userReservedAtThisSlot: () => 'Joined',
                     userHasConflictWithOtherSlot: () => 'In Conflict',
-                    orElse: () => 'Available',
+                    orElse: () {
+                      if (courtSlot.isClosedByAdmin) {
+                        return 'Closed by Admin';
+                      } else if (utils
+                          .isCurrentSlotClosed(courtSlot.timeRange)) {
+                        return 'Slot has ended';
+                      } else {
+                        return 'Available';
+                      }
+                    },
                   ),
                   style: const TextStyle(fontSize: 20),
                 ),
