@@ -30,11 +30,11 @@ class StandingsTab extends HookConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,
         icon: const FaIcon(
-          FontAwesomeIcons.crown,
+          FontAwesomeIcons.angleRight,
           size: 15,
         ),
         foregroundColor: Colors.black,
-        label: const Text('View Stat Leaders'),
+        label: const Text('Tap here for MORE'),
         onPressed: () => context.pushNamed(Routes.statLeadersView),
       ),
     );

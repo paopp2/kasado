@@ -26,8 +26,8 @@ class StatLeadersView extends HookConsumerWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             bottom: TabBar(
-              labelColor: Colors.green,
-              indicatorColor: Colors.green,
+              labelColor: Colors.amber.shade600,
+              indicatorColor: Colors.amber.shade600,
               unselectedLabelColor: Colors.grey,
               controller: tabController,
               isScrollable: true,
