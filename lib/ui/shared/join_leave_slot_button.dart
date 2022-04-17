@@ -50,7 +50,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
         title: (forTeamCaptain)
             ? "Some players at your team doesn't have enough PONDO"
             : "Not enough PONDO",
-        desc: "Sugod karong Sunday April 17 dol, implement "
+        desc: "Sugod karong Sunday April 24 dol, implement "
             "na tas atoang Pondo system para pud mahapsay atoang "
             "systema. Bale mura rakag magpaload sa imong Pondo, "
             "pwede through GCash or bayad personal, nya kana "
