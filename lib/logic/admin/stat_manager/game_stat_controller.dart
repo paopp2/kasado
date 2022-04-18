@@ -47,6 +47,7 @@ class GameStatController {
     required bool wasMade,
     required CourtSlot courtSlot,
     required GameStats gameStats,
+    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -74,6 +75,7 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: _isHomePlayer,
       wasMade: wasMade,
+      isCancel: isCancel,
     );
   }
 
@@ -82,6 +84,7 @@ class GameStatController {
     required bool wasMade,
     required GameStats gameStats,
     required CourtSlot courtSlot,
+    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -95,15 +98,17 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
       wasMade: wasMade,
+      isCancel: isCancel,
     );
   }
 
-  Future<void> onPlayerRebounded(
-      {required BuildContext context,
-      required bool isDefensive,
-      required GameStats gameStats,
-      required CourtSlot courtSlot,
-      required}) async {
+  Future<void> onPlayerRebounded({
+    required BuildContext context,
+    required bool isDefensive,
+    required GameStats gameStats,
+    required CourtSlot courtSlot,
+    bool isCancel = false,
+  }) async {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
@@ -116,6 +121,7 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
       isDefensive: isDefensive,
+      isCancel: isCancel,
     );
   }
 
@@ -123,6 +129,7 @@ class GameStatController {
     required BuildContext context,
     required GameStats gameStats,
     required CourtSlot courtSlot,
+    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -135,6 +142,7 @@ class GameStatController {
       gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
+      isCancel: isCancel,
     );
   }
 
@@ -142,6 +150,7 @@ class GameStatController {
     required BuildContext context,
     required GameStats gameStats,
     required CourtSlot courtSlot,
+    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -154,6 +163,7 @@ class GameStatController {
       gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
+      isCancel: isCancel,
     );
   }
 

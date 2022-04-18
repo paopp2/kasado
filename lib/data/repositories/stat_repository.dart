@@ -69,6 +69,7 @@ class StatRepository {
     required CourtSlot courtSlot,
     required bool isHomePlayer,
     required bool wasMade,
+    required bool isCancel,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
 
@@ -82,12 +83,16 @@ class StatRepository {
         fieldPrefix: {
           playerWhoScored.id: (isThree)
               ? {
-                  "threePA": FieldValue.increment(1),
-                  if (wasMade) ...{"threePM": FieldValue.increment(1)}
+                  "threePA": FieldValue.increment((isCancel) ? -1 : 1),
+                  if (wasMade) ...{
+                    "threePM": FieldValue.increment((isCancel) ? -1 : 1)
+                  }
                 }
               : {
-                  "twoPA": FieldValue.increment(1),
-                  if (wasMade) ...{"twoPM": FieldValue.increment(1)}
+                  "twoPA": FieldValue.increment((isCancel) ? -1 : 1),
+                  if (wasMade) ...{
+                    "twoPM": FieldValue.increment((isCancel) ? -1 : 1)
+                  }
                 }
         }
       },
@@ -100,6 +105,7 @@ class StatRepository {
         gameStatsId: gameStatsId,
         courtSlot: courtSlot,
         isHomePlayer: isHomePlayer,
+        isCancel: isCancel,
       );
     }
   }
@@ -109,6 +115,7 @@ class StatRepository {
     required String gameStatsId,
     required CourtSlot courtSlot,
     required bool isHomePlayer,
+    required bool isCancel,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
     await firestoreHelper.setData(
@@ -119,7 +126,9 @@ class StatRepository {
       ),
       data: {
         fieldPrefix: {
-          playerWhoAssisted.id: {"ast": FieldValue.increment(1)}
+          playerWhoAssisted.id: {
+            "ast": FieldValue.increment((isCancel) ? -1 : 1)
+          }
         }
       },
       merge: true,
@@ -131,6 +140,7 @@ class StatRepository {
     required String gameStatsId,
     required CourtSlot courtSlot,
     required bool isHomePlayer,
+    required bool isCancel,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
     await firestoreHelper.setData(
@@ -141,7 +151,9 @@ class StatRepository {
       ),
       data: {
         fieldPrefix: {
-          playerWhoBlocked.id: {"blk": FieldValue.increment(1)}
+          playerWhoBlocked.id: {
+            "blk": FieldValue.increment((isCancel) ? -1 : 1)
+          }
         }
       },
       merge: true,
@@ -153,6 +165,7 @@ class StatRepository {
     required String gameStatsId,
     required CourtSlot courtSlot,
     required bool isHomePlayer,
+    required bool isCancel,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
     await firestoreHelper.setData(
@@ -163,7 +176,9 @@ class StatRepository {
       ),
       data: {
         fieldPrefix: {
-          playerWhoStealed.id: {"stl": FieldValue.increment(1)}
+          playerWhoStealed.id: {
+            "stl": FieldValue.increment((isCancel) ? -1 : 1)
+          }
         }
       },
       merge: true,
@@ -176,6 +191,7 @@ class StatRepository {
     required CourtSlot courtSlot,
     required bool isHomePlayer,
     required bool wasMade,
+    required bool isCancel,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
     await firestoreHelper.setData(
@@ -187,8 +203,8 @@ class StatRepository {
       data: {
         fieldPrefix: {
           shootingPlayer.id: {
-            "ftA": FieldValue.increment(1),
-            if (wasMade) ...{"ftM": FieldValue.increment(1)}
+            "ftA": FieldValue.increment((isCancel) ? -1 : 1),
+            if (wasMade) ...{"ftM": FieldValue.increment((isCancel) ? -1 : 1)}
           }
         }
       },
@@ -202,6 +218,7 @@ class StatRepository {
     required CourtSlot courtSlot,
     required bool isHomePlayer,
     required bool isDefensive,
+    required bool isCancel,
   }) async {
     final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
     await firestoreHelper.setData(
@@ -213,8 +230,8 @@ class StatRepository {
       data: {
         fieldPrefix: {
           reboundingPlayer.id: (isDefensive)
-              ? {"dReb": FieldValue.increment(1)}
-              : {"oReb": FieldValue.increment(1)},
+              ? {"dReb": FieldValue.increment((isCancel) ? -1 : 1)}
+              : {"oReb": FieldValue.increment((isCancel) ? -1 : 1)},
         }
       },
       merge: true,
