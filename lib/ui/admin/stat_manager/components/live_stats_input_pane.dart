@@ -3,6 +3,7 @@ import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/ui/admin/stat_manager/components/stat_button.dart';
+import 'package:kasado/ui/admin/stat_manager/components/timer_button.dart';
 
 class LiveStatsInputPane extends StatelessWidget {
   const LiveStatsInputPane({
@@ -74,6 +75,11 @@ class LiveStatsInputPane extends StatelessWidget {
                   ),
                 ],
               ),
+              TimerButton(
+                controller: controller,
+                courtSlot: courtSlot,
+                gameStats: gameStats,
+              ),
             ],
           ),
         ),
@@ -81,6 +87,7 @@ class LiveStatsInputPane extends StatelessWidget {
           children: [
             Row(
               children: [
+                // TODO: Refactor to minimize boilerplate for StatButtons
                 StatButton(
                   color: Colors.green,
                   content: '3',
@@ -90,6 +97,14 @@ class LiveStatsInputPane extends StatelessWidget {
                     wasMade: true,
                     gameStats: gameStats,
                     courtSlot: courtSlot,
+                  ),
+                  onLongPressed: () => controller.onPlayerShot(
+                    context: context,
+                    isThree: true,
+                    wasMade: true,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
                   ),
                 ),
                 StatButton(
@@ -101,6 +116,14 @@ class LiveStatsInputPane extends StatelessWidget {
                     wasMade: false,
                     gameStats: gameStats,
                     courtSlot: courtSlot,
+                  ),
+                  onLongPressed: () => controller.onPlayerShot(
+                    context: context,
+                    isThree: true,
+                    wasMade: false,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
                   ),
                 ),
                 const Spacer(),
@@ -113,6 +136,13 @@ class LiveStatsInputPane extends StatelessWidget {
                     gameStats: gameStats,
                     courtSlot: courtSlot,
                   ),
+                  onLongPressed: () => controller.onPlayerRebounded(
+                    context: context,
+                    isDefensive: false,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
+                  ),
                 ),
                 StatButton(
                   color: Colors.green,
@@ -122,6 +152,13 @@ class LiveStatsInputPane extends StatelessWidget {
                     isDefensive: true,
                     gameStats: gameStats,
                     courtSlot: courtSlot,
+                  ),
+                  onLongPressed: () => controller.onPlayerRebounded(
+                    context: context,
+                    isDefensive: true,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
                   ),
                 ),
               ],
@@ -138,6 +175,14 @@ class LiveStatsInputPane extends StatelessWidget {
                     gameStats: gameStats,
                     courtSlot: courtSlot,
                   ),
+                  onLongPressed: () => controller.onPlayerShot(
+                    context: context,
+                    isThree: false,
+                    wasMade: true,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
+                  ),
                 ),
                 StatButton(
                   color: Colors.red,
@@ -148,6 +193,14 @@ class LiveStatsInputPane extends StatelessWidget {
                     wasMade: false,
                     gameStats: gameStats,
                     courtSlot: courtSlot,
+                  ),
+                  onLongPressed: () => controller.onPlayerShot(
+                    context: context,
+                    isThree: false,
+                    wasMade: false,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
                   ),
                 ),
                 const Spacer(),
@@ -159,6 +212,12 @@ class LiveStatsInputPane extends StatelessWidget {
                     gameStats: gameStats,
                     courtSlot: courtSlot,
                   ),
+                  onLongPressed: () => controller.onPlayerBlock(
+                    context: context,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
+                  ),
                 ),
                 StatButton(
                   color: Colors.blue,
@@ -167,6 +226,12 @@ class LiveStatsInputPane extends StatelessWidget {
                     context: context,
                     gameStats: gameStats,
                     courtSlot: courtSlot,
+                  ),
+                  onLongPressed: () => controller.onPlayerSteal(
+                    context: context,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
                   ),
                 ),
               ],
@@ -182,6 +247,13 @@ class LiveStatsInputPane extends StatelessWidget {
                     gameStats: gameStats,
                     courtSlot: courtSlot,
                   ),
+                  onLongPressed: () => controller.onPlayerShotFT(
+                    context: context,
+                    wasMade: true,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
+                  ),
                 ),
                 StatButton(
                   color: Colors.red,
@@ -191,6 +263,13 @@ class LiveStatsInputPane extends StatelessWidget {
                     wasMade: false,
                     gameStats: gameStats,
                     courtSlot: courtSlot,
+                  ),
+                  onLongPressed: () => controller.onPlayerShotFT(
+                    context: context,
+                    wasMade: false,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
                   ),
                 ),
               ],

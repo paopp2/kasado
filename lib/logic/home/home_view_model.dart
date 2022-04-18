@@ -54,8 +54,7 @@ class HomeViewModel extends ViewModel {
         context: params!['context'] as BuildContext,
         dialogType: DialogType.WARNING,
         title: "Web app not yet optimized for desktop",
-        desc:
-            "Pasidaan lang pre, bisan tuod mugana ra diri, bati-bati pa jud ni "
+        desc: "Pasidaan lang pre, bisan tuod mugana ra diri, kiwaw pa gamay "
             "tan-awn sa desktop kay sa mobile pa gifocus ang design. Adjust-on "
             "ra nya ni namo puhon",
         width: 750,

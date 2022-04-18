@@ -9,6 +9,7 @@ import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/ui/admin/stat_manager/components/stat_player_chooser_dialog.dart';
+import 'package:time/time.dart';
 import 'package:uuid/uuid.dart';
 
 final gameStatController = Provider.autoDispose(
@@ -47,6 +48,7 @@ class GameStatController {
     required bool wasMade,
     required CourtSlot courtSlot,
     required GameStats gameStats,
+    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -74,6 +76,7 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: _isHomePlayer,
       wasMade: wasMade,
+      isCancel: isCancel,
     );
   }
 
@@ -82,6 +85,7 @@ class GameStatController {
     required bool wasMade,
     required GameStats gameStats,
     required CourtSlot courtSlot,
+    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -95,15 +99,17 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
       wasMade: wasMade,
+      isCancel: isCancel,
     );
   }
 
-  Future<void> onPlayerRebounded(
-      {required BuildContext context,
-      required bool isDefensive,
-      required GameStats gameStats,
-      required CourtSlot courtSlot,
-      required}) async {
+  Future<void> onPlayerRebounded({
+    required BuildContext context,
+    required bool isDefensive,
+    required GameStats gameStats,
+    required CourtSlot courtSlot,
+    bool isCancel = false,
+  }) async {
     final player = await showDialog(
       context: context,
       builder: (_) => const StatPlayerChooserDialog(),
@@ -116,6 +122,7 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
       isDefensive: isDefensive,
+      isCancel: isCancel,
     );
   }
 
@@ -123,6 +130,7 @@ class GameStatController {
     required BuildContext context,
     required GameStats gameStats,
     required CourtSlot courtSlot,
+    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -135,6 +143,7 @@ class GameStatController {
       gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
+      isCancel: isCancel,
     );
   }
 
@@ -142,6 +151,7 @@ class GameStatController {
     required BuildContext context,
     required GameStats gameStats,
     required CourtSlot courtSlot,
+    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -154,6 +164,7 @@ class GameStatController {
       gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
+      isCancel: isCancel,
     );
   }
 
@@ -208,6 +219,8 @@ class GameStatController {
           player.id: Stats(player: player, courtSlot: courtSlot)
       },
       isLive: true,
+      remainingMsOnPaused: 15.minutes.inMilliseconds,
+      endsAt: DateTime.now() + 15.minutes,
     );
     await statRepo.pushGameStats(
       courtSlot: courtSlot,
@@ -233,6 +246,15 @@ class GameStatController {
 
     final List<KasadoUser> updatedTeamPlayers;
     if (isPlayerAdd) {
+      if ((courtSlot.stageHomeTeamPlayers ?? []).contains(player) ||
+          (courtSlot.stageAwayTeamPlayers ?? []).contains(player)) {
+        Fluttertoast.showToast(msg: "Player already added to a team");
+        return;
+      }
+      if (currentTeamPlayers.length == 5) {
+        Fluttertoast.showToast(msg: "Team already has 5 players");
+        return;
+      }
       updatedTeamPlayers = [...currentTeamPlayers, player];
     } else {
       updatedTeamPlayers = currentTeamPlayers..remove(player);
@@ -257,6 +279,18 @@ class GameStatController {
       slotId: courtSlot.slotId,
       teamPlayers: [],
       isHome: false,
+    );
+  }
+
+  Future<void> pauseOrPlayGameClock({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+    required bool isPaused,
+  }) async {
+    await statRepo.pauseOrPlayGameClock(
+      courtSlot: courtSlot,
+      gameStats: gameStats,
+      isPaused: isPaused,
     );
   }
 }

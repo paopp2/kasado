@@ -27,13 +27,17 @@ class _$GameStatsTearOff {
       required DateTime recordedAt,
       required Map<String, Stats> homeTeamStats,
       required Map<String, Stats> awayTeamStats,
-      bool isLive = false}) {
+      bool isLive = false,
+      int? remainingMsOnPaused,
+      DateTime? endsAt}) {
     return _GameStats(
       id: id,
       recordedAt: recordedAt,
       homeTeamStats: homeTeamStats,
       awayTeamStats: awayTeamStats,
       isLive: isLive,
+      remainingMsOnPaused: remainingMsOnPaused,
+      endsAt: endsAt,
     );
   }
 
@@ -52,6 +56,10 @@ mixin _$GameStats {
   Map<String, Stats> get homeTeamStats => throw _privateConstructorUsedError;
   Map<String, Stats> get awayTeamStats => throw _privateConstructorUsedError;
   bool get isLive => throw _privateConstructorUsedError;
+  int? get remainingMsOnPaused =>
+      throw _privateConstructorUsedError; // 900000 milliseconds == 15 mins
+// Set as nullable for backward compatibility (property nonexistent before)
+  DateTime? get endsAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -68,7 +76,9 @@ abstract class $GameStatsCopyWith<$Res> {
       DateTime recordedAt,
       Map<String, Stats> homeTeamStats,
       Map<String, Stats> awayTeamStats,
-      bool isLive});
+      bool isLive,
+      int? remainingMsOnPaused,
+      DateTime? endsAt});
 }
 
 /// @nodoc
@@ -86,6 +96,8 @@ class _$GameStatsCopyWithImpl<$Res> implements $GameStatsCopyWith<$Res> {
     Object? homeTeamStats = freezed,
     Object? awayTeamStats = freezed,
     Object? isLive = freezed,
+    Object? remainingMsOnPaused = freezed,
+    Object? endsAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -108,6 +120,14 @@ class _$GameStatsCopyWithImpl<$Res> implements $GameStatsCopyWith<$Res> {
           ? _value.isLive
           : isLive // ignore: cast_nullable_to_non_nullable
               as bool,
+      remainingMsOnPaused: remainingMsOnPaused == freezed
+          ? _value.remainingMsOnPaused
+          : remainingMsOnPaused // ignore: cast_nullable_to_non_nullable
+              as int?,
+      endsAt: endsAt == freezed
+          ? _value.endsAt
+          : endsAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -123,7 +143,9 @@ abstract class _$GameStatsCopyWith<$Res> implements $GameStatsCopyWith<$Res> {
       DateTime recordedAt,
       Map<String, Stats> homeTeamStats,
       Map<String, Stats> awayTeamStats,
-      bool isLive});
+      bool isLive,
+      int? remainingMsOnPaused,
+      DateTime? endsAt});
 }
 
 /// @nodoc
@@ -142,6 +164,8 @@ class __$GameStatsCopyWithImpl<$Res> extends _$GameStatsCopyWithImpl<$Res>
     Object? homeTeamStats = freezed,
     Object? awayTeamStats = freezed,
     Object? isLive = freezed,
+    Object? remainingMsOnPaused = freezed,
+    Object? endsAt = freezed,
   }) {
     return _then(_GameStats(
       id: id == freezed
@@ -164,6 +188,14 @@ class __$GameStatsCopyWithImpl<$Res> extends _$GameStatsCopyWithImpl<$Res>
           ? _value.isLive
           : isLive // ignore: cast_nullable_to_non_nullable
               as bool,
+      remainingMsOnPaused: remainingMsOnPaused == freezed
+          ? _value.remainingMsOnPaused
+          : remainingMsOnPaused // ignore: cast_nullable_to_non_nullable
+              as int?,
+      endsAt: endsAt == freezed
+          ? _value.endsAt
+          : endsAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -176,7 +208,9 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
       required this.recordedAt,
       required this.homeTeamStats,
       required this.awayTeamStats,
-      this.isLive = false})
+      this.isLive = false,
+      this.remainingMsOnPaused,
+      this.endsAt})
       : super._();
 
   factory _$_GameStats.fromJson(Map<String, dynamic> json) =>
@@ -193,10 +227,15 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final bool isLive;
+  @override
+  final int? remainingMsOnPaused;
+  @override // 900000 milliseconds == 15 mins
+// Set as nullable for backward compatibility (property nonexistent before)
+  final DateTime? endsAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GameStats(id: $id, recordedAt: $recordedAt, homeTeamStats: $homeTeamStats, awayTeamStats: $awayTeamStats, isLive: $isLive)';
+    return 'GameStats(id: $id, recordedAt: $recordedAt, homeTeamStats: $homeTeamStats, awayTeamStats: $awayTeamStats, isLive: $isLive, remainingMsOnPaused: $remainingMsOnPaused, endsAt: $endsAt)';
   }
 
   @override
@@ -208,7 +247,9 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('recordedAt', recordedAt))
       ..add(DiagnosticsProperty('homeTeamStats', homeTeamStats))
       ..add(DiagnosticsProperty('awayTeamStats', awayTeamStats))
-      ..add(DiagnosticsProperty('isLive', isLive));
+      ..add(DiagnosticsProperty('isLive', isLive))
+      ..add(DiagnosticsProperty('remainingMsOnPaused', remainingMsOnPaused))
+      ..add(DiagnosticsProperty('endsAt', endsAt));
   }
 
   @override
@@ -223,7 +264,10 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
                 .equals(other.homeTeamStats, homeTeamStats) &&
             const DeepCollectionEquality()
                 .equals(other.awayTeamStats, awayTeamStats) &&
-            const DeepCollectionEquality().equals(other.isLive, isLive));
+            const DeepCollectionEquality().equals(other.isLive, isLive) &&
+            const DeepCollectionEquality()
+                .equals(other.remainingMsOnPaused, remainingMsOnPaused) &&
+            const DeepCollectionEquality().equals(other.endsAt, endsAt));
   }
 
   @override
@@ -233,7 +277,9 @@ class _$_GameStats extends _GameStats with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(recordedAt),
       const DeepCollectionEquality().hash(homeTeamStats),
       const DeepCollectionEquality().hash(awayTeamStats),
-      const DeepCollectionEquality().hash(isLive));
+      const DeepCollectionEquality().hash(isLive),
+      const DeepCollectionEquality().hash(remainingMsOnPaused),
+      const DeepCollectionEquality().hash(endsAt));
 
   @JsonKey(ignore: true)
   @override
@@ -252,7 +298,9 @@ abstract class _GameStats extends GameStats {
       required DateTime recordedAt,
       required Map<String, Stats> homeTeamStats,
       required Map<String, Stats> awayTeamStats,
-      bool isLive}) = _$_GameStats;
+      bool isLive,
+      int? remainingMsOnPaused,
+      DateTime? endsAt}) = _$_GameStats;
   const _GameStats._() : super._();
 
   factory _GameStats.fromJson(Map<String, dynamic> json) =
@@ -268,6 +316,11 @@ abstract class _GameStats extends GameStats {
   Map<String, Stats> get awayTeamStats;
   @override
   bool get isLive;
+  @override
+  int? get remainingMsOnPaused;
+  @override // 900000 milliseconds == 15 mins
+// Set as nullable for backward compatibility (property nonexistent before)
+  DateTime? get endsAt;
   @override
   @JsonKey(ignore: true)
   _$GameStatsCopyWith<_GameStats> get copyWith =>
