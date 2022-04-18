@@ -1,7 +1,9 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/enums.dart';
+import 'package:kasado/logic/leaderboards/stat_leaders_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';
+import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/overview_stats/overview_stats.dart';
 
 final statLeadersViewModel = Provider.autoDispose(
@@ -59,5 +61,26 @@ class StatLeadersViewModel extends ViewModel {
         : (statType == StatType.threePtMade)
             ? statValue.toStringAsFixed(0) // No decimals
             : utils.getDoubleFormat(statValue);
+  }
+
+  /// Gets the rank number of a user. If having the same rank as the user
+  /// preceding, rank number is not shown again
+  String getRankNumAsString({
+    required StatType statType,
+    required KasadoUserInfo? precedingUserInfo,
+    required KasadoUserInfo userInfo,
+  }) {
+    final rankNum = read(rankNumProvider(statType))[getStatValue(
+      stats: userInfo.overviewStats,
+      statType: statType,
+    )];
+    final isSameRankWithPreceding = (precedingUserInfo == null)
+        ? false
+        : rankNum ==
+            read(rankNumProvider(statType))[getStatValue(
+              stats: precedingUserInfo.overviewStats,
+              statType: statType,
+            )];
+    return (isSameRankWithPreceding) ? '' : rankNum.toString();
   }
 }

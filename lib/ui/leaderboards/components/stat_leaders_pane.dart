@@ -55,6 +55,8 @@ class StatLeadersPane extends HookConsumerWidget {
                         itemCount: userInfoList.length,
                         itemBuilder: (context, i) {
                           final userInfo = userInfoList[i];
+                          final precedingUserInfo =
+                              (i == 0) ? null : userInfoList[i - 1];
                           final player = userInfo.user;
 
                           return Padding(
@@ -64,7 +66,11 @@ class StatLeadersPane extends HookConsumerWidget {
                                 SizedBox(
                                   width: 30,
                                   child: Text(
-                                    '${i + 1}',
+                                    model.getRankNumAsString(
+                                      statType: statType,
+                                      precedingUserInfo: precedingUserInfo,
+                                      userInfo: userInfo,
+                                    ),
                                     style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
