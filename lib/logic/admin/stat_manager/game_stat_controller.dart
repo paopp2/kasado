@@ -9,6 +9,7 @@ import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/ui/admin/stat_manager/components/stat_player_chooser_dialog.dart';
+import 'package:time/time.dart';
 import 'package:uuid/uuid.dart';
 
 final gameStatController = Provider.autoDispose(
@@ -218,6 +219,8 @@ class GameStatController {
           player.id: Stats(player: player, courtSlot: courtSlot)
       },
       isLive: true,
+      remainingMsOnPaused: 15.minutes.inMilliseconds,
+      endsAt: DateTime.now() + 15.minutes,
     );
     await statRepo.pushGameStats(
       courtSlot: courtSlot,
@@ -276,6 +279,18 @@ class GameStatController {
       slotId: courtSlot.slotId,
       teamPlayers: [],
       isHome: false,
+    );
+  }
+
+  Future<void> pauseOrPlayGameClock({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+    required bool isPaused,
+  }) async {
+    await statRepo.pauseOrPlayGameClock(
+      courtSlot: courtSlot,
+      gameStats: gameStats,
+      isPaused: isPaused,
     );
   }
 }

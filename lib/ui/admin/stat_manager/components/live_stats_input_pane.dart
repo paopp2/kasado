@@ -75,7 +75,11 @@ class LiveStatsInputPane extends StatelessWidget {
                   ),
                 ],
               ),
-              TimerButton(gameStats: gameStats),
+              TimerButton(
+                controller: controller,
+                courtSlot: courtSlot,
+                gameStats: gameStats,
+              ),
             ],
           ),
         ),

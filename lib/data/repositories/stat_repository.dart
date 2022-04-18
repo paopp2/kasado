@@ -39,6 +39,32 @@ class StatRepository {
     );
   }
 
+  Future<void> pauseOrPlayGameClock({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+    required bool isPaused,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStats.id,
+      ),
+      data: (isPaused)
+          ? {
+              'endsAt': DateTime.now()
+                  .add(gameStats.remainingOnPaused!)
+                  .toIso8601String(),
+              'remainingMsOnPaused': null,
+            }
+          : {
+              'remainingMsOnPaused':
+                  gameStats.endsAt!.difference(DateTime.now()).inMilliseconds
+            },
+      merge: true,
+    );
+  }
+
   Stream<List<GameStats>> getAllSlotGameStatsStream(
     String courtId,
     String slotId,
