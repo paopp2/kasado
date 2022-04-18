@@ -233,6 +233,15 @@ class GameStatController {
 
     final List<KasadoUser> updatedTeamPlayers;
     if (isPlayerAdd) {
+      if ((courtSlot.stageHomeTeamPlayers ?? []).contains(player) ||
+          (courtSlot.stageAwayTeamPlayers ?? []).contains(player)) {
+        Fluttertoast.showToast(msg: "Player already added to a team");
+        return;
+      }
+      if (currentTeamPlayers.length == 5) {
+        Fluttertoast.showToast(msg: "Team already has 5 players");
+        return;
+      }
       updatedTeamPlayers = [...currentTeamPlayers, player];
     } else {
       updatedTeamPlayers = currentTeamPlayers..remove(player);
