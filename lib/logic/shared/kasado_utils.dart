@@ -149,4 +149,15 @@ class KasadoUtils {
     if (number.isNaN) return "N/A";
     return number.toStringAsFixed(1);
   }
+
+  String getFormattedRemainingTime(Duration remaining) {
+    final twoDigitFormat = NumberFormat('00');
+    final minRemaining =
+        twoDigitFormat.format(remaining.inMinutes.remainder(60));
+    final secRemaining =
+        twoDigitFormat.format(remaining.inSeconds.remainder(60));
+    final msRemaining =
+        twoDigitFormat.format(remaining.inMilliseconds.remainder(100));
+    return "$minRemaining : $secRemaining : $msRemaining";
+  }
 }
