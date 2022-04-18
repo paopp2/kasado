@@ -248,7 +248,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required double courtTicketPrice,
   }) async {
     final KasadoUser player =
-        baseCourtSlot.players.singleWhere((p) => (p.id == playerToRemove.id));
+        baseCourtSlot.players.firstWhere((p) => (p.id == playerToRemove.id));
 
     await courtSlotRepo.removePlayerFromCourtSlot(
       player: player,
