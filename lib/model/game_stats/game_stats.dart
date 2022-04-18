@@ -14,6 +14,9 @@ class GameStats with _$GameStats {
     required Map<String, Stats> homeTeamStats,
     required Map<String, Stats> awayTeamStats,
     @Default(false) bool isLive,
+    @Default(900000) int remainingOnPaused, // 900000 milliseconds == 15 mins
+    // Set as nullable for backward compatibility (property nonexistent before)
+    DateTime? endsAt,
   }) = _GameStats;
 
   int get homeScore => homeTeamStats.entries

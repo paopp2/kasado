@@ -16,6 +16,10 @@ _$_GameStats _$$_GameStatsFromJson(Map<String, dynamic> json) => _$_GameStats(
         (k, e) => MapEntry(k, Stats.fromJson(e as Map<String, dynamic>)),
       ),
       isLive: json['isLive'] as bool? ?? false,
+      remainingOnPaused: json['remainingOnPaused'] as int? ?? 900000,
+      endsAt: json['endsAt'] == null
+          ? null
+          : DateTime.parse(json['endsAt'] as String),
     );
 
 Map<String, dynamic> _$$_GameStatsToJson(_$_GameStats instance) =>
@@ -27,4 +31,6 @@ Map<String, dynamic> _$$_GameStatsToJson(_$_GameStats instance) =>
       'awayTeamStats':
           instance.awayTeamStats.map((k, e) => MapEntry(k, e.toJson())),
       'isLive': instance.isLive,
+      'remainingOnPaused': instance.remainingOnPaused,
+      'endsAt': instance.endsAt?.toIso8601String(),
     };
