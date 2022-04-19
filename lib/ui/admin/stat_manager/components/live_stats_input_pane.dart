@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
@@ -33,7 +35,10 @@ class LiveStatsInputPane extends StatelessWidget {
                       'ENLARGE',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onPressed: () {},
+                    onPressed: () => context.pushNamed(
+                      Routes.scoreBoardView,
+                      params: {'courtId': courtSlot.courtId},
+                    ),
                   ),
                   ElevatedButton(
                     child: const Text(
