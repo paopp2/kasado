@@ -17,6 +17,7 @@ class TimerButton extends HookConsumerWidget {
     required this.gameStats,
     this.showMillis = true,
     this.displayTimeOnly = false,
+    this.fontSize = 22,
   }) : super(key: key);
 
   final GameStatController controller;
@@ -24,6 +25,7 @@ class TimerButton extends HookConsumerWidget {
   final GameStats gameStats;
   final bool showMillis;
   final bool displayTimeOnly;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,7 +64,7 @@ class TimerButton extends HookConsumerWidget {
               )
             : remainingTimeState.value,
         style: GoogleFonts.roboto(
-          fontSize: 22,
+          fontSize: fontSize,
           color: (isPaused) ? Colors.grey.shade500 : Colors.green.shade500,
         ),
       ),

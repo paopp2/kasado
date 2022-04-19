@@ -67,7 +67,8 @@ class AppRouter {
                 name: Routes.scoreBoardView,
                 path: 'score-board-view',
                 builder: (context, state) {
-                  return const ScoreBoardView();
+                  final courtSlot = state.extra as CourtSlot;
+                  return ScoreBoardView(courtSlot: courtSlot);
                 },
               ),
             ],

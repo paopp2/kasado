@@ -38,6 +38,7 @@ class LiveStatsInputPane extends StatelessWidget {
                     onPressed: () => context.pushNamed(
                       Routes.scoreBoardView,
                       params: {'courtId': courtSlot.courtId},
+                      extra: courtSlot,
                     ),
                   ),
                   ElevatedButton(
