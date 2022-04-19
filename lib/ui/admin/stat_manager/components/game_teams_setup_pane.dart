@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
-class GameTeamsSetupPane extends StatelessWidget {
+class GameTeamsSetupPane extends HookConsumerWidget {
   const GameTeamsSetupPane({
     Key? key,
     required this.controller,
@@ -13,7 +18,7 @@ class GameTeamsSetupPane extends StatelessWidget {
   final CourtSlot courtSlot;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Using a spread to create a new final instance, not just a reference. This
     // avoids messing up the original arrangement of courtSlot.players when sorting
     final unsortedPlayers = [...courtSlot.players];
@@ -22,6 +27,7 @@ class GameTeamsSetupPane extends StatelessWidget {
           a.displayName!.toLowerCase().compareTo(b.displayName!.toLowerCase()));
     final homeTeamPlayers = courtSlot.stageHomeTeamPlayers ?? [];
     final awayTeamPlayers = courtSlot.stageAwayTeamPlayers ?? [];
+    final isStartingGameState = useState(false);
 
     return Column(
       children: [
@@ -139,23 +145,37 @@ class GameTeamsSetupPane extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextButton(
+              child: const Text('ENLARGE'),
+              onPressed: () => context.pushNamed(
+                Routes.scoreBoardView,
+                params: {'courtId': courtSlot.courtId},
+                extra: courtSlot,
+              ),
+            ),
+            TextButton(
               child: const Text('RESET', style: TextStyle(color: Colors.red)),
               onPressed: () => controller.resetAllStageTeams(
                 courtSlot: courtSlot,
               ),
             ),
-            TextButton(
-              child: const Text(
-                'START GAME',
-                style: TextStyle(color: Colors.green),
-              ),
-              onPressed: () => controller.initStatsForGame(
-                context: context,
-                courtSlot: courtSlot,
-                awayTeamPlayers: awayTeamPlayers,
-                homeTeamPlayers: homeTeamPlayers,
-              ),
-            ),
+            (isStartingGameState.value)
+                ? const LoadingWidget()
+                : TextButton(
+                    child: const Text(
+                      'START GAME',
+                      style: TextStyle(color: Colors.green),
+                    ),
+                    onPressed: () async {
+                      isStartingGameState.value = true;
+                      await controller.initStatsForGame(
+                        context: context,
+                        courtSlot: courtSlot,
+                        awayTeamPlayers: awayTeamPlayers,
+                        homeTeamPlayers: homeTeamPlayers,
+                      );
+                      isStartingGameState.value = false;
+                    },
+                  ),
           ],
         ),
       ],

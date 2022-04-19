@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/admin/player_manager/player_manager_view.dart';
+import 'package:kasado/ui/admin/stat_manager/components/score_board_view.dart';
 import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
 import 'package:kasado/ui/admin/court_manager/courts_owned_view.dart';
@@ -61,6 +62,16 @@ class AppRouter {
                 isDone: (params['isDone'] as String) == 'true',
               );
             },
+            routes: [
+              GoRoute(
+                name: Routes.scoreBoardView,
+                path: 'score-board-view',
+                builder: (context, state) {
+                  final courtSlot = state.extra as CourtSlot;
+                  return ScoreBoardView(courtSlot: courtSlot);
+                },
+              ),
+            ],
           ),
         ],
       ),
@@ -133,4 +144,5 @@ class Routes {
   static const notifsView = 'notifs_view';
   static const feedbacksView = 'feedbacks_view';
   static const statLeadersView = 'stat_leaders_view';
+  static const scoreBoardView = 'score_board_view';
 }

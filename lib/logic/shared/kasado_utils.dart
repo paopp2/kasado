@@ -150,7 +150,10 @@ class KasadoUtils {
     return number.toStringAsFixed(1);
   }
 
-  String getFormattedRemainingTime(Duration remaining) {
+  String getFormattedRemainingTime({
+    required Duration remaining,
+    bool showMillis = false,
+  }) {
     final twoDigitFormat = NumberFormat('00');
     final minRemaining =
         twoDigitFormat.format(remaining.inMinutes.remainder(60));
@@ -158,6 +161,7 @@ class KasadoUtils {
         twoDigitFormat.format(remaining.inSeconds.remainder(60));
     final msRemaining =
         twoDigitFormat.format(remaining.inMilliseconds.remainder(100));
-    return "$minRemaining : $secRemaining : $msRemaining";
+    return "$minRemaining : $secRemaining" +
+        ((showMillis) ? " : $msRemaining" : '');
   }
 }

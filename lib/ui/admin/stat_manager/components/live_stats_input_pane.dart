@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
@@ -30,7 +32,18 @@ class LiveStatsInputPane extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     child: const Text(
-                      'CANCEL GAME',
+                      'ENLARGE',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () => context.pushNamed(
+                      Routes.scoreBoardView,
+                      params: {'courtId': courtSlot.courtId},
+                      extra: courtSlot,
+                    ),
+                  ),
+                  ElevatedButton(
+                    child: const Text(
+                      'CANCEL',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: null, // To avoid accidental presses
@@ -41,7 +54,7 @@ class LiveStatsInputPane extends StatelessWidget {
                   ),
                   ElevatedButton(
                     child: const Text(
-                      'END GAME',
+                      'END',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: null, // To avoid accidental presses
@@ -79,6 +92,7 @@ class LiveStatsInputPane extends StatelessWidget {
                 controller: controller,
                 courtSlot: courtSlot,
                 gameStats: gameStats,
+                showMillis: true,
               ),
             ],
           ),
