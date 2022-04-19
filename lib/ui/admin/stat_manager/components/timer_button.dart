@@ -15,11 +15,15 @@ class TimerButton extends HookConsumerWidget {
     required this.controller,
     required this.courtSlot,
     required this.gameStats,
+    this.showMillis = true,
+    this.displayTimeOnly = false,
   }) : super(key: key);
 
   final GameStatController controller;
   final CourtSlot courtSlot;
   final GameStats gameStats;
+  final bool showMillis;
+  final bool displayTimeOnly;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +31,8 @@ class TimerButton extends HookConsumerWidget {
     final remainingOnPaused = gameStats.remainingOnPaused;
     final endsAt = gameStats.endsAt!;
     final isPaused = gameStats.isPaused;
-    final remainingTimeState = useState("15 : 00 : 00");
+    final remainingTimeState =
+        useState((showMillis) ? "15 : 00 : 00" : "15 : 00");
 
     useEffect(() {
       final _timer = Timer.periodic(const Duration(milliseconds: 5), (timer) {
@@ -37,10 +42,12 @@ class TimerButton extends HookConsumerWidget {
         final durationDifference = endsAt.difference(now);
         if (durationDifference <= Duration.zero) {
           timer.cancel();
-          remainingTimeState.value = "00 : 00 : 00";
+          remainingTimeState.value = (showMillis) ? "00 : 00 : 00" : "00 : 00";
         } else {
-          remainingTimeState.value =
-              utils.getFormattedRemainingTime(durationDifference);
+          remainingTimeState.value = utils.getFormattedRemainingTime(
+            remaining: durationDifference,
+            showMillis: showMillis,
+          );
         }
       });
       return _timer.cancel;
@@ -49,20 +56,25 @@ class TimerButton extends HookConsumerWidget {
     return TextButton(
       child: Text(
         (isPaused)
-            ? utils.getFormattedRemainingTime(remainingOnPaused!)
+            ? utils.getFormattedRemainingTime(
+                remaining: remainingOnPaused!,
+                showMillis: showMillis,
+              )
             : remainingTimeState.value,
         style: GoogleFonts.roboto(
           fontSize: 22,
-          color: (isPaused) ? Colors.red.shade500 : Colors.green.shade500,
+          color: (isPaused) ? Colors.grey.shade500 : Colors.green.shade500,
         ),
       ),
-      onPressed: () {
-        controller.pauseOrPlayGameClock(
-          courtSlot: courtSlot,
-          gameStats: gameStats,
-          isPaused: isPaused,
-        );
-      },
+      onPressed: (displayTimeOnly)
+          ? null
+          : () {
+              controller.pauseOrPlayGameClock(
+                courtSlot: courtSlot,
+                gameStats: gameStats,
+                isPaused: isPaused,
+              );
+            },
     );
   }
 }

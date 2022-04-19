@@ -79,6 +79,7 @@ class LiveStatsInputPane extends StatelessWidget {
                 controller: controller,
                 courtSlot: courtSlot,
                 gameStats: gameStats,
+                showMillis: true,
               ),
             ],
           ),

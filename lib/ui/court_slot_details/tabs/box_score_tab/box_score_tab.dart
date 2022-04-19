@@ -6,6 +6,7 @@ import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/ui/admin/stat_manager/components/timer_button.dart';
 import 'package:kasado/ui/court_slot_details/tabs/box_score_tab/components/slot_game_selector_row.dart';
 import 'package:kasado/ui/court_slot_details/tabs/box_score_tab/components/team_stat_table.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
@@ -73,6 +74,15 @@ class BoxScoreTab extends HookConsumerWidget {
                                   ),
                                 ],
                               ),
+                              if (gameStats.isLive) ...[
+                                TimerButton(
+                                  controller: controller,
+                                  courtSlot: courtSlot,
+                                  gameStats: gameStats,
+                                  showMillis: false,
+                                  displayTimeOnly: true,
+                                ),
+                              ],
                               Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
