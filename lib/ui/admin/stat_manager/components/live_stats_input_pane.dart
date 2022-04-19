@@ -30,7 +30,14 @@ class LiveStatsInputPane extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     child: const Text(
-                      'CANCEL GAME',
+                      'ENLARGE',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {},
+                  ),
+                  ElevatedButton(
+                    child: const Text(
+                      'CANCEL',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: null, // To avoid accidental presses
@@ -41,7 +48,7 @@ class LiveStatsInputPane extends StatelessWidget {
                   ),
                   ElevatedButton(
                     child: const Text(
-                      'END GAME',
+                      'END',
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: null, // To avoid accidental presses
