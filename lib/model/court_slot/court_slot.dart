@@ -14,6 +14,8 @@ class CourtSlot with _$CourtSlot {
     required String slotId,
     required String courtId,
     required TimeRange timeRange,
+    @Default('Pitogo Basketball Court') String courtName,
+    @Default(30) double ticketPrice,
     @Default([]) List<KasadoUser> players,
     @Default(false) bool isClosedByAdmin,
     @Default(null) String? liveGameStatsId,

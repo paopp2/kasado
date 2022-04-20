@@ -84,7 +84,6 @@ class UserInfoRepository {
   Future<void> createUserTicket({
     required KasadoUserInfo userInfo,
     required CourtSlot courtSlot,
-    required String courtName,
   }) async {
     final userTickets = [...userInfo.tickets];
 
@@ -95,7 +94,6 @@ class UserInfoRepository {
     userTickets.add(Ticket(
       id: "${courtSlot.courtId}|${courtSlot.slotId}",
       courtSlot: courtSlot,
-      courtName: courtName,
     ));
 
     // Sort tickets from earliest to latest
