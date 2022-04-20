@@ -95,6 +95,17 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
     required Notif notif,
     bool? isLiked,
   }) async {
+    final String action = (isLiked == null)
+        ? "Cancelled"
+        : (isLiked)
+            ? "Liked"
+            : "Disliked";
+    read(mixpanel)!.track(
+      "$action notif",
+      properties: {
+        "notifTitle": notif.title,
+      },
+    );
     await notifRepo.setUserNotifFeedbackState(
       userId: currentUser.id,
       notif: notif as NotifObject,
