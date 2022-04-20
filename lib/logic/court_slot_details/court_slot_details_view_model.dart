@@ -89,7 +89,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
 
   CourtSlot getBaseCourtSlot({
     required Appointment appointment,
-    required String courtId,
+    required Court court,
     required List<CourtSlot> courtSlots,
   }) {
     final aTimeRange = TimeRange(
@@ -101,7 +101,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
     return courtSlots.singleWhere(
       (slot) => slot.slotId == appSlotId,
       orElse: () => CourtSlot(
-        courtId: courtId,
+        courtId: court.id,
+        courtName: court.name,
         slotId: CourtSlot.getIdFromTimeRange(aTimeRange),
         timeRange: aTimeRange,
       ),
