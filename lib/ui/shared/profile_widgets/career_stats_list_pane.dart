@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/overview_stats/overview_stats.dart';
 import 'package:kasado/ui/shared/profile_widgets/player_stat_tile.dart';
 
-class CareerStatsListPane extends StatelessWidget {
+class CareerStatsListPane extends HookConsumerWidget {
   const CareerStatsListPane({
     Key? key,
     required this.userStats,
@@ -14,7 +17,12 @@ class CareerStatsListPane extends StatelessWidget {
   final KasadoUtils utils;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(() {
+      ref.read(mixpanel)!.track("Viewed Career Stats");
+      return;
+    }, []);
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 40,

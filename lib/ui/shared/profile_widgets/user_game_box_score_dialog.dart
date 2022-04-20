@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -24,6 +26,20 @@ class UserGameBoxScoreDialog extends HookConsumerWidget {
     final courtSlot = userGameStats.courtSlot;
     final gameStatsStream = ref.watch(slotGameStatsStreamProvider(
         "${courtSlot.courtId}|${courtSlot.slotId}|${userGameStats.id!}"));
+
+    useEffect(() {
+      ref.read(mixpanel)!.track(
+        "Viewed UserGameBoxScoreDialog",
+        properties: {
+          "courtName": courtSlot.courtName,
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            courtSlot.timeRange,
+            showDate: true,
+          ),
+        },
+      );
+      return;
+    }, []);
 
     return SizedBox(
       height: constraints.maxHeight * 0.8,

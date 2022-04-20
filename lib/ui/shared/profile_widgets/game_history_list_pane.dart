@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/profile/user_profile_state.dart';
 import 'package:kasado/logic/profile/user_profile_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -22,6 +24,11 @@ class GameHistoryListPane extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userGameStatsStream = ref.watch(userStatsStreamProvider(userId));
     final utils = ref.watch(kasadoUtilsProvider);
+
+    useEffect(() {
+      ref.read(mixpanel)!.track("Viewed Game History");
+      return;
+    }, []);
 
     return userGameStatsStream.when(
       error: (e, _) => Text(e.toString()),
