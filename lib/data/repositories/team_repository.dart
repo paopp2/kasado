@@ -77,7 +77,6 @@ class TeamRepository {
     teamTickets.add(Ticket(
       id: "${courtSlot.courtId}|${courtSlot.slotId}",
       courtSlot: courtSlot,
-      courtName: courtName,
     ));
 
     // Sort tickets from earliest to latest

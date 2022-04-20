@@ -50,7 +50,7 @@ class EnlargedTicketDialog extends StatelessWidget {
             ),
             const Divider(),
             Text(
-              ticket.courtName,
+              ticket.courtSlot.courtName,
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
