@@ -103,6 +103,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
       orElse: () => CourtSlot(
         courtId: court.id,
         courtName: court.name,
+        ticketPrice: court.ticketPrice,
         slotId: CourtSlot.getIdFromTimeRange(aTimeRange),
         timeRange: aTimeRange,
       ),
