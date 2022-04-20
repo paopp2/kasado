@@ -36,6 +36,7 @@ dependencies:
   salomon_bottom_bar: ^3.3.0
   google_nav_bar: ^5.0.6
   animated_flip_counter: ^0.2.4
+  tab_indicator_styler: ^2.0.0
   # Utils
   dartz: ^0.10.1
   fluttertoast: ^8.0.8

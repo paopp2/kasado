@@ -7,6 +7,7 @@ part of 'stats.dart';
 // **************************************************************************
 
 _$_Stats _$$_StatsFromJson(Map<String, dynamic> json) => _$_Stats(
+      id: json['id'] as String?,
       player: KasadoUser.fromJson(json['player'] as Map<String, dynamic>),
       courtSlot: CourtSlot.fromJson(json['courtSlot'] as Map<String, dynamic>),
       threePA: json['threePA'] as int? ?? 0,
@@ -24,6 +25,7 @@ _$_Stats _$$_StatsFromJson(Map<String, dynamic> json) => _$_Stats(
     );
 
 Map<String, dynamic> _$$_StatsToJson(_$_Stats instance) => <String, dynamic>{
+      'id': instance.id,
       'player': instance.player.toJson(),
       'courtSlot': instance.courtSlot.toJson(),
       'threePA': instance.threePA,

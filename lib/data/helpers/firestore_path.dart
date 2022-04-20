@@ -11,6 +11,7 @@ class FirestorePath {
   static String colGameStats(String courtId, String slotId) =>
       'courts/$courtId/court_slots/$slotId/stats';
   static String colFeedbacks() => 'feedbacks';
+  static String colUserStats(String userId) => 'user_info/$userId/user_stats';
 
   // DOCUMENT paths
   static String docAppMeta() => 'app_meta/app_meta';
