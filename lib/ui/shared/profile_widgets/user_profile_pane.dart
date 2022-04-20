@@ -6,7 +6,8 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/ui/home/components/pondo_info_dialog.dart';
-import 'package:kasado/ui/shared/profile_widgets/player_stat_tile.dart';
+import 'package:kasado/ui/shared/profile_widgets/career_stats_list_pane.dart';
+import 'package:kasado/ui/shared/profile_widgets/game_history_list_pane.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class UserProfilePane extends HookConsumerWidget {
@@ -101,96 +102,11 @@ class UserProfilePane extends HookConsumerWidget {
                         child: TabBarView(
                           controller: tabController,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 40,
-                                vertical: 8,
-                              ),
-                              child: ListView(
-                                children: [
-                                  PlayerStatTile(
-                                    statDescription: "Standing",
-                                    statValue:
-                                        "${userStats.totalWins} - ${userStats.totalLosses}",
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Win %",
-                                    statValue: utils.getPercentageFormat(
-                                      userStats.winPercent,
-                                    ),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Points Per Game",
-                                    statValue: utils.getDoubleFormat(
-                                      userStats.avePointsPerGame,
-                                    ),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Assists Per Game",
-                                    statValue: utils.getDoubleFormat(
-                                      userStats.aveAssistsPerGame,
-                                    ),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Rebounds Per Game",
-                                    statValue: utils.getDoubleFormat(
-                                      userStats.aveReboundsPerGame,
-                                    ),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Blocks Per Game",
-                                    statValue: utils.getDoubleFormat(
-                                      userStats.aveBlocksPerGame,
-                                    ),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Steals Per Game",
-                                    statValue: utils.getDoubleFormat(
-                                      userStats.aveStlPerGame,
-                                    ),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Total Points",
-                                    statValue: userStats.totalPoints.toString(),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Total Assists",
-                                    statValue: userStats.totalAst.toString(),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Total Rebounds",
-                                    statValue:
-                                        userStats.totalRebounds.toString(),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Total Blocks",
-                                    statValue: userStats.totalBlk.toString(),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Total Steals",
-                                    statValue: userStats.totalStl.toString(),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Average FG%",
-                                    statValue: utils.getPercentageFormat(
-                                        userStats.aveFgPercent),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Average 3PT%",
-                                    statValue: utils.getPercentageFormat(
-                                      userStats.aveThreePtPercent,
-                                    ),
-                                  ),
-                                  PlayerStatTile(
-                                    statDescription: "Average FT%",
-                                    statValue: utils.getPercentageFormat(
-                                      userStats.aveFtPercent,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            CareerStatsListPane(
+                              userStats: userStats,
+                              utils: utils,
                             ),
-                            Container(color: Colors.green),
+                            const GameHistoryListPane(),
                           ],
                         ),
                       ),
