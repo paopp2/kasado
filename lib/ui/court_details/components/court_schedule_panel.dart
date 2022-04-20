@@ -72,7 +72,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
                   constraints: constraints,
                   courtSlot: model.getBaseCourtSlot(
                     appointment: app,
-                    courtId: court.id,
+                    court: court,
                     courtSlots: courtSlots,
                   ),
                   isAdmin: isAdmin,

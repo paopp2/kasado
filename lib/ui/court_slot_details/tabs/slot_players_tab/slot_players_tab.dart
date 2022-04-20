@@ -92,7 +92,6 @@ class SlotPlayersTab extends HookConsumerWidget {
                     context: context,
                     courtSlot: courtSlot,
                     closeCourt: !courtSlot.isClosedByAdmin,
-                    courtTicketPrice: court.ticketPrice,
                   ),
                 ),
               ],

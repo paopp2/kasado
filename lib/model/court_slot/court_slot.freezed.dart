@@ -26,6 +26,8 @@ class _$CourtSlotTearOff {
       {required String slotId,
       required String courtId,
       required TimeRange timeRange,
+      String courtName = 'Pitogo Basketball Court',
+      double ticketPrice = 69,
       List<KasadoUser> players = const [],
       bool isClosedByAdmin = false,
       String? liveGameStatsId = null,
@@ -36,6 +38,8 @@ class _$CourtSlotTearOff {
       slotId: slotId,
       courtId: courtId,
       timeRange: timeRange,
+      courtName: courtName,
+      ticketPrice: ticketPrice,
       players: players,
       isClosedByAdmin: isClosedByAdmin,
       liveGameStatsId: liveGameStatsId,
@@ -58,6 +62,8 @@ mixin _$CourtSlot {
   String get slotId => throw _privateConstructorUsedError;
   String get courtId => throw _privateConstructorUsedError;
   TimeRange get timeRange => throw _privateConstructorUsedError;
+  String get courtName => throw _privateConstructorUsedError;
+  double get ticketPrice => throw _privateConstructorUsedError;
   List<KasadoUser> get players => throw _privateConstructorUsedError;
   bool get isClosedByAdmin => throw _privateConstructorUsedError;
   String? get liveGameStatsId => throw _privateConstructorUsedError;
@@ -82,6 +88,8 @@ abstract class $CourtSlotCopyWith<$Res> {
       {String slotId,
       String courtId,
       TimeRange timeRange,
+      String courtName,
+      double ticketPrice,
       List<KasadoUser> players,
       bool isClosedByAdmin,
       String? liveGameStatsId,
@@ -105,6 +113,8 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
     Object? slotId = freezed,
     Object? courtId = freezed,
     Object? timeRange = freezed,
+    Object? courtName = freezed,
+    Object? ticketPrice = freezed,
     Object? players = freezed,
     Object? isClosedByAdmin = freezed,
     Object? liveGameStatsId = freezed,
@@ -125,6 +135,14 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
           ? _value.timeRange
           : timeRange // ignore: cast_nullable_to_non_nullable
               as TimeRange,
+      courtName: courtName == freezed
+          ? _value.courtName
+          : courtName // ignore: cast_nullable_to_non_nullable
+              as String,
+      ticketPrice: ticketPrice == freezed
+          ? _value.ticketPrice
+          : ticketPrice // ignore: cast_nullable_to_non_nullable
+              as double,
       players: players == freezed
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
@@ -170,6 +188,8 @@ abstract class _$CourtSlotCopyWith<$Res> implements $CourtSlotCopyWith<$Res> {
       {String slotId,
       String courtId,
       TimeRange timeRange,
+      String courtName,
+      double ticketPrice,
       List<KasadoUser> players,
       bool isClosedByAdmin,
       String? liveGameStatsId,
@@ -195,6 +215,8 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
     Object? slotId = freezed,
     Object? courtId = freezed,
     Object? timeRange = freezed,
+    Object? courtName = freezed,
+    Object? ticketPrice = freezed,
     Object? players = freezed,
     Object? isClosedByAdmin = freezed,
     Object? liveGameStatsId = freezed,
@@ -215,6 +237,14 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
           ? _value.timeRange
           : timeRange // ignore: cast_nullable_to_non_nullable
               as TimeRange,
+      courtName: courtName == freezed
+          ? _value.courtName
+          : courtName // ignore: cast_nullable_to_non_nullable
+              as String,
+      ticketPrice: ticketPrice == freezed
+          ? _value.ticketPrice
+          : ticketPrice // ignore: cast_nullable_to_non_nullable
+              as double,
       players: players == freezed
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
@@ -250,6 +280,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       {required this.slotId,
       required this.courtId,
       required this.timeRange,
+      this.courtName = 'Pitogo Basketball Court',
+      this.ticketPrice = 69,
       this.players = const [],
       this.isClosedByAdmin = false,
       this.liveGameStatsId = null,
@@ -267,6 +299,12 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   final String courtId;
   @override
   final TimeRange timeRange;
+  @JsonKey()
+  @override
+  final String courtName;
+  @JsonKey()
+  @override
+  final double ticketPrice;
   @JsonKey()
   @override
   final List<KasadoUser> players;
@@ -288,7 +326,7 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CourtSlot(slotId: $slotId, courtId: $courtId, timeRange: $timeRange, players: $players, isClosedByAdmin: $isClosedByAdmin, liveGameStatsId: $liveGameStatsId, stageHomeTeamPlayers: $stageHomeTeamPlayers, stageAwayTeamPlayers: $stageAwayTeamPlayers, slotInfoPerPlayer: $slotInfoPerPlayer)';
+    return 'CourtSlot(slotId: $slotId, courtId: $courtId, timeRange: $timeRange, courtName: $courtName, ticketPrice: $ticketPrice, players: $players, isClosedByAdmin: $isClosedByAdmin, liveGameStatsId: $liveGameStatsId, stageHomeTeamPlayers: $stageHomeTeamPlayers, stageAwayTeamPlayers: $stageAwayTeamPlayers, slotInfoPerPlayer: $slotInfoPerPlayer)';
   }
 
   @override
@@ -299,6 +337,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('slotId', slotId))
       ..add(DiagnosticsProperty('courtId', courtId))
       ..add(DiagnosticsProperty('timeRange', timeRange))
+      ..add(DiagnosticsProperty('courtName', courtName))
+      ..add(DiagnosticsProperty('ticketPrice', ticketPrice))
       ..add(DiagnosticsProperty('players', players))
       ..add(DiagnosticsProperty('isClosedByAdmin', isClosedByAdmin))
       ..add(DiagnosticsProperty('liveGameStatsId', liveGameStatsId))
@@ -315,6 +355,9 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.slotId, slotId) &&
             const DeepCollectionEquality().equals(other.courtId, courtId) &&
             const DeepCollectionEquality().equals(other.timeRange, timeRange) &&
+            const DeepCollectionEquality().equals(other.courtName, courtName) &&
+            const DeepCollectionEquality()
+                .equals(other.ticketPrice, ticketPrice) &&
             const DeepCollectionEquality().equals(other.players, players) &&
             const DeepCollectionEquality()
                 .equals(other.isClosedByAdmin, isClosedByAdmin) &&
@@ -334,6 +377,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(slotId),
       const DeepCollectionEquality().hash(courtId),
       const DeepCollectionEquality().hash(timeRange),
+      const DeepCollectionEquality().hash(courtName),
+      const DeepCollectionEquality().hash(ticketPrice),
       const DeepCollectionEquality().hash(players),
       const DeepCollectionEquality().hash(isClosedByAdmin),
       const DeepCollectionEquality().hash(liveGameStatsId),
@@ -357,6 +402,8 @@ abstract class _CourtSlot extends CourtSlot {
       {required String slotId,
       required String courtId,
       required TimeRange timeRange,
+      String courtName,
+      double ticketPrice,
       List<KasadoUser> players,
       bool isClosedByAdmin,
       String? liveGameStatsId,
@@ -374,6 +421,10 @@ abstract class _CourtSlot extends CourtSlot {
   String get courtId;
   @override
   TimeRange get timeRange;
+  @override
+  String get courtName;
+  @override
+  double get ticketPrice;
   @override
   List<KasadoUser> get players;
   @override

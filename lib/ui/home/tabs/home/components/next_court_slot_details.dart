@@ -65,6 +65,8 @@ class NextCourtSlotDetails extends HookConsumerWidget {
         final nextCourtSlot = courtSlot ??
             CourtSlot(
               courtId: court.id,
+              courtName: court.name,
+              ticketPrice: court.ticketPrice,
               slotId: CourtSlot.getIdFromTimeRange(nextTimeSlot),
               timeRange: TimeRange(
                 startsAt: nextTimeSlot.startsAt,

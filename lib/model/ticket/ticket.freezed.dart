@@ -22,13 +22,9 @@ Ticket _$TicketFromJson(Map<String, dynamic> json) {
 class _$TicketTearOff {
   const _$TicketTearOff();
 
-  _Ticket call(
-      {required String id,
-      required String courtName,
-      required CourtSlot courtSlot}) {
+  _Ticket call({required String id, required CourtSlot courtSlot}) {
     return _Ticket(
       id: id,
-      courtName: courtName,
       courtSlot: courtSlot,
     );
   }
@@ -44,7 +40,6 @@ const $Ticket = _$TicketTearOff();
 /// @nodoc
 mixin _$Ticket {
   String get id => throw _privateConstructorUsedError;
-  String get courtName => throw _privateConstructorUsedError;
   CourtSlot get courtSlot => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,7 +51,7 @@ mixin _$Ticket {
 abstract class $TicketCopyWith<$Res> {
   factory $TicketCopyWith(Ticket value, $Res Function(Ticket) then) =
       _$TicketCopyWithImpl<$Res>;
-  $Res call({String id, String courtName, CourtSlot courtSlot});
+  $Res call({String id, CourtSlot courtSlot});
 
   $CourtSlotCopyWith<$Res> get courtSlot;
 }
@@ -72,17 +67,12 @@ class _$TicketCopyWithImpl<$Res> implements $TicketCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? courtName = freezed,
     Object? courtSlot = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      courtName: courtName == freezed
-          ? _value.courtName
-          : courtName // ignore: cast_nullable_to_non_nullable
               as String,
       courtSlot: courtSlot == freezed
           ? _value.courtSlot
@@ -104,7 +94,7 @@ abstract class _$TicketCopyWith<$Res> implements $TicketCopyWith<$Res> {
   factory _$TicketCopyWith(_Ticket value, $Res Function(_Ticket) then) =
       __$TicketCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String courtName, CourtSlot courtSlot});
+  $Res call({String id, CourtSlot courtSlot});
 
   @override
   $CourtSlotCopyWith<$Res> get courtSlot;
@@ -122,17 +112,12 @@ class __$TicketCopyWithImpl<$Res> extends _$TicketCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? courtName = freezed,
     Object? courtSlot = freezed,
   }) {
     return _then(_Ticket(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      courtName: courtName == freezed
-          ? _value.courtName
-          : courtName // ignore: cast_nullable_to_non_nullable
               as String,
       courtSlot: courtSlot == freezed
           ? _value.courtSlot
@@ -145,9 +130,7 @@ class __$TicketCopyWithImpl<$Res> extends _$TicketCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Ticket extends _Ticket with DiagnosticableTreeMixin {
-  const _$_Ticket(
-      {required this.id, required this.courtName, required this.courtSlot})
-      : super._();
+  const _$_Ticket({required this.id, required this.courtSlot}) : super._();
 
   factory _$_Ticket.fromJson(Map<String, dynamic> json) =>
       _$$_TicketFromJson(json);
@@ -155,13 +138,11 @@ class _$_Ticket extends _Ticket with DiagnosticableTreeMixin {
   @override
   final String id;
   @override
-  final String courtName;
-  @override
   final CourtSlot courtSlot;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Ticket(id: $id, courtName: $courtName, courtSlot: $courtSlot)';
+    return 'Ticket(id: $id, courtSlot: $courtSlot)';
   }
 
   @override
@@ -170,7 +151,6 @@ class _$_Ticket extends _Ticket with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'Ticket'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('courtName', courtName))
       ..add(DiagnosticsProperty('courtSlot', courtSlot));
   }
 
@@ -180,7 +160,6 @@ class _$_Ticket extends _Ticket with DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is _Ticket &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.courtName, courtName) &&
             const DeepCollectionEquality().equals(other.courtSlot, courtSlot));
   }
 
@@ -188,7 +167,6 @@ class _$_Ticket extends _Ticket with DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(courtName),
       const DeepCollectionEquality().hash(courtSlot));
 
   @JsonKey(ignore: true)
@@ -203,18 +181,14 @@ class _$_Ticket extends _Ticket with DiagnosticableTreeMixin {
 }
 
 abstract class _Ticket extends Ticket {
-  const factory _Ticket(
-      {required String id,
-      required String courtName,
-      required CourtSlot courtSlot}) = _$_Ticket;
+  const factory _Ticket({required String id, required CourtSlot courtSlot}) =
+      _$_Ticket;
   const _Ticket._() : super._();
 
   factory _Ticket.fromJson(Map<String, dynamic> json) = _$_Ticket.fromJson;
 
   @override
   String get id;
-  @override
-  String get courtName;
   @override
   CourtSlot get courtSlot;
   @override

@@ -124,7 +124,6 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                         slotHasPlayer: courtSlot.hasPlayer(
                           currentUser,
                         ),
-                        court: court,
                         teamId: currentUserInfo.teamId,
                         isTeamCaptain: currentUserInfo.isTeamCaptain,
                         onUserDontHaveEnoughPondo: () async =>
@@ -141,7 +140,6 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                         ? () => model.joinAsAnotherPlayer(
                               context: context,
                               baseCourtSlot: courtSlot,
-                              court: court,
                               onNotEnoughPondo: () =>
                                   _showPondoImplementationAnnouncementDialog(),
                             )

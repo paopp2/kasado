@@ -10,7 +10,6 @@ class Ticket with _$Ticket {
   const Ticket._();
   const factory Ticket({
     required String id,
-    required String courtName,
     required CourtSlot courtSlot,
   }) = _Ticket;
 

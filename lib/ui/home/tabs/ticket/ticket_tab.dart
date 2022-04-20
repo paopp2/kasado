@@ -102,7 +102,7 @@ class TicketTab extends HookConsumerWidget {
                                               CrossAxisAlignment.stretch,
                                           children: [
                                             Text(
-                                              ticket.courtName,
+                                              ticket.courtSlot.courtName,
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                               ),

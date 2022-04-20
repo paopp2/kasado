@@ -79,8 +79,6 @@ class CourtSlotRepository {
   Future<void> addPlayerToCourtSlot({
     required KasadoUser player,
     required CourtSlot courtSlot,
-    required double courtTicketPrice,
-    required String courtName,
     // TODO: The Future<bool> refers to user's decision whether to proceed without
     // pondo or otherwise. In the future user should not be able to proceed without pondo
     required Future<bool> Function() onNotEnoughPondo,
@@ -89,12 +87,12 @@ class CourtSlotRepository {
     final userInfo = await userInfoRepo.getUserInfo(player.id);
     // If slot is not full and user is not reserved at another slot, check
     // if user has enough pondo to pay for joining
-    if (userInfo!.hasEnoughPondoToPay(courtTicketPrice)) {
+    if (userInfo!.hasEnoughPondoToPay(courtSlot.ticketPrice)) {
       // If user has enough pondo, use pondo to pay for court ticket
       userInfoRepo.addOrDeductPondo(
         currentUserInfo: userInfo,
         isAdd: false,
-        pondo: courtTicketPrice,
+        pondo: courtSlot.ticketPrice,
       );
       paidUser = userInfo.user.copyWith(hasPaid: true);
     } else {
@@ -112,7 +110,6 @@ class CourtSlotRepository {
 
     // Create a new ticket for joined courtSlot
     await userInfoRepo.createUserTicket(
-      courtName: courtName,
       courtSlot: courtSlot,
       userInfo: userInfo,
     );
@@ -121,14 +118,13 @@ class CourtSlotRepository {
   Future<void> removePlayerFromCourtSlot({
     required KasadoUser player,
     required CourtSlot courtSlot,
-    required double courtTicketPrice,
   }) async {
     final baseUserInfo = await userInfoRepo.getUserInfo(player.id);
     if (player.hasPaid) {
       await userInfoRepo.addOrDeductPondo(
         currentUserInfo: baseUserInfo!,
         isAdd: true,
-        pondo: courtTicketPrice,
+        pondo: courtSlot.ticketPrice,
       );
     }
 
@@ -156,8 +152,6 @@ class CourtSlotRepository {
     required String teamId,
     required KasadoUserInfo teamCaptainInfo,
     required CourtSlot courtSlot,
-    required String courtName,
-    required double courtTicketPrice,
     required VoidCallback onTeamCantFit,
     // TODO: The Future<bool> refers to teamCaptain's decision whether to
     // proceed lacking pondo or otherwise. In the future user should not be able
@@ -174,8 +168,8 @@ class CourtSlotRepository {
       );
 
       // Check if every player in the team has enough pondo before proceeding
-      final playersWhoLackPondo = playerUserInfos.where(
-          (playerInfo) => !playerInfo.hasEnoughPondoToPay(courtTicketPrice));
+      final playersWhoLackPondo = playerUserInfos.where((playerInfo) =>
+          !playerInfo.hasEnoughPondoToPay(courtSlot.ticketPrice));
       if (playersWhoLackPondo.isNotEmpty) {
         final isProceed =
             await onNotAllHasEnoughPondo(playersWhoLackPondo.toList());
@@ -187,12 +181,12 @@ class CourtSlotRepository {
       List<KasadoUser> _updatedTeamPlayers = [];
       for (final userInfo in playerUserInfos) {
         bool _hasPaid = false;
-        if (userInfo.hasEnoughPondoToPay(courtTicketPrice)) {
+        if (userInfo.hasEnoughPondoToPay(courtSlot.ticketPrice)) {
           _hasPaid = true;
           await userInfoRepo.addOrDeductPondo(
             currentUserInfo: userInfo,
             isAdd: false,
-            pondo: courtTicketPrice,
+            pondo: courtSlot.ticketPrice,
           );
         }
         _updatedTeamPlayers.add(userInfo.user.copyWith(
@@ -214,7 +208,6 @@ class CourtSlotRepository {
         teamCaptainInfo: teamCaptainInfo,
         team: _team,
         courtSlot: courtSlot,
-        courtName: courtName,
       );
     } else {
       onTeamCantFit();
@@ -225,8 +218,6 @@ class CourtSlotRepository {
     required String teamId,
     required KasadoUserInfo teamCaptainInfo,
     required CourtSlot courtSlot,
-    required String courtName,
-    required double courtTicketPrice,
   }) async {
     final _team = await teamRepo.getTeam(teamId);
     final _teamPlayerIds = _team!.players.map((u) => u.id).toList();
@@ -253,7 +244,7 @@ class CourtSlotRepository {
         await userInfoRepo.addOrDeductPondo(
           currentUserInfo: baseUserInfo!,
           isAdd: true,
-          pondo: courtTicketPrice,
+          pondo: courtSlot.ticketPrice,
         );
       }
     }
@@ -273,7 +264,6 @@ class CourtSlotRepository {
   Future<void> setCourtSlotClosed({
     required CourtSlot courtSlot,
     required bool isCourtClosed,
-    required double courtTicketPrice,
   }) async {
     if (isCourtClosed) {
       // Convert courtSlot players to a map with their respective ID as the key
@@ -299,7 +289,7 @@ class CourtSlotRepository {
           await userInfoRepo.addOrDeductPondo(
             currentUserInfo: userInfo,
             isAdd: true,
-            pondo: courtTicketPrice,
+            pondo: courtSlot.ticketPrice,
           );
         }
 
