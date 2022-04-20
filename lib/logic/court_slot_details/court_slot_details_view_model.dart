@@ -128,8 +128,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
     await addToCourtSlot(
       userInfo: playerUserInfo,
       baseCourtSlot: baseCourtSlot,
-      courtTicketPrice: court.ticketPrice,
-      courtName: court.name,
       onNotEnoughPondo: onNotEnoughPondo,
     );
   }
@@ -173,8 +171,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
         await addToCourtSlot(
           userInfo: currentUserInfo!,
           baseCourtSlot: baseCourtSlot,
-          courtTicketPrice: court.ticketPrice,
-          courtName: court.name,
           onNotEnoughPondo: onUserDontHaveEnoughPondo,
         );
       }
@@ -194,8 +190,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
           teamCaptainInfo: currentUserInfo!,
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
-          courtName: court.name,
-          courtTicketPrice: court.ticketPrice,
         );
       } else {
         read(mixpanel)!.track("Join a courtSlot", properties: {
@@ -209,10 +203,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
         await addTeamToCourtSlot(
           teamId: teamId,
           teamCaptainInfo: currentUserInfo!,
-          courtName: court.name,
           isTeamCaptain: isTeamCaptain,
           baseCourtSlot: baseCourtSlot,
-          courtTicketPrice: court.ticketPrice,
           onNotAllHasEnoughPondo: onNotAllHasEnoughPondo,
         );
       }
@@ -222,8 +214,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
   Future<void> addToCourtSlot({
     required KasadoUserInfo userInfo,
     required CourtSlot baseCourtSlot,
-    required double courtTicketPrice,
-    required String courtName,
     required Future<bool> Function() onNotEnoughPondo,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
@@ -236,8 +226,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
         await courtSlotRepo.addPlayerToCourtSlot(
           courtSlot: baseCourtSlot,
           player: userInfo.user,
-          courtTicketPrice: courtTicketPrice,
-          courtName: courtName,
           onNotEnoughPondo: onNotEnoughPondo,
         );
       },
@@ -255,7 +243,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
     await courtSlotRepo.removePlayerFromCourtSlot(
       player: player,
       courtSlot: baseCourtSlot,
-      courtTicketPrice: courtTicketPrice,
     );
   }
 
@@ -263,9 +250,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required String teamId,
     required bool isTeamCaptain,
     required KasadoUserInfo teamCaptainInfo,
-    required String courtName,
     required CourtSlot baseCourtSlot,
-    required double courtTicketPrice,
     required Future<bool> Function(List<KasadoUserInfo>) onNotAllHasEnoughPondo,
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
@@ -278,9 +263,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
           await courtSlotRepo.addTeamToCourtSlot(
             teamId: teamId,
             teamCaptainInfo: teamCaptainInfo,
-            courtName: courtName,
             courtSlot: baseCourtSlot,
-            courtTicketPrice: courtTicketPrice,
             onTeamCantFit: () => Fluttertoast.showToast(
               msg:
                   "Your team can't fit for this slot, please choose another one",
@@ -301,8 +284,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required KasadoUserInfo teamCaptainInfo,
     required bool isTeamCaptain,
     required CourtSlot baseCourtSlot,
-    required String courtName,
-    required double courtTicketPrice,
     BuildContext? context,
   }) async {
     if (isTeamCaptain) {
@@ -310,8 +291,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
         teamId: teamId,
         teamCaptainInfo: teamCaptainInfo,
         courtSlot: baseCourtSlot,
-        courtName: courtName,
-        courtTicketPrice: courtTicketPrice,
       );
       if (context != null) Navigator.pop(context);
     } else {

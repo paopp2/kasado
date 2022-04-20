@@ -84,7 +84,6 @@ class UserInfoRepository {
   Future<void> createUserTicket({
     required KasadoUserInfo userInfo,
     required CourtSlot courtSlot,
-    required String courtName,
   }) async {
     final userTickets = [...userInfo.tickets];
 

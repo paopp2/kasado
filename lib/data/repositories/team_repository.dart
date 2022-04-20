@@ -65,7 +65,6 @@ class TeamRepository {
     required KasadoUserInfo teamCaptainInfo,
     required Team team,
     required CourtSlot courtSlot,
-    required String courtName,
   }) async {
     final teamTickets = [...teamCaptainInfo.tickets];
 
