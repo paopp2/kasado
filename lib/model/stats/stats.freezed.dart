@@ -23,7 +23,8 @@ class _$StatsTearOff {
   const _$StatsTearOff();
 
   _Stats call(
-      {required KasadoUser player,
+      {String? id,
+      required KasadoUser player,
       required CourtSlot courtSlot,
       int threePA = 0,
       int threePM = 0,
@@ -38,6 +39,7 @@ class _$StatsTearOff {
       int blk = 0,
       bool? hasWonGame}) {
     return _Stats(
+      id: id,
       player: player,
       courtSlot: courtSlot,
       threePA: threePA,
@@ -65,6 +67,7 @@ const $Stats = _$StatsTearOff();
 
 /// @nodoc
 mixin _$Stats {
+  String? get id => throw _privateConstructorUsedError;
   KasadoUser get player => throw _privateConstructorUsedError;
   CourtSlot get courtSlot => throw _privateConstructorUsedError;
   int get threePA => throw _privateConstructorUsedError;
@@ -90,7 +93,8 @@ abstract class $StatsCopyWith<$Res> {
   factory $StatsCopyWith(Stats value, $Res Function(Stats) then) =
       _$StatsCopyWithImpl<$Res>;
   $Res call(
-      {KasadoUser player,
+      {String? id,
+      KasadoUser player,
       CourtSlot courtSlot,
       int threePA,
       int threePM,
@@ -119,6 +123,7 @@ class _$StatsCopyWithImpl<$Res> implements $StatsCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? player = freezed,
     Object? courtSlot = freezed,
     Object? threePA = freezed,
@@ -135,6 +140,10 @@ class _$StatsCopyWithImpl<$Res> implements $StatsCopyWith<$Res> {
     Object? hasWonGame = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       player: player == freezed
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
@@ -215,7 +224,8 @@ abstract class _$StatsCopyWith<$Res> implements $StatsCopyWith<$Res> {
       __$StatsCopyWithImpl<$Res>;
   @override
   $Res call(
-      {KasadoUser player,
+      {String? id,
+      KasadoUser player,
       CourtSlot courtSlot,
       int threePA,
       int threePM,
@@ -247,6 +257,7 @@ class __$StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? player = freezed,
     Object? courtSlot = freezed,
     Object? threePA = freezed,
@@ -263,6 +274,10 @@ class __$StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res>
     Object? hasWonGame = freezed,
   }) {
     return _then(_Stats(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       player: player == freezed
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
@@ -327,7 +342,8 @@ class __$StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Stats extends _Stats with DiagnosticableTreeMixin {
   const _$_Stats(
-      {required this.player,
+      {this.id,
+      required this.player,
       required this.courtSlot,
       this.threePA = 0,
       this.threePM = 0,
@@ -346,6 +362,8 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
   factory _$_Stats.fromJson(Map<String, dynamic> json) =>
       _$$_StatsFromJson(json);
 
+  @override
+  final String? id;
   @override
   final KasadoUser player;
   @override
@@ -388,7 +406,7 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Stats(player: $player, courtSlot: $courtSlot, threePA: $threePA, threePM: $threePM, twoPA: $twoPA, twoPM: $twoPM, ftA: $ftA, ftM: $ftM, oReb: $oReb, dReb: $dReb, ast: $ast, stl: $stl, blk: $blk, hasWonGame: $hasWonGame)';
+    return 'Stats(id: $id, player: $player, courtSlot: $courtSlot, threePA: $threePA, threePM: $threePM, twoPA: $twoPA, twoPM: $twoPM, ftA: $ftA, ftM: $ftM, oReb: $oReb, dReb: $dReb, ast: $ast, stl: $stl, blk: $blk, hasWonGame: $hasWonGame)';
   }
 
   @override
@@ -396,6 +414,7 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Stats'))
+      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('player', player))
       ..add(DiagnosticsProperty('courtSlot', courtSlot))
       ..add(DiagnosticsProperty('threePA', threePA))
@@ -417,6 +436,7 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Stats &&
+            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.player, player) &&
             const DeepCollectionEquality().equals(other.courtSlot, courtSlot) &&
             const DeepCollectionEquality().equals(other.threePA, threePA) &&
@@ -437,6 +457,7 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(player),
       const DeepCollectionEquality().hash(courtSlot),
       const DeepCollectionEquality().hash(threePA),
@@ -465,7 +486,8 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
 
 abstract class _Stats extends Stats {
   const factory _Stats(
-      {required KasadoUser player,
+      {String? id,
+      required KasadoUser player,
       required CourtSlot courtSlot,
       int threePA,
       int threePM,
@@ -483,6 +505,8 @@ abstract class _Stats extends Stats {
 
   factory _Stats.fromJson(Map<String, dynamic> json) = _$_Stats.fromJson;
 
+  @override
+  String? get id;
   @override
   KasadoUser get player;
   @override

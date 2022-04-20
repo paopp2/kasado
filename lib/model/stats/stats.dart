@@ -10,6 +10,7 @@ part 'stats.g.dart';
 class Stats with _$Stats {
   const Stats._();
   const factory Stats({
+    String? id,
     required KasadoUser player,
     required CourtSlot courtSlot,
     @Default(0) int threePA,
