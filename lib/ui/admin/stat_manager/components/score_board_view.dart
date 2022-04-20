@@ -1,3 +1,4 @@
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
@@ -33,26 +34,31 @@ class ScoreBoardView extends HookConsumerWidget {
                   ? const Center(child: Text('No game started yet'))
                   : Column(
                       children: [
+                        SizedBox(height: constraints.maxHeight * 0.05),
                         Expanded(
                           flex: 2,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text(
-                                gameStats.homeScore.toString(),
-                                style: TextStyle(
+                              AnimatedFlipCounter(
+                                value: gameStats.homeScore,
+                                curve: Curves.easeInOutBack,
+                                duration: const Duration(milliseconds: 500),
+                                textStyle: TextStyle(
                                   color: Colors.blue.shade700,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: constraints.maxHeight * 0.65,
+                                  fontSize: constraints.maxHeight * 0.6,
                                 ),
                               ),
-                              Text(
-                                gameStats.awayScore.toString(),
-                                style: TextStyle(
+                              AnimatedFlipCounter(
+                                value: gameStats.awayScore,
+                                curve: Curves.easeInOutBack,
+                                duration: const Duration(milliseconds: 500),
+                                textStyle: TextStyle(
                                   color: Colors.red.shade700,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: constraints.maxHeight * 0.65,
+                                  fontSize: constraints.maxHeight * 0.6,
                                 ),
                               ),
                             ],
