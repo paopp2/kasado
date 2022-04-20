@@ -166,7 +166,7 @@ class CourtInputDialog extends HookConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FilterChip(
-                label: const Text('9 - 11 PM'),
+                label: const Text('9 - 11 AM'),
                 selected: selectedSchedChipIndices.contains(10),
                 onSelected: (val) => controller.selectSchedChip(val, 10),
               ),

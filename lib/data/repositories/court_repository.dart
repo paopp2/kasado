@@ -18,10 +18,11 @@ class CourtRepository {
 
   final FirestoreHelper firestoreHelper;
 
-  Future<void> pushCourt(Court court) async {
+  Future<void> pushCourt(Court court, {bool isUpdate = false}) async {
     await firestoreHelper.setData(
       path: FirestorePath.docCourt(court.id),
-      data: court.toJson(),
+      data: court.toJson()..remove('specialCourtSlots'),
+      merge: isUpdate,
     );
   }
 

@@ -215,6 +215,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
   }) async {
     await getSlotAndUserState(baseCourtSlot).when(
       slotFull: () => Fluttertoast.showToast(msg: 'Slot is full'),
+      slotClosedByAdmin: () =>
+          Fluttertoast.showToast(msg: 'Slot is closed by Admin'),
       userHasConflictWithOtherSlot: () => Fluttertoast.showToast(
         msg: "In conflict with another slot you are reserved at",
       ),
@@ -254,6 +256,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
       userHasConflictWithOtherSlot: () => Fluttertoast.showToast(
         msg: "In conflict with another slot the team is reserved at",
       ),
+      slotClosedByAdmin: () =>
+          Fluttertoast.showToast(msg: 'Slot is closed by Admin'),
       orElse: () async {
         if (isTeamCaptain) {
           await courtSlotRepo.addTeamToCourtSlot(
