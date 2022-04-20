@@ -26,8 +26,8 @@ class _$CourtSlotTearOff {
       {required String slotId,
       required String courtId,
       required TimeRange timeRange,
-      required String courtName,
-      required double ticketPrice,
+      String courtName = 'Pitogo Basketball Court',
+      double ticketPrice = 69,
       List<KasadoUser> players = const [],
       bool isClosedByAdmin = false,
       String? liveGameStatsId = null,
@@ -280,8 +280,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       {required this.slotId,
       required this.courtId,
       required this.timeRange,
-      required this.courtName,
-      required this.ticketPrice,
+      this.courtName = 'Pitogo Basketball Court',
+      this.ticketPrice = 69,
       this.players = const [],
       this.isClosedByAdmin = false,
       this.liveGameStatsId = null,
@@ -299,8 +299,10 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   final String courtId;
   @override
   final TimeRange timeRange;
+  @JsonKey()
   @override
   final String courtName;
+  @JsonKey()
   @override
   final double ticketPrice;
   @JsonKey()
@@ -400,8 +402,8 @@ abstract class _CourtSlot extends CourtSlot {
       {required String slotId,
       required String courtId,
       required TimeRange timeRange,
-      required String courtName,
-      required double ticketPrice,
+      String courtName,
+      double ticketPrice,
       List<KasadoUser> players,
       bool isClosedByAdmin,
       String? liveGameStatsId,
