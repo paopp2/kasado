@@ -113,7 +113,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
   Future<void> joinAsAnotherPlayer({
     required BuildContext context,
     required CourtSlot baseCourtSlot,
-    required Court court,
     required Future<bool> Function() onNotEnoughPondo,
   }) async {
     final playerUserInfo = await showDialog(
@@ -136,7 +135,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
   Future<void> joinLeaveCourtSlot({
     required CourtSlot baseCourtSlot,
     required bool slotHasPlayer,
-    required Court court,
     required String? teamId,
     required bool isTeamCaptain,
     required Future<bool> Function() onUserDontHaveEnoughPondo,
@@ -147,7 +145,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
       if (slotHasPlayer) {
         read(mixpanel)!.track("Leave a courtSlot", properties: {
           "isSingle": true,
-          "courtName": court.name,
+          "courtName": baseCourtSlot.courtName,
           "courtSlotTimeRange": utils.getTimeRangeFormat(
             baseCourtSlot.timeRange,
             showDate: true,
@@ -157,12 +155,11 @@ class CourtSlotDetailsViewModel extends ViewModel {
         await removeFromCourtSlot(
           playerToRemove: currentUserInfo!.user,
           baseCourtSlot: baseCourtSlot,
-          courtTicketPrice: court.ticketPrice,
         );
       } else {
         read(mixpanel)!.track("Join a courtSlot", properties: {
           "isSingle": true,
-          "courtName": court.name,
+          "courtName": baseCourtSlot.courtName,
           "courtSlotTimeRange": utils.getTimeRangeFormat(
             baseCourtSlot.timeRange,
             showDate: true,
@@ -179,7 +176,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
       if (slotHasPlayer) {
         read(mixpanel)!.track("Leave a courtSlot", properties: {
           "isSingle": false,
-          "courtName": court.name,
+          "courtName": baseCourtSlot.courtName,
           "courtSlotTimeRange": utils.getTimeRangeFormat(
             baseCourtSlot.timeRange,
             showDate: true,
@@ -194,7 +191,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
       } else {
         read(mixpanel)!.track("Join a courtSlot", properties: {
           "isSingle": false,
-          "courtName": court.name,
+          "courtName": baseCourtSlot.courtName,
           "courtSlotTimeRange": utils.getTimeRangeFormat(
             baseCourtSlot.timeRange,
             showDate: true,
@@ -235,7 +232,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
   Future<void> removeFromCourtSlot({
     required KasadoUser playerToRemove,
     required CourtSlot baseCourtSlot,
-    required double courtTicketPrice,
   }) async {
     final KasadoUser player =
         baseCourtSlot.players.firstWhere((p) => (p.id == playerToRemove.id));

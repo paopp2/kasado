@@ -36,7 +36,6 @@ class SlotPlayerTile extends StatelessWidget {
       key: UniqueKey(),
       onDismissed: (_) => model.removeFromCourtSlot(
         playerToRemove: player,
-        courtTicketPrice: court.ticketPrice,
         baseCourtSlot: fetchedCourtSlot,
       ),
       direction: isAdmin ? DismissDirection.startToEnd : DismissDirection.none,
