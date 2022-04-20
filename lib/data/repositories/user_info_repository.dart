@@ -158,7 +158,7 @@ class UserInfoRepository {
   Stream<List<Stats>> getUserStatsStream(String userId) {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colUserStats(userId),
-      builder: (data, _) => Stats.fromJson(data),
+      builder: (data, docId) => Stats.fromJson(data).copyWith(id: docId),
       queryBuilder: (query) => query.orderBy(
         'courtSlot.timeRange.startsAt',
         descending: true,

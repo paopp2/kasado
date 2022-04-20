@@ -16,21 +16,21 @@ class BoxScorePane extends HookConsumerWidget {
     required this.courtSlot,
     required this.constraints,
     required this.utils,
-    required this.selectedGameStats,
+    required this.gameStats,
   }) : super(key: key);
 
   final GameStatController controller;
   final CourtSlot courtSlot;
   final BoxConstraints constraints;
   final KasadoUtils utils;
-  final GameStats? selectedGameStats;
+  final GameStats? gameStats;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedGameStatsStream = ref.watch(slotGameStatsStreamProvider(
-        (selectedGameStats == null)
+        (gameStats == null)
             ? null
-            : "${courtSlot.courtId}|${courtSlot.slotId}|${selectedGameStats!.id}"));
+            : "${courtSlot.courtId}|${courtSlot.slotId}|${gameStats!.id}"));
     final utils = ref.watch(kasadoUtilsProvider);
     return selectedGameStatsStream.when(
       error: (e, _) => Text(e.toString()),

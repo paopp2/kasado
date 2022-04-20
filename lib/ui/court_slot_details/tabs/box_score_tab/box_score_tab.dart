@@ -43,7 +43,7 @@ class BoxScoreTab extends HookConsumerWidget {
             courtSlot: courtSlot,
             constraints: constraints,
             utils: utils,
-            selectedGameStats: selectedGameStats,
+            gameStats: selectedGameStats,
           ),
         ),
         const Divider(),
