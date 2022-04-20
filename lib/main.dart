@@ -11,7 +11,7 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 // TODO: Set to false in production
-const bool inDebugMode = true;
+const bool inDebugMode = false;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
