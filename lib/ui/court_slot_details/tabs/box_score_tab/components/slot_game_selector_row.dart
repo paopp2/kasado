@@ -66,8 +66,9 @@ class SlotGameSelectorRow extends HookConsumerWidget {
                     ),
                     onPressed: () {
                       ref.read(mixpanel)!.track(
-                        "Selected slot game ${gameStatEntry.key + 1}",
+                        "Selected a slot game",
                         properties: {
+                          "slotNum": gameStatEntry.key,
                           "courtSlotTimeRange": utils.getTimeRangeFormat(
                             courtSlot.timeRange,
                             showDate: true,
