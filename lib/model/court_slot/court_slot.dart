@@ -14,6 +14,8 @@ class CourtSlot with _$CourtSlot {
     required String slotId,
     required String courtId,
     required TimeRange timeRange,
+    // TODO: Assert courtName and ticketPrice as required
+    // (Firestore might have to be edited manually to avoid null errors)
     @Default('Pitogo Basketball Court') String courtName,
     @Default(30) double ticketPrice,
     @Default([]) List<KasadoUser> players,

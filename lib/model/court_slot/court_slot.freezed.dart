@@ -27,7 +27,7 @@ class _$CourtSlotTearOff {
       required String courtId,
       required TimeRange timeRange,
       String courtName = 'Pitogo Basketball Court',
-      double ticketPrice = 69,
+      double ticketPrice = 30,
       List<KasadoUser> players = const [],
       bool isClosedByAdmin = false,
       String? liveGameStatsId = null,
@@ -61,7 +61,9 @@ const $CourtSlot = _$CourtSlotTearOff();
 mixin _$CourtSlot {
   String get slotId => throw _privateConstructorUsedError;
   String get courtId => throw _privateConstructorUsedError;
-  TimeRange get timeRange => throw _privateConstructorUsedError;
+  TimeRange get timeRange =>
+      throw _privateConstructorUsedError; // TODO: Assert courtName and ticketPrice as required
+// (Firestore might have to be edited manually to avoid null errors)
   String get courtName => throw _privateConstructorUsedError;
   double get ticketPrice => throw _privateConstructorUsedError;
   List<KasadoUser> get players => throw _privateConstructorUsedError;
@@ -281,7 +283,7 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       required this.courtId,
       required this.timeRange,
       this.courtName = 'Pitogo Basketball Court',
-      this.ticketPrice = 69,
+      this.ticketPrice = 30,
       this.players = const [],
       this.isClosedByAdmin = false,
       this.liveGameStatsId = null,
@@ -300,7 +302,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   @override
   final TimeRange timeRange;
   @JsonKey()
-  @override
+  @override // TODO: Assert courtName and ticketPrice as required
+// (Firestore might have to be edited manually to avoid null errors)
   final String courtName;
   @JsonKey()
   @override
@@ -421,7 +424,8 @@ abstract class _CourtSlot extends CourtSlot {
   String get courtId;
   @override
   TimeRange get timeRange;
-  @override
+  @override // TODO: Assert courtName and ticketPrice as required
+// (Firestore might have to be edited manually to avoid null errors)
   String get courtName;
   @override
   double get ticketPrice;

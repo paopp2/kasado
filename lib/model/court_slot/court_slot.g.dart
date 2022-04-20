@@ -11,7 +11,7 @@ _$_CourtSlot _$$_CourtSlotFromJson(Map<String, dynamic> json) => _$_CourtSlot(
       courtId: json['courtId'] as String,
       timeRange: TimeRange.fromJson(json['timeRange'] as Map<String, dynamic>),
       courtName: json['courtName'] as String? ?? 'Pitogo Basketball Court',
-      ticketPrice: (json['ticketPrice'] as num?)?.toDouble() ?? 69,
+      ticketPrice: (json['ticketPrice'] as num?)?.toDouble() ?? 30,
       players: (json['players'] as List<dynamic>?)
               ?.map((e) => KasadoUser.fromJson(e as Map<String, dynamic>))
               .toList() ??
