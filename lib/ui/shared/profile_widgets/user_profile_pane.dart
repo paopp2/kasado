@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
+import 'package:kasado/logic/profile/user_profile_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/ui/home/components/pondo_info_dialog.dart';
@@ -22,13 +23,14 @@ class UserProfilePane extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final model = ref.watch(userProfileViewModel);
     final currentUser = ref.watch(currentUserProvider)!;
     final utils = ref.watch(kasadoUtilsProvider);
     final user = userInfo?.user;
     final isCurrentUser = currentUser.id == user?.id;
     final isSuperAdmin =
         ref.watch(currentUserInfoProvider).value?.isSuperAdmin ?? false;
-    final userStats = userInfo?.overviewStats;
+    final userCareerStats = userInfo?.overviewStats;
     final tabController = useTabController(initialLength: 2);
 
     return (user == null)
@@ -95,7 +97,7 @@ class UserProfilePane extends HookConsumerWidget {
                 ),
               ),
               Expanded(
-                child: (userStats == null)
+                child: (userCareerStats == null)
                     ? const Center(child: Text('No stats available'))
                     : Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -103,10 +105,14 @@ class UserProfilePane extends HookConsumerWidget {
                           controller: tabController,
                           children: [
                             CareerStatsListPane(
-                              userStats: userStats,
+                              userStats: userCareerStats,
                               utils: utils,
                             ),
-                            const GameHistoryListPane(),
+                            GameHistoryListPane(
+                              model: model,
+                              userId: user.id,
+                              constraints: constraints,
+                            ),
                           ],
                         ),
                       ),

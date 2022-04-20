@@ -6,6 +6,7 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/model/ticket/ticket.dart';
 
 final userInfoRepositoryProvider = Provider.autoDispose(
@@ -152,5 +153,16 @@ class UserInfoRepository {
     return courtAdminUserInfos.map((userInfoList) {
       return userInfoList.map((userInfo) => userInfo.user).toList();
     });
+  }
+
+  Stream<List<Stats>> getUserStatsStream(String userId) {
+    return firestoreHelper.collectionStream(
+      path: FirestorePath.colUserStats(userId),
+      builder: (data, _) => Stats.fromJson(data),
+      queryBuilder: (query) => query.orderBy(
+        'courtSlot.timeRange.startsAt',
+        descending: true,
+      ),
+    );
   }
 }
