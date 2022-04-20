@@ -31,7 +31,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
       loading: () => const LoadingWidget(),
       data: (courtSlots) {
         return SfCalendar(
-          dataSource: _getCalendarDataSource(court),
+          dataSource: _getCalendarDataSource(court, isAdmin),
           view: CalendarView.schedule,
           allowedViews: const [CalendarView.schedule, CalendarView.day],
           allowViewNavigation: true,
@@ -88,7 +88,7 @@ class CourtSchedulePanel extends HookConsumerWidget {
   }
 }
 
-_AppointmentDataSource _getCalendarDataSource(Court court) {
+_AppointmentDataSource _getCalendarDataSource(Court court, bool isAdmin) {
   List<Appointment> appointments = <Appointment>[];
 
   appointments.addAll(court.allowedTimeSlots.map((tRange) {
@@ -96,9 +96,11 @@ _AppointmentDataSource _getCalendarDataSource(Court court) {
       id: 'appointment_id',
       startTime: tRange.startsAt,
       endTime: tRange.endsAt,
-      recurrenceExceptionDates: court.specialCourtSlots!
-          .map((slot) => slot.timeRange.startsAt)
-          .toList(),
+      recurrenceExceptionDates: (isAdmin)
+          ? null
+          : court.specialCourtSlots!
+              .map((slot) => slot.timeRange.startsAt)
+              .toList(),
       recurrenceRule: SfCalendar.generateRRule(
         RecurrenceProperties(
           recurrenceType: RecurrenceType.weekly,

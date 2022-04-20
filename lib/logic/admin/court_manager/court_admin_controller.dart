@@ -151,6 +151,7 @@ class CourtAdminController with CourtAdminTecMixin {
         adminIds: baseCourtInfo?.adminIds ?? [currentUser.id],
         allowedWeekDays: allowedWeekDays,
       ),
+      isUpdate: isEdit,
     );
 
     Navigator.pop(context);
