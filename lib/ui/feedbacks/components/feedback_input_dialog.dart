@@ -22,6 +22,12 @@ class FeedbackInputDialog extends HookConsumerWidget {
       return model.clearAllTecs;
     }, []);
 
+    Future<void> _onSendFeedbackPressed() async {
+      isLoadingState.value = true;
+      await model.pushFeedback(context);
+      isLoadingState.value = false;
+    }
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: Padding(
@@ -45,15 +51,11 @@ class FeedbackInputDialog extends HookConsumerWidget {
               (isLoadingState.value)
                   ? const LoadingWidget()
                   : TextButton(
-                      onPressed: () async {
-                        isLoadingState.value = true;
-                        await model.pushFeedback(context);
-                        isLoadingState.value = false;
-                      },
                       child: Text(
                         'SEND FEEDBACK',
                         style: TextStyle(color: Colors.green.shade500),
                       ),
+                      onPressed: _onSendFeedbackPressed,
                     ),
             ],
           ),

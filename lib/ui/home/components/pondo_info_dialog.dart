@@ -21,6 +21,21 @@ class PondoInfoDialog extends HookConsumerWidget {
       return;
     }, []);
 
+    void _onGcashNumberCopied() {
+      ref.read(mixpanel)!.track("Gcash number copied");
+      Clipboard.setData(
+        const ClipboardData(text: "09164531565"),
+      );
+      Fluttertoast.showToast(
+        msg: "Copied to clipboard",
+      );
+    }
+
+    void _onUseGcashToggled(bool? val) {
+      ref.read(mixpanel)!.track("Toggled useGcash to ${val!}");
+      hasGcashState.value = val;
+    }
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -45,10 +60,7 @@ class PondoInfoDialog extends HookConsumerWidget {
                   Checkbox(
                     activeColor: Colors.blue,
                     value: hasGcashState.value,
-                    onChanged: (val) {
-                      ref.read(mixpanel)!.track("Toggled useGcash to ${val!}");
-                      hasGcashState.value = val;
-                    },
+                    onChanged: _onUseGcashToggled,
                   ),
                 ],
               ),
@@ -75,17 +87,7 @@ class PondoInfoDialog extends HookConsumerWidget {
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.copy),
-                                  onPressed: () {
-                                    ref
-                                        .read(mixpanel)!
-                                        .track("Gcash number copied");
-                                    Clipboard.setData(
-                                      const ClipboardData(text: "09164531565"),
-                                    );
-                                    Fluttertoast.showToast(
-                                      msg: "Copied to clipboard",
-                                    );
-                                  },
+                                  onPressed: _onGcashNumberCopied,
                                 ),
                               ],
                             ),

@@ -41,6 +41,7 @@ class UserSearchPane extends HookConsumerWidget {
       if (timer.value != null) timer.value!.cancel();
       timer.value = Timer(
         const Duration(milliseconds: 650),
+        // ignore: prefer-extracting-callbacks
         () {
           if (query.isNotEmpty) (userEmailQuery.value = query);
         },

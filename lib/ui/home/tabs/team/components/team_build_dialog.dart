@@ -31,6 +31,7 @@ class TeamBuildDialog extends HookConsumerWidget {
     final isLoadingState = useState(false);
 
     useEffect(() {
+      // ignore: prefer-extracting-callbacks
       Future.delayed(Duration.zero, () {
         if (team != null) {
           ref.read(teamPlayersListProvider.notifier).state = team!.players;
@@ -39,6 +40,27 @@ class TeamBuildDialog extends HookConsumerWidget {
 
       return;
     }, []);
+
+    Future<void> _onDissolveTeamPressed() async {
+      isLoadingState.value = true;
+      await model.dissolveTeam(
+        hasReserved: currentUserInfo.hasReserved,
+        team: team!,
+        context: context,
+      );
+      isLoadingState.value = false;
+    }
+
+    Future<void> _onBuildUpdateTeamPressed() async {
+      isLoadingState.value = true;
+      await model.pushTeam(
+        context: context,
+        teamName: teamNameState.value,
+        team: team,
+        hasReserved: currentUserInfo.hasReserved,
+      );
+      isLoadingState.value = false;
+    }
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -121,15 +143,7 @@ class TeamBuildDialog extends HookConsumerWidget {
                           'DISSOLVE TEAM',
                           style: TextStyle(color: Colors.red),
                         ),
-                        onPressed: () async {
-                          isLoadingState.value = true;
-                          await model.dissolveTeam(
-                            hasReserved: currentUserInfo.hasReserved,
-                            team: team!,
-                            context: context,
-                          );
-                          isLoadingState.value = false;
-                        },
+                        onPressed: _onDissolveTeamPressed,
                       ),
                     ],
                     TextButton(
@@ -137,16 +151,7 @@ class TeamBuildDialog extends HookConsumerWidget {
                         (isEdit) ? 'UPDATE TEAM' : 'BUILD TEAM',
                         style: const TextStyle(color: Colors.green),
                       ),
-                      onPressed: () async {
-                        isLoadingState.value = true;
-                        await model.pushTeam(
-                          context: context,
-                          teamName: teamNameState.value,
-                          team: team,
-                          hasReserved: currentUserInfo.hasReserved,
-                        );
-                        isLoadingState.value = false;
-                      },
+                      onPressed: _onBuildUpdateTeamPressed,
                     ),
                   ],
                 ),

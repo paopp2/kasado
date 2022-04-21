@@ -25,6 +25,14 @@ class FeedbacksView extends HookConsumerWidget {
       return model.dispose;
     }, []);
 
+    _onNewFeedbackPressed() {
+      ref.read(mixpanel)!.track("Feedback input dialog opened");
+      showDialog(
+        context: context,
+        builder: (_) => FeedbackInputDialog(model: model),
+      );
+    }
+
     return SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -102,13 +110,7 @@ class FeedbacksView extends HookConsumerWidget {
             floatingActionButton: FloatingActionButton.extended(
               label: const Text('New Feedback'),
               icon: const Icon(Icons.add),
-              onPressed: () {
-                ref.read(mixpanel)!.track("Feedback input dialog opened");
-                showDialog(
-                  context: context,
-                  builder: (_) => FeedbackInputDialog(model: model),
-                );
-              },
+              onPressed: _onNewFeedbackPressed,
             ),
           );
         },

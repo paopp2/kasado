@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
+import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/ticket/ticket.dart';
 import 'package:kasado/ui/home/tabs/ticket/components/enlarged_ticket_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -25,6 +27,20 @@ class TicketTab extends HookConsumerWidget {
 
       return;
     }, []);
+
+    _onTicketPressed(Ticket ticket, KasadoUserInfo userInfo) {
+      ref.read(mixpanel)!.track("Enlarged a ticket");
+      showDialog(
+        context: context,
+        builder: (_) {
+          return EnlargedTicketDialog(
+            ticket: ticket,
+            utils: utils,
+            userName: userInfo.user.displayName!,
+          );
+        },
+      );
+    }
 
     return currentUserInfoStream.when(
       error: (e, _) => Text(e.toString()),
@@ -67,21 +83,10 @@ class TicketTab extends HookConsumerWidget {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: InkWell(
-                                onTap: () {
-                                  ref
-                                      .read(mixpanel)!
-                                      .track("Enlarged a ticket");
-                                  showDialog(
-                                    context: context,
-                                    builder: (_) {
-                                      return EnlargedTicketDialog(
-                                        ticket: ticket,
-                                        utils: utils,
-                                        userName: userInfo!.user.displayName!,
-                                      );
-                                    },
-                                  );
-                                },
+                                onTap: () => _onTicketPressed(
+                                  ticket,
+                                  userInfo!,
+                                ),
                                 child: Row(
                                   children: [
                                     ClipRRect(

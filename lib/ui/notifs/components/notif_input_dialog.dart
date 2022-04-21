@@ -19,6 +19,12 @@ class NotifInputDialog extends HookConsumerWidget {
     final isYesNoEnabled = ref.watch(isYesNoEnabledProvider);
     final isLoadingState = useState(false);
 
+    Future<void> _onPushNotifPressed() async {
+      isLoadingState.value = true;
+      await model.pushNotifications(context);
+      isLoadingState.value = false;
+    }
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: ListView(
@@ -42,12 +48,8 @@ class NotifInputDialog extends HookConsumerWidget {
           (isLoadingState.value)
               ? const LoadingWidget()
               : TextButton(
-                  onPressed: () async {
-                    isLoadingState.value = true;
-                    await model.pushNotifications(context);
-                    isLoadingState.value = false;
-                  },
                   child: const Text('PUSH NOTIF'),
+                  onPressed: _onPushNotifPressed,
                 ),
         ],
       ),

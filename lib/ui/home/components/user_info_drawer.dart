@@ -84,12 +84,10 @@ class UserInfoDrawer extends HookConsumerWidget {
                                   'ADD',
                                   style: TextStyle(color: Colors.green),
                                 ),
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (_) => const PondoInfoDialog(),
-                                  );
-                                },
+                                onPressed: () => showDialog(
+                                  context: context,
+                                  builder: (_) => const PondoInfoDialog(),
+                                ),
                               ),
                             ],
                           ),

@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/constants/enums.dart';
+import 'package:kasado/constants/enums/stat_type.dart';
 import 'package:kasado/logic/leaderboards/stat_leaders_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';

@@ -21,6 +21,28 @@ class PondoInputDialog extends HookConsumerWidget {
     final isLoadingState = useState(false);
     final pondoTec = useTextEditingController();
 
+    Future<void> _onDeductPressed() async {
+      isLoadingState.value = true;
+      await model.addOrDeductPondo(
+        context: context,
+        currentUserInfo: userInfo,
+        isAdd: false,
+        pondo: double.parse(pondoTec.text),
+      );
+      isLoadingState.value = false;
+    }
+
+    Future<void> _onAddPressed() async {
+      isLoadingState.value = true;
+      await model.addOrDeductPondo(
+        context: context,
+        currentUserInfo: userInfo,
+        isAdd: true,
+        pondo: double.parse(pondoTec.text),
+      );
+      isLoadingState.value = false;
+    }
+
     return Dialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -55,16 +77,7 @@ class PondoInputDialog extends HookConsumerWidget {
                             color: Colors.red,
                           ),
                         ),
-                        onPressed: () async {
-                          isLoadingState.value = true;
-                          await model.addOrDeductPondo(
-                            context: context,
-                            currentUserInfo: userInfo,
-                            isAdd: false,
-                            pondo: double.parse(pondoTec.text),
-                          );
-                          isLoadingState.value = false;
-                        },
+                        onPressed: _onDeductPressed,
                       ),
                       TextButton(
                         child: const Text(
@@ -74,16 +87,7 @@ class PondoInputDialog extends HookConsumerWidget {
                             color: Colors.green,
                           ),
                         ),
-                        onPressed: () async {
-                          isLoadingState.value = true;
-                          await model.addOrDeductPondo(
-                            context: context,
-                            currentUserInfo: userInfo,
-                            isAdd: true,
-                            pondo: double.parse(pondoTec.text),
-                          );
-                          isLoadingState.value = false;
-                        },
+                        onPressed: _onAddPressed,
                       ),
                     ],
                   ),

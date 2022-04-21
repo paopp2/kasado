@@ -49,6 +49,11 @@ class CourtDetailsView extends HookConsumerWidget {
       return courtDetailsModel.dispose;
     }, [courtStream.value]);
 
+    void _onBottomNavBarItemTapped(int index) {
+      tabIndex.value = index;
+      tabController.animateTo(index);
+    }
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return courtStream.when(
@@ -146,10 +151,7 @@ class CourtDetailsView extends HookConsumerWidget {
               bottomNavigationBar: Visibility(
                 visible: isAdmin,
                 child: BottomNavigationBar(
-                  onTap: (index) {
-                    tabIndex.value = index;
-                    tabController.animateTo(index);
-                  },
+                  onTap: _onBottomNavBarItemTapped,
                   selectedItemColor: Colors.black,
                   currentIndex: tabController.index,
                   items: const [

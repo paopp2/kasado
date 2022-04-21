@@ -59,18 +59,15 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
             "Sa karon pwede pa man sad nuon bisag way Pondo pero mas "
             "may jung atong hinay-hinayan hehe. Gege mao rato dol lamats!",
         autoDismiss: false,
-        onDissmissCallback: (dismissType) {
-          Navigator.pop(
-            context,
-            dismissType == DismissType.BTN_CANCEL,
-          );
-        },
+        onDissmissCallback: (dismissType) => Navigator.pop(
+          context,
+          dismissType == DismissType.BTN_CANCEL,
+        ),
         padding: const EdgeInsets.all(15.0),
         dialogBorderRadius: BorderRadius.circular(20),
         headerAnimationLoop: false,
-        btnCancelOnPress: () {
-          ref.read(mixpanel)!.track("Pressed 'Join w/o PONDO'");
-        },
+        btnCancelOnPress: () =>
+            ref.read(mixpanel)!.track("Pressed 'Join w/o PONDO'"),
         btnCancelText: "Join w/o PONDO",
         btnCancelColor: Colors.grey.shade400,
         btnOkText: "ADD PONDO",
@@ -84,6 +81,34 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
         ),
         buttonsBorderRadius: BorderRadius.circular(10),
       ).show();
+    }
+
+    Future<void> _onJoinLeaveSlotButtonPressed() async {
+      isModifyingSlot.value = true;
+      await model.joinLeaveCourtSlot(
+        baseCourtSlot: courtSlot,
+        slotHasPlayer: courtSlot.hasPlayer(
+          currentUser,
+        ),
+        teamId: currentUserInfo.teamId,
+        isTeamCaptain: currentUserInfo.isTeamCaptain,
+        onUserDontHaveEnoughPondo: () async =>
+            await _showPondoImplementationAnnouncementDialog(),
+        onNotAllHasEnoughPondo: (_) async {
+          return await _showPondoImplementationAnnouncementDialog(
+            forTeamCaptain: true,
+          );
+        },
+      );
+      isModifyingSlot.value = false;
+    }
+
+    Future<void> _onSuperAdminLongPressed() async {
+      model.joinAsAnotherPlayer(
+        context: context,
+        baseCourtSlot: courtSlot,
+        onNotEnoughPondo: () => _showPondoImplementationAnnouncementDialog(),
+      );
     }
 
     return (isModifyingSlot.value)
@@ -118,33 +143,9 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                    onPressed: () async {
-                      isModifyingSlot.value = true;
-                      await model.joinLeaveCourtSlot(
-                        baseCourtSlot: courtSlot,
-                        slotHasPlayer: courtSlot.hasPlayer(
-                          currentUser,
-                        ),
-                        teamId: currentUserInfo.teamId,
-                        isTeamCaptain: currentUserInfo.isTeamCaptain,
-                        onUserDontHaveEnoughPondo: () async =>
-                            await _showPondoImplementationAnnouncementDialog(),
-                        onNotAllHasEnoughPondo: (_) async {
-                          return await _showPondoImplementationAnnouncementDialog(
-                            forTeamCaptain: true,
-                          );
-                        },
-                      );
-                      isModifyingSlot.value = false;
-                    },
-                    onLongPress: (isSuperAdmin)
-                        ? () => model.joinAsAnotherPlayer(
-                              context: context,
-                              baseCourtSlot: courtSlot,
-                              onNotEnoughPondo: () =>
-                                  _showPondoImplementationAnnouncementDialog(),
-                            )
-                        : null,
+                    onPressed: _onJoinLeaveSlotButtonPressed,
+                    onLongPress:
+                        (isSuperAdmin) ? _onSuperAdminLongPressed : null,
                   ),
           );
   }

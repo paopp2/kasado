@@ -29,6 +29,17 @@ class GameTeamsSetupPane extends HookConsumerWidget {
     final awayTeamPlayers = courtSlot.stageAwayTeamPlayers ?? [];
     final isStartingGameState = useState(false);
 
+    Future<void> _onStartGamePressed() async {
+      isStartingGameState.value = true;
+      await controller.initStatsForGame(
+        context: context,
+        courtSlot: courtSlot,
+        awayTeamPlayers: awayTeamPlayers,
+        homeTeamPlayers: homeTeamPlayers,
+      );
+      isStartingGameState.value = false;
+    }
+
     return Column(
       children: [
         Container(
@@ -166,16 +177,7 @@ class GameTeamsSetupPane extends HookConsumerWidget {
                       'START GAME',
                       style: TextStyle(color: Colors.green),
                     ),
-                    onPressed: () async {
-                      isStartingGameState.value = true;
-                      await controller.initStatsForGame(
-                        context: context,
-                        courtSlot: courtSlot,
-                        awayTeamPlayers: awayTeamPlayers,
-                        homeTeamPlayers: homeTeamPlayers,
-                      );
-                      isStartingGameState.value = false;
-                    },
+                    onPressed: _onStartGamePressed,
                   ),
           ],
         ),

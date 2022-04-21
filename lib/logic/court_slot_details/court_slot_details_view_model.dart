@@ -2,7 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/constants/enums.dart';
+import 'package:kasado/constants/enums/slot_and_user_state.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
