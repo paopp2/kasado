@@ -35,7 +35,7 @@ class GameHistoryListPane extends HookConsumerWidget {
       loading: () => const LoadingWidget(),
       data: (userStats) {
         return (userStats.isEmpty)
-            ? const Center(child: Text("No games joined yet"))
+            ? const Center(child: Text("No games played yet"))
             : ListView.builder(
                 itemCount: userStats.length,
                 itemBuilder: (context, i) {
