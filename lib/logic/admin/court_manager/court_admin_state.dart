@@ -10,6 +10,7 @@ import 'package:kasado/model/kasado_user/kasado_user.dart';
 final selectedSchedChipIndicesProvider = StateProvider.autoDispose<List<int>>(
   (ref) {
     ref.maintainState = true;
+
     return [];
   },
 );
@@ -17,6 +18,7 @@ final selectedSchedChipIndicesProvider = StateProvider.autoDispose<List<int>>(
 final selectedDayChipIndicesProvider = StateProvider.autoDispose<List<int>>(
   (ref) {
     ref.maintainState = true;
+
     return [];
   },
 );
@@ -24,6 +26,7 @@ final selectedDayChipIndicesProvider = StateProvider.autoDispose<List<int>>(
 final courtsOwnedListProvider = StreamProvider.autoDispose(
   (ref) {
     final currentUser = ref.watch(currentUserProvider);
+
     return ref
         .watch(courtRepositoryProvider)
         .getCourtsStream(admin: currentUser);
@@ -34,6 +37,7 @@ final courtAdminsListProvider =
     StreamProvider.autoDispose.family<List<KasadoUser>, String>(
   (ref, courtRawJson) {
     final Court court = Court.fromJson(jsonDecode(courtRawJson));
+
     return ref.watch(userInfoRepositoryProvider).getCourtAdmins(court);
   },
 );

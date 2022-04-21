@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/constants/enums.dart';
+import 'package:kasado/constants/enums/stat_type.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/leaderboards/stat_leaders_view_model.dart';
 import 'package:kasado/ui/leaderboards/components/stat_leaders_pane.dart';
@@ -16,6 +16,7 @@ class StatLeadersView extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Navigated to StatLeadersView");
+
       return;
     }, []);
 

@@ -20,8 +20,29 @@ class LoginView extends HookConsumerWidget {
     useEffect(() {
       ref.read(mixpanel)!.track("Navigated to LoginView");
       model.initState();
+
       return model.dispose;
     }, []);
+
+    Future<void> _onSignInWithGooglePressed() async {
+      isLoggingInState.value = true;
+      await model.signInWithGoogle(
+        ifError: (e) => showDialog(
+          context: context,
+          builder: (_) => const LoginErrorDialog(),
+        ),
+        ifSuccess: (creds) {
+          if (creds != null) {
+            Fluttertoast.showToast(
+              msg: 'Signed in successfully',
+            );
+          }
+        },
+      );
+      isLoggingInState.value = false;
+    }
+
+    Future<void> _onSignInWithFbPressed() async => model.signInWithFacebook();
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -64,23 +85,7 @@ class LoginView extends HookConsumerWidget {
                           width: constraints.maxWidth * 0.7,
                           child: SignInButton(
                             Buttons.Google,
-                            onPressed: () async {
-                              isLoggingInState.value = true;
-                              await model.signInWithGoogle(
-                                ifError: (e) => showDialog(
-                                  context: context,
-                                  builder: (_) => const LoginErrorDialog(),
-                                ),
-                                ifSuccess: (creds) {
-                                  if (creds != null) {
-                                    Fluttertoast.showToast(
-                                      msg: 'Signed in successfully',
-                                    );
-                                  }
-                                },
-                              );
-                              isLoggingInState.value = false;
-                            },
+                            onPressed: _onSignInWithGooglePressed,
                             elevation: 10,
                             shape: const RoundedRectangleBorder(
                                 borderRadius:
@@ -94,11 +99,13 @@ class LoginView extends HookConsumerWidget {
                           width: constraints.maxWidth * 0.7,
                           child: SignInButton(
                             Buttons.FacebookNew,
-                            onPressed: model.signInWithFacebook,
+                            onPressed: _onSignInWithFbPressed,
                             elevation: 10,
                             shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
                             padding: const EdgeInsets.all(8.0),
                           ),
                         ),

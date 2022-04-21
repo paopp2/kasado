@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:kasado/constants/enums.dart';
+import 'package:kasado/constants/enums/slot_and_user_state.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_state.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
@@ -44,14 +44,17 @@ class NextCourtSlotDetails extends HookConsumerWidget {
     );
 
     useEffect(() {
-      // TODO: Improve performance for this feature
-      // Update nextTimeSlot every 5 seconds
-      Timer.periodic(const Duration(seconds: 5), (_) {
+      _getNextTimeSlot(Timer timer) {
         nextTimeSlotState.value = utils.getNextTimeSlot(
           timeSlots: court.allowedTimeSlots,
           weekdays: court.allowedWeekDays,
         );
-      });
+      }
+
+      // TODO: Improve performance for this feature
+      // Update nextTimeSlot every 5 seconds
+      Timer.periodic(const Duration(seconds: 5), _getNextTimeSlot);
+
       return;
     }, []);
 

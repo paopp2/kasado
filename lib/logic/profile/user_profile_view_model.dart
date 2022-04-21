@@ -35,6 +35,7 @@ class UserProfileViewModel extends ViewModel {
       'BLK': stats.blk,
     };
     final statsMapEntries = statsMap.entries.toList();
+
     return statsMapEntries..sort((a, b) => (b.value.compareTo(a.value)));
   }
 }

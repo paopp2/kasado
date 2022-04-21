@@ -203,6 +203,7 @@ class GameStatController {
   }) async {
     if (homeTeamPlayers.length != 5 || awayTeamPlayers.length != 5) {
       Fluttertoast.showToast(msg: "Incorrect number of players");
+
       return;
     }
 
@@ -249,10 +250,12 @@ class GameStatController {
       if ((courtSlot.stageHomeTeamPlayers ?? []).contains(player) ||
           (courtSlot.stageAwayTeamPlayers ?? []).contains(player)) {
         Fluttertoast.showToast(msg: "Player already added to a team");
+
         return;
       }
       if (currentTeamPlayers.length == 5) {
         Fluttertoast.showToast(msg: "Team already has 5 players");
+
         return;
       }
       updatedTeamPlayers = [...currentTeamPlayers, player];

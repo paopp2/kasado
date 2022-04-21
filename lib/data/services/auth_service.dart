@@ -30,6 +30,7 @@ class AuthService {
       );
       final signedInUserCreds =
           await read(fireauthProvider).signInWithCredential(googleAuthCreds);
+
       return Right(signedInUserCreds);
     } catch (e) {
       return Left(e as Exception);

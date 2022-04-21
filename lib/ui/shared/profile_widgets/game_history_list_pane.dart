@@ -27,6 +27,7 @@ class GameHistoryListPane extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed Game History");
+
       return;
     }, []);
 
@@ -35,12 +36,13 @@ class GameHistoryListPane extends HookConsumerWidget {
       loading: () => const LoadingWidget(),
       data: (userStats) {
         return (userStats.isEmpty)
-            ? const Center(child: Text("No games joined yet"))
+            ? const Center(child: Text("No games played yet"))
             : ListView.builder(
                 itemCount: userStats.length,
                 itemBuilder: (context, i) {
                   final userGameStats = userStats[i];
                   final courtSlot = userGameStats.courtSlot;
+
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),

@@ -27,6 +27,7 @@ class FeedbacksRepository {
         final modifiedQuery = (user != null)
             ? query.where('sender.id', isEqualTo: user.id)
             : query;
+
         return modifiedQuery.orderBy(
           'sentAt',
           descending: true,

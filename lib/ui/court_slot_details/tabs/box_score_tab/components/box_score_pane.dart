@@ -32,6 +32,7 @@ class BoxScorePane extends HookConsumerWidget {
             ? null
             : "${courtSlot.courtId}|${courtSlot.slotId}|${gameStats!.id}"));
     final utils = ref.watch(kasadoUtilsProvider);
+
     return selectedGameStatsStream.when(
       error: (e, _) => Text(e.toString()),
       loading: () => const LoadingWidget(),

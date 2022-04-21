@@ -10,6 +10,7 @@ enum SlotAndUserState {
 }
 
 extension SlotAndUserStatePatternMatching on SlotAndUserState {
+  // ignore: long-parameter-list, pattern matching for SlotAndUserState
   T when<T>({
     T Function()? loading,
     T Function()? error,
@@ -40,16 +41,4 @@ extension SlotAndUserStatePatternMatching on SlotAndUserState {
         return userNotReserved?.call() ?? orElse!();
     }
   }
-}
-
-enum StatType {
-  standing,
-  ptsPerGame,
-  astPerGame,
-  rebPerGame,
-  blkPerGame,
-  stlPerGame,
-  fgPercent,
-  threePtPercent,
-  threePtMade,
 }

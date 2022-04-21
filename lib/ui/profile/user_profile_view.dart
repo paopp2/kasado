@@ -32,6 +32,7 @@ class UserProfileView extends HookConsumerWidget {
         );
       }
       model.initState({'viewed_user_id': userId});
+
       return model.dispose;
     }, [userInfoStream.value]);
 

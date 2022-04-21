@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
-import 'package:kasado/constants/enums.dart';
+import 'package:kasado/constants/enums/stat_type.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/leaderboards/stat_leaders_state.dart';
 import 'package:kasado/logic/leaderboards/stat_leaders_view_model.dart';
@@ -28,6 +28,7 @@ class StatLeadersPane extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed ${statType.toString()} Leaders Tab");
+
       return;
     }, []);
 

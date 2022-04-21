@@ -6,6 +6,7 @@ import 'package:kasado/model/feedback/feedback.dart';
 final feedbacksStreamProvider = StreamProvider.autoDispose
     .family<List<Feedback>, bool>((ref, isSuperAdmin) {
   final feedbacksRepo = ref.watch(feedbacksRepositoryProvider);
+
   return (isSuperAdmin)
       // Get all feedbacks
       ? feedbacksRepo.getFeedbacksStream()

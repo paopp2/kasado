@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/app_router.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/firebase_options.dart';
+import 'package:kasado/kasado_app.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:universal_platform/universal_platform.dart';
 
@@ -39,25 +38,7 @@ Future<void> main() async {
   );
 
   runApp(ProviderScope(
-    child: const MyApp(),
+    child: const KasadoApp(),
     overrides: [mixpanel.overrideWithValue(mixpanelInstance)],
   ));
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final appRouter = AppRouter.instance.router;
-    return MaterialApp.router(
-      title: 'Kasado',
-      theme: ThemeData(
-        textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
-        primarySwatch: Colors.grey,
-      ),
-      routeInformationParser: appRouter.routeInformationParser,
-      routerDelegate: appRouter.routerDelegate,
-    );
-  }
 }

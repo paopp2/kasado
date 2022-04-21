@@ -14,6 +14,7 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final homeTeamPlayers = ref.watch(homeTeamPlayersProvider);
     final awayTeamPlayers = ref.watch(awayTeamPlayersProvider);
+
     return Dialog(
       child: Column(
         children: [
@@ -25,6 +26,7 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
                 itemCount: 5,
                 itemBuilder: (context, i) {
                   final homePlayer = homeTeamPlayers[i];
+
                   return Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: ListTile(
@@ -50,6 +52,7 @@ class StatPlayerChooserDialog extends HookConsumerWidget {
                 itemCount: 5,
                 itemBuilder: (context, i) {
                   final awayPlayer = awayTeamPlayers[i];
+
                   return Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: ListTile(

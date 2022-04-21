@@ -20,6 +20,7 @@ class CareerStatsListPane extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed Career Stats");
+
       return;
     }, []);
 

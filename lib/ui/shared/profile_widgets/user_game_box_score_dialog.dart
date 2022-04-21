@@ -38,6 +38,7 @@ class UserGameBoxScoreDialog extends HookConsumerWidget {
           ),
         },
       );
+
       return;
     }, []);
 

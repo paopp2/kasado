@@ -7,6 +7,7 @@ final userInfoStreamProvider =
     StreamProvider.autoDispose.family<KasadoUserInfo?, String>(
   (ref, userId) {
     final userInfoRepo = ref.watch(userInfoRepositoryProvider);
+
     return userInfoRepo.getUserInfoStream(userId);
   },
 );
@@ -14,5 +15,6 @@ final userInfoStreamProvider =
 final userStatsStreamProvider =
     StreamProvider.autoDispose.family<List<Stats>, String>((ref, userId) {
   final userInfoRepo = ref.watch(userInfoRepositoryProvider);
+
   return userInfoRepo.getUserStatsStream(userId);
 });

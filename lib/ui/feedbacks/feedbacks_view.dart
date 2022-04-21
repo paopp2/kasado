@@ -21,8 +21,17 @@ class FeedbacksView extends HookConsumerWidget {
     useEffect(() {
       ref.read(mixpanel)!.track("Navigated to FeedbacksView");
       model.initState();
+
       return model.dispose;
     }, []);
+
+    _onNewFeedbackPressed() {
+      ref.read(mixpanel)!.track("Feedback input dialog opened");
+      showDialog(
+        context: context,
+        builder: (_) => FeedbackInputDialog(model: model),
+      );
+    }
 
     return SafeArea(
       child: LayoutBuilder(
@@ -63,6 +72,7 @@ class FeedbacksView extends HookConsumerWidget {
                               itemCount: feedbacks.length,
                               itemBuilder: (context, i) {
                                 final feedback = feedbacks[i];
+
                                 return ListTile(
                                   leading: (isSuperAdmin)
                                       ? CircleAvatar(
@@ -100,13 +110,7 @@ class FeedbacksView extends HookConsumerWidget {
             floatingActionButton: FloatingActionButton.extended(
               label: const Text('New Feedback'),
               icon: const Icon(Icons.add),
-              onPressed: () {
-                ref.read(mixpanel)!.track("Feedback input dialog opened");
-                showDialog(
-                  context: context,
-                  builder: (_) => FeedbackInputDialog(model: model),
-                );
-              },
+              onPressed: _onNewFeedbackPressed,
             ),
           );
         },

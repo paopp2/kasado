@@ -43,6 +43,7 @@ class UserInfoRepository {
   Future<List<KasadoUserInfo>> getUserInfoList(List<String> userIdList) async {
     // whereIn queries can only accept a list of up to 10 values
     assert(userIdList.length <= 10);
+
     return firestoreHelper.collectionToList(
       path: FirestorePath.colUserInfos(),
       builder: (data, docId) => KasadoUserInfo.fromJson(data),
@@ -150,9 +151,9 @@ class UserInfoRepository {
       builder: (data, docId) => KasadoUserInfo.fromJson(data),
       queryBuilder: (query) => query.where('id', whereIn: court.adminIds),
     );
-    return courtAdminUserInfos.map((userInfoList) {
-      return userInfoList.map((userInfo) => userInfo.user).toList();
-    });
+
+    return courtAdminUserInfos.map((userInfoList) =>
+        userInfoList.map((userInfo) => userInfo.user).toList());
   }
 
   Stream<List<Stats>> getUserStatsStream(String userId) {

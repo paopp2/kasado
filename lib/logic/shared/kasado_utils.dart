@@ -86,18 +86,14 @@ class KasadoUtils {
     final indexOfDayToday = weekdaysWithToday.indexOf(dayTodayAsNum);
 
     DateTime nextSchedDate;
-    if (weekdaysWithToday.last == dayTodayAsNum) {
-      // If today is at the end of the weekdays list, the first one will be the
-      // day of the next sched
-      nextSchedDate = now
-          .to(weekFromNow)
-          .firstWhere((dt) => dt.weekday == (weekdaysWithToday.first + 1));
-    } else {
-      // Else the next sched day will be the next one on the weekdays list
-      // after today
-      nextSchedDate = now.to(weekFromNow).firstWhere(
-          (dt) => dt.weekday == (weekdaysAsNumber[indexOfDayToday + 1] + 1));
-    }
+    nextSchedDate = (weekdaysWithToday.last == dayTodayAsNum)
+        // If today is at the end of the weekdays list, the first one will be the day of the next sched
+        ? now.to(weekFromNow).firstWhere(
+              (dt) => dt.weekday == (weekdaysWithToday.first + 1),
+            )
+        // Else the next sched day will be the next one on the weekdays list after today
+        : now.to(weekFromNow).firstWhere(
+            (dt) => dt.weekday == (weekdaysAsNumber[indexOfDayToday + 1] + 1));
 
     // Use the first slot at timeSlots
     final firstSlot = timeSlots.first;
@@ -122,6 +118,7 @@ class KasadoUtils {
 
   bool isCurrentSlotEnded(TimeRange timeRange) {
     final now = DateTime.now();
+
     return timeRange.startsAt.difference(now).abs() >
         timeRange.endsAt.difference(now).abs();
   }
@@ -135,6 +132,7 @@ class KasadoUtils {
     final endTimeFormat = DateFormat('h:mm a');
     final timeRangeAsString =
         "${startTimeFormat.format(timeRange.startsAt)} - ${endTimeFormat.format(timeRange.endsAt)}";
+
     return (showDate)
         ? "${getDateFormat(timeRange.startsAt)} / $timeRangeAsString"
         : timeRangeAsString;
@@ -142,11 +140,13 @@ class KasadoUtils {
 
   String getPercentageFormat(double number) {
     if (number.isNaN) return "N/A";
+
     return "${number.toStringAsFixed(0)}%";
   }
 
   String getDoubleFormat(double number) {
     if (number.isNaN) return "N/A";
+
     return number.toStringAsFixed(1);
   }
 
@@ -161,6 +161,7 @@ class KasadoUtils {
         twoDigitFormat.format(remaining.inSeconds.remainder(60));
     final msRemaining =
         twoDigitFormat.format(remaining.inMilliseconds.remainder(100));
+
     return "$minRemaining : $secRemaining" +
         ((showMillis) ? " : $msRemaining" : '');
   }

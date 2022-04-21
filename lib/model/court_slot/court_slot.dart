@@ -36,6 +36,7 @@ class CourtSlot with _$CourtSlot {
 
   static String getIdFromTimeRange(TimeRange? timeRange) {
     if (timeRange == null) return 'paththatdoesntexist';
+
     return "${timeRange.startsAt.toIso8601String()}-${timeRange.endsAt.toIso8601String()}";
   }
 

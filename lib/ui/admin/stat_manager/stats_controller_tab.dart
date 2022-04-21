@@ -22,9 +22,11 @@ class StatsControllerTab extends HookConsumerWidget {
     final controller = ref.watch(gameStatController);
 
     // Update provider asynchronously to avoid UI rebuild errors or "clashes"
+    // ignore: prefer-extracting-callbacks
     Future.delayed(Duration.zero, () {
       ref.read(slotGameStatsPathProvider.notifier).update((s) {
         if (courtSlot.liveGameStatsId == null) return null;
+
         return "${courtSlot.courtId}|${courtSlot.slotId}|${courtSlot.liveGameStatsId}";
       });
     });

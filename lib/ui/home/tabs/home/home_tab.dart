@@ -23,6 +23,7 @@ class HomeTab extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed HomeTab");
+
       return;
     }, []);
 
@@ -45,6 +46,7 @@ class HomeTab extends HookConsumerWidget {
                   itemCount: courtList.length,
                   itemBuilder: (context, i) {
                     final court = courtList[i];
+
                     return NextCourtSlotCard(
                       constraints: constraints,
                       court: court,

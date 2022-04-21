@@ -27,6 +27,20 @@ class SlotGameSelectorRow extends HookConsumerWidget {
         '${courtSlot.courtId}|${courtSlot.slotId}'));
     final utils = ref.watch(kasadoUtilsProvider);
 
+    void _onSlotGameSelected(MapEntry<int, GameStats> gameStatEntry) {
+      ref.read(mixpanel)!.track(
+        "Selected a slot game",
+        properties: {
+          "slotNum": gameStatEntry.key,
+          "courtSlotTimeRange": utils.getTimeRangeFormat(
+            courtSlot.timeRange,
+            showDate: true,
+          )
+        },
+      );
+      controller.selectSlotGameStats(gameStatEntry.value);
+    }
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: allGameStatsStream.when(
@@ -37,10 +51,12 @@ class SlotGameSelectorRow extends HookConsumerWidget {
             // If gameStats is not empty and no game stats had been
             // selected yet, show the stats of the first game by default.
             // Update asynchronously to avoid UI rebuild errors or "clashes"
-            Future.delayed(Duration.zero, () {
-              controller.selectSlotGameStats(allGameStats.first);
-            });
+            Future.delayed(
+              Duration.zero,
+              () => controller.selectSlotGameStats(allGameStats.first),
+            );
           }
+
           return Row(
             children: allGameStats
                 .asMap()
@@ -64,19 +80,7 @@ class SlotGameSelectorRow extends HookConsumerWidget {
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      ref.read(mixpanel)!.track(
-                        "Selected a slot game",
-                        properties: {
-                          "slotNum": gameStatEntry.key,
-                          "courtSlotTimeRange": utils.getTimeRangeFormat(
-                            courtSlot.timeRange,
-                            showDate: true,
-                          )
-                        },
-                      );
-                      controller.selectSlotGameStats(gameStatEntry.value);
-                    },
+                    onPressed: () => _onSlotGameSelected(gameStatEntry),
                   ),
                 )
                 .toList(),

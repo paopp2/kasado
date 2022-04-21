@@ -8,6 +8,7 @@ import 'package:kasado/model/court_slot/court_slot.dart';
 final courtSlotStreamProvider = StreamProvider.autoDispose
     .family<CourtSlot?, String>((ref, combinedPathIds) {
   final List<String> pathIdList = combinedPathIds.split('|');
+
   return ref
       .watch(courtSlotRepositoryProvider)
       .getCourtSlotStream(pathIdList[0], pathIdList[1]);

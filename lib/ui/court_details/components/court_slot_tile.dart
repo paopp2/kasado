@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
-import 'package:kasado/constants/enums.dart';
+import 'package:kasado/constants/enums/slot_and_user_state.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';

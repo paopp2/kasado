@@ -47,6 +47,7 @@ class SlotPlayersTab extends HookConsumerWidget {
           showDate: true,
         ),
       });
+
       return;
     }, []);
 
@@ -60,6 +61,7 @@ class SlotPlayersTab extends HookConsumerWidget {
                     itemCount: players.length,
                     itemBuilder: (context, index) {
                       final player = players[index];
+
                       return SlotPlayerTile(
                         model: model,
                         player: player,

@@ -9,6 +9,7 @@ final userNotifsStreamProvider =
     StreamProvider.autoDispose.family<List<Notif>, String>(
   (ref, userId) {
     final notifRepo = ref.watch(notifRepositoryProvider);
+
     return notifRepo.getUserNotifsStream(userId: userId);
   },
 );
@@ -18,6 +19,7 @@ final userNotifStreamProvider =
   (ref, notifId) {
     final currentUserId = ref.watch(currentUserProvider)!.id;
     final notifRepo = ref.watch(notifRepositoryProvider);
+
     return notifRepo.getUserNotifStream(
       userId: currentUserId,
       notifId: notifId,
@@ -28,26 +30,9 @@ final userNotifStreamProvider =
 final notifMetaStreamProvider =
     StreamProvider.autoDispose.family<NotifMeta?, String>((ref, notifId) {
   final notifRepo = ref.watch(notifRepositoryProvider);
+
   return notifRepo.getNotifMetaStream(notifId: notifId);
 });
-
-final notifYesCountStreamProvider =
-    StreamProvider.autoDispose.family<int, String>(
-  (ref, notifId) {
-    return ref
-        .watch(notifMetaStreamProvider(notifId).stream)
-        .map((notif) => notif?.yesCount ?? 0);
-  },
-);
-
-final notifNoCountStreamProvider =
-    StreamProvider.autoDispose.family<int, String>(
-  (ref, notifId) {
-    return ref
-        .watch(notifMetaStreamProvider(notifId).stream)
-        .map((notif) => notif?.noCount ?? 0);
-  },
-);
 
 final unreadUserNotifCountStream =
     StreamProvider.autoDispose.family<int, String>(
@@ -55,6 +40,7 @@ final unreadUserNotifCountStream =
     return ref.watch(userNotifsStreamProvider(userId).stream).map((notifList) {
       return notifList.where((notif) {
         notif as NotifObject;
+
         return !notif.isRead;
       }).length;
     });

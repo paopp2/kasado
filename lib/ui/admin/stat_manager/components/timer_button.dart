@@ -37,7 +37,7 @@ class TimerButton extends HookConsumerWidget {
         useState((showMillis) ? "15 : 00 : 00" : "15 : 00");
 
     useEffect(() {
-      final _timer = Timer.periodic(const Duration(milliseconds: 5), (timer) {
+      _updateRemainingTime(Timer timer) {
         if (isPaused) return;
 
         final now = DateTime.now();
@@ -51,7 +51,13 @@ class TimerButton extends HookConsumerWidget {
             showMillis: showMillis,
           );
         }
-      });
+      }
+
+      final _timer = Timer.periodic(
+        const Duration(milliseconds: 5),
+        _updateRemainingTime,
+      );
+
       return _timer.cancel;
     }, [isPaused]);
 

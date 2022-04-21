@@ -21,6 +21,7 @@ class Ticket with _$Ticket {
 
   bool get isExpired {
     final now = DateTime.now();
+
     return expiry.isBefore(now);
   }
 

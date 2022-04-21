@@ -42,6 +42,7 @@ class AppRouter {
         path: '/court-details/:courtId',
         builder: (context, state) {
           final isAdmin = state.extra as bool?;
+
           return CourtDetailsView(
             courtId: state.params['courtId']!,
             isAdmin: (isAdmin ?? false),
@@ -53,6 +54,7 @@ class AppRouter {
             path: 'slot-details',
             builder: (context, state) {
               final params = state.queryParams;
+
               return CourtSlotDetailsView(
                 isAdmin: (state.extra as bool?) ?? false,
                 baseCourtSlot: CourtSlot.fromJson(
@@ -68,6 +70,7 @@ class AppRouter {
                 path: 'score-board-view',
                 builder: (context, state) {
                   final courtSlot = state.extra as CourtSlot;
+
                   return ScoreBoardView(courtSlot: courtSlot);
                 },
               ),
@@ -92,6 +95,7 @@ class AppRouter {
         path: '/notifs',
         builder: (context, state) {
           final extraMap = state.extra as Map<String, Object?>;
+
           return NotifsView(
             userId: extraMap['userId'] as String,
             isSuperAdmin: (extraMap['isSuperAdmin'] as bool?) ?? false,

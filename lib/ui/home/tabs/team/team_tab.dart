@@ -26,6 +26,7 @@ class TeamTab extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed TeamTab");
+
       return;
     }, []);
 
@@ -59,6 +60,7 @@ class TeamTab extends HookConsumerWidget {
                                   final player = team.players[i];
                                   final isTeamCaptain =
                                       player.id == team.teamCaptain.id;
+
                                   return ListTile(
                                     leading: Badge(
                                       badgeContent: const FaIcon(

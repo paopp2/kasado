@@ -45,8 +45,14 @@ class CourtDetailsView extends HookConsumerWidget {
         );
       }
       courtDetailsModel.initState({'court_id': courtId});
+
       return courtDetailsModel.dispose;
     }, [courtStream.value]);
+
+    void _onBottomNavBarItemTapped(int index) {
+      tabIndex.value = index;
+      tabController.animateTo(index);
+    }
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -55,6 +61,7 @@ class CourtDetailsView extends HookConsumerWidget {
           loading: () => const LoadingWidget(),
           data: (court) {
             court!;
+
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,
@@ -134,7 +141,9 @@ class CourtDetailsView extends HookConsumerWidget {
                             forEdit: true,
                             court: court,
                           )
-                      : () {},
+                      : () {
+                          // TODO: Add an admin for court
+                        },
                   label: Text(
                     tabIndex.value == 0 ? 'Edit Court' : 'Add Admin',
                   ),
@@ -144,10 +153,7 @@ class CourtDetailsView extends HookConsumerWidget {
               bottomNavigationBar: Visibility(
                 visible: isAdmin,
                 child: BottomNavigationBar(
-                  onTap: (index) {
-                    tabIndex.value = index;
-                    tabController.animateTo(index);
-                  },
+                  onTap: _onBottomNavBarItemTapped,
                   selectedItemColor: Colors.black,
                   currentIndex: tabController.index,
                   items: const [

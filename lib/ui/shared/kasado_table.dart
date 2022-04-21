@@ -38,6 +38,7 @@ class KasadoTable<T extends Object> extends StatelessWidget {
     final leastSummaryIndex = (colIndexToSummaryType.isNotEmpty)
         ? colIndexToSummaryType.keys.reduce(min)
         : null;
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: SfDataGridTheme(
@@ -109,6 +110,7 @@ class KasadoTable<T extends Object> extends StatelessWidget {
                     columns: colIndexToSummaryType.entries.map((i2sEntry) {
                       final colData = columnDataList[i2sEntry.key];
                       final summaryType = i2sEntry.value;
+
                       return GridSummaryColumn(
                         name: colData.columnName,
                         columnName: colData.columnName,
@@ -147,6 +149,7 @@ class MarnikkoDataGridSource<T extends Object> extends DataGridSource {
           data: data,
           cells: columnDataList.map((columnData) {
             columnData as ColumnData<T>;
+
             return DataGridCell(
               columnName: columnData.columnName,
               value: columnData.dataValueCallback(data),
@@ -173,6 +176,7 @@ class MarnikkoDataGridSource<T extends Object> extends DataGridSource {
     final columnData = columnDataList.where(
       (colData) => (colData.columnName == summaryColumn?.columnName),
     );
+
     return Container(
       padding: const EdgeInsets.all(8.0),
       alignment: (columnData.isNotEmpty)
@@ -191,11 +195,13 @@ class MarnikkoDataGridSource<T extends Object> extends DataGridSource {
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
     row as MarnikkoDataGridRow<T>;
+
     return DataGridRowAdapter(
         cells: row.getCells().map<Widget>((cell) {
       final columnData = columnDataList.singleWhere(
         (colData) => (colData.columnName == cell.columnName),
       ) as ColumnData<T>;
+
       return Tooltip(
         message: columnData.contentTooltip?.call(cell.value, row.data) ?? '',
         padding: const EdgeInsets.all(8.0),

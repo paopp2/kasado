@@ -46,8 +46,10 @@ class TeamTabModel extends ViewModel {
           Fluttertoast.showToast(msg: "User already added");
         } else {
           read(mixpanel)!.track("Added a user to team build");
+
           return [...state, userInfo.user];
         }
+
         return state;
       },
     );

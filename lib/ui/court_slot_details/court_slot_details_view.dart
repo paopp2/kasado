@@ -49,6 +49,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
       );
       tabController.addListener(() => (tabIndex.value = tabController.index));
       model.initState({'court_id': baseCourtSlot.courtId});
+
       return model.dispose;
     }, []);
 

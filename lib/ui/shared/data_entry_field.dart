@@ -9,7 +9,7 @@ class DataEntryField extends StatelessWidget {
     this.tec,
     this.maxLength,
     this.isDisabled = false,
-    this.validator = InputValidator.mustNotBeEmpty,
+    this.validator = InputValidators.mustNotBeEmpty,
     this.isMoney = false,
     this.onChanged,
     this.maxLines = 1,
@@ -44,6 +44,7 @@ class DataEntryField extends StatelessWidget {
         ),
       );
     }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(

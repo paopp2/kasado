@@ -322,33 +322,12 @@ class StatRepository {
     };
 
     // Update each player's overviewStats based on the updated gameStats
-    // Batch setData to each of the userInfo.overviewStats
-    await firestoreHelper.setBatchDataForDocInList(
-      docIdList: gamePlayerIds,
-      baseColPath: FirestorePath.colUserInfos(),
-      dataFromId: (playerId) {
-        final newStats = updatedGameStats[playerId]!;
-        return {
-          "overviewStats": {
-            "totalThreePA": FieldValue.increment(newStats.threePA),
-            "totalThreePM": FieldValue.increment(newStats.threePM),
-            "totalTwoPA": FieldValue.increment(newStats.twoPA),
-            "totalTwoPM": FieldValue.increment(newStats.twoPM),
-            "totalFta": FieldValue.increment(newStats.ftA),
-            "totalFtm": FieldValue.increment(newStats.ftM),
-            "totalOReb": FieldValue.increment(newStats.oReb),
-            "totalDReb": FieldValue.increment(newStats.dReb),
-            "totalAst": FieldValue.increment(newStats.ast),
-            "totalStl": FieldValue.increment(newStats.stl),
-            "totalBlk": FieldValue.increment(newStats.blk),
-            "totalWins": FieldValue.increment(newStats.hasWonGame! ? 1 : 0),
-            "gamesPlayed": FieldValue.increment(1),
-          }
-        };
-      },
-      merge: true,
+    await updatePlayersOverviewStats(
+      gamePlayerIds: gamePlayerIds,
+      gameStats: updatedGameStats,
     );
 
+    // Increase gamesPlayed count for players at this game
     await courtSlotRepo.incGamesPlayedForPlayers(
       courtSlot: courtSlot,
       gamePlayers: updatedGameStats.values.map((s) => s.player).toList(),
@@ -361,6 +340,39 @@ class StatRepository {
       dataFromId: (playerId) => updatedGameStats[playerId]!.toJson(),
       queryBuilder: (query) =>
           query.where('id', whereIn: updatedGameStats.keys.toList()),
+    );
+  }
+
+  /// Batch update data to each of the userInfo.overviewStats
+  Future<void> updatePlayersOverviewStats({
+    required List<String> gamePlayerIds,
+    required Map<String, Stats> gameStats,
+  }) async {
+    await firestoreHelper.setBatchDataForDocInList(
+      docIdList: gamePlayerIds,
+      baseColPath: FirestorePath.colUserInfos(),
+      dataFromId: (playerId) {
+        final playerStats = gameStats[playerId]!;
+
+        return {
+          "overviewStats": {
+            "totalThreePA": FieldValue.increment(playerStats.threePA),
+            "totalThreePM": FieldValue.increment(playerStats.threePM),
+            "totalTwoPA": FieldValue.increment(playerStats.twoPA),
+            "totalTwoPM": FieldValue.increment(playerStats.twoPM),
+            "totalFta": FieldValue.increment(playerStats.ftA),
+            "totalFtm": FieldValue.increment(playerStats.ftM),
+            "totalOReb": FieldValue.increment(playerStats.oReb),
+            "totalDReb": FieldValue.increment(playerStats.dReb),
+            "totalAst": FieldValue.increment(playerStats.ast),
+            "totalStl": FieldValue.increment(playerStats.stl),
+            "totalBlk": FieldValue.increment(playerStats.blk),
+            "totalWins": FieldValue.increment(playerStats.hasWonGame! ? 1 : 0),
+            "gamesPlayed": FieldValue.increment(1),
+          }
+        };
+      },
+      merge: true,
     );
   }
 
