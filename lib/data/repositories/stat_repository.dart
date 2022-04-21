@@ -322,12 +322,37 @@ class StatRepository {
     };
 
     // Update each player's overviewStats based on the updated gameStats
-    // Batch setData to each of the userInfo.overviewStats
+    await updatePlayersOverviewStats(
+      gamePlayerIds: gamePlayerIds,
+      gameStats: updatedGameStats,
+    );
+
+    // Increase gamesPlayed count for players at this game
+    await courtSlotRepo.incGamesPlayedForPlayers(
+      courtSlot: courtSlot,
+      gamePlayers: updatedGameStats.values.map((s) => s.player).toList(),
+    );
+
+    // Save each of the player's stats to their corresponding userInfos
+    await firestoreHelper.setBatchData(
+      baseColPath: FirestorePath.colUserInfos(),
+      endPath: FirestorePath.docPartialUserStats(gameStats.id),
+      dataFromId: (playerId) => updatedGameStats[playerId]!.toJson(),
+      queryBuilder: (query) =>
+          query.where('id', whereIn: updatedGameStats.keys.toList()),
+    );
+  }
+
+  /// Batch update data to each of the userInfo.overviewStats
+  Future<void> updatePlayersOverviewStats({
+    required List<String> gamePlayerIds,
+    required Map<String, Stats> gameStats,
+  }) async {
     await firestoreHelper.setBatchDataForDocInList(
       docIdList: gamePlayerIds,
       baseColPath: FirestorePath.colUserInfos(),
       dataFromId: (playerId) {
-        final newStats = updatedGameStats[playerId]!;
+        final newStats = gameStats[playerId]!;
 
         return {
           "overviewStats": {
@@ -348,20 +373,6 @@ class StatRepository {
         };
       },
       merge: true,
-    );
-
-    await courtSlotRepo.incGamesPlayedForPlayers(
-      courtSlot: courtSlot,
-      gamePlayers: updatedGameStats.values.map((s) => s.player).toList(),
-    );
-
-    // Save each of the player's stats to their corresponding userInfos
-    await firestoreHelper.setBatchData(
-      baseColPath: FirestorePath.colUserInfos(),
-      endPath: FirestorePath.docPartialUserStats(gameStats.id),
-      dataFromId: (playerId) => updatedGameStats[playerId]!.toJson(),
-      queryBuilder: (query) =>
-          query.where('id', whereIn: updatedGameStats.keys.toList()),
     );
   }
 

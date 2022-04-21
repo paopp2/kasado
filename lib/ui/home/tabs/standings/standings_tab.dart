@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
-import 'package:kasado/constants/enums/slot_and_user_state.dart';
 import 'package:kasado/constants/enums/stat_type.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/leaderboards/stat_leaders_view_model.dart';

@@ -86,18 +86,14 @@ class KasadoUtils {
     final indexOfDayToday = weekdaysWithToday.indexOf(dayTodayAsNum);
 
     DateTime nextSchedDate;
-    if (weekdaysWithToday.last == dayTodayAsNum) {
-      // If today is at the end of the weekdays list, the first one will be the
-      // day of the next sched
-      nextSchedDate = now
-          .to(weekFromNow)
-          .firstWhere((dt) => dt.weekday == (weekdaysWithToday.first + 1));
-    } else {
-      // Else the next sched day will be the next one on the weekdays list
-      // after today
-      nextSchedDate = now.to(weekFromNow).firstWhere(
-          (dt) => dt.weekday == (weekdaysAsNumber[indexOfDayToday + 1] + 1));
-    }
+    nextSchedDate = (weekdaysWithToday.last == dayTodayAsNum)
+        // If today is at the end of the weekdays list, the first one will be the day of the next sched
+        ? now.to(weekFromNow).firstWhere(
+              (dt) => dt.weekday == (weekdaysWithToday.first + 1),
+            )
+        // Else the next sched day will be the next one on the weekdays list after today
+        : now.to(weekFromNow).firstWhere(
+            (dt) => dt.weekday == (weekdaysAsNumber[indexOfDayToday + 1] + 1));
 
     // Use the first slot at timeSlots
     final firstSlot = timeSlots.first;

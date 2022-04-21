@@ -143,28 +143,11 @@ class CourtSlotDetailsViewModel extends ViewModel {
     if (teamId == null) {
       // If player is not part of a team
       if (slotHasPlayer) {
-        read(mixpanel)!.track("Leave a courtSlot", properties: {
-          "isSingle": true,
-          "courtName": baseCourtSlot.courtName,
-          "courtSlotTimeRange": utils.getTimeRangeFormat(
-            baseCourtSlot.timeRange,
-            showDate: true,
-          )
-        });
-
         await removeFromCourtSlot(
           playerToRemove: currentUserInfo!.user,
           baseCourtSlot: baseCourtSlot,
         );
       } else {
-        read(mixpanel)!.track("Join a courtSlot", properties: {
-          "isSingle": true,
-          "courtName": baseCourtSlot.courtName,
-          "courtSlotTimeRange": utils.getTimeRangeFormat(
-            baseCourtSlot.timeRange,
-            showDate: true,
-          )
-        });
         await addToCourtSlot(
           userInfo: currentUserInfo!,
           baseCourtSlot: baseCourtSlot,
@@ -174,14 +157,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
     } else {
       // If player is part of a team
       if (slotHasPlayer) {
-        read(mixpanel)!.track("Leave a courtSlot", properties: {
-          "isSingle": false,
-          "courtName": baseCourtSlot.courtName,
-          "courtSlotTimeRange": utils.getTimeRangeFormat(
-            baseCourtSlot.timeRange,
-            showDate: true,
-          )
-        });
         await removeTeamFromCourtSlot(
           teamId: teamId,
           teamCaptainInfo: currentUserInfo!,
@@ -189,14 +164,6 @@ class CourtSlotDetailsViewModel extends ViewModel {
           baseCourtSlot: baseCourtSlot,
         );
       } else {
-        read(mixpanel)!.track("Join a courtSlot", properties: {
-          "isSingle": false,
-          "courtName": baseCourtSlot.courtName,
-          "courtSlotTimeRange": utils.getTimeRangeFormat(
-            baseCourtSlot.timeRange,
-            showDate: true,
-          )
-        });
         await addTeamToCourtSlot(
           teamId: teamId,
           teamCaptainInfo: currentUserInfo!,
@@ -213,6 +180,14 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required CourtSlot baseCourtSlot,
     required Future<bool> Function() onNotEnoughPondo,
   }) async {
+    read(mixpanel)!.track("Join a courtSlot", properties: {
+      "isSingle": true,
+      "courtName": baseCourtSlot.courtName,
+      "courtSlotTimeRange": utils.getTimeRangeFormat(
+        baseCourtSlot.timeRange,
+        showDate: true,
+      )
+    });
     await getSlotAndUserState(baseCourtSlot).when(
       slotFull: () => Fluttertoast.showToast(msg: 'Slot is full'),
       slotClosedByAdmin: () =>
@@ -235,6 +210,15 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required KasadoUser playerToRemove,
     required CourtSlot baseCourtSlot,
   }) async {
+    read(mixpanel)!.track("Leave a courtSlot", properties: {
+      "isSingle": true,
+      "courtName": baseCourtSlot.courtName,
+      "courtSlotTimeRange": utils.getTimeRangeFormat(
+        baseCourtSlot.timeRange,
+        showDate: true,
+      )
+    });
+
     final KasadoUser player =
         baseCourtSlot.players.firstWhere((p) => (p.id == playerToRemove.id));
 
@@ -251,6 +235,14 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required CourtSlot baseCourtSlot,
     required Future<bool> Function(List<KasadoUserInfo>) onNotAllHasEnoughPondo,
   }) async {
+    read(mixpanel)!.track("Join a courtSlot", properties: {
+      "isSingle": false,
+      "courtName": baseCourtSlot.courtName,
+      "courtSlotTimeRange": utils.getTimeRangeFormat(
+        baseCourtSlot.timeRange,
+        showDate: true,
+      )
+    });
     await getSlotAndUserState(baseCourtSlot).when(
       // TODO: Should only be for the team captain
       userHasConflictWithOtherSlot: () => Fluttertoast.showToast(
@@ -286,6 +278,14 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required CourtSlot baseCourtSlot,
     BuildContext? context,
   }) async {
+    read(mixpanel)!.track("Leave a courtSlot", properties: {
+      "isSingle": false,
+      "courtName": baseCourtSlot.courtName,
+      "courtSlotTimeRange": utils.getTimeRangeFormat(
+        baseCourtSlot.timeRange,
+        showDate: true,
+      )
+    });
     if (isTeamCaptain) {
       await courtSlotRepo.removeTeamFromCourtSlot(
         teamId: teamId,
