@@ -16,6 +16,7 @@ class StatLeadersView extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Navigated to StatLeadersView");
+
       return;
     }, []);
 

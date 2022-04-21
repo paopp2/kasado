@@ -14,6 +14,7 @@ final userInfoQueryResultProvider =
     ref.maintainState = true;
     final userInfoRepo = ref.watch(userInfoRepositoryProvider);
     if (emailQuery == null) return Stream.value([]);
+
     return userInfoRepo.getUserInfosStream(emailQuery);
   },
 );
@@ -68,6 +69,7 @@ class UserSearchPane extends HookConsumerWidget {
               itemBuilder: (context, i) {
                 final userInfo = userInfoList[i];
                 final user = userInfo.user;
+
                 return ListTile(
                   leading: CircleAvatar(
                     radius: 25,

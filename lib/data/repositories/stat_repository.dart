@@ -328,6 +328,7 @@ class StatRepository {
       baseColPath: FirestorePath.colUserInfos(),
       dataFromId: (playerId) {
         final newStats = updatedGameStats[playerId]!;
+
         return {
           "overviewStats": {
             "totalThreePA": FieldValue.increment(newStats.threePA),

@@ -10,6 +10,7 @@ enum SlotAndUserState {
 }
 
 extension SlotAndUserStatePatternMatching on SlotAndUserState {
+  // ignore: long-parameter-list, pattern matching for SlotAndUserState
   T when<T>({
     T Function()? loading,
     T Function()? error,

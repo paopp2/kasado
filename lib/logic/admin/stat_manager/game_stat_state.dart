@@ -9,6 +9,7 @@ import 'package:kasado/model/kasado_user/kasado_user.dart';
 final allSlotGamesStatsStreamProvider = StreamProvider.autoDispose
     .family<List<GameStats>, String>((ref, combinedPathIds) {
   final List<String> pathIdList = combinedPathIds.split('|');
+
   return ref
       .watch(statRepositoryProvider)
       .getAllSlotGameStatsStream(pathIdList[0], pathIdList[1]);
@@ -22,6 +23,7 @@ final slotGameStatsStreamProvider =
   (ref, combinedPathIds) {
     if (combinedPathIds == null) return Stream.value(null);
     final List<String> pathIdList = combinedPathIds.split('|');
+
     return ref
         .watch(statRepositoryProvider)
         .getSlotGameStatsStream(pathIdList[0], pathIdList[1], pathIdList[2]);
@@ -30,6 +32,7 @@ final slotGameStatsStreamProvider =
 
 final selectedGameStatsProvider = StateProvider.autoDispose<GameStats?>((ref) {
   ref.maintainState = true;
+
   return null;
 });
 
@@ -37,6 +40,7 @@ final selectedGameStatsProvider = StateProvider.autoDispose<GameStats?>((ref) {
 // "[courtId]|[slotId]|[statsId]" (null if no game currently occurring)
 final slotGameStatsPathProvider = StateProvider.autoDispose<String?>((ref) {
   ref.maintainState = true;
+
   return null;
 });
 
@@ -47,6 +51,7 @@ final homeTeamPlayersProvider = Provider.autoDispose<List<KasadoUser>>(
         ref.watch(slotGameStatsStreamProvider(gameStatPath)).value;
 
     if (slotGameStats == null) return [];
+
     return slotGameStats.homeTeamStats.values
         .map((stat) => stat.player)
         .toList()
@@ -62,6 +67,7 @@ final awayTeamPlayersProvider = Provider.autoDispose<List<KasadoUser>>(
         ref.watch(slotGameStatsStreamProvider(gameStatPath)).value;
 
     if (slotGameStats == null) return [];
+
     return slotGameStats.awayTeamStats.values
         .map((stat) => stat.player)
         .toList()

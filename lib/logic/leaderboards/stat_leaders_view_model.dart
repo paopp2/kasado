@@ -81,6 +81,7 @@ class StatLeadersViewModel extends ViewModel {
               stats: precedingUserInfo.overviewStats,
               statType: statType,
             )];
+
     return (isSameRankWithPreceding) ? '' : rankNum.toString();
   }
 }

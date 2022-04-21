@@ -18,6 +18,7 @@ class StandingsTab extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed StandingsTab");
+
       return;
     }, []);
 

@@ -9,6 +9,7 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 final appMetaStreamProvider = StreamProvider.autoDispose((ref) {
   final firestoreHelper = FirestoreHelper.instance;
+
   return firestoreHelper.documentStream(
     path: FirestorePath.docAppMeta(),
     builder: (data, docId) => data,
@@ -24,6 +25,7 @@ final currentUserProvider = Provider.autoDispose<KasadoUser?>((ref) {
   User? firebaseUser = ref.watch(fireauthProvider).currentUser;
 
   if (firebaseUser == null) return null;
+
   return KasadoUser(
     id: firebaseUser.uid,
     displayName: firebaseUser.displayName,

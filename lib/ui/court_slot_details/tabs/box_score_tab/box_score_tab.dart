@@ -32,6 +32,7 @@ class BoxScoreTab extends HookConsumerWidget {
           showDate: true,
         ),
       });
+
       return;
     }, []);
 

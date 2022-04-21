@@ -26,6 +26,7 @@ class UserInfoDrawer extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Opened UserInfoDrawer");
+
       return;
     }, []);
 
@@ -38,6 +39,7 @@ class UserInfoDrawer extends HookConsumerWidget {
               data: (userInfo) {
                 final isCurrentUserAdmin = userInfo!.isAdmin;
                 final isCurrentUserSuperAdmin = userInfo.isSuperAdmin;
+
                 return Column(
                   children: [
                     Container(

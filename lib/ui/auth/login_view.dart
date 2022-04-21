@@ -20,6 +20,7 @@ class LoginView extends HookConsumerWidget {
     useEffect(() {
       ref.read(mixpanel)!.track("Navigated to LoginView");
       model.initState();
+
       return model.dispose;
     }, []);
 

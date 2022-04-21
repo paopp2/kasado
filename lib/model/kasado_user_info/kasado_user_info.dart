@@ -27,6 +27,7 @@ class KasadoUserInfo with _$KasadoUserInfo {
     if (tickets.isEmpty) return false;
 
     final now = DateTime.now();
+
     // Check if user has any pending tickets reserved for the future.
     return tickets.any((ticket) => ticket.expiry.isAfter(now));
   }

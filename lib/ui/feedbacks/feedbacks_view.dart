@@ -21,6 +21,7 @@ class FeedbacksView extends HookConsumerWidget {
     useEffect(() {
       ref.read(mixpanel)!.track("Navigated to FeedbacksView");
       model.initState();
+
       return model.dispose;
     }, []);
 
@@ -63,6 +64,7 @@ class FeedbacksView extends HookConsumerWidget {
                               itemCount: feedbacks.length,
                               itemBuilder: (context, i) {
                                 final feedback = feedbacks[i];
+
                                 return ListTile(
                                   leading: (isSuperAdmin)
                                       ? CircleAvatar(

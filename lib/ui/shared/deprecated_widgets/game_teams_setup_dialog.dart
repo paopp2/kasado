@@ -86,6 +86,7 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
               itemCount: players.length,
               itemBuilder: (context, i) {
                 final player = players[i];
+
                 return ListTile(
                   leading: CircleAvatar(
                     radius: 20,

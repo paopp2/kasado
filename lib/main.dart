@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appRouter = AppRouter.instance.router;
+
     return MaterialApp.router(
       title: 'Kasado',
       theme: ThemeData(

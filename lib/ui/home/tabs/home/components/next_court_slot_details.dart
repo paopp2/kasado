@@ -52,6 +52,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
           weekdays: court.allowedWeekDays,
         );
       });
+
       return;
     }, []);
 

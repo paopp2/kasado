@@ -37,6 +37,7 @@ class LoginViewModel extends ViewModel {
           "Sign in attempt",
           properties: {"success": false, "error": error.toString()},
         );
+
         return ifError(error);
       },
       (creds) {
@@ -44,6 +45,7 @@ class LoginViewModel extends ViewModel {
           "Sign in attempt",
           properties: {"success": true, "provider": "Google"},
         );
+
         return ifSuccess(creds);
       },
     );

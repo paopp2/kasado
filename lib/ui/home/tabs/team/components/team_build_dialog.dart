@@ -36,6 +36,7 @@ class TeamBuildDialog extends HookConsumerWidget {
           ref.read(teamPlayersListProvider.notifier).state = team!.players;
         }
       });
+
       return;
     }, []);
 
@@ -58,6 +59,7 @@ class TeamBuildDialog extends HookConsumerWidget {
                   children: teamPlayersList.map(
                     (player) {
                       final isCurrentUser = player.id == currentUserInfo.id;
+
                       return GestureDetector(
                         onTap: (isCurrentUser)
                             ? null

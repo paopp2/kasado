@@ -22,6 +22,7 @@ class TicketTab extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed TicketsTab");
+
       return;
     }, []);
 
@@ -30,6 +31,7 @@ class TicketTab extends HookConsumerWidget {
       loading: () => const LoadingWidget(),
       data: (userInfo) {
         final tickets = userInfo?.validTickets ?? [];
+
         return Padding(
           padding: const EdgeInsets.all(20.0),
           child: tickets.isEmpty
@@ -58,6 +60,7 @@ class TicketTab extends HookConsumerWidget {
                           itemCount: tickets.length,
                           itemBuilder: (context, i) {
                             final ticket = tickets[i];
+
                             return Card(
                               color: Colors.grey.shade100,
                               shape: RoundedRectangleBorder(

@@ -35,6 +35,7 @@ class HomeView extends HookConsumerWidget {
         properties: {"isUpdated": isCurrentVerGood},
       );
       model.initState({'context': context});
+
       return model.dispose;
     }, []);
 

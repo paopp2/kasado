@@ -19,6 +19,7 @@ class ProfileTab extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed ProfileTab");
+
       return;
     }, []);
 

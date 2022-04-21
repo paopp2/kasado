@@ -89,6 +89,7 @@ class GameTeamsSetupPane extends HookConsumerWidget {
               itemCount: players.length,
               itemBuilder: (context, i) {
                 final player = players[i];
+
                 return Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: ListTile(

@@ -78,6 +78,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
           context: context,
           builder: (_) {
             ref.read(mixpanel)!.track("Pressed 'ADD PONDO'");
+
             return const PondoInfoDialog();
           },
         ),

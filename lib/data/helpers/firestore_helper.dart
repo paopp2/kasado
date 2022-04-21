@@ -17,6 +17,7 @@ class FirestoreHelper {
     required String path,
   }) async {
     final DocumentReference reference = FirebaseFirestore.instance.doc(path);
+
     return (await reference.get()).exists;
   }
 
@@ -26,6 +27,7 @@ class FirestoreHelper {
   }) async {
     final DocumentReference reference = FirebaseFirestore.instance.doc(path);
     final DocumentSnapshot snapshot = await reference.get();
+
     return builder(snapshot.data() as Map<String, dynamic>, snapshot.id);
   }
 
@@ -73,6 +75,7 @@ class FirestoreHelper {
       final reference = FirebaseFirestore.instance.doc(path);
       batch.set(reference, dataFromId(docId), SetOptions(merge: merge));
     }
+
     return batch.commit();
   }
 
@@ -141,6 +144,7 @@ class FirestoreHelper {
       streamController.add(result);
     }, cancelOnError: true);
     streamController.onCancel = streamController.close;
+
     return streamController.stream;
   }
 
@@ -163,6 +167,7 @@ class FirestoreHelper {
       }
     }, cancelOnError: true);
     streamController.onCancel = streamController.close;
+
     return streamController.stream;
   }
 
@@ -177,6 +182,7 @@ class FirestoreHelper {
       query = queryBuilder(query);
     }
     final Future<QuerySnapshot> snapshots = query.get();
+
     return snapshots.then((snapshot) {
       final result = snapshot.docs
           .map((snapshot) =>
@@ -186,6 +192,7 @@ class FirestoreHelper {
       if (sort != null) {
         result.sort(sort);
       }
+
       return result;
     });
   }

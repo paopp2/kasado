@@ -17,6 +17,7 @@ class PondoInfoDialog extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed PondoInfoDialog");
+
       return;
     }, []);
 

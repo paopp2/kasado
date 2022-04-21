@@ -52,6 +52,7 @@ class TimerButton extends HookConsumerWidget {
           );
         }
       });
+
       return _timer.cancel;
     }, [isPaused]);
 

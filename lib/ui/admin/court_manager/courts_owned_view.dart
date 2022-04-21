@@ -28,6 +28,7 @@ class CourtsOwnedView extends HookConsumerWidget {
               itemCount: courtsList.length,
               itemBuilder: (context, i) {
                 final court = courtsList[i];
+
                 return ListTile(
                   title: Text(court.name),
                   subtitle: Text(court.address),

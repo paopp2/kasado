@@ -27,6 +27,7 @@ class NotifFeedbackRow extends HookConsumerWidget {
       data: (userNotif) {
         userNotif as NotifObject;
         final isLiked = userNotif.hasLiked;
+
         return notifMetaStream.when(
           error: (e, _) => Text(e.toString()),
           loading: () => const SizedBox(),

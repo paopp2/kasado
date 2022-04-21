@@ -6,12 +6,14 @@ import 'package:kasado/model/team/team.dart';
 
 final teamPlayersListProvider = StateProvider.autoDispose((ref) {
   final currentUser = ref.watch(currentUserProvider)!;
+
   return [currentUser];
 });
 
 final removedPlayersListProvider =
     StateProvider.autoDispose<List<KasadoUser>>((ref) {
   ref.maintainState = true;
+
   return [];
 });
 
@@ -19,6 +21,7 @@ final teamStreamProvider = StreamProvider.autoDispose.family<Team?, String?>(
   (ref, teamId) {
     if (teamId == null) return Stream.value(null);
     final teamRepo = ref.watch(teamRepositoryProvider);
+
     return teamRepo.getTeamStream(teamId);
   },
 );

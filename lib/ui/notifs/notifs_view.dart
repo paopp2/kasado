@@ -28,6 +28,7 @@ class NotifsView extends HookConsumerWidget {
     useEffect(() {
       ref.read(mixpanel)!.track("Navigated to NotifsView");
       model.initState();
+
       return model.dispose;
     }, []);
 
@@ -52,6 +53,7 @@ class NotifsView extends HookConsumerWidget {
                         itemBuilder: (context, i) {
                           final notif = userNotifs[i];
                           notif as NotifObject;
+
                           return Column(
                             children: [
                               ListTile(

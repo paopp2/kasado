@@ -29,6 +29,7 @@ class CourtAdminsPanel extends HookConsumerWidget {
         itemCount: courtAdmins.length,
         itemBuilder: (context, i) {
           final admin = courtAdmins[i];
+
           return ListTile(
             leading: CircleAvatar(
               radius: 25,

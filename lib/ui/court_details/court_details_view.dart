@@ -45,6 +45,7 @@ class CourtDetailsView extends HookConsumerWidget {
         );
       }
       courtDetailsModel.initState({'court_id': courtId});
+
       return courtDetailsModel.dispose;
     }, [courtStream.value]);
 
@@ -55,6 +56,7 @@ class CourtDetailsView extends HookConsumerWidget {
           loading: () => const LoadingWidget(),
           data: (court) {
             court!;
+
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.transparent,

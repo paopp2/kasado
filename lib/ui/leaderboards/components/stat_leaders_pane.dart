@@ -28,6 +28,7 @@ class StatLeadersPane extends HookConsumerWidget {
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed ${statType.toString()} Leaders Tab");
+
       return;
     }, []);
 

@@ -41,6 +41,7 @@ class SlotGameSelectorRow extends HookConsumerWidget {
               controller.selectSlotGameStats(allGameStats.first);
             });
           }
+
           return Row(
             children: allGameStats
                 .asMap()
