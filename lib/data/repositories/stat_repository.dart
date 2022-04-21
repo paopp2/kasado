@@ -352,22 +352,22 @@ class StatRepository {
       docIdList: gamePlayerIds,
       baseColPath: FirestorePath.colUserInfos(),
       dataFromId: (playerId) {
-        final newStats = gameStats[playerId]!;
+        final playerStats = gameStats[playerId]!;
 
         return {
           "overviewStats": {
-            "totalThreePA": FieldValue.increment(newStats.threePA),
-            "totalThreePM": FieldValue.increment(newStats.threePM),
-            "totalTwoPA": FieldValue.increment(newStats.twoPA),
-            "totalTwoPM": FieldValue.increment(newStats.twoPM),
-            "totalFta": FieldValue.increment(newStats.ftA),
-            "totalFtm": FieldValue.increment(newStats.ftM),
-            "totalOReb": FieldValue.increment(newStats.oReb),
-            "totalDReb": FieldValue.increment(newStats.dReb),
-            "totalAst": FieldValue.increment(newStats.ast),
-            "totalStl": FieldValue.increment(newStats.stl),
-            "totalBlk": FieldValue.increment(newStats.blk),
-            "totalWins": FieldValue.increment(newStats.hasWonGame! ? 1 : 0),
+            "totalThreePA": FieldValue.increment(playerStats.threePA),
+            "totalThreePM": FieldValue.increment(playerStats.threePM),
+            "totalTwoPA": FieldValue.increment(playerStats.twoPA),
+            "totalTwoPM": FieldValue.increment(playerStats.twoPM),
+            "totalFta": FieldValue.increment(playerStats.ftA),
+            "totalFtm": FieldValue.increment(playerStats.ftM),
+            "totalOReb": FieldValue.increment(playerStats.oReb),
+            "totalDReb": FieldValue.increment(playerStats.dReb),
+            "totalAst": FieldValue.increment(playerStats.ast),
+            "totalStl": FieldValue.increment(playerStats.stl),
+            "totalBlk": FieldValue.increment(playerStats.blk),
+            "totalWins": FieldValue.increment(playerStats.hasWonGame! ? 1 : 0),
             "gamesPlayed": FieldValue.increment(1),
           }
         };
