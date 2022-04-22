@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/enums/slot_and_user_state.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/model/court/court.dart';
@@ -33,6 +34,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final slotAndUserState = model.getSlotAndUserState(courtSlot);
     final isSuperAdmin = currentUserInfo.isSuperAdmin;
     final isModifyingSlot = useState(false);
 
@@ -50,11 +52,11 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
         title: (forTeamCaptain)
             ? "Some players at your team doesn't have enough PONDO"
             : "Not enough PONDO",
-        desc: "Sugod karong Sunday April 24 dol, implement "
+        desc: "Sugod karong Sunday May 1 dol, implement "
             "na tas atoang Pondo system para pud mahapsay atoang "
             "systema. Bale mura rakag magpaload sa imong Pondo, "
-            "pwede through GCash or bayad personal, nya kana "
-            "nga Pondo, magamit na para maka-join og mga court slot. "
+            "pwede through GCash or hatag personal, nya kana "
+            "imong Pondo, magamit na para maka-join og mga court slot. "
             "Ig-abots atong sched, aw wa nay hasol, duwa nalay ato. "
             "Sa karon pwede pa man sad nuon bisag way Pondo pero mas "
             "may jung atong hinay-hinayan hehe. Gege mao rato dol lamats!",
@@ -136,10 +138,16 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                             'LEAVE GAME',
                             style: TextStyle(color: Colors.red.shade200),
                           )
-                        : const Text(
+                        : Text(
                             'JOIN GAME',
                             style: TextStyle(
-                              color: Colors.green,
+                              color: slotAndUserState.when(
+                                slotClosedByAdmin: () => Colors.grey.shade300,
+                                userHasConflictWithOtherSlot: () =>
+                                    Colors.grey.shade300,
+                                slotFull: () => Colors.grey.shade300,
+                                orElse: () => Colors.green,
+                              ),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
