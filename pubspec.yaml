@@ -50,6 +50,8 @@ dependencies:
   mixpanel_flutter: ^1.4.5
   pub_semver: ^2.1.1
   url_launcher: ^6.0.20
+  time_range_picker: ^2.1.0
+  weekday_selector: ^1.1.0
 
 dev_dependencies:
   flutter_test:
