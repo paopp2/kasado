@@ -25,7 +25,7 @@ class KasadoUtils {
 
     // If today is not one of the allowed weekdays for the sched, calculate the
     // time range for the next sched
-    if (!weekdays.contains(indexToWeekDay[now.weekday - 1])) {
+    if (!weekdays.contains(weekdaysList[now.weekday - 1])) {
       return calculateFirstSlotForNextSched(
         timeSlots: timeSlots,
         weekdays: weekdays,
@@ -77,7 +77,7 @@ class KasadoUtils {
     final dayTodayAsNum = now.weekday - 1;
     // Map [weekdays] to their number counterpart (based on ISO 8601)
     final weekdaysAsNumber =
-        weekdays.map((day) => indexToWeekDay.indexOf(day)).toList();
+        weekdays.map((day) => weekdaysList.indexOf(day)).toList();
     // Insert today (as number) to the list above
     final weekdaysWithToday = weekdaysAsNumber
       ..add(dayTodayAsNum)

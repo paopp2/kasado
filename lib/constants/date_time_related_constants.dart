@@ -3,8 +3,19 @@ import 'dart:core';
 import 'package:kasado/model/time_range/time_range.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+// ignore: prefer-match-file-name
+class WeekdayIndex {
+  static const mon = 0;
+  static const tue = 1;
+  static const wed = 2;
+  static const thu = 3;
+  static const fri = 4;
+  static const sat = 5;
+  static const sun = 6;
+}
+
 // In accordance with ISO 8601 wherein week starts with Monday
-final indexToWeekDay = [
+final weekdaysList = [
   WeekDays.monday,
   WeekDays.tuesday,
   WeekDays.wednesday,

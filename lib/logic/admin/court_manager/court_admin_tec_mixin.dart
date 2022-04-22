@@ -28,7 +28,7 @@ mixin CourtAdminTecMixin {
     tecCourtAddress.text = court.address;
     tecTicketPrice.text = court.ticketPrice.toStringAsFixed(2);
     setupScheduleChips(
-      court.allowedWeekDays.map((d) => indexToWeekDay.indexOf(d)).toList(),
+      court.allowedWeekDays.map((d) => weekdaysList.indexOf(d)).toList(),
       court.allowedTimeSlots.map((t) => allowedTimeRanges.indexOf(t)).toList(),
     );
   }

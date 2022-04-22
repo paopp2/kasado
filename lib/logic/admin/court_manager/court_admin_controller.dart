@@ -124,7 +124,7 @@ class CourtAdminController with CourtAdminTecMixin {
     final List<TimeRange> allowedTimeSlots =
         selectedSchedIndices.map((si) => allowedTimeRanges[si]).toList();
     final List<WeekDays> allowedWeekDays =
-        selectedWeekDayIndices.map((di) => indexToWeekDay[di]).toList();
+        selectedWeekDayIndices.map((di) => weekdaysList[di]).toList();
 
     // assert that courtId != null when in 'edit mode'
     assert(isEdit == (courtId != null));
