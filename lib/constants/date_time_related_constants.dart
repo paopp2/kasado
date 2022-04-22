@@ -14,6 +14,18 @@ class WeekdayIndex {
   static const sun = 6;
 }
 
+final weekdaysStringList = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
+final bigBang = DateTime(2022, 3, 1);
+
 // In accordance with ISO 8601 wherein week starts with Monday
 final weekdaysList = [
   WeekDays.monday,
