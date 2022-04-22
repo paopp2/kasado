@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/logic/court_details/court_details_state.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/model/court/court.dart';
@@ -92,11 +93,11 @@ class CourtSchedulePanel extends HookConsumerWidget {
 _AppointmentDataSource _getCalendarDataSource(Court court, bool isAdmin) {
   List<Appointment> appointments = <Appointment>[];
 
-  appointments.addAll(court.allowedTimeSlots.map((tRange) {
+  appointments.addAll(court.courtScheds.map((sched) {
     return Appointment(
       id: 'appointment_id',
-      startTime: tRange.startsAt,
-      endTime: tRange.endsAt,
+      startTime: sched.timeRange.startsAt,
+      endTime: sched.timeRange.endsAt,
       recurrenceExceptionDates: (isAdmin)
           ? null
           : court.specialCourtSlots!
@@ -106,7 +107,7 @@ _AppointmentDataSource _getCalendarDataSource(Court court, bool isAdmin) {
         RecurrenceProperties(
           recurrenceType: RecurrenceType.weekly,
           startDate: DateTime.now(),
-          weekDays: court.allowedWeekDays,
+          weekDays: [weekdaysList[sched.weekdayIndex]],
         ),
         DateTime(2015, 1, 1),
         DateTime(2015, 1, 1),

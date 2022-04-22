@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
@@ -11,8 +10,6 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_sched/court_sched.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
-import 'package:kasado/model/time_range/time_range.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:uuid/uuid.dart';
 
 final courtAdminController = Provider.autoDispose(
@@ -54,34 +51,6 @@ class CourtAdminController with CourtAdminTecMixin {
     );
   }
 
-  void selectSchedChip(bool isSelected, int index) {
-    read(selectedSchedChipIndicesProvider.notifier).update((s) {
-      // Using conditional expressions results to a bug where chip doesn't update
-      // ignore: prefer-conditional-expressions
-      if (isSelected) {
-        return [...s, index];
-      } else {
-        return [...s]..remove(index);
-      }
-    });
-  }
-
-  bool isSchedIndexSelected(int index) {
-    return read(selectedSchedChipIndicesProvider).contains(index);
-  }
-
-  void selectWeekDayChip(bool isSelected, int index) {
-    read(selectedDayChipIndicesProvider.notifier).update((s) {
-      // Using conditional expressions results to a bug where chip doesn't update
-      // ignore: prefer-conditional-expressions
-      if (isSelected) {
-        return [...s, index];
-      } else {
-        return [...s]..remove(index);
-      }
-    });
-  }
-
   void addToCourtSchedList(CourtSched sched) {
     read(courtSchedListProvider.notifier).update(
       (s) => [...s, sched]..sort(
@@ -110,24 +79,17 @@ class CourtAdminController with CourtAdminTecMixin {
     // assert that courtId != null when in 'edit mode'
     assert(forEdit == (court != null));
     if (forEdit) {
-      setupCourtToEdit(court!, (dayChipIndices, schedChipIndices) {
-        read(selectedSchedChipIndicesProvider.notifier).state =
-            schedChipIndices;
-        read(selectedDayChipIndicesProvider.notifier).state = dayChipIndices;
+      setupCourtToEdit(court!, (courtScheds) {
+        read(courtSchedListProvider.notifier).state = courtScheds;
       });
     }
     showDialog(
       context: context,
       builder: (_) => dialog,
     ).then((_) {
-      read(selectedSchedChipIndicesProvider.notifier).state = [];
-      read(selectedDayChipIndicesProvider.notifier).state = [];
+      read(courtSchedListProvider.notifier).state = [];
       clearAllTecs();
     });
-  }
-
-  bool isWeekDayIndexSelected(int index) {
-    return read(selectedDayChipIndicesProvider).contains(index);
   }
 
   /// If (isEdit), courtId must not be null
@@ -136,15 +98,6 @@ class CourtAdminController with CourtAdminTecMixin {
     bool isEdit = false,
     String? courtId,
   }) async {
-    final List<int> selectedSchedIndices =
-        read(selectedSchedChipIndicesProvider);
-    final List<int> selectedWeekDayIndices =
-        read(selectedDayChipIndicesProvider);
-    final List<TimeRange> allowedTimeSlots =
-        selectedSchedIndices.map((si) => allowedTimeRanges[si]).toList();
-    final List<WeekDays> allowedWeekDays =
-        selectedWeekDayIndices.map((di) => weekdaysList[di]).toList();
-
     // assert that courtId != null when in 'edit mode'
     assert(isEdit == (courtId != null));
     final id = (isEdit) ? courtId! : const Uuid().v4();
@@ -170,9 +123,10 @@ class CourtAdminController with CourtAdminTecMixin {
         address: tecCourtAddress.text,
         photoUrl: tecCourtPhotoUrl.text,
         ticketPrice: double.parse(tecTicketPrice.text),
-        allowedTimeSlots: allowedTimeSlots,
         adminIds: baseCourtInfo?.adminIds ?? [currentUser.id],
-        allowedWeekDays: allowedWeekDays,
+        allowedTimeSlots: [],
+        allowedWeekDays: [],
+        courtScheds: read(courtSchedListProvider),
       ),
       isUpdate: isEdit,
     );
