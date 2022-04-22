@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/date_time_related_constants.dart';
+import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/model/court_sched/court_sched.dart';
 import 'package:time/time.dart';
 import 'package:time_range_picker/time_range_picker.dart';
@@ -10,14 +11,30 @@ import 'package:kasado/model/time_range/time_range.dart' as kasado;
 
 class CourtSchedInputDialog extends HookConsumerWidget {
   const CourtSchedInputDialog({
+    required this.controller,
     Key? key,
   }) : super(key: key);
+
+  final CourtAdminController controller;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedWeekdayIndex = useState(0);
     final timeStartState = useState(bigBang);
     final timeEndState = useState(bigBang);
+
+    void _onAddCourtSchedPressed() {
+      controller.addToCourtSchedList(
+        CourtSched(
+          weekdayIndex: selectedWeekdayIndex.value,
+          timeRange: kasado.TimeRange(
+            startsAt: timeStartState.value,
+            endsAt: timeEndState.value,
+          ),
+        ),
+      );
+      Navigator.pop(context);
+    }
 
     return Dialog(
       child: Padding(
@@ -67,16 +84,7 @@ class CourtSchedInputDialog extends HookConsumerWidget {
             ),
             TextButton(
               child: const Text("Add CourtSched"),
-              // ignore: prefer-extracting-callbacks
-              onPressed: () {
-                print(CourtSched(
-                  weekdayIndex: selectedWeekdayIndex.value,
-                  timeRange: kasado.TimeRange(
-                    startsAt: timeStartState.value,
-                    endsAt: timeEndState.value,
-                  ),
-                ));
-              },
+              onPressed: _onAddCourtSchedPressed,
               style: TextButton.styleFrom(
                 primary: Colors.green,
               ),

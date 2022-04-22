@@ -8,6 +8,7 @@ import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_state.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_tec_mixin.dart';
 import 'package:kasado/model/court/court.dart';
+import 'package:kasado/model/court_sched/court_sched.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/time_range/time_range.dart';
@@ -79,6 +80,24 @@ class CourtAdminController with CourtAdminTecMixin {
         return [...s]..remove(index);
       }
     });
+  }
+
+  void addToCourtSchedList(CourtSched sched) {
+    read(courtSchedListProvider.notifier).update(
+      (s) => [...s, sched]..sort(
+          (a, b) {
+            return a.weekdayIndex != b.weekdayIndex
+                ? a.weekdayIndex.compareTo(b.weekdayIndex)
+                : a.timeRange.startsAt.compareTo(b.timeRange.startsAt);
+          },
+        ),
+    );
+  }
+
+  void removeFromCourtSchedList(CourtSched sched) {
+    read(courtSchedListProvider.notifier).update(
+      (s) => [...s]..remove(sched),
+    );
   }
 
   /// If (forEdit), courtId must not be null
