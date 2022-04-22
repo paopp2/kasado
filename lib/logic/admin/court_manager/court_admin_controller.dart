@@ -55,8 +55,13 @@ class CourtAdminController with CourtAdminTecMixin {
 
   void selectSchedChip(bool isSelected, int index) {
     read(selectedSchedChipIndicesProvider.notifier).update((s) {
-      return isSelected ? [...s, index] : [...s]
-        ..remove(index);
+      // Using conditional expressions results to a bug where chip doesn't update
+      // ignore: prefer-conditional-expressions
+      if (isSelected) {
+        return [...s, index];
+      } else {
+        return [...s]..remove(index);
+      }
     });
   }
 
@@ -66,8 +71,13 @@ class CourtAdminController with CourtAdminTecMixin {
 
   void selectWeekDayChip(bool isSelected, int index) {
     read(selectedDayChipIndicesProvider.notifier).update((s) {
-      return isSelected ? [...s, index] : [...s]
-        ..remove(index);
+      // Using conditional expressions results to a bug where chip doesn't update
+      // ignore: prefer-conditional-expressions
+      if (isSelected) {
+        return [...s, index];
+      } else {
+        return [...s]..remove(index);
+      }
     });
   }
 
