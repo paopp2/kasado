@@ -23,6 +23,7 @@ class CourtInputDialog extends HookConsumerWidget {
         ref.watch(selectedDayChipIndicesProvider);
 
     return Dialog(
+      insetPadding: const EdgeInsets.all(20.0),
       child: ListView(
         children: [
           DataEntryField(hint: 'Court Name', tec: controller.tecCourtName),
@@ -210,13 +211,22 @@ class CourtInputDialog extends HookConsumerWidget {
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(
-              child: Text((courtToEdit != null) ? 'Update Court' : 'Add Court'),
-              onPressed: () => controller.pushCourt(
-                context: context,
-                isEdit: courtToEdit != null,
-                courtId: courtToEdit?.id,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  child: const Text("Cancel"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                ElevatedButton(
+                  child: Text((courtToEdit != null) ? 'Update' : 'Add'),
+                  onPressed: () => controller.pushCourt(
+                    context: context,
+                    isEdit: courtToEdit != null,
+                    courtId: courtToEdit?.id,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
