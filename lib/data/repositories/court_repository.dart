@@ -21,7 +21,14 @@ class CourtRepository {
   Future<void> pushCourt(Court court, {bool isUpdate = false}) async {
     await firestoreHelper.setData(
       path: FirestorePath.docCourt(court.id),
-      data: court.toJson()..remove('specialCourtSlots'),
+      // TODO: Remove the removes
+      // The reason for doing this is to avoid overwriting these existing fields
+      // at db with nothing, which might fuck up the app if not yet updated.
+      // Basically for backwards compatiblity, sort of
+      data: court.toJson()
+        ..remove('specialCourtSlots')
+        ..remove('allowedTimeSlots')
+        ..remove('allowedWeekDays'),
       merge: isUpdate,
     );
   }
