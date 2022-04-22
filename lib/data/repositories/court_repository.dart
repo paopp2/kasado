@@ -24,11 +24,8 @@ class CourtRepository {
       // TODO: Remove the removes
       // The reason for doing this is to avoid overwriting these existing fields
       // at db with nothing, which might fuck up the app if not yet updated.
-      // Basically for backwards compatiblity, sort of
-      data: court.toJson()
-        ..remove('specialCourtSlots')
-        ..remove('allowedTimeSlots')
-        ..remove('allowedWeekDays'),
+      // Basically done for backwards compatiblity, sort of
+      data: court.toJson()..remove('specialCourtSlots'),
       merge: isUpdate,
     );
   }

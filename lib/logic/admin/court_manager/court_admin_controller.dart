@@ -124,8 +124,6 @@ class CourtAdminController with CourtAdminTecMixin {
         photoUrl: tecCourtPhotoUrl.text,
         ticketPrice: double.parse(tecTicketPrice.text),
         adminIds: baseCourtInfo?.adminIds ?? [currentUser.id],
-        allowedTimeSlots: [],
-        allowedWeekDays: [],
         courtScheds: read(courtSchedListProvider),
       ),
       isUpdate: isEdit,
