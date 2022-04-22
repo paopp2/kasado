@@ -31,6 +31,7 @@ class _$CourtTearOff {
       required List<WeekDays> allowedWeekDays,
       required List<TimeRange> allowedTimeSlots,
       required List<String> adminIds,
+      List<CourtSched> courtScheds = const [],
       List<CourtSlot>? specialCourtSlots = const []}) {
     return _Court(
       id: id,
@@ -41,6 +42,7 @@ class _$CourtTearOff {
       allowedWeekDays: allowedWeekDays,
       allowedTimeSlots: allowedTimeSlots,
       adminIds: adminIds,
+      courtScheds: courtScheds,
       specialCourtSlots: specialCourtSlots,
     );
   }
@@ -63,6 +65,7 @@ mixin _$Court {
   List<WeekDays> get allowedWeekDays => throw _privateConstructorUsedError;
   List<TimeRange> get allowedTimeSlots => throw _privateConstructorUsedError;
   List<String> get adminIds => throw _privateConstructorUsedError;
+  List<CourtSched> get courtScheds => throw _privateConstructorUsedError;
 
   /// Special courtSlots are courtSlots wherein all the other slots with the
   /// same day as them are hidden. In other words, only the specialCourtSlots
@@ -91,6 +94,7 @@ abstract class $CourtCopyWith<$Res> {
       List<WeekDays> allowedWeekDays,
       List<TimeRange> allowedTimeSlots,
       List<String> adminIds,
+      List<CourtSched> courtScheds,
       List<CourtSlot>? specialCourtSlots});
 }
 
@@ -112,6 +116,7 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
     Object? allowedWeekDays = freezed,
     Object? allowedTimeSlots = freezed,
     Object? adminIds = freezed,
+    Object? courtScheds = freezed,
     Object? specialCourtSlots = freezed,
   }) {
     return _then(_value.copyWith(
@@ -147,6 +152,10 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
           ? _value.adminIds
           : adminIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      courtScheds: courtScheds == freezed
+          ? _value.courtScheds
+          : courtScheds // ignore: cast_nullable_to_non_nullable
+              as List<CourtSched>,
       specialCourtSlots: specialCourtSlots == freezed
           ? _value.specialCourtSlots
           : specialCourtSlots // ignore: cast_nullable_to_non_nullable
@@ -169,6 +178,7 @@ abstract class _$CourtCopyWith<$Res> implements $CourtCopyWith<$Res> {
       List<WeekDays> allowedWeekDays,
       List<TimeRange> allowedTimeSlots,
       List<String> adminIds,
+      List<CourtSched> courtScheds,
       List<CourtSlot>? specialCourtSlots});
 }
 
@@ -191,6 +201,7 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
     Object? allowedWeekDays = freezed,
     Object? allowedTimeSlots = freezed,
     Object? adminIds = freezed,
+    Object? courtScheds = freezed,
     Object? specialCourtSlots = freezed,
   }) {
     return _then(_Court(
@@ -226,6 +237,10 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
           ? _value.adminIds
           : adminIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      courtScheds: courtScheds == freezed
+          ? _value.courtScheds
+          : courtScheds // ignore: cast_nullable_to_non_nullable
+              as List<CourtSched>,
       specialCourtSlots: specialCourtSlots == freezed
           ? _value.specialCourtSlots
           : specialCourtSlots // ignore: cast_nullable_to_non_nullable
@@ -246,6 +261,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       required this.allowedWeekDays,
       required this.allowedTimeSlots,
       required this.adminIds,
+      this.courtScheds = const [],
       this.specialCourtSlots = const []});
 
   factory _$_Court.fromJson(Map<String, dynamic> json) =>
@@ -269,6 +285,9 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
   final List<String> adminIds;
   @JsonKey()
   @override
+  final List<CourtSched> courtScheds;
+  @JsonKey()
+  @override
 
   /// Special courtSlots are courtSlots wherein all the other slots with the
   /// same day as them are hidden. In other words, only the specialCourtSlots
@@ -281,7 +300,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Court(id: $id, name: $name, address: $address, photoUrl: $photoUrl, ticketPrice: $ticketPrice, allowedWeekDays: $allowedWeekDays, allowedTimeSlots: $allowedTimeSlots, adminIds: $adminIds, specialCourtSlots: $specialCourtSlots)';
+    return 'Court(id: $id, name: $name, address: $address, photoUrl: $photoUrl, ticketPrice: $ticketPrice, allowedWeekDays: $allowedWeekDays, allowedTimeSlots: $allowedTimeSlots, adminIds: $adminIds, courtScheds: $courtScheds, specialCourtSlots: $specialCourtSlots)';
   }
 
   @override
@@ -297,6 +316,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       ..add(DiagnosticsProperty('allowedWeekDays', allowedWeekDays))
       ..add(DiagnosticsProperty('allowedTimeSlots', allowedTimeSlots))
       ..add(DiagnosticsProperty('adminIds', adminIds))
+      ..add(DiagnosticsProperty('courtScheds', courtScheds))
       ..add(DiagnosticsProperty('specialCourtSlots', specialCourtSlots));
   }
 
@@ -317,6 +337,8 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
                 .equals(other.allowedTimeSlots, allowedTimeSlots) &&
             const DeepCollectionEquality().equals(other.adminIds, adminIds) &&
             const DeepCollectionEquality()
+                .equals(other.courtScheds, courtScheds) &&
+            const DeepCollectionEquality()
                 .equals(other.specialCourtSlots, specialCourtSlots));
   }
 
@@ -331,6 +353,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       const DeepCollectionEquality().hash(allowedWeekDays),
       const DeepCollectionEquality().hash(allowedTimeSlots),
       const DeepCollectionEquality().hash(adminIds),
+      const DeepCollectionEquality().hash(courtScheds),
       const DeepCollectionEquality().hash(specialCourtSlots));
 
   @JsonKey(ignore: true)
@@ -354,6 +377,7 @@ abstract class _Court implements Court {
       required List<WeekDays> allowedWeekDays,
       required List<TimeRange> allowedTimeSlots,
       required List<String> adminIds,
+      List<CourtSched> courtScheds,
       List<CourtSlot>? specialCourtSlots}) = _$_Court;
 
   factory _Court.fromJson(Map<String, dynamic> json) = _$_Court.fromJson;
@@ -374,6 +398,8 @@ abstract class _Court implements Court {
   List<TimeRange> get allowedTimeSlots;
   @override
   List<String> get adminIds;
+  @override
+  List<CourtSched> get courtScheds;
   @override
 
   /// Special courtSlots are courtSlots wherein all the other slots with the
