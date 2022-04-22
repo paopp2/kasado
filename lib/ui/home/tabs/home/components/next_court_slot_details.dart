@@ -131,7 +131,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                       SizedBox(
                         width: constraints.maxWidth * 0.05,
                       ),
-                      Text('₱ ${court.ticketPrice}')
+                      Text('${court.ticketPrice.toStringAsFixed(0)} Php')
                     ],
                   ),
                 ],
