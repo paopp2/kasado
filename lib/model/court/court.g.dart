@@ -18,6 +18,10 @@ _$_Court _$$_CourtFromJson(Map<String, dynamic> json) => _$_Court(
               ?.map((e) => CourtSched.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      specialCourtScheds: (json['specialCourtScheds'] as List<dynamic>?)
+              ?.map((e) => CourtSched.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       specialCourtSlots: (json['specialCourtSlots'] as List<dynamic>?)
               ?.map((e) => CourtSlot.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -32,6 +36,8 @@ Map<String, dynamic> _$$_CourtToJson(_$_Court instance) => <String, dynamic>{
       'ticketPrice': instance.ticketPrice,
       'adminIds': instance.adminIds,
       'courtScheds': instance.courtScheds.map((e) => e.toJson()).toList(),
+      'specialCourtScheds':
+          instance.specialCourtScheds.map((e) => e.toJson()).toList(),
       'specialCourtSlots':
           instance.specialCourtSlots?.map((e) => e.toJson()).toList(),
     };
