@@ -124,8 +124,12 @@ class KasadoUtils {
         timeRange.endsAt.difference(now).abs();
   }
 
-  String getDateFormat(DateTime dateTime) {
-    return DateFormat('MMM d').format(dateTime);
+  String getDateFormat(DateTime? dateTime, {bool showYear = false}) {
+    if (dateTime == null) return '';
+    final dateFormat =
+        (showYear) ? DateFormat('MMM d yyyy') : DateFormat('MMM d');
+
+    return dateFormat.format(dateTime);
   }
 
   String getTimeRangeFormat(TimeRange timeRange, {bool showDate = false}) {
