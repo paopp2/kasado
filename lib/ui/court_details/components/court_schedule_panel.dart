@@ -100,8 +100,8 @@ _AppointmentDataSource _getCalendarDataSource(Court court, bool isAdmin) {
       endTime: sched.timeRange.endsAt,
       recurrenceExceptionDates: (isAdmin)
           ? null
-          : court.specialCourtSlots!
-              .map((slot) => slot.timeRange.startsAt)
+          : court.specialCourtScheds
+              .map((specialSched) => specialSched.timeRange.startsAt)
               .toList(),
       recurrenceRule: SfCalendar.generateRRule(
         RecurrenceProperties(
@@ -117,11 +117,11 @@ _AppointmentDataSource _getCalendarDataSource(Court court, bool isAdmin) {
 
   /// Add the specialCourtSlots that was hidden due to the
   /// 'recurrenceExceptionDates' above
-  appointments.addAll(court.specialCourtSlots!.map((slot) {
+  appointments.addAll(court.specialCourtScheds.map((specialSched) {
     return Appointment(
       recurrenceId: 'appointment_id',
-      startTime: slot.timeRange.startsAt,
-      endTime: slot.timeRange.endsAt,
+      startTime: specialSched.timeRange.startsAt,
+      endTime: specialSched.timeRange.endsAt,
     );
   }));
 

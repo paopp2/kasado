@@ -89,14 +89,16 @@ class CourtAdminController with CourtAdminTecMixin {
     // assert that courtId != null when in 'edit mode'
     assert(forEdit == (court != null));
     if (forEdit) {
-      setupCourtToEdit(court!, (courtScheds) {
+      setupCourtToEdit(court!, (courtScheds, specialCourtScheds) {
         read(courtSchedListProvider.notifier).state = courtScheds;
+        read(specialCourtSchedListProvider.notifier).state = specialCourtScheds;
       });
     }
     showDialog(
       context: context,
       builder: (_) => dialog,
     ).then((_) {
+      read(courtSchedListProvider.notifier).state = [];
       read(courtSchedListProvider.notifier).state = [];
       clearAllTecs();
     });
@@ -135,6 +137,7 @@ class CourtAdminController with CourtAdminTecMixin {
         ticketPrice: double.parse(tecTicketPrice.text),
         adminIds: baseCourtInfo?.adminIds ?? [currentUser.id],
         courtScheds: read(courtSchedListProvider),
+        specialCourtScheds: read(specialCourtSchedListProvider),
       ),
       isUpdate: isEdit,
     );

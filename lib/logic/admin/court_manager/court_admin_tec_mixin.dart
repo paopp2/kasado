@@ -17,12 +17,19 @@ mixin CourtAdminTecMixin {
 
   void setupCourtToEdit(
     Court court,
-    void Function(List<CourtSched> courtScheds) setupScheduleChips,
+    void Function(
+      List<CourtSched> courtScheds,
+      List<CourtSched> specialCourtScheds,
+    )
+        setupCourtProviders,
   ) {
     tecCourtName.text = court.name;
     tecCourtPhotoUrl.text = court.photoUrl;
     tecCourtAddress.text = court.address;
     tecTicketPrice.text = court.ticketPrice.toStringAsFixed(2);
-    setupScheduleChips(court.courtScheds);
+    setupCourtProviders(
+      court.courtScheds,
+      court.specialCourtScheds,
+    );
   }
 }
