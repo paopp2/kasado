@@ -103,10 +103,18 @@ class CourtDetailsView extends HookConsumerWidget {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          "${court.ticketPrice.toStringAsFixed(0)} Php",
+                                          court.ticketPrice.toStringAsFixed(0),
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 40,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const Text(
+                                          " / per slot",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -121,6 +129,7 @@ class CourtDetailsView extends HookConsumerWidget {
                                     //       style: TextStyle(
                                     //         color: Colors.white,
                                     //         fontWeight: FontWeight.bold,
+                                    //         fontSize: 10,
                                     //       ),
                                     //     ),
                                     //     Icon(
