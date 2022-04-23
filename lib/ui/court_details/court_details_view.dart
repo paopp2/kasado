@@ -81,9 +81,68 @@ class CourtDetailsView extends HookConsumerWidget {
                       ),
                       child: SizedBox(
                         height: constraints.maxHeight * 0.3,
-                        child: Image.network(
-                          court.photoUrl,
-                          fit: BoxFit.cover,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              child: Image.network(
+                                court.photoUrl,
+                                fit: BoxFit.cover,
+                              ),
+                              right: 0,
+                              left: 0,
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          court.ticketPrice.toStringAsFixed(0),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 40,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const Text(
+                                          " / per slot",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    // TODO: Uncomment after implementing additional if with light
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.end,
+                                    //   children: [
+                                    //     Text(
+                                    //       "+10 if w/",
+                                    //       style: TextStyle(
+                                    //         color: Colors.white,
+                                    //         fontWeight: FontWeight.bold,
+                                    //         fontSize: 10,
+                                    //       ),
+                                    //     ),
+                                    //     Icon(
+                                    //       Icons.lightbulb,
+                                    //       color: Colors.amber,
+                                    //     ),
+                                    //   ],
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -93,8 +152,7 @@ class CourtDetailsView extends HookConsumerWidget {
                     child: Column(
                       children: [
                         AutoSizeText(
-                          court.name.toUpperCase() +
-                              "  [₱${court.ticketPrice}]",
+                          court.name.toUpperCase(),
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,

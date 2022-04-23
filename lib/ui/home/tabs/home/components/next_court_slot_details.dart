@@ -32,10 +32,12 @@ class NextCourtSlotDetails extends HookConsumerWidget {
     final currentUserInfo = ref.watch(currentUserInfoProvider).value;
     final model = ref.watch(courtSlotDetailsViewModel);
     final utils = ref.watch(kasadoUtilsProvider);
-    final nextTimeSlotState = useState(utils.getNextTimeSlot(
-      timeSlots: court.allowedTimeSlots,
-      weekdays: court.allowedWeekDays,
-    ));
+    final nextTimeSlotState = useState(
+      utils.getNextTimeSlot(
+        from: DateTime.now(),
+        courtScheds: court.courtScheds,
+      ),
+    );
     final nextTimeSlot = nextTimeSlotState.value;
     final courtSlotStream = ref.watch(
       courtSlotStreamProvider(
@@ -46,8 +48,8 @@ class NextCourtSlotDetails extends HookConsumerWidget {
     useEffect(() {
       _getNextTimeSlot(Timer timer) {
         nextTimeSlotState.value = utils.getNextTimeSlot(
-          timeSlots: court.allowedTimeSlots,
-          weekdays: court.allowedWeekDays,
+          courtScheds: court.courtScheds,
+          from: DateTime.now(),
         );
       }
 
@@ -131,7 +133,7 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                       SizedBox(
                         width: constraints.maxWidth * 0.05,
                       ),
-                      Text('₱ ${court.ticketPrice}')
+                      Text('${court.ticketPrice.toStringAsFixed(0)} Php')
                     ],
                   ),
                 ],

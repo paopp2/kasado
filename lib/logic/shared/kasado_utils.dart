@@ -1,8 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:kasado/constants/date_time_related_constants.dart';
+import 'package:kasado/model/court_sched/court_sched.dart';
 import 'package:kasado/model/time_range/time_range.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:time/time.dart';
 
 final kasadoUtilsProvider = Provider.autoDispose(
@@ -15,32 +14,40 @@ class KasadoUtils {
   final Reader read;
 
   TimeRange getNextTimeSlot({
-    required List<TimeRange> timeSlots,
-    required List<WeekDays> weekdays,
+    required DateTime from,
+    required List<CourtSched> courtScheds,
   }) {
-    const hour = Duration(hours: 1);
-    final now = DateTime.now();
-    final sortedTimeSlots = timeSlots
-      ..sort((a, b) => a.startsAt.compareTo(b.startsAt));
+    // Weekdays are represented as numbers => MON:0, TUE:1,..., SUN:6
+    final weekdays =
+        courtScheds.map((sched) => sched.weekdayIndex).toSet().toList();
+    final today = from.weekday - 1; // Adjusted to start at 0 (1 by default)
+    final slotsPerDay = {
+      for (final day in weekdays)
+        day: courtScheds
+            .where((sched) => sched.weekdayIndex == day)
+            .map((sched) => sched.timeRange)
+            .toList()
+          ..sort((a, b) => a.startsAt.compareTo(b.startsAt)),
+    };
 
     // If today is not one of the allowed weekdays for the sched, calculate the
     // time range for the next sched
-    if (!weekdays.contains(indexToWeekDay[now.weekday - 1])) {
+    if (!weekdays.contains(today)) {
       return calculateFirstSlotForNextSched(
-        timeSlots: timeSlots,
-        weekdays: weekdays,
+        from: from,
+        slotsPerDay: slotsPerDay,
       );
     }
 
-    // Iterate over the time slots to get the next closest one for today
-    for (final slot in sortedTimeSlots) {
+    // Iterate over the time slots of today and get the next closest one
+    for (final slot in slotsPerDay[today]!) {
       final sStart = slot.startTime;
       final sEnd = slot.endTime;
 
       final sStartDateTime =
-          DateTime(now.year, now.month, now.day, sStart.hour, sStart.minute);
+          DateTime(from.year, from.month, from.day, sStart.hour, sStart.minute);
       final sEndDateTime =
-          DateTime(now.year, now.month, now.day, sEnd.hour, sEnd.minute);
+          DateTime(from.year, from.month, from.day, sEnd.hour, sEnd.minute);
 
       final sAdjustedTimeRange = TimeRange(
         startsAt: sStartDateTime,
@@ -48,55 +55,49 @@ class KasadoUtils {
       );
 
       // Get next slot if current slot's time range has ended
-      if (sEndDateTime.isBefore(now)) continue;
+      if (sEndDateTime.isBefore(from)) continue;
 
       // If slot's time range had not started yet OR
       // If the slot has started but still within an hour ago, return the slot
-      if (sStartDateTime.isAfter(now) ||
-          now.difference(sStartDateTime) < hour) {
+      if (sStartDateTime.isAfter(from) ||
+          from.difference(sStartDateTime) < 1.hours) {
         return sAdjustedTimeRange;
       }
     }
 
-    //In cases there is none,
-    // get the closest next schedule that is not for today
     return calculateFirstSlotForNextSched(
-      timeSlots: timeSlots,
-      weekdays: weekdays,
+      slotsPerDay: slotsPerDay,
+      from: from,
     );
   }
 
-  /// Calculates the TimeRange for the next sched when it's not for today
   TimeRange calculateFirstSlotForNextSched({
-    required List<TimeRange> timeSlots,
-    required List<WeekDays> weekdays,
+    required Map<int, List<TimeRange>> slotsPerDay,
+    required DateTime from,
   }) {
-    final now = DateTime.now();
-    final weekFromNow = now + 1.weeks;
-    // -1 adjusts now.weekday to begin at 0 (eg. Monday: 0, Sunday: 6)
-    final dayTodayAsNum = now.weekday - 1;
-    // Map [weekdays] to their number counterpart (based on ISO 8601)
-    final weekdaysAsNumber =
-        weekdays.map((day) => indexToWeekDay.indexOf(day)).toList();
-    // Insert today (as number) to the list above
-    final weekdaysWithToday = weekdaysAsNumber
-      ..add(dayTodayAsNum)
-      ..sort();
+    // Weekdays are represented as numbers => MON:0, TUE:1,..., SUN:6
+    final today = from.weekday - 1; // Adjusted to start at 0 (1 by default)
+    final weekdays = slotsPerDay.keys.toList();
+
+    // Insert today to the weekdays list (if not in it already)
+    final weekdaysWithToday = {...weekdays, today}.toList()..sort();
+
     // Obtain the index to be used below
-    final indexOfDayToday = weekdaysWithToday.indexOf(dayTodayAsNum);
+    final todayIndex = weekdaysWithToday.indexOf(today);
 
     DateTime nextSchedDate;
-    nextSchedDate = (weekdaysWithToday.last == dayTodayAsNum)
+    final weekFromNow = from + 1.weeks;
+    nextSchedDate = (weekdaysWithToday.last == today)
         // If today is at the end of the weekdays list, the first one will be the day of the next sched
-        ? now.to(weekFromNow).firstWhere(
+        ? from.to(weekFromNow).firstWhere(
               (dt) => dt.weekday == (weekdaysWithToday.first + 1),
             )
         // Else the next sched day will be the next one on the weekdays list after today
-        : now.to(weekFromNow).firstWhere(
-            (dt) => dt.weekday == (weekdaysAsNumber[indexOfDayToday + 1] + 1));
+        : from.to(weekFromNow).firstWhere(
+            (dt) => (dt.weekday) == (weekdaysWithToday[todayIndex + 1] + 1));
 
-    // Use the first slot at timeSlots
-    final firstSlot = timeSlots.first;
+    // Use the first slot of nextSchedDate (adjusted to start at 0 (1 by default))
+    final firstSlot = slotsPerDay[nextSchedDate.weekday - 1]!.first;
 
     return TimeRange(
       startsAt: DateTime(
@@ -123,8 +124,12 @@ class KasadoUtils {
         timeRange.endsAt.difference(now).abs();
   }
 
-  String getDateFormat(DateTime dateTime) {
-    return DateFormat('MMM d').format(dateTime);
+  String getDateFormat(DateTime? dateTime, {bool showYear = false}) {
+    if (dateTime == null) return '';
+    final dateFormat =
+        (showYear) ? DateFormat('MMM d yyyy') : DateFormat('MMM d');
+
+    return dateFormat.format(dateTime);
   }
 
   String getTimeRangeFormat(TimeRange timeRange, {bool showDate = false}) {

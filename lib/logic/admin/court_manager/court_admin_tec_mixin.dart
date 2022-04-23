@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/model/court/court.dart';
+import 'package:kasado/model/court_sched/court_sched.dart';
 
 mixin CourtAdminTecMixin {
   final tecCourtName = TextEditingController();
@@ -18,18 +18,18 @@ mixin CourtAdminTecMixin {
   void setupCourtToEdit(
     Court court,
     void Function(
-      List<int> dayChipIndices,
-      List<int> schedChipIndices,
+      List<CourtSched> courtScheds,
+      List<CourtSched> specialCourtScheds,
     )
-        setupScheduleChips,
+        setupCourtProviders,
   ) {
     tecCourtName.text = court.name;
     tecCourtPhotoUrl.text = court.photoUrl;
     tecCourtAddress.text = court.address;
     tecTicketPrice.text = court.ticketPrice.toStringAsFixed(2);
-    setupScheduleChips(
-      court.allowedWeekDays.map((d) => indexToWeekDay.indexOf(d)).toList(),
-      court.allowedTimeSlots.map((t) => allowedTimeRanges.indexOf(t)).toList(),
+    setupCourtProviders(
+      court.courtScheds,
+      court.specialCourtScheds,
     );
   }
 }

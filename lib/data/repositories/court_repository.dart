@@ -2,7 +2,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court/court.dart';
-import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 final courtRepositoryProvider = Provider.autoDispose(
@@ -21,6 +20,10 @@ class CourtRepository {
   Future<void> pushCourt(Court court, {bool isUpdate = false}) async {
     await firestoreHelper.setData(
       path: FirestorePath.docCourt(court.id),
+      // TODO: Remove the removes
+      // The reason for doing this is to avoid overwriting these existing fields
+      // at db with nothing, which might fuck up the app if not yet updated.
+      // Basically done for backwards compatiblity, sort of
       data: court.toJson()..remove('specialCourtSlots'),
       merge: isUpdate,
     );
@@ -28,22 +31,6 @@ class CourtRepository {
 
   Future<void> deleteCourt(Court court) async {
     await firestoreHelper.deleteData(path: FirestorePath.docCourt(court.id));
-  }
-
-  Future<void> hideOtherCourtSlotsWithSameDayAs(CourtSlot courtSlot) async {
-    final baseCourt = await getCourt(courtSlot.courtId);
-    // Special courtSlots are slots that remain shown while other slots having
-    // the same day as them are hidden
-    final specialCourtSlots = [...baseCourt!.specialCourtSlots!, courtSlot]
-      ..sort((a, b) => a.timeRange.startsAt.compareTo(b.timeRange.startsAt));
-    await firestoreHelper.setData(
-      path: FirestorePath.docCourt(baseCourt.id),
-      data: {
-        'specialCourtSlots':
-            specialCourtSlots.map((slot) => slot.toJson()).toList(),
-      },
-      merge: true,
-    );
   }
 
   Future<Court?> getCourt(String courtId) async {
