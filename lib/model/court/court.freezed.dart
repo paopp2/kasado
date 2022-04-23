@@ -30,8 +30,7 @@ class _$CourtTearOff {
       required double ticketPrice,
       required List<String> adminIds,
       List<CourtSched> courtScheds = const [],
-      List<CourtSched> specialCourtScheds = const [],
-      List<CourtSlot>? specialCourtSlots = const []}) {
+      List<CourtSched> specialCourtScheds = const []}) {
     return _Court(
       id: id,
       name: name,
@@ -41,7 +40,6 @@ class _$CourtTearOff {
       adminIds: adminIds,
       courtScheds: courtScheds,
       specialCourtScheds: specialCourtScheds,
-      specialCourtSlots: specialCourtSlots,
     );
   }
 
@@ -62,16 +60,15 @@ mixin _$Court {
   double get ticketPrice => throw _privateConstructorUsedError;
   List<String> get adminIds => throw _privateConstructorUsedError;
   List<CourtSched> get courtScheds => throw _privateConstructorUsedError;
-  List<CourtSched> get specialCourtScheds => throw _privateConstructorUsedError;
 
-  /// Special courtSlots are courtSlots wherein all the other slots with the
-  /// same day as them are hidden. In other words, only the specialCourtSlots
+  /// Special courtScheds are courtScheds wherein all the other slots with the
+  /// same day as them are hidden. In other words, only the specialCourtScheds
   /// are shown during the day that they occur
 //
 // These are in use with Syncfusion's calendar widget and its
 // 'recurrenceExceptionDates' feature. Useful when admin has to hide some
 // slots from the end user
-  List<CourtSlot>? get specialCourtSlots => throw _privateConstructorUsedError;
+  List<CourtSched> get specialCourtScheds => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -90,8 +87,7 @@ abstract class $CourtCopyWith<$Res> {
       double ticketPrice,
       List<String> adminIds,
       List<CourtSched> courtScheds,
-      List<CourtSched> specialCourtScheds,
-      List<CourtSlot>? specialCourtSlots});
+      List<CourtSched> specialCourtScheds});
 }
 
 /// @nodoc
@@ -112,7 +108,6 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
     Object? adminIds = freezed,
     Object? courtScheds = freezed,
     Object? specialCourtScheds = freezed,
-    Object? specialCourtSlots = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -147,10 +142,6 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
           ? _value.specialCourtScheds
           : specialCourtScheds // ignore: cast_nullable_to_non_nullable
               as List<CourtSched>,
-      specialCourtSlots: specialCourtSlots == freezed
-          ? _value.specialCourtSlots
-          : specialCourtSlots // ignore: cast_nullable_to_non_nullable
-              as List<CourtSlot>?,
     ));
   }
 }
@@ -168,8 +159,7 @@ abstract class _$CourtCopyWith<$Res> implements $CourtCopyWith<$Res> {
       double ticketPrice,
       List<String> adminIds,
       List<CourtSched> courtScheds,
-      List<CourtSched> specialCourtScheds,
-      List<CourtSlot>? specialCourtSlots});
+      List<CourtSched> specialCourtScheds});
 }
 
 /// @nodoc
@@ -191,7 +181,6 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
     Object? adminIds = freezed,
     Object? courtScheds = freezed,
     Object? specialCourtScheds = freezed,
-    Object? specialCourtSlots = freezed,
   }) {
     return _then(_Court(
       id: id == freezed
@@ -226,10 +215,6 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
           ? _value.specialCourtScheds
           : specialCourtScheds // ignore: cast_nullable_to_non_nullable
               as List<CourtSched>,
-      specialCourtSlots: specialCourtSlots == freezed
-          ? _value.specialCourtSlots
-          : specialCourtSlots // ignore: cast_nullable_to_non_nullable
-              as List<CourtSlot>?,
     ));
   }
 }
@@ -245,8 +230,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       required this.ticketPrice,
       required this.adminIds,
       this.courtScheds = const [],
-      this.specialCourtScheds = const [],
-      this.specialCourtSlots = const []});
+      this.specialCourtScheds = const []});
 
   factory _$_Court.fromJson(Map<String, dynamic> json) =>
       _$$_CourtFromJson(json);
@@ -268,22 +252,19 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
   final List<CourtSched> courtScheds;
   @JsonKey()
   @override
-  final List<CourtSched> specialCourtScheds;
-  @JsonKey()
-  @override
 
-  /// Special courtSlots are courtSlots wherein all the other slots with the
-  /// same day as them are hidden. In other words, only the specialCourtSlots
+  /// Special courtScheds are courtScheds wherein all the other slots with the
+  /// same day as them are hidden. In other words, only the specialCourtScheds
   /// are shown during the day that they occur
 //
 // These are in use with Syncfusion's calendar widget and its
 // 'recurrenceExceptionDates' feature. Useful when admin has to hide some
 // slots from the end user
-  final List<CourtSlot>? specialCourtSlots;
+  final List<CourtSched> specialCourtScheds;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Court(id: $id, name: $name, address: $address, photoUrl: $photoUrl, ticketPrice: $ticketPrice, adminIds: $adminIds, courtScheds: $courtScheds, specialCourtScheds: $specialCourtScheds, specialCourtSlots: $specialCourtSlots)';
+    return 'Court(id: $id, name: $name, address: $address, photoUrl: $photoUrl, ticketPrice: $ticketPrice, adminIds: $adminIds, courtScheds: $courtScheds, specialCourtScheds: $specialCourtScheds)';
   }
 
   @override
@@ -298,8 +279,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       ..add(DiagnosticsProperty('ticketPrice', ticketPrice))
       ..add(DiagnosticsProperty('adminIds', adminIds))
       ..add(DiagnosticsProperty('courtScheds', courtScheds))
-      ..add(DiagnosticsProperty('specialCourtScheds', specialCourtScheds))
-      ..add(DiagnosticsProperty('specialCourtSlots', specialCourtSlots));
+      ..add(DiagnosticsProperty('specialCourtScheds', specialCourtScheds));
   }
 
   @override
@@ -317,9 +297,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
             const DeepCollectionEquality()
                 .equals(other.courtScheds, courtScheds) &&
             const DeepCollectionEquality()
-                .equals(other.specialCourtScheds, specialCourtScheds) &&
-            const DeepCollectionEquality()
-                .equals(other.specialCourtSlots, specialCourtSlots));
+                .equals(other.specialCourtScheds, specialCourtScheds));
   }
 
   @override
@@ -332,8 +310,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       const DeepCollectionEquality().hash(ticketPrice),
       const DeepCollectionEquality().hash(adminIds),
       const DeepCollectionEquality().hash(courtScheds),
-      const DeepCollectionEquality().hash(specialCourtScheds),
-      const DeepCollectionEquality().hash(specialCourtSlots));
+      const DeepCollectionEquality().hash(specialCourtScheds));
 
   @JsonKey(ignore: true)
   @override
@@ -355,8 +332,7 @@ abstract class _Court implements Court {
       required double ticketPrice,
       required List<String> adminIds,
       List<CourtSched> courtScheds,
-      List<CourtSched> specialCourtScheds,
-      List<CourtSlot>? specialCourtSlots}) = _$_Court;
+      List<CourtSched> specialCourtScheds}) = _$_Court;
 
   factory _Court.fromJson(Map<String, dynamic> json) = _$_Court.fromJson;
 
@@ -375,17 +351,15 @@ abstract class _Court implements Court {
   @override
   List<CourtSched> get courtScheds;
   @override
-  List<CourtSched> get specialCourtScheds;
-  @override
 
-  /// Special courtSlots are courtSlots wherein all the other slots with the
-  /// same day as them are hidden. In other words, only the specialCourtSlots
+  /// Special courtScheds are courtScheds wherein all the other slots with the
+  /// same day as them are hidden. In other words, only the specialCourtScheds
   /// are shown during the day that they occur
 //
 // These are in use with Syncfusion's calendar widget and its
 // 'recurrenceExceptionDates' feature. Useful when admin has to hide some
 // slots from the end user
-  List<CourtSlot>? get specialCourtSlots;
+  List<CourtSched> get specialCourtScheds;
   @override
   @JsonKey(ignore: true)
   _$CourtCopyWith<_Court> get copyWith => throw _privateConstructorUsedError;

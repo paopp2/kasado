@@ -145,10 +145,6 @@ class CourtAdminController with CourtAdminTecMixin {
     Navigator.pop(context);
   }
 
-  Future<void> hideOtherCourtSlotsWithSameDayAs(CourtSlot courtSlot) async {
-    await courtRepo.hideOtherCourtSlotsWithSameDayAs(courtSlot);
-  }
-
   Future<void> setCourtSlotClosed({
     required BuildContext context,
     required CourtSlot courtSlot,
