@@ -16,6 +16,15 @@ final courtSchedListProvider = StateProvider.autoDispose<List<CourtSched>>(
   },
 );
 
+final specialCourtSchedListProvider =
+    StateProvider.autoDispose<List<CourtSched>>(
+  (ref) {
+    ref.maintainState = true;
+
+    return [];
+  },
+);
+
 final courtsOwnedListProvider = StreamProvider.autoDispose(
   (ref) {
     final currentUser = ref.watch(currentUserProvider);

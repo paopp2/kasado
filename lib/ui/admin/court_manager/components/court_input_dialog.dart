@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_state.dart';
-import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
-import 'package:kasado/ui/admin/court_manager/components/court_sched_input_dialog.dart';
+import 'package:kasado/ui/admin/court_manager/components/sched_input_pane.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
 
 class CourtInputDialog extends HookConsumerWidget {
@@ -21,7 +19,7 @@ class CourtInputDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courtSchedList = ref.watch(courtSchedListProvider);
-    final utils = ref.watch(kasadoUtilsProvider);
+    final specialCourtSchedList = ref.watch(specialCourtSchedListProvider);
 
     return Dialog(
       insetPadding: const EdgeInsets.all(20.0),
@@ -37,30 +35,21 @@ class CourtInputDialog extends HookConsumerWidget {
             tec: controller.tecTicketPrice,
           ),
           const Divider(),
-          TextButton(
-            child: const Text("Add Sched"),
-            onPressed: () => showDialog(
-              context: context,
-              builder: (_) => CourtSchedInputDialog(controller: controller),
-            ),
-            style: TextButton.styleFrom(primary: Colors.green),
-          ),
           SizedBox(
-            height: 250,
-            child: ListView.builder(
-              itemCount: courtSchedList.length,
-              itemBuilder: (context, i) {
-                final sched = courtSchedList[i];
-
-                return ListTile(
-                  title: Text(
-                      "${weekdaysStringList[sched.weekdayIndex]} / ${utils.getTimeRangeFormat(sched.timeRange)}"),
-                  trailing: IconButton(
-                    onPressed: () => controller.removeFromCourtSchedList(sched),
-                    icon: const Icon(Icons.delete),
-                  ),
-                );
-              },
+            height: 300,
+            child: PageView(
+              children: [
+                SchedInputPane(
+                  controller: controller,
+                  courtSchedList: courtSchedList,
+                  isSpecial: false,
+                ),
+                SchedInputPane(
+                  controller: controller,
+                  courtSchedList: specialCourtSchedList,
+                  isSpecial: true,
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 10),

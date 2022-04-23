@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court_sched/court_sched.dart';
 import 'package:time/time.dart';
 import 'package:time_range_picker/time_range_picker.dart';
@@ -12,28 +13,50 @@ import 'package:kasado/model/time_range/time_range.dart' as kasado;
 class CourtSchedInputDialog extends HookConsumerWidget {
   const CourtSchedInputDialog({
     required this.controller,
+    required this.isSpecial,
     Key? key,
   }) : super(key: key);
 
   final CourtAdminController controller;
+  final bool isSpecial;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedWeekdayIndex = useState(0);
     final timeStartState = useState(bigBang);
     final timeEndState = useState(bigBang);
+    final isSpecialSchedDateSet = !timeStartState.value.isAtSameDayAs(bigBang);
+    final utils = ref.watch(kasadoUtilsProvider);
 
     void _onAddCourtSchedPressed() {
       controller.addToCourtSchedList(
-        CourtSched(
+        sched: CourtSched(
           weekdayIndex: selectedWeekdayIndex.value,
           timeRange: kasado.TimeRange(
             startsAt: timeStartState.value,
             endsAt: timeEndState.value,
           ),
         ),
+        isSpecial: isSpecial,
       );
       Navigator.pop(context);
+    }
+
+    void _onSpecialDateSchedButtonPressed() async {
+      final specialDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2022),
+            lastDate: DateTime(2050),
+          ) ??
+          DateTime(
+            timeStartState.value.year,
+            timeStartState.value.month,
+          );
+      timeStartState.value = timeStartState.value.copyWith(
+        month: specialDate.month,
+        day: specialDate.day,
+      );
     }
 
     return Dialog(
@@ -42,13 +65,29 @@ class CourtSchedInputDialog extends HookConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            WeekdaySelector(
-              firstDayOfWeek: 0,
-              onChanged: (weekday) =>
-                  (selectedWeekdayIndex.value = (weekday - 1) % 7),
-              values: List.generate(
-                  7, (i) => ((i - 1) % 7 == selectedWeekdayIndex.value)),
-            ),
+            (isSpecial)
+                ? TextButton(
+                    style: TextButton.styleFrom(
+                      primary:
+                          (isSpecialSchedDateSet) ? Colors.green : Colors.red,
+                    ),
+                    child: Text(
+                      (isSpecialSchedDateSet)
+                          ? utils.getDateFormat(
+                              timeStartState.value,
+                              showYear: true,
+                            )
+                          : "Choose a special sched date",
+                    ),
+                    onPressed: _onSpecialDateSchedButtonPressed,
+                  )
+                : WeekdaySelector(
+                    firstDayOfWeek: 0,
+                    onChanged: (weekday) =>
+                        (selectedWeekdayIndex.value = (weekday - 1) % 7),
+                    values: List.generate(
+                        7, (i) => ((i - 1) % 7 == selectedWeekdayIndex.value)),
+                  ),
             TimeRangePicker(
               use24HourFormat: false,
               interval: const Duration(minutes: 30),

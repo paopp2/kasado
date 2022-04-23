@@ -51,8 +51,13 @@ class CourtAdminController with CourtAdminTecMixin {
     );
   }
 
-  void addToCourtSchedList(CourtSched sched) {
-    read(courtSchedListProvider.notifier).update(
+  void addToCourtSchedList({
+    required CourtSched sched,
+    required bool isSpecial,
+  }) {
+    final schedListProvider =
+        (isSpecial) ? specialCourtSchedListProvider : courtSchedListProvider;
+    read(schedListProvider.notifier).update(
       (s) => [...s, sched]..sort(
           (a, b) {
             return a.weekdayIndex != b.weekdayIndex
@@ -63,8 +68,13 @@ class CourtAdminController with CourtAdminTecMixin {
     );
   }
 
-  void removeFromCourtSchedList(CourtSched sched) {
-    read(courtSchedListProvider.notifier).update(
+  void removeFromCourtSchedList({
+    required CourtSched sched,
+    required bool isSpecial,
+  }) {
+    final schedListProvider =
+        (isSpecial) ? specialCourtSchedListProvider : courtSchedListProvider;
+    read(schedListProvider.notifier).update(
       (s) => [...s]..remove(sched),
     );
   }
