@@ -60,9 +60,11 @@ class CourtAdminController with CourtAdminTecMixin {
     read(schedListProvider.notifier).update(
       (s) => [...s, sched]..sort(
           (a, b) {
-            return a.weekdayIndex != b.weekdayIndex
-                ? a.weekdayIndex.compareTo(b.weekdayIndex)
-                : a.timeRange.startsAt.compareTo(b.timeRange.startsAt);
+            return isSpecial
+                ? b.timeRange.startsAt.compareTo(a.timeRange.startsAt)
+                : a.weekdayIndex != b.weekdayIndex
+                    ? a.weekdayIndex.compareTo(b.weekdayIndex)
+                    : a.timeRange.startsAt.compareTo(b.timeRange.startsAt);
           },
         ),
     );
