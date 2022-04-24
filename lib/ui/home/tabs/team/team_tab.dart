@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,6 +11,7 @@ import 'package:kasado/logic/home/states/team_tab_state.dart';
 import 'package:kasado/logic/home/team_tab_model.dart';
 import 'package:kasado/ui/home/tabs/team/components/team_build_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
+import 'package:kasado/ui/shared/stagger_list_tile_animation.dart';
 
 class TeamTab extends HookConsumerWidget {
   const TeamTab({
@@ -50,42 +52,47 @@ class TeamTab extends HookConsumerWidget {
                               ),
                             ),
                             Expanded(
-                              child: ListView.builder(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 20,
-                                ),
-                                itemCount: team.players.length,
-                                itemBuilder: (context, i) {
-                                  final player = team.players[i];
-                                  final isTeamCaptain =
-                                      player.id == team.teamCaptain.id;
+                              child: AnimationLimiter(
+                                child: ListView.builder(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 20,
+                                  ),
+                                  itemCount: team.players.length,
+                                  itemBuilder: (context, i) {
+                                    final player = team.players[i];
+                                    final isTeamCaptain =
+                                        player.id == team.teamCaptain.id;
 
-                                  return ListTile(
-                                    leading: Badge(
-                                      badgeContent: const FaIcon(
-                                        FontAwesomeIcons.crown,
-                                        size: 8,
+                                    return StaggerListTileAnimation(
+                                      index: i,
+                                      child: ListTile(
+                                        leading: Badge(
+                                          badgeContent: const FaIcon(
+                                            FontAwesomeIcons.crown,
+                                            size: 8,
+                                          ),
+                                          badgeColor: Colors.amber,
+                                          showBadge: isTeamCaptain,
+                                          child: CircleAvatar(
+                                            backgroundImage:
+                                                NetworkImage(player.photoUrl!),
+                                          ),
+                                        ),
+                                        title: Text(
+                                          player.displayName!,
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        onTap: () => context.pushNamed(
+                                          Routes.userProfileView,
+                                          params: {'uid': player.id},
+                                        ),
                                       ),
-                                      badgeColor: Colors.amber,
-                                      showBadge: isTeamCaptain,
-                                      child: CircleAvatar(
-                                        backgroundImage:
-                                            NetworkImage(player.photoUrl!),
-                                      ),
-                                    ),
-                                    title: Text(
-                                      player.displayName!,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    onTap: () => context.pushNamed(
-                                      Routes.userProfileView,
-                                      params: {'uid': player.id},
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ],

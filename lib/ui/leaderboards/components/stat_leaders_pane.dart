@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
@@ -8,6 +9,7 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/leaderboards/stat_leaders_state.dart';
 import 'package:kasado/logic/leaderboards/stat_leaders_view_model.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
+import 'package:kasado/ui/shared/stagger_list_tile_animation.dart';
 
 class StatLeadersPane extends HookConsumerWidget {
   const StatLeadersPane({
@@ -52,63 +54,80 @@ class StatLeadersPane extends HookConsumerWidget {
               return (userInfoList.isEmpty)
                   ? const Center(child: Text('No data available'))
                   : Material(
-                      child: ListView.builder(
-                        itemCount: userInfoList.length,
-                        itemBuilder: (context, i) {
-                          final userInfo = userInfoList[i];
-                          final precedingUserInfo =
-                              (i == 0) ? null : userInfoList[i - 1];
-                          final player = userInfo.user;
+                      child: AnimationLimiter(
+                        child: ListView.builder(
+                          itemCount: userInfoList.length,
+                          itemBuilder: (context, i) {
+                            final userInfo = userInfoList[i];
+                            final precedingUserInfo =
+                                (i == 0) ? null : userInfoList[i - 1];
+                            final player = userInfo.user;
 
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 30,
-                                  child: Text(
-                                    model.getRankNumAsString(
-                                      statType: statType,
-                                      precedingUserInfo: precedingUserInfo,
-                                      userInfo: userInfo,
-                                    ),
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: ListTile(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    tileColor: (player.id == currentUser?.id)
+                            return StaggerListTileAnimation(
+                              index: i,
+                              child: FutureBuilder<Color?>(
+                                  initialData: null,
+                                  future: Future.delayed(
+                                    const Duration(milliseconds: 500),
+                                    () => (player.id == currentUser?.id)
                                         ? Colors.amber.shade100
                                         : null,
-                                    leading: CircleAvatar(
-                                      backgroundImage:
-                                          NetworkImage(player.photoUrl!),
-                                    ),
-                                    title: Text(player.displayName!),
-                                    trailing: Text(
-                                      model.getStatValue(
-                                        stats: userInfo.overviewStats,
-                                        statType: statType,
-                                      ),
-                                      style: const TextStyle(fontSize: 15),
-                                    ),
-                                    onTap: () => context.pushNamed(
-                                      Routes.userProfileView,
-                                      params: {'uid': player.id},
-                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                                  builder: (context, snapshot) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 30,
+                                            child: Text(
+                                              model.getRankNumAsString(
+                                                statType: statType,
+                                                precedingUserInfo:
+                                                    precedingUserInfo,
+                                                userInfo: userInfo,
+                                              ),
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: ListTile(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              tileColor: snapshot.data,
+                                              leading: CircleAvatar(
+                                                backgroundImage: NetworkImage(
+                                                    player.photoUrl!),
+                                              ),
+                                              title: Text(player.displayName!),
+                                              trailing: Text(
+                                                model.getStatValue(
+                                                  stats: userInfo.overviewStats,
+                                                  statType: statType,
+                                                ),
+                                                style: const TextStyle(
+                                                    fontSize: 15),
+                                              ),
+                                              onTap: () => context.pushNamed(
+                                                Routes.userProfileView,
+                                                params: {'uid': player.id},
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                            );
+                          },
+                        ),
                       ),
                     );
             },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
@@ -24,25 +25,35 @@ class CourtsOwnedView extends HookConsumerWidget {
           body: courtsOwnedList.when(
             error: (e, _) => Text(e.toString()),
             loading: () => const LoadingWidget(),
-            data: (courtsList) => ListView.builder(
-              itemCount: courtsList.length,
-              itemBuilder: (context, i) {
-                final court = courtsList[i];
+            data: (courtsList) => AnimationLimiter(
+              child: ListView.builder(
+                itemCount: courtsList.length,
+                itemBuilder: (context, i) {
+                  final court = courtsList[i];
 
-                return ListTile(
-                  title: Text(court.name),
-                  subtitle: Text(court.address),
-                  onTap: () => context.pushNamed(
-                    Routes.courtDetailsView,
-                    params: {"courtId": court.id},
-                    extra: true, // isAdmin
-                  ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () => adminController.deleteCourt(court),
-                  ),
-                );
-              },
+                  return AnimationConfiguration.staggeredList(
+                    position: i,
+                    child: SlideAnimation(
+                      verticalOffset: 50.0,
+                      child: FadeInAnimation(
+                        child: ListTile(
+                          title: Text(court.name),
+                          subtitle: Text(court.address),
+                          onTap: () => context.pushNamed(
+                            Routes.courtDetailsView,
+                            params: {"courtId": court.id},
+                            extra: true, // isAdmin
+                          ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () => adminController.deleteCourt(court),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
           floatingActionButton: Visibility(
