@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court/court.dart';
+import 'package:kasado/model/kasado_location/kasado_location.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 
@@ -51,20 +52,9 @@ class CourtRepository {
     );
   }
 
-  // TODO: Remove commented code
-  // Stream<List<Court>> getCourtsStream({KasadoUser? admin}) {
-  //   return firestoreHelper.collectionStream(
-  //     path: FirestorePath.colCourts(),
-  //     builder: (data, docId) => Court.fromJson(data),
-  //     queryBuilder: (admin != null)
-  //         ? (query) => query.where('adminIds', arrayContains: admin.id)
-  //         : null,
-  //   );
-  // }
-
   Stream<List<Court>> getCourtsStream({
     KasadoUser? admin,
-    Map<String, double>? centerLatLng,
+    KasadoLocation? centerLoc,
   }) {
     final geo = Geoflutterfire();
     final streamController = StreamController<List<Court>>();
@@ -73,10 +63,10 @@ class CourtRepository {
     if (admin != null) {
       query = query.where('adminIds', arrayContains: admin.id);
     }
-    if (centerLatLng != null) {
+    if (centerLoc != null) {
       final center = geo.point(
-        latitude: centerLatLng['lat']!,
-        longitude: centerLatLng['lng']!,
+        latitude: centerLoc.lat,
+        longitude: centerLoc.lng,
       );
       final geoRef = geo
           .collection(collectionRef: query)

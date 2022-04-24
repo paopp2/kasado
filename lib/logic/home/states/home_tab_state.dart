@@ -1,14 +1,23 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
+import 'package:kasado/model/kasado_location/kasado_location.dart';
+
+final selectedCenterLocProvider = StateProvider.autoDispose<KasadoLocation?>(
+  (ref) => null,
+);
+
+final isLocationRetrievedProvider = StateProvider.autoDispose((ref) => false);
 
 final courtsStreamProvider = StreamProvider.autoDispose(
-  (ref) => ref.watch(courtRepositoryProvider).getCourtsStream(
-    // TODO: Replace with real location
-    centerLatLng: {
-      'lat': 10.383033221412328,
-      'lng': 123.97179477071731,
-    },
-  ),
+  (ref) {
+    final isLocationRetrieved = ref.watch(isLocationRetrievedProvider);
+
+    return (isLocationRetrieved)
+        ? ref.watch(courtRepositoryProvider).getCourtsStream(
+              centerLoc: ref.watch(selectedCenterLocProvider),
+            )
+        : const Stream.empty();
+  },
 );
 
 final isLoadedProvider = StateProvider((ref) => false);

@@ -9,15 +9,7 @@ final locationServiceProvider =
     Provider.autoDispose((ref) => LocationService(ref.read));
 
 class LocationService {
-  LocationService(this.read) {
-    // In order to be able to listen to changes for when the location service
-    // is enabled/disabled on top of being able to control the stream, manually
-    // add them through the serviceStatusController which can also be utilized
-    // wherever
-    Geolocator.getServiceStatusStream().listen(
-      (status) => serviceStatusController.add(status),
-    );
-  }
+  LocationService(this.read);
 
   final Reader read;
   final serviceStatusController = StreamController<ServiceStatus>();
