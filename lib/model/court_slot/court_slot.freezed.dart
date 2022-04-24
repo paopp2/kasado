@@ -33,7 +33,9 @@ class _$CourtSlotTearOff {
       String? liveGameStatsId = null,
       List<KasadoUser>? stageHomeTeamPlayers = const [],
       List<KasadoUser>? stageAwayTeamPlayers = const [],
-      Map<String, SlotPlayerInfo> slotInfoPerPlayer = const {}}) {
+      Map<String, SlotPlayerInfo> slotInfoPerPlayer = const {},
+      int maxPlayerCount = 30,
+      int minPlayerCount = 15}) {
     return _CourtSlot(
       slotId: slotId,
       courtId: courtId,
@@ -46,6 +48,8 @@ class _$CourtSlotTearOff {
       stageHomeTeamPlayers: stageHomeTeamPlayers,
       stageAwayTeamPlayers: stageAwayTeamPlayers,
       slotInfoPerPlayer: slotInfoPerPlayer,
+      maxPlayerCount: maxPlayerCount,
+      minPlayerCount: minPlayerCount,
     );
   }
 
@@ -75,6 +79,8 @@ mixin _$CourtSlot {
       throw _privateConstructorUsedError;
   Map<String, SlotPlayerInfo> get slotInfoPerPlayer =>
       throw _privateConstructorUsedError;
+  int get maxPlayerCount => throw _privateConstructorUsedError;
+  int get minPlayerCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -97,7 +103,9 @@ abstract class $CourtSlotCopyWith<$Res> {
       String? liveGameStatsId,
       List<KasadoUser>? stageHomeTeamPlayers,
       List<KasadoUser>? stageAwayTeamPlayers,
-      Map<String, SlotPlayerInfo> slotInfoPerPlayer});
+      Map<String, SlotPlayerInfo> slotInfoPerPlayer,
+      int maxPlayerCount,
+      int minPlayerCount});
 
   $TimeRangeCopyWith<$Res> get timeRange;
 }
@@ -123,6 +131,8 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
     Object? stageHomeTeamPlayers = freezed,
     Object? stageAwayTeamPlayers = freezed,
     Object? slotInfoPerPlayer = freezed,
+    Object? maxPlayerCount = freezed,
+    Object? minPlayerCount = freezed,
   }) {
     return _then(_value.copyWith(
       slotId: slotId == freezed
@@ -169,6 +179,14 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
           ? _value.slotInfoPerPlayer
           : slotInfoPerPlayer // ignore: cast_nullable_to_non_nullable
               as Map<String, SlotPlayerInfo>,
+      maxPlayerCount: maxPlayerCount == freezed
+          ? _value.maxPlayerCount
+          : maxPlayerCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      minPlayerCount: minPlayerCount == freezed
+          ? _value.minPlayerCount
+          : minPlayerCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 
@@ -197,7 +215,9 @@ abstract class _$CourtSlotCopyWith<$Res> implements $CourtSlotCopyWith<$Res> {
       String? liveGameStatsId,
       List<KasadoUser>? stageHomeTeamPlayers,
       List<KasadoUser>? stageAwayTeamPlayers,
-      Map<String, SlotPlayerInfo> slotInfoPerPlayer});
+      Map<String, SlotPlayerInfo> slotInfoPerPlayer,
+      int maxPlayerCount,
+      int minPlayerCount});
 
   @override
   $TimeRangeCopyWith<$Res> get timeRange;
@@ -225,6 +245,8 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
     Object? stageHomeTeamPlayers = freezed,
     Object? stageAwayTeamPlayers = freezed,
     Object? slotInfoPerPlayer = freezed,
+    Object? maxPlayerCount = freezed,
+    Object? minPlayerCount = freezed,
   }) {
     return _then(_CourtSlot(
       slotId: slotId == freezed
@@ -271,6 +293,14 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
           ? _value.slotInfoPerPlayer
           : slotInfoPerPlayer // ignore: cast_nullable_to_non_nullable
               as Map<String, SlotPlayerInfo>,
+      maxPlayerCount: maxPlayerCount == freezed
+          ? _value.maxPlayerCount
+          : maxPlayerCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      minPlayerCount: minPlayerCount == freezed
+          ? _value.minPlayerCount
+          : minPlayerCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -289,7 +319,9 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       this.liveGameStatsId = null,
       this.stageHomeTeamPlayers = const [],
       this.stageAwayTeamPlayers = const [],
-      this.slotInfoPerPlayer = const {}})
+      this.slotInfoPerPlayer = const {},
+      this.maxPlayerCount = 30,
+      this.minPlayerCount = 15})
       : super._();
 
   factory _$_CourtSlot.fromJson(Map<String, dynamic> json) =>
@@ -326,10 +358,16 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final Map<String, SlotPlayerInfo> slotInfoPerPlayer;
+  @JsonKey()
+  @override
+  final int maxPlayerCount;
+  @JsonKey()
+  @override
+  final int minPlayerCount;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CourtSlot(slotId: $slotId, courtId: $courtId, timeRange: $timeRange, courtName: $courtName, ticketPrice: $ticketPrice, players: $players, isClosedByAdmin: $isClosedByAdmin, liveGameStatsId: $liveGameStatsId, stageHomeTeamPlayers: $stageHomeTeamPlayers, stageAwayTeamPlayers: $stageAwayTeamPlayers, slotInfoPerPlayer: $slotInfoPerPlayer)';
+    return 'CourtSlot(slotId: $slotId, courtId: $courtId, timeRange: $timeRange, courtName: $courtName, ticketPrice: $ticketPrice, players: $players, isClosedByAdmin: $isClosedByAdmin, liveGameStatsId: $liveGameStatsId, stageHomeTeamPlayers: $stageHomeTeamPlayers, stageAwayTeamPlayers: $stageAwayTeamPlayers, slotInfoPerPlayer: $slotInfoPerPlayer, maxPlayerCount: $maxPlayerCount, minPlayerCount: $minPlayerCount)';
   }
 
   @override
@@ -347,7 +385,9 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('liveGameStatsId', liveGameStatsId))
       ..add(DiagnosticsProperty('stageHomeTeamPlayers', stageHomeTeamPlayers))
       ..add(DiagnosticsProperty('stageAwayTeamPlayers', stageAwayTeamPlayers))
-      ..add(DiagnosticsProperty('slotInfoPerPlayer', slotInfoPerPlayer));
+      ..add(DiagnosticsProperty('slotInfoPerPlayer', slotInfoPerPlayer))
+      ..add(DiagnosticsProperty('maxPlayerCount', maxPlayerCount))
+      ..add(DiagnosticsProperty('minPlayerCount', minPlayerCount));
   }
 
   @override
@@ -371,7 +411,11 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.stageAwayTeamPlayers, stageAwayTeamPlayers) &&
             const DeepCollectionEquality()
-                .equals(other.slotInfoPerPlayer, slotInfoPerPlayer));
+                .equals(other.slotInfoPerPlayer, slotInfoPerPlayer) &&
+            const DeepCollectionEquality()
+                .equals(other.maxPlayerCount, maxPlayerCount) &&
+            const DeepCollectionEquality()
+                .equals(other.minPlayerCount, minPlayerCount));
   }
 
   @override
@@ -387,7 +431,9 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(liveGameStatsId),
       const DeepCollectionEquality().hash(stageHomeTeamPlayers),
       const DeepCollectionEquality().hash(stageAwayTeamPlayers),
-      const DeepCollectionEquality().hash(slotInfoPerPlayer));
+      const DeepCollectionEquality().hash(slotInfoPerPlayer),
+      const DeepCollectionEquality().hash(maxPlayerCount),
+      const DeepCollectionEquality().hash(minPlayerCount));
 
   @JsonKey(ignore: true)
   @override
@@ -412,7 +458,9 @@ abstract class _CourtSlot extends CourtSlot {
       String? liveGameStatsId,
       List<KasadoUser>? stageHomeTeamPlayers,
       List<KasadoUser>? stageAwayTeamPlayers,
-      Map<String, SlotPlayerInfo> slotInfoPerPlayer}) = _$_CourtSlot;
+      Map<String, SlotPlayerInfo> slotInfoPerPlayer,
+      int maxPlayerCount,
+      int minPlayerCount}) = _$_CourtSlot;
   const _CourtSlot._() : super._();
 
   factory _CourtSlot.fromJson(Map<String, dynamic> json) =
@@ -441,6 +489,10 @@ abstract class _CourtSlot extends CourtSlot {
   List<KasadoUser>? get stageAwayTeamPlayers;
   @override
   Map<String, SlotPlayerInfo> get slotInfoPerPlayer;
+  @override
+  int get maxPlayerCount;
+  @override
+  int get minPlayerCount;
   @override
   @JsonKey(ignore: true)
   _$CourtSlotCopyWith<_CourtSlot> get copyWith =>

@@ -15,6 +15,8 @@ class Court with _$Court {
     required double ticketPrice,
     required List<String> adminIds,
     @Default([]) List<CourtSched> courtScheds,
+    @Default(30) int maxPerSlot,
+    @Default(15) int minPerSlot,
 
     /// Special courtScheds are courtScheds wherein all the other slots with the
     /// same day as them are hidden. In other words, only the specialCourtScheds
