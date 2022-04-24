@@ -21,10 +21,22 @@ class HomeTab extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final _controller = useAnimationController();
     final courtsStream = ref.watch(courtsStreamProvider);
+    final courtsList = courtsStream.value ?? [];
+    final isLoaded = ref.watch(isLoadedProvider);
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed HomeTab");
+      _controller.addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          if (courtsStream.asData == const AsyncValue.loading()) {
+            _controller.forward(from: 0);
+          } else {
+            ref.read(isLoadedProvider.notifier).state = true;
+          }
+        }
+      });
 
       return;
     }, []);
@@ -40,34 +52,42 @@ class HomeTab extends HookConsumerWidget {
         ),
         Expanded(
           child: Center(
-            child: courtsStream.when(
-              error: (e, __) => Text(e.toString()),
-              loading: () => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Lottie.asset('assets/lottie/dunking_man.zip'),
-                  const Text("Warming up..."),
-                ],
-              ),
-              data: (courtList) {
-                return AnimationLimiter(
-                  child: ListView.builder(
-                    itemCount: courtList.length,
-                    itemBuilder: (context, i) {
-                      final court = courtList[i];
-
-                      return StaggerListTileAnimation(
-                        index: i,
-                        child: NextCourtSlotCard(
-                          constraints: constraints,
-                          court: court,
+            child: (!isLoaded)
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Lottie.asset(
+                        'assets/lottie/dunking_man.zip',
+                        height: constraints.maxHeight * 0.65,
+                        controller: _controller,
+                        onLoaded: (composition) => Future.delayed(
+                          composition.duration,
+                          () {
+                            _controller
+                              ..duration = composition.duration
+                              ..forward();
+                          },
                         ),
-                      );
-                    },
+                      ),
+                      const Text("Warming up..."),
+                    ],
+                  )
+                : AnimationLimiter(
+                    child: ListView.builder(
+                      itemCount: courtsList.length,
+                      itemBuilder: (context, i) {
+                        final court = courtsList[i];
+
+                        return StaggerListTileAnimation(
+                          index: i,
+                          child: NextCourtSlotCard(
+                            constraints: constraints,
+                            court: court,
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                );
-              },
-            ),
           ),
         ),
       ],
