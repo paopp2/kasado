@@ -24,8 +24,8 @@ class CourtSlot with _$CourtSlot {
     @Default([]) List<KasadoUser>? stageHomeTeamPlayers,
     @Default([]) List<KasadoUser>? stageAwayTeamPlayers,
     @Default({}) Map<String, SlotPlayerInfo> slotInfoPerPlayer,
-    required int maxPlayerCount,
-    required int minPlayerCount,
+    @Default(25) int maxPlayerCount,
+    @Default(15) int minPlayerCount,
   }) = _CourtSlot;
 
   int get playerCount => players.length;

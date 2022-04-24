@@ -34,8 +34,8 @@ class _$CourtSlotTearOff {
       List<KasadoUser>? stageHomeTeamPlayers = const [],
       List<KasadoUser>? stageAwayTeamPlayers = const [],
       Map<String, SlotPlayerInfo> slotInfoPerPlayer = const {},
-      required int maxPlayerCount,
-      required int minPlayerCount}) {
+      int maxPlayerCount = 25,
+      int minPlayerCount = 15}) {
     return _CourtSlot(
       slotId: slotId,
       courtId: courtId,
@@ -320,8 +320,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       this.stageHomeTeamPlayers = const [],
       this.stageAwayTeamPlayers = const [],
       this.slotInfoPerPlayer = const {},
-      required this.maxPlayerCount,
-      required this.minPlayerCount})
+      this.maxPlayerCount = 25,
+      this.minPlayerCount = 15})
       : super._();
 
   factory _$_CourtSlot.fromJson(Map<String, dynamic> json) =>
@@ -358,8 +358,10 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final Map<String, SlotPlayerInfo> slotInfoPerPlayer;
+  @JsonKey()
   @override
   final int maxPlayerCount;
+  @JsonKey()
   @override
   final int minPlayerCount;
 
@@ -457,8 +459,8 @@ abstract class _CourtSlot extends CourtSlot {
       List<KasadoUser>? stageHomeTeamPlayers,
       List<KasadoUser>? stageAwayTeamPlayers,
       Map<String, SlotPlayerInfo> slotInfoPerPlayer,
-      required int maxPlayerCount,
-      required int minPlayerCount}) = _$_CourtSlot;
+      int maxPlayerCount,
+      int minPlayerCount}) = _$_CourtSlot;
   const _CourtSlot._() : super._();
 
   factory _CourtSlot.fromJson(Map<String, dynamic> json) =
