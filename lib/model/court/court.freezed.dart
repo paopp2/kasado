@@ -30,8 +30,8 @@ class _$CourtTearOff {
       required double ticketPrice,
       required List<String> adminIds,
       List<CourtSched> courtScheds = const [],
-      int maxPerSlot = 30,
-      int minPerSlot = 15,
+      required int maxPerSlot,
+      required int minPerSlot,
       List<CourtSched> specialCourtScheds = const []}) {
     return _Court(
       id: id,
@@ -260,8 +260,8 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       required this.ticketPrice,
       required this.adminIds,
       this.courtScheds = const [],
-      this.maxPerSlot = 30,
-      this.minPerSlot = 15,
+      required this.maxPerSlot,
+      required this.minPerSlot,
       this.specialCourtScheds = const []});
 
   factory _$_Court.fromJson(Map<String, dynamic> json) =>
@@ -282,10 +282,8 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
   @JsonKey()
   @override
   final List<CourtSched> courtScheds;
-  @JsonKey()
   @override
   final int maxPerSlot;
-  @JsonKey()
   @override
   final int minPerSlot;
   @JsonKey()
@@ -378,8 +376,8 @@ abstract class _Court implements Court {
       required double ticketPrice,
       required List<String> adminIds,
       List<CourtSched> courtScheds,
-      int maxPerSlot,
-      int minPerSlot,
+      required int maxPerSlot,
+      required int minPerSlot,
       List<CourtSched> specialCourtScheds}) = _$_Court;
 
   factory _Court.fromJson(Map<String, dynamic> json) = _$_Court.fromJson;

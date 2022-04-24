@@ -77,6 +77,8 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                 startsAt: nextTimeSlot.startsAt,
                 endsAt: nextTimeSlot.endsAt,
               ),
+              maxPlayerCount: court.maxPerSlot,
+              minPlayerCount: court.minPerSlot,
             );
 
         final nextSlotState = model.getSlotAndUserState(nextCourtSlot);
@@ -98,7 +100,8 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                       Text(
                         nextSlotState.when(
                           slotClosedByAdmin: () => 'Closed by admin',
-                          orElse: () => '${nextCourtSlot.playerCount} / 25',
+                          orElse: () =>
+                              '${nextCourtSlot.playerCount} / ${nextCourtSlot.maxPlayerCount}',
                         ),
                         style: TextStyle(
                           color: nextSlotState.when(

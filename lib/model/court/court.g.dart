@@ -18,8 +18,8 @@ _$_Court _$$_CourtFromJson(Map<String, dynamic> json) => _$_Court(
               ?.map((e) => CourtSched.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      maxPerSlot: json['maxPerSlot'] as int? ?? 30,
-      minPerSlot: json['minPerSlot'] as int? ?? 15,
+      maxPerSlot: json['maxPerSlot'] as int,
+      minPerSlot: json['minPerSlot'] as int,
       specialCourtScheds: (json['specialCourtScheds'] as List<dynamic>?)
               ?.map((e) => CourtSched.fromJson(e as Map<String, dynamic>))
               .toList() ??
