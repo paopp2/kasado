@@ -140,6 +140,8 @@ class CourtAdminController with CourtAdminTecMixin {
         adminIds: baseCourtInfo?.adminIds ?? [currentUser.id],
         courtScheds: read(courtSchedListProvider),
         specialCourtScheds: read(specialCourtSchedListProvider),
+        maxPerSlot: int.parse(tecMaxPerSlot.text),
+        minPerSlot: int.parse(tecMinPerSlot.text),
       ),
       isUpdate: isEdit,
     );

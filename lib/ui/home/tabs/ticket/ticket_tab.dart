@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -7,6 +8,7 @@ import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/ticket/ticket.dart';
 import 'package:kasado/ui/home/tabs/ticket/components/enlarged_ticket_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
+import 'package:kasado/ui/shared/stagger_list_tile_animation.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class TicketTab extends HookConsumerWidget {
@@ -72,64 +74,70 @@ class TicketTab extends HookConsumerWidget {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: ListView.builder(
-                          itemCount: tickets.length,
-                          itemBuilder: (context, i) {
-                            final ticket = tickets[i];
+                        child: AnimationLimiter(
+                          child: ListView.builder(
+                            itemCount: tickets.length,
+                            itemBuilder: (context, i) {
+                              final ticket = tickets[i];
 
-                            return Card(
-                              color: Colors.grey.shade100,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: InkWell(
-                                onTap: () => _onTicketPressed(
-                                  ticket,
-                                  userInfo!,
-                                ),
-                                child: Row(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Container(
-                                        width: 75,
-                                        height: 75,
-                                        color: Colors.grey.shade300,
-                                        child: QrImage(
-                                          data: ticket.id,
-                                        ),
-                                      ),
+                              return StaggerListTileAnimation(
+                                index: i,
+                                child: Card(
+                                  color: Colors.grey.shade100,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () => _onTicketPressed(
+                                      ticket,
+                                      userInfo!,
                                     ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            Text(
-                                              ticket.courtSlot.courtName,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                    child: Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: Container(
+                                            width: 75,
+                                            height: 75,
+                                            color: Colors.grey.shade300,
+                                            child: QrImage(
+                                              data: ticket.id,
                                             ),
-                                            Text(
-                                              utils.getTimeRangeFormat(
-                                                ticket.courtSlot.timeRange,
-                                                showDate: true,
-                                              ),
-                                            ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
+                                              children: [
+                                                Text(
+                                                  ticket.courtSlot.courtName,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  utils.getTimeRangeFormat(
+                                                    ticket.courtSlot.timeRange,
+                                                    showDate: true,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),

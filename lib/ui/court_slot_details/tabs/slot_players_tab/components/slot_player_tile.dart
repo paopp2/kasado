@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
@@ -41,35 +42,43 @@ class SlotPlayerTile extends StatelessWidget {
       direction: isAdmin ? DismissDirection.startToEnd : DismissDirection.none,
       child: Padding(
         padding: const EdgeInsets.all(3.0),
-        child: ListTile(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+        child: FutureBuilder<Color?>(
+          initialData: null,
+          future: Future.delayed(const Duration(milliseconds: 500)).then(
+            (_) => (player.hasPaid) ? Colors.green.shade50 : null,
           ),
-          tileColor: (player.hasPaid) ? Colors.green.shade50 : null,
-          onTap: () => context.pushNamed(
-            Routes.userProfileView,
-            params: {'uid': player.id},
-          ),
-          onLongPress: (isSuperAdmin)
-              ? () => adminController.togglePlayerPaymentStatus(
-                    baseCourtSlot: fetchedCourtSlot,
-                    player: player,
-                  )
-              : null,
-          title: AutoSizeText(
-            player.displayName!,
-            maxLines: 1,
-          ),
-          subtitle: (player.teamName.isNotEmpty)
-              ? Text(
-                  player.teamName,
-                  style: const TextStyle(fontSize: 10),
-                )
-              : null,
-          leading: CircleAvatar(
-            radius: 25,
-            backgroundImage: NetworkImage(player.photoUrl!),
-          ),
+          builder: (context, snapshot) {
+            return ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              tileColor: snapshot.data,
+              onTap: () => context.pushNamed(
+                Routes.userProfileView,
+                params: {'uid': player.id},
+              ),
+              onLongPress: (isSuperAdmin)
+                  ? () => adminController.togglePlayerPaymentStatus(
+                        baseCourtSlot: fetchedCourtSlot,
+                        player: player,
+                      )
+                  : null,
+              title: AutoSizeText(
+                player.displayName!,
+                maxLines: 1,
+              ),
+              subtitle: (player.teamName.isNotEmpty)
+                  ? Text(
+                      player.teamName,
+                      style: const TextStyle(fontSize: 10),
+                    )
+                  : null,
+              leading: CircleAvatar(
+                radius: 25,
+                backgroundImage: NetworkImage(player.photoUrl!),
+              ),
+            );
+          },
         ),
       ),
     );

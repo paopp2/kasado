@@ -92,7 +92,7 @@ class CourtSlotTile extends HookConsumerWidget {
                 trailing: Visibility(
                   visible: !courtSlot.isClosedByAdmin,
                   child: Text(
-                    '${courtSlot.playerCount} / 25',
+                    '${courtSlot.playerCount} / ${courtSlot.maxPlayerCount}',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 25,

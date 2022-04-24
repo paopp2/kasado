@@ -34,9 +34,25 @@ class CourtInputDialog extends HookConsumerWidget {
             isMoney: true,
             tec: controller.tecTicketPrice,
           ),
+          Row(
+            children: [
+              Expanded(
+                child: DataEntryField(
+                  hint: 'Max per Slot',
+                  tec: controller.tecMaxPerSlot,
+                ),
+              ),
+              Expanded(
+                child: DataEntryField(
+                  hint: 'Min per Slot',
+                  tec: controller.tecMinPerSlot,
+                ),
+              ),
+            ],
+          ),
           const Divider(),
           SizedBox(
-            height: 300,
+            height: 230,
             child: PageView(
               children: [
                 SchedInputPane(
@@ -52,7 +68,6 @@ class CourtInputDialog extends HookConsumerWidget {
               ],
             ),
           ),
-          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(

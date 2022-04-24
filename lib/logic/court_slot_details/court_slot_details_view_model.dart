@@ -106,6 +106,8 @@ class CourtSlotDetailsViewModel extends ViewModel {
         ticketPrice: court.ticketPrice,
         slotId: CourtSlot.getIdFromTimeRange(aTimeRange),
         timeRange: aTimeRange,
+        maxPlayerCount: court.maxPerSlot,
+        minPlayerCount: court.minPerSlot,
       ),
     );
   }

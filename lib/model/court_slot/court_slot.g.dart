@@ -32,6 +32,8 @@ _$_CourtSlot _$$_CourtSlotFromJson(Map<String, dynamic> json) => _$_CourtSlot(
                 MapEntry(k, SlotPlayerInfo.fromJson(e as Map<String, dynamic>)),
           ) ??
           const {},
+      maxPlayerCount: json['maxPlayerCount'] as int? ?? 25,
+      minPlayerCount: json['minPlayerCount'] as int? ?? 15,
     );
 
 Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
@@ -50,4 +52,6 @@ Map<String, dynamic> _$$_CourtSlotToJson(_$_CourtSlot instance) =>
           instance.stageAwayTeamPlayers?.map((e) => e.toJson()).toList(),
       'slotInfoPerPlayer':
           instance.slotInfoPerPlayer.map((k, e) => MapEntry(k, e.toJson())),
+      'maxPlayerCount': instance.maxPlayerCount,
+      'minPlayerCount': instance.minPlayerCount,
     };
