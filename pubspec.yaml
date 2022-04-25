@@ -30,7 +30,7 @@ dependencies:
   # Design
   syncfusion_flutter_calendar: ^19.4.52
   syncfusion_flutter_datagrid: ^19.4.56
-  flutter_signin_button: ^2.0.0
+  sign_button: ^2.0.2
   google_fonts: ^2.3.1
   auto_size_text: ^3.0.0
   font_awesome_flutter: ^9.2.0
