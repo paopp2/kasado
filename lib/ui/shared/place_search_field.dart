@@ -4,6 +4,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/extensions/string_extensions.dart';
 import 'package:kasado/constants/extensions/tec_extensions.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/shared/place_suggester.dart';
 import 'package:kasado/model/kasado_location/kasado_location.dart';
 
@@ -43,6 +44,10 @@ class PlaceSearchField extends HookConsumerWidget {
         ref.read(searchTextControllerProvider).text = suggestedPlace;
         final location = await placeSuggester.getLocation(suggestedPlace);
         onLocationTapped?.call(location?.copyWith(address: suggestedPlace));
+        ref.read(mixpanel)!.track(
+              "Searched for a location",
+              properties: location?.toJson(),
+            );
       }
     }
 
