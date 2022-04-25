@@ -25,7 +25,6 @@ class _$CourtTearOff {
   _Court call(
       {required String id,
       required String name,
-      required String address,
       required KasadoLocation location,
       required String photoUrl,
       required double ticketPrice,
@@ -37,7 +36,6 @@ class _$CourtTearOff {
     return _Court(
       id: id,
       name: name,
-      address: address,
       location: location,
       photoUrl: photoUrl,
       ticketPrice: ticketPrice,
@@ -61,7 +59,6 @@ const $Court = _$CourtTearOff();
 mixin _$Court {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
   KasadoLocation get location => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
   double get ticketPrice => throw _privateConstructorUsedError;
@@ -91,7 +88,6 @@ abstract class $CourtCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String address,
       KasadoLocation location,
       String photoUrl,
       double ticketPrice,
@@ -116,7 +112,6 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? address = freezed,
     Object? location = freezed,
     Object? photoUrl = freezed,
     Object? ticketPrice = freezed,
@@ -134,10 +129,6 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: address == freezed
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
               as String,
       location: location == freezed
           ? _value.location
@@ -190,7 +181,6 @@ abstract class _$CourtCopyWith<$Res> implements $CourtCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      String address,
       KasadoLocation location,
       String photoUrl,
       double ticketPrice,
@@ -217,7 +207,6 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? address = freezed,
     Object? location = freezed,
     Object? photoUrl = freezed,
     Object? ticketPrice = freezed,
@@ -235,10 +224,6 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: address == freezed
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
               as String,
       location: location == freezed
           ? _value.location
@@ -282,7 +267,6 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
   const _$_Court(
       {required this.id,
       required this.name,
-      required this.address,
       required this.location,
       required this.photoUrl,
       required this.ticketPrice,
@@ -299,8 +283,6 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
   final String id;
   @override
   final String name;
-  @override
-  final String address;
   @override
   final KasadoLocation location;
   @override
@@ -330,7 +312,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Court(id: $id, name: $name, address: $address, location: $location, photoUrl: $photoUrl, ticketPrice: $ticketPrice, adminIds: $adminIds, courtScheds: $courtScheds, maxPerSlot: $maxPerSlot, minPerSlot: $minPerSlot, specialCourtScheds: $specialCourtScheds)';
+    return 'Court(id: $id, name: $name, location: $location, photoUrl: $photoUrl, ticketPrice: $ticketPrice, adminIds: $adminIds, courtScheds: $courtScheds, maxPerSlot: $maxPerSlot, minPerSlot: $minPerSlot, specialCourtScheds: $specialCourtScheds)';
   }
 
   @override
@@ -340,7 +322,6 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       ..add(DiagnosticsProperty('type', 'Court'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('address', address))
       ..add(DiagnosticsProperty('location', location))
       ..add(DiagnosticsProperty('photoUrl', photoUrl))
       ..add(DiagnosticsProperty('ticketPrice', ticketPrice))
@@ -358,7 +339,6 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
             other is _Court &&
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.address, address) &&
             const DeepCollectionEquality().equals(other.location, location) &&
             const DeepCollectionEquality().equals(other.photoUrl, photoUrl) &&
             const DeepCollectionEquality()
@@ -379,7 +359,6 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(address),
       const DeepCollectionEquality().hash(location),
       const DeepCollectionEquality().hash(photoUrl),
       const DeepCollectionEquality().hash(ticketPrice),
@@ -404,7 +383,6 @@ abstract class _Court implements Court {
   const factory _Court(
       {required String id,
       required String name,
-      required String address,
       required KasadoLocation location,
       required String photoUrl,
       required double ticketPrice,
@@ -420,8 +398,6 @@ abstract class _Court implements Court {
   String get id;
   @override
   String get name;
-  @override
-  String get address;
   @override
   KasadoLocation get location;
   @override

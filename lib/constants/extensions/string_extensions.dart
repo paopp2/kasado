@@ -8,6 +8,10 @@ extension StringExtensions on String {
   /// Capitalize this String (eg. hello -> Hello)
   String capitalize() => '${this[0].toUpperCase()}${substring(1)}';
 
+  String get firstAddr => splitAddress().first;
+  String get lastAddr => splitAddress().last;
+  String get shortAddr => firstAddr + ", " + lastAddr.splitAddress().first;
+
   /// Splits this String address into two: the first being the more 'specific',
   /// the other one the more 'general' (eg. ['USC-TC', 'Talamban Cebu'])
   List<String> splitAddress() {

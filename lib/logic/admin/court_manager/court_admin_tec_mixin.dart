@@ -31,7 +31,6 @@ mixin CourtAdminTecMixin {
   ) {
     tecCourtName.text = court.name;
     tecCourtPhotoUrl.text = court.photoUrl;
-    tecCourtAddress.text = court.address;
     tecTicketPrice.text = court.ticketPrice.toStringAsFixed(2);
     tecMaxPerSlot.text = court.maxPerSlot.toString();
     tecMinPerSlot.text = court.minPerSlot.toString();

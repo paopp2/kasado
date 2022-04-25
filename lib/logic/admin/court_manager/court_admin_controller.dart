@@ -11,7 +11,6 @@ import 'package:kasado/model/court_sched/court_sched.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_location/kasado_location.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
-import 'package:kasado/ui/shared/place_search_field.dart';
 import 'package:uuid/uuid.dart';
 
 final courtAdminController = Provider.autoDispose(
@@ -142,7 +141,6 @@ class CourtAdminController with CourtAdminTecMixin {
       Court(
         id: id,
         name: tecCourtName.text,
-        address: tecCourtAddress.text,
         photoUrl: tecCourtPhotoUrl.text,
         location: read(courtLocationProvider)!,
         ticketPrice: double.parse(tecTicketPrice.text),

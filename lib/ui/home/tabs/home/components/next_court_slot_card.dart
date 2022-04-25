@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/home/tabs/home/components/next_court_slot_details.dart';
+import 'package:kasado/constants/extensions/string_extensions.dart';
 
 class NextCourtSlotCard extends StatelessWidget {
   const NextCourtSlotCard({
@@ -60,7 +61,7 @@ class NextCourtSlotCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 AutoSizeText(
-                  court.address,
+                  court.location.address?.shortAddr ?? '',
                   maxLines: 1,
                   textAlign: TextAlign.center,
                 ),
