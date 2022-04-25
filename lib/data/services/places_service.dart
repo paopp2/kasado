@@ -1,5 +1,6 @@
 import 'package:google_place/google_place.dart';
 import 'package:kasado/model/kasado_location/kasado_location.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 const googleApiKey = "AIzaSyDN3zQFHS9fHxVZEEO_uDoc-xjw_WuDPXU";
 
@@ -14,7 +15,9 @@ class PlacesService {
     if (query.isEmpty) return [];
     final googlePlace = GooglePlace(
       googleApiKey,
-      proxyUrl: "https://kasado-2022-cors-proxy.herokuapp.com/",
+      proxyUrl: UniversalPlatform.isWeb
+          ? "https://kasado-2022-cors-proxy.herokuapp.com/"
+          : null,
     );
     final result = await googlePlace.autocomplete.get(query);
     final predictions = result?.predictions ?? [];
@@ -32,7 +35,9 @@ class PlacesService {
   Future<KasadoLocation?> getLocFromPlaceId(String placeId) async {
     final googlePlace = GooglePlace(
       googleApiKey,
-      proxyUrl: "https://kasado-2022-cors-proxy.herokuapp.com/",
+      proxyUrl: UniversalPlatform.isWeb
+          ? "https://kasado-2022-cors-proxy.herokuapp.com/"
+          : null,
     );
     final response = await googlePlace.details.get(placeId);
     final latitude = response?.result?.geometry?.location?.lat;
