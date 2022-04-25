@@ -3,7 +3,6 @@
         {
             "id": "5ba5c18b-b6b8-4d76-a6b8-78eea4fd23e8",
             "name": "Pitogo Basketball Court",
-            "address": "Pitogo Barangay Hall",
             "photoUrl": "https://i.imgur.com/0FeZGW8.jpg",
             "ticketPrice": 35.0,
             "adminIds": [
@@ -23,13 +22,17 @@
             "minPerSlot": 15,
             "specialCourtScheds": [],
             "geo": {
-                "geohash": "wcb5j"
+                "geohash": "wcb5j41kn"
+            },
+            "location": {
+                "lat": 10.3827694,
+                "lng": 123.9717304,
+                "address": "Pitogo Barangay Hall, National Highway, Consolacion, Cebu, Philippines"
             }
         },
         {
             "id": "somerandomstring-b6b8-4d76-a6b8-78eea4fd23e8",
             "name": "Talamban Basketball Court",
-            "address": "Talamban Cebu City",
             "photoUrl": "https://i.imgur.com/0FeZGW8.jpg",
             "ticketPrice": 40.0,
             "adminIds": [
@@ -49,7 +52,12 @@
             "minPerSlot": 20,
             "specialCourtScheds": [],
             "geo": {
-                "geohash": "wcb4g"
+                "geohash": "wcb4gzbeg"
+            },
+            "location": {
+                "lat": 10.3703657,
+                "lng": 123.9156521,
+                "address": "Talamban Christian School, Talamban Rd, Cebu City, Cebu, Philippines"
             }
         }
     ]
