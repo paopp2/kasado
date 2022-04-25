@@ -79,7 +79,7 @@ class PlaceSearchField extends HookConsumerWidget {
       },
       onSuggestionSelected: _onSuggestionSelected,
       suggestionsCallback: _suggestionsCallback,
-      debounceDuration: const Duration(milliseconds: 500),
+      debounceDuration: const Duration(milliseconds: 300),
       suggestionsBoxDecoration: SuggestionsBoxDecoration(
         borderRadius: BorderRadius.circular(10),
         constraints: BoxConstraints(maxWidth: constraints.maxWidth),
