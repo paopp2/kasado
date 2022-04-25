@@ -66,8 +66,6 @@ class CourtInputDialog extends HookConsumerWidget {
                         ),
                       ],
                     ),
-                    DataEntryField(
-                        hint: 'Address', tec: controller.tecCourtAddress),
                   ],
                 ),
                 SchedInputPane(

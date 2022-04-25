@@ -6,7 +6,6 @@ import 'package:kasado/model/kasado_location/kasado_location.dart';
 mixin CourtAdminTecMixin {
   final tecCourtName = TextEditingController();
   final tecCourtPhotoUrl = TextEditingController();
-  final tecCourtAddress = TextEditingController();
   final tecTicketPrice = TextEditingController();
   final tecMaxPerSlot = TextEditingController();
   final tecMinPerSlot = TextEditingController();
@@ -14,7 +13,6 @@ mixin CourtAdminTecMixin {
   void clearAllTecs() {
     tecCourtName.clear();
     tecCourtPhotoUrl.clear();
-    tecCourtAddress.clear();
     tecTicketPrice.clear();
     tecMaxPerSlot.clear();
     tecMinPerSlot.clear();
