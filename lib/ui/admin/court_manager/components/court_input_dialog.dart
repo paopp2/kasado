@@ -29,41 +29,47 @@ class CourtInputDialog extends HookConsumerWidget {
       insetPadding: const EdgeInsets.all(20.0),
       child: ListView(
         children: [
-          DataEntryField(hint: 'Court Name', tec: controller.tecCourtName),
-          DataEntryField(
-              hint: 'Court Photo URL', tec: controller.tecCourtPhotoUrl),
-          DataEntryField(hint: 'Address', tec: controller.tecCourtAddress),
-          DataEntryField(
-            hint: 'Ticket Price',
-            isMoney: true,
-            tec: controller.tecTicketPrice,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: DataEntryField(
-                  hint: 'Max per Slot',
-                  tec: controller.tecMaxPerSlot,
-                ),
-              ),
-              Expanded(
-                child: DataEntryField(
-                  hint: 'Min per Slot',
-                  tec: controller.tecMinPerSlot,
-                ),
-              ),
-            ],
-          ),
-          PlaceSearchField(
-            constraints: constraints,
-            onLocationTapped: controller.setCourtLocation,
-            initialPlace: courtLocation,
-          ),
-          const Divider(),
           SizedBox(
-            height: 230,
+            height: constraints.maxHeight * 0.8,
             child: PageView(
               children: [
+                Column(
+                  children: [
+                    DataEntryField(
+                        hint: 'Court Name', tec: controller.tecCourtName),
+                    DataEntryField(
+                        hint: 'Court Photo URL',
+                        tec: controller.tecCourtPhotoUrl),
+                    PlaceSearchField(
+                      constraints: constraints,
+                      onLocationTapped: controller.setCourtLocation,
+                      initialPlace: courtLocation,
+                    ),
+                    DataEntryField(
+                      hint: 'Ticket Price',
+                      isMoney: true,
+                      tec: controller.tecTicketPrice,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DataEntryField(
+                            hint: 'Max per Slot',
+                            tec: controller.tecMaxPerSlot,
+                          ),
+                        ),
+                        Expanded(
+                          child: DataEntryField(
+                            hint: 'Min per Slot',
+                            tec: controller.tecMinPerSlot,
+                          ),
+                        ),
+                      ],
+                    ),
+                    DataEntryField(
+                        hint: 'Address', tec: controller.tecCourtAddress),
+                  ],
+                ),
                 SchedInputPane(
                   controller: controller,
                   courtSchedList: courtSchedList,
