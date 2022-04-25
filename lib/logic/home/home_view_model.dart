@@ -12,6 +12,7 @@ import 'package:kasado/data/services/location_service.dart';
 import 'package:kasado/logic/home/states/home_tab_state.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:kasado/ui/shared/place_search_field.dart';
 
 final homeViewModel = Provider.autoDispose(
   (ref) => HomeViewModel(

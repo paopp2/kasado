@@ -6,6 +6,7 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/home/home_view_model.dart';
 import 'package:kasado/logic/home/states/home_tab_state.dart';
 import 'package:kasado/ui/home/tabs/home/components/next_court_slot_card.dart';
+import 'package:kasado/ui/shared/place_search_field.dart';
 import 'package:kasado/ui/shared/stagger_list_tile_animation.dart';
 import 'package:lottie/lottie.dart';
 
@@ -25,7 +26,6 @@ class HomeTab extends HookConsumerWidget {
     final courtsStream = ref.watch(courtsStreamProvider);
     final courtsList = courtsStream.value ?? [];
     final isLoaded = ref.watch(isLoadedProvider);
-    final searchTextController = ref.watch(searchTextControllerProvider);
     final isLocationRetrieved = ref.watch(isLocationRetrievedProvider);
 
     useEffect(() {
@@ -119,36 +119,11 @@ class HomeTab extends HookConsumerWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey.shade100,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.location_on_rounded,
-                        color: Colors.black,
-                        size: 27,
-                      ),
-                    ),
-                    Expanded(
-                      child: TextFormField(
-                        controller: searchTextController,
-                        decoration: InputDecoration(
-                          hintText: "Search places",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              child: PlaceSearchField(
+                constraints: constraints,
+                onLocationTapped: (location) => ref
+                    .read(selectedCenterLocProvider.notifier)
+                    .state = location,
               ),
             ),
           ),
