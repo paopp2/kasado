@@ -41,53 +41,112 @@ class HomeTab extends HookConsumerWidget {
       return;
     }, []);
 
-    return Column(
+    return Stack(
       children: [
-        const Text(
-          'NEXT GAMES',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Column(
+            children: [
+              Expanded(
+                child: Center(
+                  child: (!isLoaded)
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Lottie.asset(
+                              'assets/lottie/dunking_man.zip',
+                              height: constraints.maxHeight * 0.65,
+                              controller: _controller,
+                              onLoaded: (composition) => Future.delayed(
+                                composition.duration,
+                                // ignore: prefer-extracting-callbacks
+                                () {
+                                  _controller
+                                    ..duration = composition.duration
+                                    ..forward();
+                                },
+                              ),
+                            ),
+                            Text(
+                              "Warming up...",
+                              style: TextStyle(
+                                fontSize: constraints.maxWidth * 0.05,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                          ],
+                        )
+                      : AnimationLimiter(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(top: 75),
+                            itemCount: courtsList.length,
+                            itemBuilder: (context, i) {
+                              final court = courtsList[i];
+
+                              return StaggerListTileAnimation(
+                                index: i,
+                                child: NextCourtSlotCard(
+                                  constraints: constraints,
+                                  court: court,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                ),
+              ),
+            ],
           ),
         ),
-        Expanded(
-          child: Center(
-            child: (!isLoaded)
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Lottie.asset(
-                        'assets/lottie/dunking_man.zip',
-                        height: constraints.maxHeight * 0.65,
-                        controller: _controller,
-                        onLoaded: (composition) => Future.delayed(
-                          composition.duration,
-                          () {
-                            _controller
-                              ..duration = composition.duration
-                              ..forward();
-                          },
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 25.0,
+              vertical: 8.0,
+            ),
+            child: Material(
+              elevation: 15,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.grey.shade100,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.location_on_rounded,
+                        color: Colors.black,
+                        size: 27,
+                      ),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: "Search places",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
                       ),
-                      const Text("Warming up..."),
-                    ],
-                  )
-                : AnimationLimiter(
-                    child: ListView.builder(
-                      itemCount: courtsList.length,
-                      itemBuilder: (context, i) {
-                        final court = courtsList[i];
-
-                        return StaggerListTileAnimation(
-                          index: i,
-                          child: NextCourtSlotCard(
-                            constraints: constraints,
-                            court: court,
-                          ),
-                        );
-                      },
                     ),
-                  ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ],
