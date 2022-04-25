@@ -12,7 +12,10 @@ class PlacesService {
   Future<List<Map<String, String?>>> getAutocompleteSuggestions(
       String query) async {
     if (query.isEmpty) return [];
-    final googlePlace = GooglePlace(googleApiKey);
+    final googlePlace = GooglePlace(
+      googleApiKey,
+      proxyUrl: "https://kasado-2022-cors-proxy.herokuapp.com/",
+    );
     final result = await googlePlace.autocomplete.get(query);
     final predictions = result?.predictions ?? [];
 
@@ -27,7 +30,10 @@ class PlacesService {
   }
 
   Future<KasadoLocation?> getLocFromPlaceId(String placeId) async {
-    final googlePlace = GooglePlace(googleApiKey);
+    final googlePlace = GooglePlace(
+      googleApiKey,
+      proxyUrl: "https://kasado-2022-cors-proxy.herokuapp.com/",
+    );
     final response = await googlePlace.details.get(placeId);
     final latitude = response?.result?.geometry?.location?.lat;
     final longitude = response?.result?.geometry?.location?.lng;
