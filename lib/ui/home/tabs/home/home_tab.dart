@@ -34,7 +34,7 @@ class HomeTab extends HookConsumerWidget {
         if (status == AnimationStatus.completed) {
           if (courtsStream.asData == const AsyncValue.loading() ||
               !isLocationRetrieved) {
-            _controller.forward(from: 0);
+            _controller.forward(from: 0.5);
           } else {
             ref.read(isLoadedProvider.notifier).state = true;
           }
@@ -69,7 +69,7 @@ class HomeTab extends HookConsumerWidget {
                                 () {
                                   _controller
                                     ..duration = composition.duration
-                                    ..forward();
+                                    ..forward(from: 0.5);
                                 },
                               ),
                             ),
