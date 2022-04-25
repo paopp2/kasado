@@ -61,7 +61,10 @@ class CourtsOwnedView extends HookConsumerWidget {
             child: FloatingActionButton.extended(
               onPressed: () => adminController.openCourtInputDialog(
                 context: context,
-                dialog: CourtInputDialog(controller: adminController),
+                dialog: CourtInputDialog(
+                  controller: adminController,
+                  constraints: constraints,
+                ),
               ),
               label: const Text('Add Court'),
               icon: const Icon(Icons.add),
