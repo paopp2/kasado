@@ -23,13 +23,18 @@ class CourtRepository {
   final FirestoreHelper firestoreHelper;
 
   Future<void> pushCourt(Court court, {bool isUpdate = false}) async {
+    final geo = Geoflutterfire();
     await firestoreHelper.setData(
       path: FirestorePath.docCourt(court.id),
-      // TODO: Remove the removes
-      // The reason for doing this is to avoid overwriting these existing fields
-      // at db with nothing, which might fuck up the app if not yet updated.
-      // Basically done for backwards compatiblity, sort of
-      data: court.toJson()..remove('specialCourtSlots'),
+      data: court.toJson()
+        ..addAll({
+          'geo': geo
+              .point(
+                latitude: court.location.lat,
+                longitude: court.location.lng,
+              )
+              .data,
+        }),
       merge: isUpdate,
     );
   }

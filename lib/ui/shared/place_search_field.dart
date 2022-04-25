@@ -15,9 +15,11 @@ class PlaceSearchField extends HookConsumerWidget {
   const PlaceSearchField({
     Key? key,
     required this.constraints,
+    this.initialPlace,
     this.onLocationTapped,
   }) : super(key: key);
 
+  final KasadoLocation? initialPlace;
   final BoxConstraints constraints;
   final void Function(KasadoLocation? location)? onLocationTapped;
 
@@ -27,7 +29,13 @@ class PlaceSearchField extends HookConsumerWidget {
     final placeSuggester = ref.watch(placeSuggesterProvider);
 
     useEffect(() {
-      return searchTextController.clear;
+      // Asynchronously update searchTextController.text to avoid rebuild clashes/errors
+      // ignore: prefer-extracting-callbacks
+      Future.delayed(Duration.zero, () {
+        searchTextController.text = initialPlace?.address ?? '';
+      });
+
+      return;
     }, []);
 
     Future<void> _onSuggestionSelected(String? suggestedPlace) async {

@@ -98,7 +98,6 @@ class CourtAdminController with CourtAdminTecMixin {
     assert(forEdit == (court != null));
     if (forEdit) {
       setupCourtToEdit(court!, (courtLoc, courtScheds, specialCourtScheds) {
-        read(searchTextControllerProvider).text = courtLoc.address ?? '';
         read(courtLocationProvider.notifier).state = courtLoc;
         read(courtSchedListProvider.notifier).state = courtScheds;
         read(specialCourtSchedListProvider.notifier).state = specialCourtScheds;

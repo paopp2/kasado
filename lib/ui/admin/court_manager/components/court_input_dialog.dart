@@ -23,6 +23,7 @@ class CourtInputDialog extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final courtSchedList = ref.watch(courtSchedListProvider);
     final specialCourtSchedList = ref.watch(specialCourtSchedListProvider);
+    final courtLocation = ref.watch(courtLocationProvider);
 
     return Dialog(
       insetPadding: const EdgeInsets.all(20.0),
@@ -56,6 +57,7 @@ class CourtInputDialog extends HookConsumerWidget {
           PlaceSearchField(
             constraints: constraints,
             onLocationTapped: controller.setCourtLocation,
+            initialPlace: courtLocation,
           ),
           const Divider(),
           SizedBox(
