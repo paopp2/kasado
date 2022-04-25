@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/model/kasado_location/kasado_location.dart';
@@ -21,3 +22,7 @@ final courtsStreamProvider = StreamProvider.autoDispose(
 );
 
 final isLoadedProvider = StateProvider((ref) => false);
+
+final searchTextControllerProvider = Provider(
+  (ref) => TextEditingController(text: "Retrieving current location..."),
+);

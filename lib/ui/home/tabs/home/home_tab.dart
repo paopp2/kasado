@@ -25,12 +25,15 @@ class HomeTab extends HookConsumerWidget {
     final courtsStream = ref.watch(courtsStreamProvider);
     final courtsList = courtsStream.value ?? [];
     final isLoaded = ref.watch(isLoadedProvider);
+    final searchTextController = ref.watch(searchTextControllerProvider);
+    final isLocationRetrieved = ref.watch(isLocationRetrievedProvider);
 
     useEffect(() {
       ref.read(mixpanel)!.track("Viewed HomeTab");
       _controller.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          if (courtsStream.asData == const AsyncValue.loading()) {
+          if (courtsStream.asData == const AsyncValue.loading() ||
+              !isLocationRetrieved) {
             _controller.forward(from: 0);
           } else {
             ref.read(isLoadedProvider.notifier).state = true;
@@ -39,7 +42,7 @@ class HomeTab extends HookConsumerWidget {
       });
 
       return;
-    }, []);
+    }, [isLocationRetrieved]);
 
     return Stack(
       children: [
@@ -133,7 +136,8 @@ class HomeTab extends HookConsumerWidget {
                       ),
                     ),
                     Expanded(
-                      child: TextField(
+                      child: TextFormField(
+                        controller: searchTextController,
                         decoration: InputDecoration(
                           hintText: "Search places",
                           border: OutlineInputBorder(

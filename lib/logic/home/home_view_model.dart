@@ -59,12 +59,19 @@ class HomeViewModel extends ViewModel {
     final getLocAttempt = await locationService.getLocation();
     read(isLocationRetrievedProvider.notifier).state = true;
     getLocAttempt.fold(
-      (error) => Fluttertoast.showToast(
-        msg: 'Error retrieving current location',
-      ),
-      (currentLoc) => read(
-        selectedCenterLocProvider.notifier,
-      ).state = currentLoc,
+      (error) {
+        read(searchTextControllerProvider).text = "";
+        Fluttertoast.showToast(
+          msg: 'Error retrieving current location',
+        );
+      },
+      (currentLoc) {
+        read(searchTextControllerProvider).text = "Current location";
+
+        read(
+          selectedCenterLocProvider.notifier,
+        ).state = currentLoc;
+      },
     );
   }
 
