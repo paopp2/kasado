@@ -1,8 +1,13 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court/court.dart';
+import 'package:kasado/model/kasado_location/kasado_location.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 
 final courtRepositoryProvider = Provider.autoDispose(
   (ref) => CourtRepository(
@@ -18,13 +23,18 @@ class CourtRepository {
   final FirestoreHelper firestoreHelper;
 
   Future<void> pushCourt(Court court, {bool isUpdate = false}) async {
+    final geo = Geoflutterfire();
     await firestoreHelper.setData(
       path: FirestorePath.docCourt(court.id),
-      // TODO: Remove the removes
-      // The reason for doing this is to avoid overwriting these existing fields
-      // at db with nothing, which might fuck up the app if not yet updated.
-      // Basically done for backwards compatiblity, sort of
-      data: court.toJson()..remove('specialCourtSlots'),
+      data: court.toJson()
+        ..addAll({
+          'geo': geo
+              .point(
+                latitude: court.location.lat,
+                longitude: court.location.lng,
+              )
+              .data,
+        }),
       merge: isUpdate,
     );
   }
@@ -47,13 +57,48 @@ class CourtRepository {
     );
   }
 
-  Stream<List<Court>> getCourtsStream({KasadoUser? admin}) {
-    return firestoreHelper.collectionStream(
-      path: FirestorePath.colCourts(),
-      builder: (data, docId) => Court.fromJson(data),
-      queryBuilder: (admin != null)
-          ? (query) => query.where('adminIds', arrayContains: admin.id)
-          : null,
-    );
+  Stream<List<Court>> getCourtsStream({
+    KasadoUser? admin,
+    KasadoLocation? centerLoc,
+  }) {
+    final geo = Geoflutterfire();
+    final streamController = StreamController<List<Court>>();
+    Query<Map<String, dynamic>> query =
+        FirebaseFirestore.instance.collection(FirestorePath.colCourts());
+    if (admin != null) {
+      query = query.where('adminIds', arrayContains: admin.id);
+    }
+    if (centerLoc != null) {
+      final center = geo.point(
+        latitude: centerLoc.lat,
+        longitude: centerLoc.lng,
+      );
+      final geoRef = geo
+          .collection(collectionRef: query)
+          .within(
+            center: center,
+            radius: 1000,
+            field: 'geo',
+          )
+          .map(
+            (snapList) =>
+                snapList.map((snap) => Court.fromJson(snap.data()!)).toList(),
+          );
+      geoRef.listen((courtList) {
+        streamController.add(courtList);
+      }, cancelOnError: true);
+    } else {
+      final Stream<QuerySnapshot> snapshots = query.snapshots();
+      snapshots.listen((snapshot) {
+        final result = snapshot.docs
+            .map((snapshot) =>
+                Court.fromJson(snapshot.data() as Map<String, dynamic>))
+            .toList();
+        streamController.add(result);
+      }, cancelOnError: true);
+    }
+    streamController.onCancel = streamController.close;
+
+    return streamController.stream;
   }
 }

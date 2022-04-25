@@ -195,6 +195,7 @@ class CourtDetailsView extends HookConsumerWidget {
                             dialog: CourtInputDialog(
                               controller: adminController,
                               courtToEdit: court,
+                              constraints: constraints,
                             ),
                             forEdit: true,
                             court: court,

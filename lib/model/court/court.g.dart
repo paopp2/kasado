@@ -10,6 +10,8 @@ _$_Court _$$_CourtFromJson(Map<String, dynamic> json) => _$_Court(
       id: json['id'] as String,
       name: json['name'] as String,
       address: json['address'] as String,
+      location:
+          KasadoLocation.fromJson(json['location'] as Map<String, dynamic>),
       photoUrl: json['photoUrl'] as String,
       ticketPrice: (json['ticketPrice'] as num).toDouble(),
       adminIds:
@@ -30,6 +32,7 @@ Map<String, dynamic> _$$_CourtToJson(_$_Court instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'address': instance.address,
+      'location': instance.location.toJson(),
       'photoUrl': instance.photoUrl,
       'ticketPrice': instance.ticketPrice,
       'adminIds': instance.adminIds,

@@ -9,7 +9,9 @@ import 'package:kasado/logic/admin/court_manager/court_admin_tec_mixin.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_sched/court_sched.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/model/kasado_location/kasado_location.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:kasado/ui/shared/place_search_field.dart';
 import 'package:uuid/uuid.dart';
 
 final courtAdminController = Provider.autoDispose(
@@ -49,6 +51,10 @@ class CourtAdminController with CourtAdminTecMixin {
           ..[playerIndex] = player.copyWith(hasPaid: !player.hasPaid),
       ),
     );
+  }
+
+  void setCourtLocation(KasadoLocation? location) {
+    read(courtLocationProvider.notifier).state = location!;
   }
 
   void addToCourtSchedList({
@@ -91,7 +97,8 @@ class CourtAdminController with CourtAdminTecMixin {
     // assert that courtId != null when in 'edit mode'
     assert(forEdit == (court != null));
     if (forEdit) {
-      setupCourtToEdit(court!, (courtScheds, specialCourtScheds) {
+      setupCourtToEdit(court!, (courtLoc, courtScheds, specialCourtScheds) {
+        read(courtLocationProvider.notifier).state = courtLoc;
         read(courtSchedListProvider.notifier).state = courtScheds;
         read(specialCourtSchedListProvider.notifier).state = specialCourtScheds;
       });
@@ -100,6 +107,7 @@ class CourtAdminController with CourtAdminTecMixin {
       context: context,
       builder: (_) => dialog,
     ).then((_) {
+      read(courtLocationProvider.notifier).state = null;
       read(courtSchedListProvider.notifier).state = [];
       read(courtSchedListProvider.notifier).state = [];
       clearAllTecs();
@@ -136,6 +144,7 @@ class CourtAdminController with CourtAdminTecMixin {
         name: tecCourtName.text,
         address: tecCourtAddress.text,
         photoUrl: tecCourtPhotoUrl.text,
+        location: read(courtLocationProvider)!,
         ticketPrice: double.parse(tecTicketPrice.text),
         adminIds: baseCourtInfo?.adminIds ?? [currentUser.id],
         courtScheds: read(courtSchedListProvider),

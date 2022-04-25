@@ -5,14 +5,17 @@ import 'package:kasado/logic/admin/court_manager/court_admin_state.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/ui/admin/court_manager/components/sched_input_pane.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
+import 'package:kasado/ui/shared/place_search_field.dart';
 
 class CourtInputDialog extends HookConsumerWidget {
   const CourtInputDialog({
     Key? key,
     required this.controller,
+    required this.constraints,
     this.courtToEdit,
   }) : super(key: key);
 
+  final BoxConstraints constraints;
   final CourtAdminController controller;
   final Court? courtToEdit;
 
@@ -20,6 +23,7 @@ class CourtInputDialog extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final courtSchedList = ref.watch(courtSchedListProvider);
     final specialCourtSchedList = ref.watch(specialCourtSchedListProvider);
+    final courtLocation = ref.watch(courtLocationProvider);
 
     return Dialog(
       insetPadding: const EdgeInsets.all(20.0),
@@ -49,6 +53,11 @@ class CourtInputDialog extends HookConsumerWidget {
                 ),
               ),
             ],
+          ),
+          PlaceSearchField(
+            constraints: constraints,
+            onLocationTapped: controller.setCourtLocation,
+            initialPlace: courtLocation,
           ),
           const Divider(),
           SizedBox(
