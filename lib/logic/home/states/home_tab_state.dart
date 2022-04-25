@@ -6,7 +6,7 @@ final selectedCenterLocProvider = StateProvider.autoDispose<KasadoLocation?>(
   (ref) => null,
 );
 
-final isLocationRetrievedProvider = StateProvider.autoDispose((ref) => false);
+final isLocationRetrievedProvider = StateProvider((ref) => false);
 
 final courtsStreamProvider = StreamProvider.autoDispose(
   (ref) {
