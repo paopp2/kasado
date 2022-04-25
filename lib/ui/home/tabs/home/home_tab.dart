@@ -74,7 +74,7 @@ class HomeTab extends HookConsumerWidget {
                               ),
                             ),
                             Text(
-                              "Warming up...",
+                              "Finding courts near you...",
                               style: TextStyle(
                                 fontSize: constraints.maxWidth * 0.05,
                                 color: Colors.grey,
