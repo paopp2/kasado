@@ -53,7 +53,10 @@ class CourtInputDialog extends HookConsumerWidget {
               ),
             ],
           ),
-          PlaceSearchField(constraints: constraints),
+          PlaceSearchField(
+            constraints: constraints,
+            onLocationTapped: controller.setCourtLocation,
+          ),
           const Divider(),
           SizedBox(
             height: 230,

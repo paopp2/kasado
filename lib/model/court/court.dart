@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kasado/model/court_sched/court_sched.dart';
+import 'package:kasado/model/kasado_location/kasado_location.dart';
 
 part 'court.freezed.dart';
 part 'court.g.dart';
@@ -11,6 +12,7 @@ class Court with _$Court {
     required String id,
     required String name,
     required String address,
+    required KasadoLocation location,
     required String photoUrl,
     required double ticketPrice,
     required List<String> adminIds,

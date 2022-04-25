@@ -6,6 +6,7 @@ import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_sched/court_sched.dart';
+import 'package:kasado/model/kasado_location/kasado_location.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 final courtSchedListProvider = StateProvider.autoDispose<List<CourtSched>>(
@@ -22,6 +23,14 @@ final specialCourtSchedListProvider =
     ref.maintainState = true;
 
     return [];
+  },
+);
+
+final courtLocationProvider = StateProvider.autoDispose<KasadoLocation?>(
+  (ref) {
+    ref.maintainState = true;
+
+    return null;
   },
 );
 
