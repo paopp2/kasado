@@ -11,6 +11,7 @@ import 'package:kasado/ui/court_details/components/court_admins_panel.dart';
 import 'package:kasado/ui/court_details/components/court_schedule_panel.dart';
 import 'package:kasado/ui/admin/court_manager/components/court_input_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
+import 'package:kasado/constants/extensions/string_extensions.dart';
 
 class CourtDetailsView extends HookConsumerWidget {
   const CourtDetailsView({
@@ -161,7 +162,7 @@ class CourtDetailsView extends HookConsumerWidget {
                           textAlign: TextAlign.center,
                         ),
                         AutoSizeText(
-                          court.address,
+                          court.location.address?.shortAddr ?? '',
                           maxLines: 1,
                           textAlign: TextAlign.center,
                         ),
@@ -195,6 +196,7 @@ class CourtDetailsView extends HookConsumerWidget {
                             dialog: CourtInputDialog(
                               controller: adminController,
                               courtToEdit: court,
+                              constraints: constraints,
                             ),
                             forEdit: true,
                             court: court,

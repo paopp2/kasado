@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/auth/login_view_model.dart';
 import 'package:kasado/ui/auth/components/login_error_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
+import 'package:sign_button/sign_button.dart';
 
 class LoginView extends HookConsumerWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -41,8 +41,6 @@ class LoginView extends HookConsumerWidget {
       );
       isLoggingInState.value = false;
     }
-
-    Future<void> _onSignInWithFbPressed() async => model.signInWithFacebook();
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -80,34 +78,14 @@ class LoginView extends HookConsumerWidget {
                         ),
                         const SizedBox(width: 200, child: Divider()),
                         const SizedBox(height: 20),
-                        SizedBox(
-                          height: 50,
+                        SignInButton(
+                          buttonType: ButtonType.google,
+                          buttonSize: ButtonSize.large,
                           width: constraints.maxWidth * 0.7,
-                          child: SignInButton(
-                            Buttons.Google,
-                            onPressed: _onSignInWithGooglePressed,
-                            elevation: 10,
-                            shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            padding: const EdgeInsets.all(5.0),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        SizedBox(
-                          height: 50,
-                          width: constraints.maxWidth * 0.7,
-                          child: SignInButton(
-                            Buttons.FacebookNew,
-                            onPressed: _onSignInWithFbPressed,
-                            elevation: 10,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            padding: const EdgeInsets.all(8.0),
-                          ),
+                          padding: 10.0,
+                          btnTextColor: Colors.grey.shade600,
+                          onPressed: _onSignInWithGooglePressed,
+                          elevation: 10.0,
                         ),
                       ],
                     ),

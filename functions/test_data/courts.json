@@ -1,44 +1,64 @@
 {
     "courtsList": [
         {
-            "id": "ccae7919-fe46-47ad-b2d3-86bd2a24aedd",
-            "name": "NPP Court",
-            "address": "Pitogo Lacion",
-            "photoUrl": "https://media.architecturaldigest.com/photos/61de0f60019f04fb969292e1/master/pass/Amiryakoby-34.jpg",
-            "ticketPrice": 20.0,
-            "allowedWeekDays": [
-                "monday"
-            ],
-            "allowedTimeSlots": [
-                {
-                    "startsAt": "2022-03-01T08:00:00.000",
-                    "endsAt": "2022-03-01T10:00:00.000"
-                }
-            ],
+            "id": "5ba5c18b-b6b8-4d76-a6b8-78eea4fd23e8",
+            "name": "Pitogo Basketball Court",
+            "photoUrl": "https://i.imgur.com/0FeZGW8.jpg",
+            "ticketPrice": 35.0,
             "adminIds": [
                 "wtkLFeagttMal66WvwDfZSheJjK2",
                 "nqo4ouLRb9PWOydZMQK1EgtUqmn1"
-            ]
+            ],
+            "courtScheds": [
+                {
+                    "weekdayIndex": 6,
+                    "timeRange": {
+                        "startsAt": "2022-03-01T13:00:00.000",
+                        "endsAt": "2022-03-01T16:00:00.000"
+                    }
+                }
+            ],
+            "maxPerSlot": 30,
+            "minPerSlot": 15,
+            "specialCourtScheds": [],
+            "geo": {
+                "geohash": "wcb5j41kn"
+            },
+            "location": {
+                "lat": 10.3827694,
+                "lng": 123.9717304,
+                "address": "Pitogo Barangay Hall, National Highway, Consolacion, Cebu, Philippines"
+            }
         },
         {
-            "id": "bati2222-gg66-74zz-c3r2-682dba08dead",
-            "name": "Another Court",
-            "address": "Skina Japan",
-            "photoUrl": "https://media.architecturaldigest.com/photos/61de0f60019f04fb969292e1/master/pass/Amiryakoby-34.jpg",
-            "ticketPrice": 20.0,
-            "allowedWeekDays": [
-                "monday"
-            ],
-            "allowedTimeSlots": [
-                {
-                    "startsAt": "2022-03-01T08:00:00.000",
-                    "endsAt": "2022-03-01T10:00:00.000"
-                }
-            ],
+            "id": "somerandomstring-b6b8-4d76-a6b8-78eea4fd23e8",
+            "name": "Talamban Basketball Court",
+            "photoUrl": "https://i.imgur.com/0FeZGW8.jpg",
+            "ticketPrice": 40.0,
             "adminIds": [
                 "wtkLFeagttMal66WvwDfZSheJjK2",
                 "nqo4ouLRb9PWOydZMQK1EgtUqmn1"
-            ]
+            ],
+            "courtScheds": [
+                {
+                    "weekdayIndex": 0,
+                    "timeRange": {
+                        "startsAt": "2022-03-01T12:00:00.000",
+                        "endsAt": "2022-03-01T14:00:00.000"
+                    }
+                }
+            ],
+            "maxPerSlot": 35,
+            "minPerSlot": 20,
+            "specialCourtScheds": [],
+            "geo": {
+                "geohash": "wcb4gzbeg"
+            },
+            "location": {
+                "lat": 10.3703657,
+                "lng": 123.9156521,
+                "address": "Talamban Christian School, Talamban Rd, Cebu City, Cebu, Philippines"
+            }
         }
     ]
 }

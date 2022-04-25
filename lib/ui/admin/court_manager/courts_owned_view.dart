@@ -8,6 +8,7 @@ import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_state.dart';
 import 'package:kasado/ui/admin/court_manager/components/court_input_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
+import 'package:kasado/constants/extensions/string_extensions.dart';
 
 class CourtsOwnedView extends HookConsumerWidget {
   const CourtsOwnedView({Key? key}) : super(key: key);
@@ -38,7 +39,9 @@ class CourtsOwnedView extends HookConsumerWidget {
                       child: FadeInAnimation(
                         child: ListTile(
                           title: Text(court.name),
-                          subtitle: Text(court.address),
+                          subtitle: Text(
+                            court.location.address?.shortAddr ?? '',
+                          ),
                           onTap: () => context.pushNamed(
                             Routes.courtDetailsView,
                             params: {"courtId": court.id},
@@ -61,7 +64,10 @@ class CourtsOwnedView extends HookConsumerWidget {
             child: FloatingActionButton.extended(
               onPressed: () => adminController.openCourtInputDialog(
                 context: context,
-                dialog: CourtInputDialog(controller: adminController),
+                dialog: CourtInputDialog(
+                  controller: adminController,
+                  constraints: constraints,
+                ),
               ),
               label: const Text('Add Court'),
               icon: const Icon(Icons.add),
