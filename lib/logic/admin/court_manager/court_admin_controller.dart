@@ -52,6 +52,26 @@ class CourtAdminController with CourtAdminTecMixin {
     );
   }
 
+  Future<void> addPlayerToQueue({
+    required KasadoUser player,
+    required CourtSlot courtSlot,
+  }) async {
+    await courtSlotRepo.addPlayerIdToQueue(
+      playerId: player.id,
+      courtSlot: courtSlot,
+    );
+  }
+
+  Future<void> removePlayerFromQueue({
+    required KasadoUser player,
+    required CourtSlot courtSlot,
+  }) async {
+    await courtSlotRepo.removePlayerIdFromQueue(
+      playerId: player.id,
+      courtSlot: courtSlot,
+    );
+  }
+
   void setCourtLocation(KasadoLocation? location) {
     read(courtLocationProvider.notifier).state = location!;
   }

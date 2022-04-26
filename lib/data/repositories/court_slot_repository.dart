@@ -54,6 +54,30 @@ class CourtSlotRepository {
     );
   }
 
+  Future<void> addPlayerIdToQueue({
+    required CourtSlot courtSlot,
+    required String playerId,
+  }) async {
+    final newPlayerIdQueue = [...courtSlot.playerIdQueue, playerId];
+    await firestoreHelper.setData(
+      path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
+      data: {"playerIdQueue": newPlayerIdQueue},
+      merge: true,
+    );
+  }
+
+  Future<void> removePlayerIdFromQueue({
+    required CourtSlot courtSlot,
+    required String playerId,
+  }) async {
+    final newPlayerIdQueue = [...courtSlot.playerIdQueue]..remove(playerId);
+    await firestoreHelper.setData(
+      path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
+      data: {"playerIdQueue": newPlayerIdQueue},
+      merge: true,
+    );
+  }
+
   Future<void> setCourtSlotLiveGameStatsId({
     required CourtSlot courtSlot,
     required String? gameStatsId,

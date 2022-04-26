@@ -76,6 +76,7 @@ class SlotPlayersTab extends HookConsumerWidget {
                             isAdmin: isAdmin,
                             isSuperAdmin: isSuperAdmin,
                             adminController: adminController,
+                            isSlotDone: isDone,
                           ),
                         );
                       },

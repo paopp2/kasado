@@ -8,6 +8,7 @@ import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.da
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:kasado/ui/admin/court_manager/components/slot_player_tile_admin_controls_dialog.dart';
 
 class SlotPlayerTile extends StatelessWidget {
   const SlotPlayerTile({
@@ -20,6 +21,7 @@ class SlotPlayerTile extends StatelessWidget {
     required this.isAdmin,
     required this.isSuperAdmin,
     required this.adminController,
+    required this.isSlotDone,
   }) : super(key: key);
 
   final CourtSlotDetailsViewModel model;
@@ -30,9 +32,12 @@ class SlotPlayerTile extends StatelessWidget {
   final bool isAdmin;
   final bool isSuperAdmin;
   final CourtAdminController adminController;
+  final bool isSlotDone;
 
   @override
   Widget build(BuildContext context) {
+    final isQueuedAtCourt = fetchedCourtSlot.playerIdQueue.contains(player.id);
+
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (_) => model.removeFromCourtSlot(
@@ -58,9 +63,15 @@ class SlotPlayerTile extends StatelessWidget {
                 params: {'uid': player.id},
               ),
               onLongPress: (isSuperAdmin)
-                  ? () => adminController.togglePlayerPaymentStatus(
-                        baseCourtSlot: fetchedCourtSlot,
-                        player: player,
+                  ? () => showDialog(
+                        context: context,
+                        builder: (_) {
+                          return SlotPlayerTileAdminControlsDialog(
+                            controller: adminController,
+                            courtSlot: fetchedCourtSlot,
+                            player: player,
+                          );
+                        },
                       )
                   : null,
               title: AutoSizeText(
@@ -74,6 +85,7 @@ class SlotPlayerTile extends StatelessWidget {
                     )
                   : null,
               leading: Badge(
+                showBadge: isQueuedAtCourt && !isSlotDone,
                 position: BadgePosition.bottomEnd(bottom: -2, end: -2),
                 badgeColor: Colors.white,
                 elevation: 0,
