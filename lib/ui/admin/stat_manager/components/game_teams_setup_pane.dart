@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
+import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
@@ -19,12 +20,21 @@ class GameTeamsSetupPane extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final sortState = ref.watch(teamsPlayersSetupSortProvider);
     // Using a spread to create a new final instance, not just a reference. This
     // avoids messing up the original arrangement of courtSlot.players when sorting
-    final unsortedPlayers = [...courtSlot.players];
-    final players = unsortedPlayers
-      ..sort((a, b) =>
-          a.displayName!.toLowerCase().compareTo(b.displayName!.toLowerCase()));
+    final players = [...courtSlot.players];
+    if (sortState != 0) {
+      players.sort((a, b) {
+        return (sortState == 1)
+            ? a.displayName!
+                .toLowerCase()
+                .compareTo(b.displayName!.toLowerCase())
+            : (courtSlot.slotInfoPerPlayer[a.id]?.timesPlayed ?? 0)
+                .compareTo(courtSlot.slotInfoPerPlayer[b.id]?.timesPlayed ?? 0);
+      });
+    }
+
     final homeTeamPlayers = courtSlot.stageHomeTeamPlayers ?? [];
     final awayTeamPlayers = courtSlot.stageAwayTeamPlayers ?? [];
     final isStartingGameState = useState(false);
@@ -94,6 +104,22 @@ class GameTeamsSetupPane extends HookConsumerWidget {
           ),
         ),
         const Divider(),
+        TextButton(
+          child: Text(
+            (sortState == 0)
+                ? "Unsorted"
+                : (sortState == 1)
+                    ? "Sorted Alphabetically"
+                    : "Sorted according to GP",
+          ),
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.all(10.0),
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            primary: Colors.blueGrey,
+          ),
+          onPressed: controller.toggleToNextSortState,
+        ),
         Expanded(
           child: Material(
             child: ListView.builder(
