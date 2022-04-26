@@ -26,6 +26,7 @@ class CourtSlot with _$CourtSlot {
     @Default({}) Map<String, SlotPlayerInfo> slotInfoPerPlayer,
     @Default(25) int maxPlayerCount,
     @Default(15) int minPlayerCount,
+    @Default([]) List<String> playerIdQueue,
   }) = _CourtSlot;
 
   int get playerCount => players.length;

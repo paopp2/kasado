@@ -21,11 +21,18 @@ class GameTeamsSetupPane extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sortState = ref.watch(teamsPlayersSetupSortProvider);
-    // Using a spread to create a new final instance, not just a reference. This
-    // avoids messing up the original arrangement of courtSlot.players when sorting
-    final players = [...courtSlot.players];
+    final playersMap = {
+      for (final player in courtSlot.players) player.id: player,
+    };
+    // Using spreads to create new final instances, not just references to the original.
+    // This avoids messing up the original arrangement of courtSlot.players when sorting
+    final queuedPlayers = [
+      ...courtSlot.playerIdQueue.map((pid) => playersMap[pid]!).toList(),
+    ];
+    final allPlayers = [...courtSlot.players];
+
     if (sortState != 0) {
-      players.sort((a, b) {
+      allPlayers.sort((a, b) {
         return (sortState == 1)
             ? a.displayName!
                 .toLowerCase()
@@ -34,6 +41,8 @@ class GameTeamsSetupPane extends HookConsumerWidget {
                 .compareTo(courtSlot.slotInfoPerPlayer[b.id]?.timesPlayed ?? 0);
       });
     }
+
+    final playersToShow = (sortState == 0) ? queuedPlayers : allPlayers;
 
     final homeTeamPlayers = courtSlot.stageHomeTeamPlayers ?? [];
     final awayTeamPlayers = courtSlot.stageAwayTeamPlayers ?? [];
@@ -107,10 +116,10 @@ class GameTeamsSetupPane extends HookConsumerWidget {
         TextButton(
           child: Text(
             (sortState == 0)
-                ? "Unsorted"
+                ? "Queued Only"
                 : (sortState == 1)
-                    ? "Sorted Alphabetically"
-                    : "Sorted according to GP",
+                    ? "All (Alphabetical)"
+                    : "All (According to Games Played)",
           ),
           style: TextButton.styleFrom(
             padding: const EdgeInsets.all(10.0),
@@ -123,9 +132,9 @@ class GameTeamsSetupPane extends HookConsumerWidget {
         Expanded(
           child: Material(
             child: ListView.builder(
-              itemCount: players.length,
+              itemCount: playersToShow.length,
               itemBuilder: (context, i) {
-                final player = players[i];
+                final player = playersToShow[i];
 
                 return Padding(
                   padding: const EdgeInsets.all(2.0),

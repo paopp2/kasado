@@ -35,7 +35,8 @@ class _$CourtSlotTearOff {
       List<KasadoUser>? stageAwayTeamPlayers = const [],
       Map<String, SlotPlayerInfo> slotInfoPerPlayer = const {},
       int maxPlayerCount = 25,
-      int minPlayerCount = 15}) {
+      int minPlayerCount = 15,
+      List<String> playerIdQueue = const []}) {
     return _CourtSlot(
       slotId: slotId,
       courtId: courtId,
@@ -50,6 +51,7 @@ class _$CourtSlotTearOff {
       slotInfoPerPlayer: slotInfoPerPlayer,
       maxPlayerCount: maxPlayerCount,
       minPlayerCount: minPlayerCount,
+      playerIdQueue: playerIdQueue,
     );
   }
 
@@ -81,6 +83,7 @@ mixin _$CourtSlot {
       throw _privateConstructorUsedError;
   int get maxPlayerCount => throw _privateConstructorUsedError;
   int get minPlayerCount => throw _privateConstructorUsedError;
+  List<String> get playerIdQueue => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -105,7 +108,8 @@ abstract class $CourtSlotCopyWith<$Res> {
       List<KasadoUser>? stageAwayTeamPlayers,
       Map<String, SlotPlayerInfo> slotInfoPerPlayer,
       int maxPlayerCount,
-      int minPlayerCount});
+      int minPlayerCount,
+      List<String> playerIdQueue});
 
   $TimeRangeCopyWith<$Res> get timeRange;
 }
@@ -133,6 +137,7 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
     Object? slotInfoPerPlayer = freezed,
     Object? maxPlayerCount = freezed,
     Object? minPlayerCount = freezed,
+    Object? playerIdQueue = freezed,
   }) {
     return _then(_value.copyWith(
       slotId: slotId == freezed
@@ -187,6 +192,10 @@ class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
           ? _value.minPlayerCount
           : minPlayerCount // ignore: cast_nullable_to_non_nullable
               as int,
+      playerIdQueue: playerIdQueue == freezed
+          ? _value.playerIdQueue
+          : playerIdQueue // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 
@@ -217,7 +226,8 @@ abstract class _$CourtSlotCopyWith<$Res> implements $CourtSlotCopyWith<$Res> {
       List<KasadoUser>? stageAwayTeamPlayers,
       Map<String, SlotPlayerInfo> slotInfoPerPlayer,
       int maxPlayerCount,
-      int minPlayerCount});
+      int minPlayerCount,
+      List<String> playerIdQueue});
 
   @override
   $TimeRangeCopyWith<$Res> get timeRange;
@@ -247,6 +257,7 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
     Object? slotInfoPerPlayer = freezed,
     Object? maxPlayerCount = freezed,
     Object? minPlayerCount = freezed,
+    Object? playerIdQueue = freezed,
   }) {
     return _then(_CourtSlot(
       slotId: slotId == freezed
@@ -301,6 +312,10 @@ class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
           ? _value.minPlayerCount
           : minPlayerCount // ignore: cast_nullable_to_non_nullable
               as int,
+      playerIdQueue: playerIdQueue == freezed
+          ? _value.playerIdQueue
+          : playerIdQueue // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -321,7 +336,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       this.stageAwayTeamPlayers = const [],
       this.slotInfoPerPlayer = const {},
       this.maxPlayerCount = 25,
-      this.minPlayerCount = 15})
+      this.minPlayerCount = 15,
+      this.playerIdQueue = const []})
       : super._();
 
   factory _$_CourtSlot.fromJson(Map<String, dynamic> json) =>
@@ -364,10 +380,13 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final int minPlayerCount;
+  @JsonKey()
+  @override
+  final List<String> playerIdQueue;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CourtSlot(slotId: $slotId, courtId: $courtId, timeRange: $timeRange, courtName: $courtName, ticketPrice: $ticketPrice, players: $players, isClosedByAdmin: $isClosedByAdmin, liveGameStatsId: $liveGameStatsId, stageHomeTeamPlayers: $stageHomeTeamPlayers, stageAwayTeamPlayers: $stageAwayTeamPlayers, slotInfoPerPlayer: $slotInfoPerPlayer, maxPlayerCount: $maxPlayerCount, minPlayerCount: $minPlayerCount)';
+    return 'CourtSlot(slotId: $slotId, courtId: $courtId, timeRange: $timeRange, courtName: $courtName, ticketPrice: $ticketPrice, players: $players, isClosedByAdmin: $isClosedByAdmin, liveGameStatsId: $liveGameStatsId, stageHomeTeamPlayers: $stageHomeTeamPlayers, stageAwayTeamPlayers: $stageAwayTeamPlayers, slotInfoPerPlayer: $slotInfoPerPlayer, maxPlayerCount: $maxPlayerCount, minPlayerCount: $minPlayerCount, playerIdQueue: $playerIdQueue)';
   }
 
   @override
@@ -387,7 +406,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('stageAwayTeamPlayers', stageAwayTeamPlayers))
       ..add(DiagnosticsProperty('slotInfoPerPlayer', slotInfoPerPlayer))
       ..add(DiagnosticsProperty('maxPlayerCount', maxPlayerCount))
-      ..add(DiagnosticsProperty('minPlayerCount', minPlayerCount));
+      ..add(DiagnosticsProperty('minPlayerCount', minPlayerCount))
+      ..add(DiagnosticsProperty('playerIdQueue', playerIdQueue));
   }
 
   @override
@@ -415,7 +435,9 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.maxPlayerCount, maxPlayerCount) &&
             const DeepCollectionEquality()
-                .equals(other.minPlayerCount, minPlayerCount));
+                .equals(other.minPlayerCount, minPlayerCount) &&
+            const DeepCollectionEquality()
+                .equals(other.playerIdQueue, playerIdQueue));
   }
 
   @override
@@ -433,7 +455,8 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(stageAwayTeamPlayers),
       const DeepCollectionEquality().hash(slotInfoPerPlayer),
       const DeepCollectionEquality().hash(maxPlayerCount),
-      const DeepCollectionEquality().hash(minPlayerCount));
+      const DeepCollectionEquality().hash(minPlayerCount),
+      const DeepCollectionEquality().hash(playerIdQueue));
 
   @JsonKey(ignore: true)
   @override
@@ -460,7 +483,8 @@ abstract class _CourtSlot extends CourtSlot {
       List<KasadoUser>? stageAwayTeamPlayers,
       Map<String, SlotPlayerInfo> slotInfoPerPlayer,
       int maxPlayerCount,
-      int minPlayerCount}) = _$_CourtSlot;
+      int minPlayerCount,
+      List<String> playerIdQueue}) = _$_CourtSlot;
   const _CourtSlot._() : super._();
 
   factory _CourtSlot.fromJson(Map<String, dynamic> json) =
@@ -493,6 +517,8 @@ abstract class _CourtSlot extends CourtSlot {
   int get maxPlayerCount;
   @override
   int get minPlayerCount;
+  @override
+  List<String> get playerIdQueue;
   @override
   @JsonKey(ignore: true)
   _$CourtSlotCopyWith<_CourtSlot> get copyWith =>
