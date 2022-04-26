@@ -75,3 +75,7 @@ final awayTeamPlayersProvider = Provider.autoDispose<List<KasadoUser>>(
           a.displayName!.toLowerCase().compareTo(b.displayName!.toLowerCase()));
   },
 );
+
+/// 0 == unsorted, 1 == alphabetical, 2 == least to most games played
+final teamsPlayersSetupSortProvider =
+    StateProvider.autoDispose<int>((ref) => 0);

@@ -296,4 +296,11 @@ class GameStatController {
       isPaused: isPaused,
     );
   }
+
+  void toggleToNextSortState() {
+    final sortState = read(teamsPlayersSetupSortProvider);
+    read(teamsPlayersSetupSortProvider.notifier).update(
+      (s) => (sortState < 2) ? s + 1 : 0,
+    );
+  }
 }
