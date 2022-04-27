@@ -38,6 +38,15 @@ class OverviewStats with _$OverviewStats {
   int get totalLosses => gamesPlayed - totalWins;
   double get winPercent => (totalWins / gamesPlayed) * 100;
   int get winLossDifference => totalWins - totalLosses;
+  double get effRating =>
+      (totalPoints +
+          totalAst +
+          totalRebounds +
+          totalBlk +
+          totalStl -
+          (totalAttempts - totalMade) -
+          (totalFta - totalFtm)) /
+      gamesPlayed;
 
   factory OverviewStats.fromJson(Map<String, dynamic> json) =>
       _$OverviewStatsFromJson(json);
