@@ -25,8 +25,8 @@ class StandingsTab extends HookConsumerWidget {
     return Scaffold(
       body: StatLeadersPane(
         model: model,
-        statType: StatType.standing,
-        statDescription: 'Player Standings',
+        statType: StatType.effRating,
+        statDescription: 'Efficiency Rankings',
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,

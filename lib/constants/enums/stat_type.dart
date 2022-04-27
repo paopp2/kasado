@@ -1,4 +1,5 @@
 enum StatType {
+  effRating,
   standing,
   ptsPerGame,
   astPerGame,

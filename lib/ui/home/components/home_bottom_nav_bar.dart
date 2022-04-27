@@ -34,7 +34,7 @@ class HomeBottomNavBar extends StatelessWidget {
         ),
         SalomonBottomBarItem(
           icon: const Icon(Icons.bar_chart),
-          title: const Text('Standings'),
+          title: const Text('Rankings'),
         ),
         SalomonBottomBarItem(
           icon: const FaIcon(
