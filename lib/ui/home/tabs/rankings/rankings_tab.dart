@@ -9,8 +9,8 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/leaderboards/stat_leaders_view_model.dart';
 import 'package:kasado/ui/leaderboards/components/stat_leaders_pane.dart';
 
-class StandingsTab extends HookConsumerWidget {
-  const StandingsTab({Key? key}) : super(key: key);
+class RankingsTab extends HookConsumerWidget {
+  const RankingsTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,8 +25,8 @@ class StandingsTab extends HookConsumerWidget {
     return Scaffold(
       body: StatLeadersPane(
         model: model,
-        statType: StatType.standing,
-        statDescription: 'Player Standings',
+        statType: StatType.effRating,
+        statDescription: 'Player Efficiency',
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,

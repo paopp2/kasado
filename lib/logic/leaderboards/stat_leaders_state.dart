@@ -8,6 +8,8 @@ final statLeadersStreamProvider = StreamProvider.autoDispose
     .family<List<KasadoUserInfo>, StatType>((ref, statType) {
   final statRepo = ref.watch(statRepositoryProvider);
   switch (statType) {
+    case StatType.effRating:
+      return statRepo.getEffRatingLeadersStream();
     case StatType.standing:
       return statRepo.getStandingLeadersStream();
     case StatType.ptsPerGame:
@@ -45,6 +47,9 @@ final rankNumProvider = Provider.autoDispose.family<Map<String, int>, StatType>(
           final stats = uInfo.overviewStats;
           final double statValue;
           switch (statType) {
+            case StatType.effRating:
+              statValue = stats.effRating;
+              break;
             case StatType.standing:
               statValue = stats.winPercent;
               break;

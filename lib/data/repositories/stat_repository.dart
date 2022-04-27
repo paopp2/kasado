@@ -376,95 +376,149 @@ class StatRepository {
     );
   }
 
+  Stream<List<KasadoUserInfo>> getEffRatingLeadersStream() {
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) => query
+              .orderBy('overviewStats.effRating', descending: true)
+              .limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) => user.overviewStats.gamesPlayed == 0));
+  }
+
   Stream<List<KasadoUserInfo>> getStandingLeadersStream() {
-    return firestoreHelper.collectionStream(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, _) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query
-          .orderBy('overviewStats.winLossDifference', descending: true)
-          .orderBy('overviewStats.winPercent', descending: true)
-          .orderBy('overviewStats.gamesPlayed', descending: true)
-          .limit(100),
-    );
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) => query
+              .orderBy('overviewStats.winLossDifference', descending: true)
+              .orderBy('overviewStats.winPercent', descending: true)
+              .orderBy('overviewStats.gamesPlayed', descending: true)
+              .limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) => user.overviewStats.gamesPlayed == 0));
   }
 
   Stream<List<KasadoUserInfo>> getPpgLeadersStream() {
-    return firestoreHelper.collectionStream(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, _) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query
-          .orderBy('overviewStats.avePointsPerGame', descending: true)
-          .limit(100),
-    );
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) => query
+              .orderBy('overviewStats.avePointsPerGame', descending: true)
+              .limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) =>
+              user.overviewStats.avePointsPerGame.isNaN ||
+              user.overviewStats.avePointsPerGame == 0));
   }
 
   Stream<List<KasadoUserInfo>> getApgLeadersStream() {
-    return firestoreHelper.collectionStream(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, _) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query
-          .orderBy('overviewStats.aveAssistsPerGame', descending: true)
-          .limit(100),
-    );
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) => query
+              .orderBy('overviewStats.aveAssistsPerGame', descending: true)
+              .limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) =>
+              user.overviewStats.aveAssistsPerGame.isNaN ||
+              user.overviewStats.aveAssistsPerGame == 0));
   }
 
   Stream<List<KasadoUserInfo>> getRpgLeadersStream() {
-    return firestoreHelper.collectionStream(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, _) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query
-          .orderBy('overviewStats.aveReboundsPerGame', descending: true)
-          .limit(100),
-    );
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) => query
+              .orderBy('overviewStats.aveReboundsPerGame', descending: true)
+              .limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) =>
+              user.overviewStats.aveReboundsPerGame.isNaN ||
+              user.overviewStats.aveReboundsPerGame == 0));
   }
 
   Stream<List<KasadoUserInfo>> getSpgLeadersStream() {
-    return firestoreHelper.collectionStream(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, _) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query
-          .orderBy('overviewStats.aveStlPerGame', descending: true)
-          .limit(100),
-    );
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) => query
+              .orderBy('overviewStats.aveStlPerGame', descending: true)
+              .limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) =>
+              user.overviewStats.aveStlPerGame.isNaN ||
+              user.overviewStats.aveStlPerGame == 0));
   }
 
   Stream<List<KasadoUserInfo>> getBpgLeadersStream() {
-    return firestoreHelper.collectionStream(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, _) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query
-          .orderBy('overviewStats.aveBlocksPerGame', descending: true)
-          .limit(100),
-    );
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) => query
+              .orderBy('overviewStats.aveBlocksPerGame', descending: true)
+              .limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) =>
+              user.overviewStats.aveBlocksPerGame.isNaN ||
+              user.overviewStats.aveBlocksPerGame == 0));
   }
 
   Stream<List<KasadoUserInfo>> getFgPercentLeadersStream() {
-    return firestoreHelper.collectionStream(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, _) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query
-          .orderBy('overviewStats.aveFgPercent', descending: true)
-          .limit(100),
-    );
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) => query
+              .orderBy('overviewStats.aveFgPercent', descending: true)
+              .limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) =>
+              user.overviewStats.aveFgPercent.isNaN ||
+              user.overviewStats.aveFgPercent == 0));
   }
 
   Stream<List<KasadoUserInfo>> get3ptPercentLeadersStream() {
-    return firestoreHelper.collectionStream(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, _) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query
-          .orderBy('overviewStats.aveThreePtPercent', descending: true)
-          .limit(100),
-    );
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) => query
+              .orderBy('overviewStats.aveThreePtPercent', descending: true)
+              .limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) =>
+              user.overviewStats.aveThreePtPercent.isNaN ||
+              user.overviewStats.aveThreePtPercent == 0));
   }
 
   Stream<List<KasadoUserInfo>> get3ptMadeLeadersStream() {
-    return firestoreHelper.collectionStream(
-      path: FirestorePath.colUserInfos(),
-      builder: (data, _) => KasadoUserInfo.fromJson(data),
-      queryBuilder: (query) => query
-          .orderBy('overviewStats.totalThreePM', descending: true)
-          .limit(100),
-    );
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) => query
+              .orderBy('overviewStats.totalThreePM', descending: true)
+              .limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) => user.overviewStats.totalThreePM == 0));
   }
 }

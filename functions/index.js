@@ -79,6 +79,7 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}')
             const totalLosses = stats.gamesPlayed - stats.totalWins;
             const winPercent = (stats.totalWins / stats.gamesPlayed) * 100;
             const winLossDifference = stats.totalWins - totalLosses;
+            const effRating = (totalPoints + stats.totalAst + totalRebounds + stats.totalStl + stats.totalBlk - (totalAttempts - totalMade) - (stats.totalFta - stats.totalFtm)) / stats.gamesPlayed;
 
             await userInfoRef.doc(updatedUserInfo.id).set({
                 "overviewStats": {
@@ -97,9 +98,33 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}')
                     "totalLosses": totalLosses,
                     "winPercent": winPercent,
                     "winLossDifference": winLossDifference,
+                    "effRating": effRating,
                 }
             }, { merge: true });
         }
 
     }
+});
+
+exports.triggerStatsUpdate = functions.https.onRequest(async (req, res) => {
+
+    await db.collection("user_info").get().then(function (querySnapshot) {
+        querySnapshot.forEach(async function (doc) {
+            await doc.ref.update({
+                "overviewStats.gamesPlayed": admin.firestore.FieldValue.increment(1),
+            }, { merge: true });
+        });
+    });
+
+    await setTimeout(function () { }, 1000);
+
+    await db.collection("user_info").get().then(function (querySnapshot) {
+        querySnapshot.forEach(async function (doc) {
+            await doc.ref.update({
+                "overviewStats.gamesPlayed": admin.firestore.FieldValue.increment(-1),
+            }, { merge: true });
+        });
+    });
+
+    res.json({ result: "Triggered derived stats recalculation" });
 });

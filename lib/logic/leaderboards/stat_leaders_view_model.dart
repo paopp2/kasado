@@ -27,6 +27,9 @@ class StatLeadersViewModel extends ViewModel {
   }) {
     final double statValue;
     switch (statType) {
+      case StatType.effRating:
+        statValue = stats.effRating;
+        break;
       case StatType.standing:
         statValue = stats.winPercent;
         break;
