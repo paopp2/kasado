@@ -103,3 +103,26 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}')
 
     }
 });
+
+exports.triggerStatsUpdate = functions.https.onRequest(async (req, res) => {
+
+    await db.collection("user_info").get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            doc.ref.update({
+                "overviewStats.gamesPlayed": admin.firestore.FieldValue.increment(1),
+            }, { merge: true });
+        });
+    });
+
+    await setTimeout(function() {}, 1000);
+
+    await db.collection("user_info").get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            doc.ref.update({
+                "overviewStats.gamesPlayed": admin.firestore.FieldValue.increment(-1),
+            }, { merge: true });
+        });
+    });
+    
+    res.json({ result: "Updated gamesPlayed" });
+});
