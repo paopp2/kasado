@@ -10,6 +10,7 @@ class CourtSched with _$CourtSched {
   const factory CourtSched({
     required int weekdayIndex,
     required TimeRange timeRange,
+    DateTime? endDate,
   }) = _CourtSched;
 
   factory CourtSched.fromJson(Map<String, dynamic> json) =>

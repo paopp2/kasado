@@ -22,10 +22,14 @@ CourtSched _$CourtSchedFromJson(Map<String, dynamic> json) {
 class _$CourtSchedTearOff {
   const _$CourtSchedTearOff();
 
-  _CourtSched call({required int weekdayIndex, required TimeRange timeRange}) {
+  _CourtSched call(
+      {required int weekdayIndex,
+      required TimeRange timeRange,
+      DateTime? endDate}) {
     return _CourtSched(
       weekdayIndex: weekdayIndex,
       timeRange: timeRange,
+      endDate: endDate,
     );
   }
 
@@ -41,6 +45,7 @@ const $CourtSched = _$CourtSchedTearOff();
 mixin _$CourtSched {
   int get weekdayIndex => throw _privateConstructorUsedError;
   TimeRange get timeRange => throw _privateConstructorUsedError;
+  DateTime? get endDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,7 +58,7 @@ abstract class $CourtSchedCopyWith<$Res> {
   factory $CourtSchedCopyWith(
           CourtSched value, $Res Function(CourtSched) then) =
       _$CourtSchedCopyWithImpl<$Res>;
-  $Res call({int weekdayIndex, TimeRange timeRange});
+  $Res call({int weekdayIndex, TimeRange timeRange, DateTime? endDate});
 
   $TimeRangeCopyWith<$Res> get timeRange;
 }
@@ -70,6 +75,7 @@ class _$CourtSchedCopyWithImpl<$Res> implements $CourtSchedCopyWith<$Res> {
   $Res call({
     Object? weekdayIndex = freezed,
     Object? timeRange = freezed,
+    Object? endDate = freezed,
   }) {
     return _then(_value.copyWith(
       weekdayIndex: weekdayIndex == freezed
@@ -80,6 +86,10 @@ class _$CourtSchedCopyWithImpl<$Res> implements $CourtSchedCopyWith<$Res> {
           ? _value.timeRange
           : timeRange // ignore: cast_nullable_to_non_nullable
               as TimeRange,
+      endDate: endDate == freezed
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 
@@ -97,7 +107,7 @@ abstract class _$CourtSchedCopyWith<$Res> implements $CourtSchedCopyWith<$Res> {
           _CourtSched value, $Res Function(_CourtSched) then) =
       __$CourtSchedCopyWithImpl<$Res>;
   @override
-  $Res call({int weekdayIndex, TimeRange timeRange});
+  $Res call({int weekdayIndex, TimeRange timeRange, DateTime? endDate});
 
   @override
   $TimeRangeCopyWith<$Res> get timeRange;
@@ -117,6 +127,7 @@ class __$CourtSchedCopyWithImpl<$Res> extends _$CourtSchedCopyWithImpl<$Res>
   $Res call({
     Object? weekdayIndex = freezed,
     Object? timeRange = freezed,
+    Object? endDate = freezed,
   }) {
     return _then(_CourtSched(
       weekdayIndex: weekdayIndex == freezed
@@ -127,6 +138,10 @@ class __$CourtSchedCopyWithImpl<$Res> extends _$CourtSchedCopyWithImpl<$Res>
           ? _value.timeRange
           : timeRange // ignore: cast_nullable_to_non_nullable
               as TimeRange,
+      endDate: endDate == freezed
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -134,7 +149,8 @@ class __$CourtSchedCopyWithImpl<$Res> extends _$CourtSchedCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_CourtSched with DiagnosticableTreeMixin implements _CourtSched {
-  const _$_CourtSched({required this.weekdayIndex, required this.timeRange});
+  const _$_CourtSched(
+      {required this.weekdayIndex, required this.timeRange, this.endDate});
 
   factory _$_CourtSched.fromJson(Map<String, dynamic> json) =>
       _$$_CourtSchedFromJson(json);
@@ -143,10 +159,12 @@ class _$_CourtSched with DiagnosticableTreeMixin implements _CourtSched {
   final int weekdayIndex;
   @override
   final TimeRange timeRange;
+  @override
+  final DateTime? endDate;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CourtSched(weekdayIndex: $weekdayIndex, timeRange: $timeRange)';
+    return 'CourtSched(weekdayIndex: $weekdayIndex, timeRange: $timeRange, endDate: $endDate)';
   }
 
   @override
@@ -155,7 +173,8 @@ class _$_CourtSched with DiagnosticableTreeMixin implements _CourtSched {
     properties
       ..add(DiagnosticsProperty('type', 'CourtSched'))
       ..add(DiagnosticsProperty('weekdayIndex', weekdayIndex))
-      ..add(DiagnosticsProperty('timeRange', timeRange));
+      ..add(DiagnosticsProperty('timeRange', timeRange))
+      ..add(DiagnosticsProperty('endDate', endDate));
   }
 
   @override
@@ -165,14 +184,16 @@ class _$_CourtSched with DiagnosticableTreeMixin implements _CourtSched {
             other is _CourtSched &&
             const DeepCollectionEquality()
                 .equals(other.weekdayIndex, weekdayIndex) &&
-            const DeepCollectionEquality().equals(other.timeRange, timeRange));
+            const DeepCollectionEquality().equals(other.timeRange, timeRange) &&
+            const DeepCollectionEquality().equals(other.endDate, endDate));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(weekdayIndex),
-      const DeepCollectionEquality().hash(timeRange));
+      const DeepCollectionEquality().hash(timeRange),
+      const DeepCollectionEquality().hash(endDate));
 
   @JsonKey(ignore: true)
   @override
@@ -188,7 +209,8 @@ class _$_CourtSched with DiagnosticableTreeMixin implements _CourtSched {
 abstract class _CourtSched implements CourtSched {
   const factory _CourtSched(
       {required int weekdayIndex,
-      required TimeRange timeRange}) = _$_CourtSched;
+      required TimeRange timeRange,
+      DateTime? endDate}) = _$_CourtSched;
 
   factory _CourtSched.fromJson(Map<String, dynamic> json) =
       _$_CourtSched.fromJson;
@@ -197,6 +219,8 @@ abstract class _CourtSched implements CourtSched {
   int get weekdayIndex;
   @override
   TimeRange get timeRange;
+  @override
+  DateTime? get endDate;
   @override
   @JsonKey(ignore: true)
   _$CourtSchedCopyWith<_CourtSched> get copyWith =>
