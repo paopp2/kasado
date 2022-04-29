@@ -17,11 +17,9 @@ class KasadoUtils {
     required DateTime from,
     required List<CourtSched> courtScheds,
   }) {
-    // Filter courtScheds to remove scheds that is yet to 'start' in the future
-    // OR has an end date before [from]
-    final _courtScheds = [...courtScheds]..removeWhere((sched) =>
-        (sched.timeRange.startsAt.isAfter(from) ||
-            (sched.endDate?.isBefore(from) ?? false)));
+    // Filter courtScheds to remove scheds has an end date before [from]
+    final _courtScheds = [...courtScheds]
+      ..removeWhere((sched) => (sched.endDate?.isBefore(from) ?? false));
 
     // Weekdays are represented as numbers => MON:0, TUE:1,..., SUN:6
     final weekdays =
@@ -67,6 +65,10 @@ class KasadoUtils {
       // If the slot has started but still within an hour ago, return the slot
       if (sStartDateTime.isAfter(from) ||
           from.difference(sStartDateTime) < 1.hours) {
+        // Except if the slot's time range is not yet meant to start (will start
+        // in future), then continue to the next one
+        if (sAdjustedTimeRange.startsAt.isBefore(slot.startsAt)) continue;
+
         return sAdjustedTimeRange;
       }
     }
