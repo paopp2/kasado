@@ -17,13 +17,17 @@ class KasadoUtils {
     required DateTime from,
     required List<CourtSched> courtScheds,
   }) {
+    // Filter courtScheds to remove scheds that have an end date before [from]
+    final _courtScheds = [...courtScheds]
+      ..removeWhere((sched) => (sched.endDate?.isBefore(from) ?? false));
+
     // Weekdays are represented as numbers => MON:0, TUE:1,..., SUN:6
     final weekdays =
-        courtScheds.map((sched) => sched.weekdayIndex).toSet().toList();
+        _courtScheds.map((sched) => sched.weekdayIndex).toSet().toList();
     final today = from.weekday - 1; // Adjusted to start at 0 (1 by default)
     final slotsPerDay = {
       for (final day in weekdays)
-        day: courtScheds
+        day: _courtScheds
             .where((sched) => sched.weekdayIndex == day)
             .map((sched) => sched.timeRange)
             .toList()

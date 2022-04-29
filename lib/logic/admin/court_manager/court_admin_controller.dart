@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
@@ -59,6 +60,9 @@ class CourtAdminController with CourtAdminTecMixin {
     await courtSlotRepo.addPlayerIdToQueue(
       playerId: player.id,
       courtSlot: courtSlot,
+      onPlayerAlreadyQueued: () => Fluttertoast.showToast(
+        msg: "Player already in queue",
+      ),
     );
   }
 
@@ -84,13 +88,7 @@ class CourtAdminController with CourtAdminTecMixin {
         (isSpecial) ? specialCourtSchedListProvider : courtSchedListProvider;
     read(schedListProvider.notifier).update(
       (s) => [...s, sched]..sort(
-          (a, b) {
-            return isSpecial
-                ? b.timeRange.startsAt.compareTo(a.timeRange.startsAt)
-                : a.weekdayIndex != b.weekdayIndex
-                    ? a.weekdayIndex.compareTo(b.weekdayIndex)
-                    : a.timeRange.startsAt.compareTo(b.timeRange.startsAt);
-          },
+          (a, b) => b.timeRange.startsAt.compareTo(a.timeRange.startsAt),
         ),
     );
   }
