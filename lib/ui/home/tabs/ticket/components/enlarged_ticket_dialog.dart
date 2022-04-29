@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
+import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/ticket/ticket.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -8,10 +9,10 @@ class EnlargedTicketDialog extends StatelessWidget {
     Key? key,
     required this.utils,
     required this.ticket,
-    required this.userName,
+    required this.user,
   }) : super(key: key);
 
-  final String userName;
+  final KasadoUser user;
   final Ticket ticket;
   final KasadoUtils utils;
 
@@ -42,7 +43,7 @@ class EnlargedTicketDialog extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: QrImage(
-                      data: ticket.id,
+                      data: ticket.getQrData(user),
                     ),
                   ),
                 ),
@@ -64,7 +65,7 @@ class EnlargedTicketDialog extends StatelessWidget {
               style: const TextStyle(fontSize: 12),
             ),
             Text(
-              userName.toUpperCase(),
+              user.displayName!.toUpperCase(),
               style: const TextStyle(fontSize: 12),
             ),
           ],
