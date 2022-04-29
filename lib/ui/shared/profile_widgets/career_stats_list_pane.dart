@@ -34,6 +34,11 @@ class CareerStatsListPane extends HookConsumerWidget {
         child: ListView(
           children: [
             PlayerStatTile(
+              statDescription: "Efficiency Rating",
+              statValue: utils.getDoubleFormat(userStats.effRating),
+              index: 0,
+            ),
+            PlayerStatTile(
               statDescription: "Standing",
               statValue: "${userStats.totalWins} - ${userStats.totalLosses}",
               index: 0,
