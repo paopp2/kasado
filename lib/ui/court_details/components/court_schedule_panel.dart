@@ -93,27 +93,35 @@ class CourtSchedulePanel extends HookConsumerWidget {
 _AppointmentDataSource _getCalendarDataSource(Court court, bool isAdmin) {
   List<Appointment> appointments = <Appointment>[];
 
-  appointments.addAll(court.courtScheds.map((sched) {
-    return Appointment(
-      id: 'appointment_id',
-      startTime: sched.timeRange.startsAt,
-      endTime: sched.timeRange.endsAt,
-      recurrenceExceptionDates: (isAdmin)
-          ? null
-          : court.specialCourtScheds
-              .map((specialSched) => specialSched.timeRange.startsAt)
-              .toList(),
-      recurrenceRule: SfCalendar.generateRRule(
-        RecurrenceProperties(
-          recurrenceType: RecurrenceType.weekly,
-          startDate: DateTime.now(),
-          weekDays: [weekdaysList[sched.weekdayIndex]],
-        ),
-        DateTime(2015, 1, 1),
-        DateTime(2015, 1, 1),
-      ),
-    );
-  }));
+  appointments.addAll(
+    court.courtScheds.map(
+      (sched) {
+        return Appointment(
+          id: 'appointment_id',
+          startTime: sched.timeRange.startsAt,
+          endTime: sched.timeRange.endsAt,
+          recurrenceExceptionDates: (isAdmin)
+              ? null
+              : court.specialCourtScheds
+                  .map((specialSched) => specialSched.timeRange.startsAt)
+                  .toList(),
+          recurrenceRule: SfCalendar.generateRRule(
+                RecurrenceProperties(
+                  recurrenceType: RecurrenceType.weekly,
+                  startDate: DateTime.now(),
+                  endDate: DateTime(2022, 5, 22),
+                  weekDays: [weekdaysList[sched.weekdayIndex]],
+                ),
+                DateTime(2015, 1, 1),
+                DateTime(2015, 1, 1),
+              ) +
+              ((sched.endDate == null)
+                  ? ""
+                  : ";UNTIL=${sched.endDate!.toIso8601String()}"),
+        );
+      },
+    ),
+  );
 
   /// Add the specialCourtSlots that was hidden due to the
   /// 'recurrenceExceptionDates' above

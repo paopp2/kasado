@@ -55,7 +55,6 @@ dependencies:
   pub_semver: ^2.1.1
   url_launcher: ^6.0.20
   time_range_picker: ^2.1.0
-  weekday_selector: ^1.1.0
   geolocator: ^8.2.0
   flutter_typeahead: ^3.2.5
 

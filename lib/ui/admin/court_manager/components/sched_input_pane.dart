@@ -46,6 +46,10 @@ class SchedInputPane extends HookConsumerWidget {
                     sched.timeRange.startsAt,
                     showYear: true,
                   ) : weekdaysStringList[sched.weekdayIndex]} / ${utils.getTimeRangeFormat(sched.timeRange)}"),
+                subtitle: (!isSpecial)
+                    ? Text(
+                        "${utils.getDateFormat(sched.timeRange.startsAt)} - ${utils.getDateFormat(sched.endDate, showYear: true)}")
+                    : null,
                 trailing: IconButton(
                   onPressed: () => controller.removeFromCourtSchedList(
                     sched: sched,

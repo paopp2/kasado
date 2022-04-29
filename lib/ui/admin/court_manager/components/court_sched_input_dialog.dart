@@ -5,11 +5,16 @@ import 'package:kasado/constants/date_time_related_constants.dart';
 import 'package:kasado/logic/admin/court_manager/court_admin_controller.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court_sched/court_sched.dart';
+import 'package:kasado/ui/admin/court_manager/components/sched_time_range_picker.dart';
 import 'package:time/time.dart';
-import 'package:time_range_picker/time_range_picker.dart';
-import 'package:weekday_selector/weekday_selector.dart';
 import 'package:kasado/model/time_range/time_range.dart' as kasado;
 
+/// Dialog for inputting a Court schedule
+///
+/// Regular schedules recurs every week. The courtSched.timeRange.startsAt
+/// represents the startDate of the appointment recurrence as well as where the
+/// weekday will be obtained from (weekday of date). As for the special dates, it
+/// only represents well, the special date that a certain appointment occurs
 class CourtSchedInputDialog extends HookConsumerWidget {
   const CourtSchedInputDialog({
     required this.controller,
@@ -22,28 +27,29 @@ class CourtSchedInputDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedWeekdayIndex = useState(0);
     final timeStartState = useState(bigBang);
     final timeEndState = useState(bigBang);
-    final isSpecialSchedDateSet = !timeStartState.value.isAtSameDayAs(bigBang);
+    final isSchedDateSet = !timeStartState.value.isAtSameDayAs(bigBang);
+    final schedEndDate = useState<DateTime?>(null);
     final utils = ref.watch(kasadoUtilsProvider);
 
     void _onAddCourtSchedPressed() {
       controller.addToCourtSchedList(
         sched: CourtSched(
-          weekdayIndex: selectedWeekdayIndex.value,
+          weekdayIndex: timeStartState.value.weekday - 1,
           timeRange: kasado.TimeRange(
             startsAt: timeStartState.value,
             endsAt: timeEndState.value,
           ),
+          endDate: schedEndDate.value,
         ),
         isSpecial: isSpecial,
       );
       Navigator.pop(context);
     }
 
-    void _onSpecialDateSchedButtonPressed() async {
-      final specialDate = await showDatePicker(
+    void _onDateSchedButtonPressed({bool forEnd = false}) async {
+      final date = await showDatePicker(
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime(2022),
@@ -53,14 +59,18 @@ class CourtSchedInputDialog extends HookConsumerWidget {
             timeStartState.value.year,
             timeStartState.value.month,
           );
-      timeStartState.value = timeStartState.value.copyWith(
-        month: specialDate.month,
-        day: specialDate.day,
-      );
-      timeEndState.value = timeEndState.value.copyWith(
-        month: specialDate.month,
-        day: specialDate.day,
-      );
+      if (forEnd) {
+        schedEndDate.value = date;
+      } else {
+        timeStartState.value = timeStartState.value.copyWith(
+          month: date.month,
+          day: date.day,
+        );
+        timeEndState.value = timeEndState.value.copyWith(
+          month: date.month,
+          day: date.day,
+        );
+      }
     }
 
     return Dialog(
@@ -72,58 +82,45 @@ class CourtSchedInputDialog extends HookConsumerWidget {
             (isSpecial)
                 ? TextButton(
                     style: TextButton.styleFrom(
-                      primary:
-                          (isSpecialSchedDateSet) ? Colors.green : Colors.red,
+                      primary: (isSchedDateSet) ? Colors.green : Colors.red,
                     ),
                     child: Text(
-                      (isSpecialSchedDateSet)
+                      (isSchedDateSet)
                           ? utils.getDateFormat(
                               timeStartState.value,
                               showYear: true,
                             )
                           : "Choose a special sched date",
                     ),
-                    onPressed: _onSpecialDateSchedButtonPressed,
+                    onPressed: _onDateSchedButtonPressed,
                   )
-                : WeekdaySelector(
-                    firstDayOfWeek: 0,
-                    onChanged: (weekday) =>
-                        (selectedWeekdayIndex.value = (weekday - 1) % 7),
-                    values: List.generate(
-                        7, (i) => ((i - 1) % 7 == selectedWeekdayIndex.value)),
+                : TextButton(
+                    child: Text(
+                      (isSchedDateSet)
+                          ? "${utils.getDateFormat(
+                              timeStartState.value,
+                              showYear: true,
+                            )} (${weekdaysStringList[timeStartState.value.weekday - 1]})"
+                          : "Choose a starting date for sched",
+                    ),
+                    onPressed: _onDateSchedButtonPressed,
                   ),
-            TimeRangePicker(
-              use24HourFormat: false,
-              interval: const Duration(minutes: 30),
-              timeTextStyle: const TextStyle(color: Colors.black),
-              ticks: 12,
-              labels: [
-                "12 am",
-                "3 am",
-                "6 am",
-                "9 am",
-                "12 pm",
-                "3 pm",
-                "6 pm",
-                "9 pm"
-              ].asMap().entries.map((e) {
-                return ClockLabel.fromIndex(
-                    idx: e.key, length: 8, text: e.value);
-              }).toList(),
-              snap: true,
-              onStartChange: (time) =>
-                  timeStartState.value = timeStartState.value.copyWith(
-                hour: time.hour,
-                minute: time.minute,
+            if (!isSpecial) ...[
+              TextButton(
+                child: Text(
+                  (schedEndDate.value != null)
+                      ? utils.getDateFormat(
+                          schedEndDate.value,
+                          showYear: true,
+                        )
+                      : "Choose end date for sched (optional)",
+                ),
+                onPressed: () => _onDateSchedButtonPressed(forEnd: true),
               ),
-              onEndChange: (time) =>
-                  timeEndState.value = timeEndState.value.copyWith(
-                hour: time.hour,
-                minute: time.minute,
-              ),
-              ticksColor: Colors.black,
-              hideButtons: true,
-              rotateLabels: false,
+            ],
+            SchedTimeRangePicker(
+              timeStartState: timeStartState,
+              timeEndState: timeEndState,
             ),
             TextButton(
               child: const Text("Add CourtSched"),
