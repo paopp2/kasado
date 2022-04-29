@@ -57,7 +57,14 @@ class CourtSlotRepository {
   Future<void> addPlayerIdToQueue({
     required CourtSlot courtSlot,
     required String playerId,
+    VoidCallback? onPlayerAlreadyQueued,
   }) async {
+    if (courtSlot.playerIdQueue.contains(playerId)) {
+      onPlayerAlreadyQueued?.call();
+
+      return;
+    }
+
     final newPlayerIdQueue = [...courtSlot.playerIdQueue, playerId];
     await firestoreHelper.setData(
       path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
