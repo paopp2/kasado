@@ -94,12 +94,17 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
         ),
         teamId: currentUserInfo.teamId,
         isTeamCaptain: currentUserInfo.isTeamCaptain,
-        onUserDontHaveEnoughPondo: () async =>
-            await _showPondoImplementationAnnouncementDialog(),
+        onUserDontHaveEnoughPondo: () async {
+          // TODO: Temporarily removed PONDO implementation announcement dialog
+          // return await _showPondoImplementationAnnouncementDialog();
+          return await Future.delayed(Duration.zero, () => true);
+        },
         onNotAllHasEnoughPondo: (_) async {
-          return await _showPondoImplementationAnnouncementDialog(
-            forTeamCaptain: true,
-          );
+          // TODO: Temporarily removed PONDO implementation announcement dialog
+          // return await _showPondoImplementationAnnouncementDialog(
+          //   forTeamCaptain: true,
+          // );
+          return await Future.delayed(Duration.zero, () => true);
         },
       );
       isModifyingSlot.value = false;
