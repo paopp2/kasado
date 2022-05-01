@@ -30,6 +30,7 @@ class _$CourtTearOff {
       required double ticketPrice,
       required List<String> adminIds,
       List<CourtSched> courtScheds = const [],
+      bool isHidden = false,
       required int maxPerSlot,
       required int minPerSlot,
       List<CourtSched> specialCourtScheds = const []}) {
@@ -41,6 +42,7 @@ class _$CourtTearOff {
       ticketPrice: ticketPrice,
       adminIds: adminIds,
       courtScheds: courtScheds,
+      isHidden: isHidden,
       maxPerSlot: maxPerSlot,
       minPerSlot: minPerSlot,
       specialCourtScheds: specialCourtScheds,
@@ -64,6 +66,7 @@ mixin _$Court {
   double get ticketPrice => throw _privateConstructorUsedError;
   List<String> get adminIds => throw _privateConstructorUsedError;
   List<CourtSched> get courtScheds => throw _privateConstructorUsedError;
+  bool get isHidden => throw _privateConstructorUsedError;
   int get maxPerSlot => throw _privateConstructorUsedError;
   int get minPerSlot => throw _privateConstructorUsedError;
 
@@ -93,6 +96,7 @@ abstract class $CourtCopyWith<$Res> {
       double ticketPrice,
       List<String> adminIds,
       List<CourtSched> courtScheds,
+      bool isHidden,
       int maxPerSlot,
       int minPerSlot,
       List<CourtSched> specialCourtScheds});
@@ -117,6 +121,7 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
     Object? ticketPrice = freezed,
     Object? adminIds = freezed,
     Object? courtScheds = freezed,
+    Object? isHidden = freezed,
     Object? maxPerSlot = freezed,
     Object? minPerSlot = freezed,
     Object? specialCourtScheds = freezed,
@@ -150,6 +155,10 @@ class _$CourtCopyWithImpl<$Res> implements $CourtCopyWith<$Res> {
           ? _value.courtScheds
           : courtScheds // ignore: cast_nullable_to_non_nullable
               as List<CourtSched>,
+      isHidden: isHidden == freezed
+          ? _value.isHidden
+          : isHidden // ignore: cast_nullable_to_non_nullable
+              as bool,
       maxPerSlot: maxPerSlot == freezed
           ? _value.maxPerSlot
           : maxPerSlot // ignore: cast_nullable_to_non_nullable
@@ -186,6 +195,7 @@ abstract class _$CourtCopyWith<$Res> implements $CourtCopyWith<$Res> {
       double ticketPrice,
       List<String> adminIds,
       List<CourtSched> courtScheds,
+      bool isHidden,
       int maxPerSlot,
       int minPerSlot,
       List<CourtSched> specialCourtScheds});
@@ -212,6 +222,7 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
     Object? ticketPrice = freezed,
     Object? adminIds = freezed,
     Object? courtScheds = freezed,
+    Object? isHidden = freezed,
     Object? maxPerSlot = freezed,
     Object? minPerSlot = freezed,
     Object? specialCourtScheds = freezed,
@@ -245,6 +256,10 @@ class __$CourtCopyWithImpl<$Res> extends _$CourtCopyWithImpl<$Res>
           ? _value.courtScheds
           : courtScheds // ignore: cast_nullable_to_non_nullable
               as List<CourtSched>,
+      isHidden: isHidden == freezed
+          ? _value.isHidden
+          : isHidden // ignore: cast_nullable_to_non_nullable
+              as bool,
       maxPerSlot: maxPerSlot == freezed
           ? _value.maxPerSlot
           : maxPerSlot // ignore: cast_nullable_to_non_nullable
@@ -272,6 +287,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       required this.ticketPrice,
       required this.adminIds,
       this.courtScheds = const [],
+      this.isHidden = false,
       required this.maxPerSlot,
       required this.minPerSlot,
       this.specialCourtScheds = const []});
@@ -294,6 +310,9 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
   @JsonKey()
   @override
   final List<CourtSched> courtScheds;
+  @JsonKey()
+  @override
+  final bool isHidden;
   @override
   final int maxPerSlot;
   @override
@@ -312,7 +331,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Court(id: $id, name: $name, location: $location, photoUrl: $photoUrl, ticketPrice: $ticketPrice, adminIds: $adminIds, courtScheds: $courtScheds, maxPerSlot: $maxPerSlot, minPerSlot: $minPerSlot, specialCourtScheds: $specialCourtScheds)';
+    return 'Court(id: $id, name: $name, location: $location, photoUrl: $photoUrl, ticketPrice: $ticketPrice, adminIds: $adminIds, courtScheds: $courtScheds, isHidden: $isHidden, maxPerSlot: $maxPerSlot, minPerSlot: $minPerSlot, specialCourtScheds: $specialCourtScheds)';
   }
 
   @override
@@ -327,6 +346,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       ..add(DiagnosticsProperty('ticketPrice', ticketPrice))
       ..add(DiagnosticsProperty('adminIds', adminIds))
       ..add(DiagnosticsProperty('courtScheds', courtScheds))
+      ..add(DiagnosticsProperty('isHidden', isHidden))
       ..add(DiagnosticsProperty('maxPerSlot', maxPerSlot))
       ..add(DiagnosticsProperty('minPerSlot', minPerSlot))
       ..add(DiagnosticsProperty('specialCourtScheds', specialCourtScheds));
@@ -346,6 +366,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
             const DeepCollectionEquality().equals(other.adminIds, adminIds) &&
             const DeepCollectionEquality()
                 .equals(other.courtScheds, courtScheds) &&
+            const DeepCollectionEquality().equals(other.isHidden, isHidden) &&
             const DeepCollectionEquality()
                 .equals(other.maxPerSlot, maxPerSlot) &&
             const DeepCollectionEquality()
@@ -364,6 +385,7 @@ class _$_Court with DiagnosticableTreeMixin implements _Court {
       const DeepCollectionEquality().hash(ticketPrice),
       const DeepCollectionEquality().hash(adminIds),
       const DeepCollectionEquality().hash(courtScheds),
+      const DeepCollectionEquality().hash(isHidden),
       const DeepCollectionEquality().hash(maxPerSlot),
       const DeepCollectionEquality().hash(minPerSlot),
       const DeepCollectionEquality().hash(specialCourtScheds));
@@ -388,6 +410,7 @@ abstract class _Court implements Court {
       required double ticketPrice,
       required List<String> adminIds,
       List<CourtSched> courtScheds,
+      bool isHidden,
       required int maxPerSlot,
       required int minPerSlot,
       List<CourtSched> specialCourtScheds}) = _$_Court;
@@ -408,6 +431,8 @@ abstract class _Court implements Court {
   List<String> get adminIds;
   @override
   List<CourtSched> get courtScheds;
+  @override
+  bool get isHidden;
   @override
   int get maxPerSlot;
   @override
