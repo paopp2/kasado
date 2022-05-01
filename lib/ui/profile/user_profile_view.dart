@@ -27,7 +27,6 @@ class UserProfileView extends HookConsumerWidget {
           properties: {
             "viewedUserName": userInfoStream.value!.user.displayName,
             "viewedUserId": userInfoStream.value!.user.id,
-            "rawUserInfo": userInfoStream.value!.toJson()
           },
         );
       }
