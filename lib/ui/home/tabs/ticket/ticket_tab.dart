@@ -38,7 +38,7 @@ class TicketTab extends HookConsumerWidget {
           return EnlargedTicketDialog(
             ticket: ticket,
             utils: utils,
-            userName: userInfo.user.displayName!,
+            user: userInfo.user,
           );
         },
       );
@@ -102,7 +102,9 @@ class TicketTab extends HookConsumerWidget {
                                             height: 75,
                                             color: Colors.grey.shade300,
                                             child: QrImage(
-                                              data: ticket.id,
+                                              data: ticket.getQrData(
+                                                userInfo!.user,
+                                              ),
                                             ),
                                           ),
                                         ),

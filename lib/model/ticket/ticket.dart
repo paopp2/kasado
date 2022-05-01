@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 part 'ticket.freezed.dart';
 part 'ticket.g.dart';
@@ -24,6 +25,10 @@ class Ticket with _$Ticket {
 
     return expiry.isBefore(now);
   }
+
+  /// Bundles required data by the propriety scanner to add a player to queue
+  String getQrData(KasadoUser user) =>
+      "${user.photoUrl}~${user.displayName}~${courtSlot.courtId}~${courtSlot.slotId}";
 
   factory Ticket.fromJson(Map<String, dynamic> json) => _$TicketFromJson(json);
 }

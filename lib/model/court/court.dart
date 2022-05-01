@@ -16,6 +16,7 @@ class Court with _$Court {
     required double ticketPrice,
     required List<String> adminIds,
     @Default([]) List<CourtSched> courtScheds,
+    @Default(false) bool isHidden,
     required int maxPerSlot,
     required int minPerSlot,
 

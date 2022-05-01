@@ -13,9 +13,13 @@ final courtsStreamProvider = StreamProvider.autoDispose(
     final isLocationRetrieved = ref.watch(isLocationRetrievedProvider);
 
     return (isLocationRetrieved)
-        ? ref.watch(courtRepositoryProvider).getCourtsStream(
+        ? ref
+            .watch(courtRepositoryProvider)
+            .getCourtsStream(
               centerLoc: ref.watch(selectedCenterLocProvider),
             )
+            .map((courtList) =>
+                courtList..removeWhere((court) => court.isHidden))
         : const Stream.empty();
   },
 );
