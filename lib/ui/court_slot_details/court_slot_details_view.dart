@@ -34,7 +34,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
     );
     final utils = ref.watch(kasadoUtilsProvider);
     final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: (isAdmin) ? 3 : 2);
+    final tabController = useTabController(initialLength: (isAdmin) ? 4 : 2);
 
     useEffect(() {
       ref.read(mixpanel)!.track(
@@ -114,6 +114,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                               constraints: constraints,
                               courtSlot: fetchedCourtSlot,
                             ),
+                            Container(color: Colors.green),
                           ],
                         ],
                       ),
@@ -124,6 +125,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             onTap: tabController.animateTo,
             currentIndex: tabIndex.value,
             selectedItemColor: Colors.black,
@@ -138,8 +140,12 @@ class CourtSlotDetailsView extends HookConsumerWidget {
               ),
               if (isAdmin) ...[
                 const BottomNavigationBarItem(
-                  label: "Stats Controller",
+                  label: "Stats",
                   icon: Icon(Icons.gamepad_outlined),
+                ),
+                const BottomNavigationBarItem(
+                  label: "Scanner",
+                  icon: Icon(Icons.qr_code_scanner),
                 ),
               ],
             ],
