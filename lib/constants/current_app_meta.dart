@@ -1,1 +1,1 @@
-const currentVersion = '0.11.7';
+const currentVersion = '0.11.8';
