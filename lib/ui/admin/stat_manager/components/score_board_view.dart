@@ -19,6 +19,15 @@ class ScoreBoardView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(gameStatController);
 
+    final sortState = ref.watch(teamsPlayersSetupSortProvider);
+    final playersToShow = controller.getPlayersToShow(
+      courtSlot: courtSlot,
+      sortState: sortState,
+    );
+
+    final homeTeamPlayers = courtSlot.stageHomeTeamPlayers ?? [];
+    final awayTeamPlayers = courtSlot.stageAwayTeamPlayers ?? [];
+
     final slotStatsPath = ref.watch(slotGameStatsPathProvider);
     final gameStatsStream =
         ref.watch(slotGameStatsStreamProvider(slotStatsPath));
@@ -31,7 +40,121 @@ class ScoreBoardView extends HookConsumerWidget {
             loading: () => const LoadingWidget(),
             data: (gameStats) {
               return (gameStats == null)
-                  ? const Center(child: Text('No game started yet'))
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              'HOME',
+                              style: TextStyle(
+                                fontSize: constraints.maxHeight * 0.1,
+                                color: Colors.blue.shade200,
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: constraints.maxWidth * 0.3,
+                                child: ListView.builder(
+                                  itemCount: homeTeamPlayers.length,
+                                  itemBuilder: (context, i) {
+                                    final player = homeTeamPlayers[i];
+
+                                    return ListTile(
+                                      title: Text(player.displayName!),
+                                      leading: CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(player.photoUrl!),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const VerticalDivider(),
+                        Column(
+                          children: [
+                            Text(
+                              'AWAY',
+                              style: TextStyle(
+                                color: Colors.red.shade200,
+                                fontSize: constraints.maxHeight * 0.1,
+                              ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: constraints.maxWidth * 0.3,
+                                child: ListView.builder(
+                                  itemCount: awayTeamPlayers.length,
+                                  itemBuilder: (context, i) {
+                                    final player = awayTeamPlayers[i];
+
+                                    return ListTile(
+                                      title: Text(player.displayName!),
+                                      leading: CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(player.photoUrl!),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const VerticalDivider(),
+                        Column(
+                          children: [
+                            TextButton(
+                              child: Text(
+                                (sortState == 0)
+                                    ? "Queued Only"
+                                    : (sortState == 1)
+                                        ? "All (Alphabetical)"
+                                        : "All (According to Games Played)",
+                              ),
+                              onPressed: controller.toggleToNextSortState,
+                              style: TextButton.styleFrom(primary: Colors.blue),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                width: constraints.maxWidth * 0.3,
+                                child: ListView.builder(
+                                  itemCount: playersToShow.length,
+                                  itemBuilder: (context, i) {
+                                    final player = playersToShow[i];
+
+                                    return Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: ListTile(
+                                        title: Text(player.displayName!),
+                                        leading: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                            player.photoUrl!,
+                                          ),
+                                        ),
+                                        subtitle: Text(
+                                          "GP: ${courtSlot.slotInfoPerPlayer[player.id]?.timesPlayed ?? 0}",
+                                        ),
+                                        tileColor: homeTeamPlayers
+                                                .contains(player)
+                                            ? Colors.blue.shade100
+                                            : awayTeamPlayers.contains(player)
+                                                ? Colors.red.shade100
+                                                : null,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
                   : Column(
                       children: [
                         SizedBox(height: constraints.maxHeight * 0.05),
