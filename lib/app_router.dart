@@ -69,9 +69,9 @@ class AppRouter {
                 name: Routes.scoreBoardView,
                 path: 'score-board-view',
                 builder: (context, state) {
-                  final courtSlot = state.extra as CourtSlot;
+                  final baseCourtSlot = state.extra as CourtSlot;
 
-                  return ScoreBoardView(courtSlot: courtSlot);
+                  return ScoreBoardView(baseCourtSlot: baseCourtSlot);
                 },
               ),
             ],
