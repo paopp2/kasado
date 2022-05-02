@@ -57,6 +57,7 @@ dependencies:
   time_range_picker: ^2.1.0
   geolocator: ^8.2.0
   flutter_typeahead: ^3.2.5
+  mobile_scanner: ^1.0.0
 
 dev_dependencies:
   flutter_test:
