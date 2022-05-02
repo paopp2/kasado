@@ -28,7 +28,7 @@ class Ticket with _$Ticket {
 
   /// Bundles required data by the propriety scanner to add a player to queue
   String getQrData(KasadoUser user) =>
-      "${user.photoUrl}~${user.displayName}~${courtSlot.courtId}~${courtSlot.slotId}";
+      "${user.id}~${user.photoUrl}~${user.displayName}~${courtSlot.courtId}~${courtSlot.slotId}";
 
   factory Ticket.fromJson(Map<String, dynamic> json) => _$TicketFromJson(json);
 }
