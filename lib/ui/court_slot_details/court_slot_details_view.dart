@@ -7,7 +7,7 @@ import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.da
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
-import 'package:kasado/ui/admin/stat_manager/stats_controller_tab.dart';
+import 'package:kasado/ui/admin/stat_manager/stats_controller/stats_controller_tab.dart';
 import 'package:kasado/ui/court_slot_details/tabs/box_score_tab/box_score_tab.dart';
 import 'package:kasado/ui/court_slot_details/tabs/slot_players_tab/slot_players_tab.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';

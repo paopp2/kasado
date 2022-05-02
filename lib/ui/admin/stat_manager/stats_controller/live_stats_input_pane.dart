@@ -4,7 +4,7 @@ import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
-import 'package:kasado/ui/admin/stat_manager/components/stat_button.dart';
+import 'package:kasado/ui/admin/stat_manager/stats_controller/stat_button.dart';
 import 'package:kasado/ui/admin/stat_manager/components/timer_button.dart';
 
 class LiveStatsInputPane extends StatelessWidget {

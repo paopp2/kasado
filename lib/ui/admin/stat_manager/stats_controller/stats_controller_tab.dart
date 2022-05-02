@@ -3,8 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
-import 'package:kasado/ui/admin/stat_manager/components/game_teams_setup_pane.dart';
-import 'package:kasado/ui/admin/stat_manager/components/live_stats_input_pane.dart';
+import 'package:kasado/ui/admin/stat_manager/stats_controller/game_teams_setup_pane.dart';
+import 'package:kasado/ui/admin/stat_manager/stats_controller/live_stats_input_pane.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class StatsControllerTab extends HookConsumerWidget {
