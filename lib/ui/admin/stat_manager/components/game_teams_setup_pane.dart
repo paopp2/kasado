@@ -21,28 +21,10 @@ class GameTeamsSetupPane extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sortState = ref.watch(teamsPlayersSetupSortProvider);
-    final playersMap = {
-      for (final player in courtSlot.players) player.id: player,
-    };
-    // Using spreads to create new final instances, not just references to the original.
-    // This avoids messing up the original arrangement of courtSlot.players when sorting
-    final queuedPlayers = [
-      ...courtSlot.playerIdQueue.map((pid) => playersMap[pid]!).toList(),
-    ];
-    final allPlayers = [...courtSlot.players];
-
-    if (sortState != 0) {
-      allPlayers.sort((a, b) {
-        return (sortState == 1)
-            ? a.displayName!
-                .toLowerCase()
-                .compareTo(b.displayName!.toLowerCase())
-            : (courtSlot.slotInfoPerPlayer[a.id]?.timesPlayed ?? 0)
-                .compareTo(courtSlot.slotInfoPerPlayer[b.id]?.timesPlayed ?? 0);
-      });
-    }
-
-    final playersToShow = (sortState == 0) ? queuedPlayers : allPlayers;
+    final playersToShow = controller.getPlayersToShow(
+      courtSlot: courtSlot,
+      sortState: sortState,
+    );
 
     final homeTeamPlayers = courtSlot.stageHomeTeamPlayers ?? [];
     final awayTeamPlayers = courtSlot.stageAwayTeamPlayers ?? [];
