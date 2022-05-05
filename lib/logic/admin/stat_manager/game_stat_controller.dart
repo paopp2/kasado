@@ -168,6 +168,27 @@ class GameStatController {
     );
   }
 
+  Future<void> onPlayerTurnover({
+    required BuildContext context,
+    required GameStats gameStats,
+    required CourtSlot courtSlot,
+    bool isCancel = false,
+  }) async {
+    final player = await showDialog(
+      context: context,
+      builder: (_) => const PlayerChooserDialog(),
+    ) as KasadoUser?;
+    if (player == null) return;
+
+    await statRepo.recordPlayerTurnover(
+      playerWhoTurnovered: player,
+      gameStatsId: gameStats.id,
+      courtSlot: courtSlot,
+      isHomePlayer: isHomePlayer(player),
+      isCancel: isCancel,
+    );
+  }
+
   Future<void> cancelGame({
     required CourtSlot courtSlot,
     required GameStats gameStats,
