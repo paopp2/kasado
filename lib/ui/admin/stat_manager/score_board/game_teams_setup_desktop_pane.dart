@@ -64,7 +64,10 @@ class GameTeamsSetupDesktopPane extends HookConsumerWidget {
                         final player = homeTeamPlayers[i];
 
                         return ListTile(
-                          title: Text(player.displayName!),
+                          title: Text(
+                            player.displayName!,
+                            style: const TextStyle(fontSize: 35),
+                          ),
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(player.photoUrl!),
                           ),
@@ -94,7 +97,10 @@ class GameTeamsSetupDesktopPane extends HookConsumerWidget {
                         final player = awayTeamPlayers[i];
 
                         return ListTile(
-                          title: Text(player.displayName!),
+                          title: Text(
+                            player.displayName!,
+                            style: const TextStyle(fontSize: 35),
+                          ),
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(player.photoUrl!),
                           ),
