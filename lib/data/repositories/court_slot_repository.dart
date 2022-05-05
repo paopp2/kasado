@@ -344,6 +344,13 @@ class CourtSlotRepository {
     }
   }
 
+  Future<CourtSlot?> getCourtSlot(String courtId, String slotId) async {
+    return await firestoreHelper.getData(
+      path: FirestorePath.docCourtSlot(courtId, slotId),
+      builder: (data, docId) => CourtSlot.fromJson(data),
+    );
+  }
+
   Stream<CourtSlot?> getCourtSlotStream(String courtId, String slotId) {
     return firestoreHelper.documentStream(
       path: FirestorePath.docCourtSlot(courtId, slotId),

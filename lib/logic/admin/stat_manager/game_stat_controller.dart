@@ -8,7 +8,7 @@ import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/stats/stats.dart';
-import 'package:kasado/ui/admin/stat_manager/components/stat_player_chooser_dialog.dart';
+import 'package:kasado/ui/admin/stat_manager/stats_controller/stat_player_chooser_dialog.dart';
 import 'package:time/time.dart';
 import 'package:uuid/uuid.dart';
 
