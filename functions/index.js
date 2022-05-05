@@ -79,7 +79,7 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}')
             const totalLosses = stats.gamesPlayed - stats.totalWins;
             const winPercent = (stats.totalWins / stats.gamesPlayed) * 100;
             const winLossDifference = stats.totalWins - totalLosses;
-            const effRating = (totalPoints + stats.totalAst + totalRebounds + stats.totalStl + stats.totalBlk - (totalAttempts - totalMade) - (stats.totalFta - stats.totalFtm)) / stats.gamesPlayed;
+            const effRating = (totalPoints + stats.totalAst + totalRebounds + stats.totalStl + stats.totalBlk - (totalAttempts - totalMade) - (stats.totalFta - stats.totalFtm) - stats.totalTO) / stats.gamesPlayed;
 
             await userInfoRef.doc(updatedUserInfo.id).set({
                 "overviewStats": {
