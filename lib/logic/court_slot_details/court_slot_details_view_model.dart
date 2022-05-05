@@ -79,7 +79,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     } else if (courtSlot.isFull) {
       return SlotAndUserState.slotFull;
     } else if (user.isReservedHere(courtSlot)) {
-      return SlotAndUserState.userReservedAtThisSlot;
+      return SlotAndUserState.slotHasUser;
     } else if (user.hasSchedConflict(courtSlot)) {
       return SlotAndUserState.userHasConflictWithOtherSlot;
     } else {

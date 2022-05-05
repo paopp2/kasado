@@ -40,7 +40,7 @@ class CourtSlotTile extends HookConsumerWidget {
             slotClosedByAdmin: () => Colors.red.shade200,
             slotFull: () => Colors.red.shade200,
             userHasConflictWithOtherSlot: () => Colors.red.shade200,
-            userReservedAtThisSlot: () => Colors.green.shade200,
+            slotHasUser: () => Colors.green.shade200,
             orElse: () => Colors.green.shade400,
           ),
           borderRadius: BorderRadius.circular(10),
@@ -71,7 +71,7 @@ class CourtSlotTile extends HookConsumerWidget {
                 title: Text(
                   slotAndUserState.when(
                     slotFull: () => 'Full',
-                    userReservedAtThisSlot: () => 'Joined',
+                    slotHasUser: () => 'Joined',
                     userHasConflictWithOtherSlot: () => 'In Conflict',
                     orElse: () {
                       if (courtSlot.isClosedByAdmin) {

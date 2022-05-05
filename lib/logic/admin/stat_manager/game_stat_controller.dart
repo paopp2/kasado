@@ -8,7 +8,7 @@ import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/stats/stats.dart';
-import 'package:kasado/ui/admin/stat_manager/components/stat_player_chooser_dialog.dart';
+import 'package:kasado/ui/admin/stat_manager/stats_controller/player_chooser_dialog.dart';
 import 'package:time/time.dart';
 import 'package:uuid/uuid.dart';
 
@@ -52,7 +52,7 @@ class GameStatController {
   }) async {
     final player = await showDialog(
       context: context,
-      builder: (_) => const StatPlayerChooserDialog(),
+      builder: (_) => const PlayerChooserDialog(),
     ) as KasadoUser?;
     if (player == null) return;
 
@@ -62,7 +62,7 @@ class GameStatController {
     if (wasMade) {
       playerWhoAssisted = await showDialog(
         context: context,
-        builder: (_) => StatPlayerChooserDialog(
+        builder: (_) => PlayerChooserDialog(
           showOneAndShowHome: _isHomePlayer,
         ),
       ) as KasadoUser?;
@@ -89,7 +89,7 @@ class GameStatController {
   }) async {
     final player = await showDialog(
       context: context,
-      builder: (_) => const StatPlayerChooserDialog(),
+      builder: (_) => const PlayerChooserDialog(),
     ) as KasadoUser?;
     if (player == null) return;
 
@@ -112,7 +112,7 @@ class GameStatController {
   }) async {
     final player = await showDialog(
       context: context,
-      builder: (_) => const StatPlayerChooserDialog(),
+      builder: (_) => const PlayerChooserDialog(),
     ) as KasadoUser?;
     if (player == null) return;
 
@@ -134,7 +134,7 @@ class GameStatController {
   }) async {
     final player = await showDialog(
       context: context,
-      builder: (_) => const StatPlayerChooserDialog(),
+      builder: (_) => const PlayerChooserDialog(),
     ) as KasadoUser?;
     if (player == null) return;
 
@@ -155,7 +155,7 @@ class GameStatController {
   }) async {
     final player = await showDialog(
       context: context,
-      builder: (_) => const StatPlayerChooserDialog(),
+      builder: (_) => const PlayerChooserDialog(),
     ) as KasadoUser?;
     if (player == null) return;
 
@@ -267,6 +267,58 @@ class GameStatController {
       slotId: courtSlot.slotId,
       teamPlayers: updatedTeamPlayers,
       isHome: isHome,
+    );
+  }
+
+  Future<void> tradeToOtherTeam({
+    required CourtSlot courtSlot,
+    required KasadoUser playerToTrade,
+    required BuildContext context,
+  }) async {
+    final homePlayers = [...courtSlot.stageHomeTeamPlayers!];
+    final awayPlayers = [...courtSlot.stageAwayTeamPlayers!];
+    final isPlayerFromHome = homePlayers.contains(playerToTrade);
+    final playerOrigTeam = isPlayerFromHome ? homePlayers : awayPlayers;
+    final playerFutureTeam = isPlayerFromHome ? awayPlayers : homePlayers;
+
+    // Player from other team to trade with
+    final otherPlayerToTrade = await showDialog(
+      context: context,
+      builder: (_) => PlayerChooserDialog(
+        // Only show the players at the other team
+        showOneAndShowHome: !isPlayerFromHome,
+        homeTeamPlayersOverride: homePlayers,
+        awayTeamPlayersOverride: awayPlayers,
+      ),
+    ) as KasadoUser?;
+    if (otherPlayerToTrade == null) return;
+
+    // Remove player from original team
+    playerOrigTeam.remove(playerToTrade);
+
+    // Remove otherPlayer from future team
+    playerFutureTeam.remove(otherPlayerToTrade);
+
+    // Add player to future team
+    playerFutureTeam.add(playerToTrade);
+
+    // Add otherPlayer to orig team
+    playerOrigTeam.add(otherPlayerToTrade);
+
+    // Update stage HOME team players
+    await courtSlotRepo.updateStageTeamPlayers(
+      courtId: courtSlot.courtId,
+      slotId: courtSlot.slotId,
+      isHome: true, // HOME
+      teamPlayers: isPlayerFromHome ? playerOrigTeam : playerFutureTeam,
+    );
+
+    // Update stage AWAY team players
+    await courtSlotRepo.updateStageTeamPlayers(
+      courtId: courtSlot.courtId,
+      slotId: courtSlot.slotId,
+      isHome: false, // AWAY
+      teamPlayers: isPlayerFromHome ? playerFutureTeam : playerOrigTeam,
     );
   }
 

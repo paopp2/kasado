@@ -141,18 +141,17 @@ class NextCourtSlotDetails extends HookConsumerWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: constraints.maxHeight * 0.08,
-                child: JoinLeaveSlotButton(
-                  court: court,
-                  courtSlot: nextCourtSlot,
-                  currentUser: currentUser,
-                  currentUserInfo: currentUserInfo!,
-                  model: model,
-                  allowLeave: false,
-                ),
+              const SizedBox(height: 20),
+              JoinLeaveSlotButton(
+                height: constraints.maxHeight * 0.07,
+                width: double.infinity,
+                court: court,
+                courtSlot: nextCourtSlot,
+                currentUser: currentUser,
+                currentUserInfo: currentUserInfo!,
+                model: model,
+                allowLeave: false,
               ),
-              const SizedBox(height: 10),
             ],
           ),
         );

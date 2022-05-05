@@ -7,7 +7,8 @@ import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.da
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
-import 'package:kasado/ui/admin/stat_manager/stats_controller_tab.dart';
+import 'package:kasado/ui/admin/stat_manager/stats_controller/stats_controller_tab.dart';
+import 'package:kasado/ui/admin/stat_manager/ticket_scanner/ticket_scanner_tab.dart';
 import 'package:kasado/ui/court_slot_details/tabs/box_score_tab/box_score_tab.dart';
 import 'package:kasado/ui/court_slot_details/tabs/slot_players_tab/slot_players_tab.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
@@ -34,7 +35,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
     );
     final utils = ref.watch(kasadoUtilsProvider);
     final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: (isAdmin) ? 3 : 2);
+    final tabController = useTabController(initialLength: (isAdmin) ? 4 : 2);
 
     useEffect(() {
       ref.read(mixpanel)!.track(
@@ -98,6 +99,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                         controller: tabController,
                         children: [
                           SlotPlayersTab(
+                            constraints: constraints,
                             model: model,
                             utils: utils,
                             courtSlot: fetchedCourtSlot,
@@ -114,6 +116,10 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                               constraints: constraints,
                               courtSlot: fetchedCourtSlot,
                             ),
+                            TicketScannerTab(
+                              constraints: constraints,
+                              courtSlot: fetchedCourtSlot,
+                            ),
                           ],
                         ],
                       ),
@@ -124,6 +130,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             onTap: tabController.animateTo,
             currentIndex: tabIndex.value,
             selectedItemColor: Colors.black,
@@ -138,8 +145,12 @@ class CourtSlotDetailsView extends HookConsumerWidget {
               ),
               if (isAdmin) ...[
                 const BottomNavigationBarItem(
-                  label: "Stats Controller",
+                  label: "Stats",
                   icon: Icon(Icons.gamepad_outlined),
+                ),
+                const BottomNavigationBarItem(
+                  label: "Scanner",
+                  icon: Icon(Icons.qr_code_scanner),
                 ),
               ],
             ],

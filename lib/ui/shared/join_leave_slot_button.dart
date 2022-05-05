@@ -20,6 +20,8 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
     required this.model,
     required this.currentUser,
     required this.currentUserInfo,
+    this.height,
+    this.width,
     this.showButton = true,
     this.allowLeave = true,
   }) : super(key: key);
@@ -31,12 +33,17 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
   final KasadoUserInfo currentUserInfo;
   final bool showButton;
   final bool allowLeave;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    const _buttonTextStyle = TextStyle(fontSize: 18, color: Colors.white);
     final slotAndUserState = model.getSlotAndUserState(courtSlot);
     final isSuperAdmin = currentUserInfo.isSuperAdmin;
     final isModifyingSlot = useState(false);
+    final slotHasPlayerAndLeaveDisallowed =
+        courtSlot.hasPlayer(currentUser) && !allowLeave;
 
     Future<bool> _showPondoImplementationAnnouncementDialog({
       bool forTeamCaptain = false,
@@ -85,7 +92,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
       ).show();
     }
 
-    Future<void> _onJoinLeaveSlotButtonPressed() async {
+    Future<void> _joinLeaveSlot() async {
       isModifyingSlot.value = true;
       await model.joinLeaveCourtSlot(
         baseCourtSlot: courtSlot,
@@ -100,7 +107,6 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
           return await Future.delayed(Duration.zero, () => true);
         },
         onNotAllHasEnoughPondo: (_) async {
-          // TODO: Temporarily removed PONDO implementation announcement dialog
           // return await _showPondoImplementationAnnouncementDialog(
           //   forTeamCaptain: true,
           // );
@@ -108,6 +114,25 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
         },
       );
       isModifyingSlot.value = false;
+    }
+
+    VoidCallback? _getJoinLeaveCallback() {
+      if (slotHasPlayerAndLeaveDisallowed) return null;
+
+      final disabledSlotAndUserStates = [
+        SlotAndUserState.error,
+        SlotAndUserState.loading,
+        SlotAndUserState.slotClosedByAdmin,
+        SlotAndUserState.slotEnded,
+        SlotAndUserState.slotFull,
+        SlotAndUserState.userHasConflictWithOtherSlot,
+      ];
+
+      return (disabledSlotAndUserStates.contains(slotAndUserState))
+          ? (slotAndUserState == SlotAndUserState.slotEnded && isSuperAdmin)
+              ? _joinLeaveSlot
+              : null
+          : _joinLeaveSlot;
     }
 
     Future<void> _onSuperAdminLongPressed() async {
@@ -118,48 +143,53 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
       );
     }
 
-    return (isModifyingSlot.value)
-        ? const LoadingWidget()
-        : Visibility(
-            visible: showButton,
-            // TODO: Might have to be refactored to be cleaner
-            child: (courtSlot.hasPlayer(currentUser) && !allowLeave)
-                ? TextButton(
-                    child: Row(
+    return Visibility(
+      visible: showButton,
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: ElevatedButton(
+          child: isModifyingSlot.value
+              ? const LoadingWidget(color: Colors.white)
+              : (slotHasPlayerAndLeaveDisallowed)
+                  ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.check, color: Colors.green.shade300),
-                        Text(
-                          'JOINED',
-                          style: TextStyle(color: Colors.green.shade300),
-                        ),
+                      children: const [
+                        Icon(Icons.check, color: Colors.white),
+                        Text('JOINED', style: _buttonTextStyle),
                       ],
+                    )
+                  : Text(
+                      slotAndUserState.when(
+                        slotClosedByAdmin: () => "CLOSED BY ADMIN",
+                        userHasConflictWithOtherSlot: () => "IN CONFLICT",
+                        slotFull: () => "FULL",
+                        slotHasUser: () => "LEAVE GAME",
+                        orElse: () => "JOIN GAME",
+                      ),
+                      style: _buttonTextStyle,
                     ),
-                    onPressed: null,
-                  )
-                : TextButton(
-                    child: (courtSlot.hasPlayer(currentUser))
-                        ? Text(
-                            'LEAVE GAME',
-                            style: TextStyle(color: Colors.red.shade200),
-                          )
-                        : Text(
-                            'JOIN GAME',
-                            style: TextStyle(
-                              color: slotAndUserState.when(
-                                slotClosedByAdmin: () => Colors.grey.shade300,
-                                userHasConflictWithOtherSlot: () =>
-                                    Colors.grey.shade300,
-                                slotFull: () => Colors.grey.shade300,
-                                orElse: () => Colors.green,
-                              ),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                    onPressed: _onJoinLeaveSlotButtonPressed,
-                    onLongPress:
-                        (isSuperAdmin) ? _onSuperAdminLongPressed : null,
-                  ),
-          );
+          style: ButtonStyle(
+            elevation: MaterialStateProperty.all(0),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
+              return slotAndUserState.when(
+                slotHasUser: () => (allowLeave)
+                    ? Colors.red.shade300 // Color for "LEAVE GAME"
+                    : Colors.green.shade100, // Color for "🗸 JOINED"
+                userAvailable: () => Colors.green.shade300,
+                orElse: () => null,
+              );
+            }),
+          ),
+          onPressed: _getJoinLeaveCallback(),
+          onLongPress: (isSuperAdmin) ? _onSuperAdminLongPressed : null,
+        ),
+      ),
+    );
   }
 }

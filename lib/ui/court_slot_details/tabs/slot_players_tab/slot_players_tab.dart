@@ -15,6 +15,7 @@ import 'package:kasado/ui/shared/stagger_list_tile_animation.dart';
 class SlotPlayersTab extends HookConsumerWidget {
   const SlotPlayersTab({
     Key? key,
+    required this.constraints,
     required this.utils,
     required this.courtSlot,
     required this.model,
@@ -23,6 +24,7 @@ class SlotPlayersTab extends HookConsumerWidget {
     required this.isDone,
   }) : super(key: key);
 
+  final BoxConstraints constraints;
   final KasadoUtils utils;
   final CourtSlot courtSlot;
   final CourtSlotDetailsViewModel model;
@@ -84,6 +86,7 @@ class SlotPlayersTab extends HookConsumerWidget {
                   ),
                 ),
         ),
+        const SizedBox(height: 20),
         if (!isDone || isSuperAdmin) ...[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -100,13 +103,19 @@ class SlotPlayersTab extends HookConsumerWidget {
                   ),
                 ),
               ],
-              JoinLeaveSlotButton(
-                court: court,
-                courtSlot: courtSlot,
-                model: model,
-                currentUser: currentUser,
-                currentUserInfo: currentUserInfo!,
-                showButton: !courtSlot.isClosedByAdmin,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: JoinLeaveSlotButton(
+                    height: constraints.maxHeight * 0.07,
+                    court: court,
+                    courtSlot: courtSlot,
+                    model: model,
+                    currentUser: currentUser,
+                    currentUserInfo: currentUserInfo!,
+                    showButton: !courtSlot.isClosedByAdmin,
+                  ),
+                ),
               ),
             ],
           ),
