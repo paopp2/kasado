@@ -99,6 +99,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                         controller: tabController,
                         children: [
                           SlotPlayersTab(
+                            constraints: constraints,
                             model: model,
                             utils: utils,
                             courtSlot: fetchedCourtSlot,
