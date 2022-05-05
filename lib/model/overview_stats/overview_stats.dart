@@ -19,6 +19,7 @@ class OverviewStats with _$OverviewStats {
     @Default(0) int totalAst,
     @Default(0) int totalStl,
     @Default(0) int totalBlk,
+    @Default(0) int totalTO,
     @Default(0) int totalWins,
     @Default(0) int gamesPlayed,
   }) = _OverviewStats;
