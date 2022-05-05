@@ -21,6 +21,7 @@ _$_Stats _$$_StatsFromJson(Map<String, dynamic> json) => _$_Stats(
       ast: json['ast'] as int? ?? 0,
       stl: json['stl'] as int? ?? 0,
       blk: json['blk'] as int? ?? 0,
+      turnover: json['turnover'] as int? ?? 0,
       hasWonGame: json['hasWonGame'] as bool?,
     );
 
@@ -39,5 +40,6 @@ Map<String, dynamic> _$$_StatsToJson(_$_Stats instance) => <String, dynamic>{
       'ast': instance.ast,
       'stl': instance.stl,
       'blk': instance.blk,
+      'turnover': instance.turnover,
       'hasWonGame': instance.hasWonGame,
     };

@@ -24,6 +24,7 @@ class Stats with _$Stats {
     @Default(0) int ast,
     @Default(0) int stl,
     @Default(0) int blk,
+    @Default(0) int turnover,
     bool? hasWonGame,
   }) = _Stats;
 
