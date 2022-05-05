@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
+import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 class StatPlayerChooserDialog extends HookConsumerWidget {
   const StatPlayerChooserDialog({
     Key? key,
     this.showOneAndShowHome,
+    this.homeTeamPlayersOverride,
+    this.awayTeamPlayersOverride,
   }) : super(key: key);
 
   final bool? showOneAndShowHome;
+  final List<KasadoUser>? homeTeamPlayersOverride;
+  final List<KasadoUser>? awayTeamPlayersOverride;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeTeamPlayers = ref.watch(homeTeamPlayersProvider);
-    final awayTeamPlayers = ref.watch(awayTeamPlayersProvider);
+    final List<KasadoUser> homeTeamPlayers =
+        homeTeamPlayersOverride ?? ref.watch(homeTeamPlayersProvider);
+    final List<KasadoUser> awayTeamPlayers =
+        awayTeamPlayersOverride ?? ref.watch(awayTeamPlayersProvider);
 
     return Dialog(
       child: Column(

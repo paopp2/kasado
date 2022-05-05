@@ -6,6 +6,7 @@ import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
 class GameTeamsSetupPane extends HookConsumerWidget {
@@ -41,6 +42,14 @@ class GameTeamsSetupPane extends HookConsumerWidget {
       isStartingGameState.value = false;
     }
 
+    void _tradePlayer(KasadoUser player) {
+      controller.tradeToOtherTeam(
+        courtSlot: courtSlot,
+        context: context,
+        playerToTrade: player,
+      );
+    }
+
     return Column(
       children: [
         Container(
@@ -59,6 +68,7 @@ class GameTeamsSetupPane extends HookConsumerWidget {
                             isHome: true,
                             isPlayerAdd: false,
                           ),
+                          onLongPress: () => _tradePlayer(player),
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(player.photoUrl!),
                           ),
@@ -84,6 +94,7 @@ class GameTeamsSetupPane extends HookConsumerWidget {
                             isHome: false,
                             isPlayerAdd: false,
                           ),
+                          onLongPress: () => _tradePlayer(player),
                           child: CircleAvatar(
                             backgroundImage: NetworkImage(player.photoUrl!),
                             radius: 20,
@@ -164,6 +175,7 @@ class GameTeamsSetupPane extends HookConsumerWidget {
                         )
                       ],
                     ),
+                    onLongPress: () => _tradePlayer(player),
                   ),
                 );
               },

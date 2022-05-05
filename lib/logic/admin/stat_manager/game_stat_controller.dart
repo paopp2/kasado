@@ -270,6 +270,58 @@ class GameStatController {
     );
   }
 
+  Future<void> tradeToOtherTeam({
+    required CourtSlot courtSlot,
+    required KasadoUser playerToTrade,
+    required BuildContext context,
+  }) async {
+    final homePlayers = [...courtSlot.stageHomeTeamPlayers!];
+    final awayPlayers = [...courtSlot.stageAwayTeamPlayers!];
+    final isPlayerFromHome = homePlayers.contains(playerToTrade);
+    final playerOrigTeam = isPlayerFromHome ? homePlayers : awayPlayers;
+    final playerFutureTeam = isPlayerFromHome ? awayPlayers : homePlayers;
+
+    // Player from other team to trade with
+    final otherPlayerToTrade = await showDialog(
+      context: context,
+      builder: (_) => StatPlayerChooserDialog(
+        // Only show the players at the other team
+        showOneAndShowHome: !isPlayerFromHome,
+        homeTeamPlayersOverride: homePlayers,
+        awayTeamPlayersOverride: awayPlayers,
+      ),
+    ) as KasadoUser?;
+    if (otherPlayerToTrade == null) return;
+
+    // Remove player from original team
+    playerOrigTeam.remove(playerToTrade);
+
+    // Remove otherPlayer from future team
+    playerFutureTeam.remove(otherPlayerToTrade);
+
+    // Add player to future team
+    playerFutureTeam.add(playerToTrade);
+
+    // Add otherPlayer to orig team
+    playerOrigTeam.add(otherPlayerToTrade);
+
+    // Update stage HOME team players
+    await courtSlotRepo.updateStageTeamPlayers(
+      courtId: courtSlot.courtId,
+      slotId: courtSlot.slotId,
+      isHome: true, // HOME
+      teamPlayers: isPlayerFromHome ? playerOrigTeam : playerFutureTeam,
+    );
+
+    // Update stage AWAY team players
+    await courtSlotRepo.updateStageTeamPlayers(
+      courtId: courtSlot.courtId,
+      slotId: courtSlot.slotId,
+      isHome: false, // AWAY
+      teamPlayers: isPlayerFromHome ? playerFutureTeam : playerOrigTeam,
+    );
+  }
+
   Future<void> resetAllStageTeams({required CourtSlot courtSlot}) async {
     await courtSlotRepo.updateStageTeamPlayers(
       courtId: courtSlot.courtId,
