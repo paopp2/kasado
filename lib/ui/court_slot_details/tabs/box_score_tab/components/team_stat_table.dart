@@ -105,6 +105,11 @@ class TeamStatTable extends StatelessWidget {
           valueToStringCallback: (ftPercent, stats) =>
               utils.getPercentageFormat(ftPercent as double),
         ),
+        ColumnData(
+          columnName: "TO",
+          dataValueCallback: (stats) => stats.turnover,
+          valueToStringCallback: (turnover, stats) => turnover.toString(),
+        ),
       ],
     );
   }

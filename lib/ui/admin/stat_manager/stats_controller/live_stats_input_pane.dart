@@ -142,7 +142,7 @@ class LiveStatsInputPane extends StatelessWidget {
                 ),
                 const Spacer(),
                 StatButton(
-                  color: Colors.red,
+                  color: Colors.purple,
                   content: 'OREB',
                   onPressed: () => controller.onPlayerRebounded(
                     context: context,
@@ -159,7 +159,7 @@ class LiveStatsInputPane extends StatelessWidget {
                   ),
                 ),
                 StatButton(
-                  color: Colors.green,
+                  color: Colors.deepPurple,
                   content: 'DREB',
                   onPressed: () => controller.onPlayerRebounded(
                     context: context,
@@ -219,7 +219,7 @@ class LiveStatsInputPane extends StatelessWidget {
                 ),
                 const Spacer(),
                 StatButton(
-                  color: Colors.grey,
+                  color: Colors.black,
                   content: 'BLK',
                   onPressed: () => controller.onPlayerBlock(
                     context: context,
@@ -234,7 +234,7 @@ class LiveStatsInputPane extends StatelessWidget {
                   ),
                 ),
                 StatButton(
-                  color: Colors.blue,
+                  color: Colors.brown,
                   content: 'STL',
                   onPressed: () => controller.onPlayerSteal(
                     context: context,
@@ -281,6 +281,22 @@ class LiveStatsInputPane extends StatelessWidget {
                   onLongPressed: () => controller.onPlayerShotFT(
                     context: context,
                     wasMade: false,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                    isCancel: true,
+                  ),
+                ),
+                const Spacer(),
+                StatButton(
+                  color: Colors.grey,
+                  content: 'TO',
+                  onPressed: () => controller.onPlayerTurnover(
+                    context: context,
+                    gameStats: gameStats,
+                    courtSlot: courtSlot,
+                  ),
+                  onLongPressed: () => controller.onPlayerTurnover(
+                    context: context,
                     gameStats: gameStats,
                     courtSlot: courtSlot,
                     isCancel: true,

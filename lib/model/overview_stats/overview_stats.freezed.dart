@@ -34,6 +34,7 @@ class _$OverviewStatsTearOff {
       int totalAst = 0,
       int totalStl = 0,
       int totalBlk = 0,
+      int totalTO = 0,
       int totalWins = 0,
       int gamesPlayed = 0}) {
     return _OverviewStats(
@@ -48,6 +49,7 @@ class _$OverviewStatsTearOff {
       totalAst: totalAst,
       totalStl: totalStl,
       totalBlk: totalBlk,
+      totalTO: totalTO,
       totalWins: totalWins,
       gamesPlayed: gamesPlayed,
     );
@@ -74,6 +76,7 @@ mixin _$OverviewStats {
   int get totalAst => throw _privateConstructorUsedError;
   int get totalStl => throw _privateConstructorUsedError;
   int get totalBlk => throw _privateConstructorUsedError;
+  int get totalTO => throw _privateConstructorUsedError;
   int get totalWins => throw _privateConstructorUsedError;
   int get gamesPlayed => throw _privateConstructorUsedError;
 
@@ -100,6 +103,7 @@ abstract class $OverviewStatsCopyWith<$Res> {
       int totalAst,
       int totalStl,
       int totalBlk,
+      int totalTO,
       int totalWins,
       int gamesPlayed});
 }
@@ -126,6 +130,7 @@ class _$OverviewStatsCopyWithImpl<$Res>
     Object? totalAst = freezed,
     Object? totalStl = freezed,
     Object? totalBlk = freezed,
+    Object? totalTO = freezed,
     Object? totalWins = freezed,
     Object? gamesPlayed = freezed,
   }) {
@@ -174,6 +179,10 @@ class _$OverviewStatsCopyWithImpl<$Res>
           ? _value.totalBlk
           : totalBlk // ignore: cast_nullable_to_non_nullable
               as int,
+      totalTO: totalTO == freezed
+          ? _value.totalTO
+          : totalTO // ignore: cast_nullable_to_non_nullable
+              as int,
       totalWins: totalWins == freezed
           ? _value.totalWins
           : totalWins // ignore: cast_nullable_to_non_nullable
@@ -205,6 +214,7 @@ abstract class _$OverviewStatsCopyWith<$Res>
       int totalAst,
       int totalStl,
       int totalBlk,
+      int totalTO,
       int totalWins,
       int gamesPlayed});
 }
@@ -233,6 +243,7 @@ class __$OverviewStatsCopyWithImpl<$Res>
     Object? totalAst = freezed,
     Object? totalStl = freezed,
     Object? totalBlk = freezed,
+    Object? totalTO = freezed,
     Object? totalWins = freezed,
     Object? gamesPlayed = freezed,
   }) {
@@ -281,6 +292,10 @@ class __$OverviewStatsCopyWithImpl<$Res>
           ? _value.totalBlk
           : totalBlk // ignore: cast_nullable_to_non_nullable
               as int,
+      totalTO: totalTO == freezed
+          ? _value.totalTO
+          : totalTO // ignore: cast_nullable_to_non_nullable
+              as int,
       totalWins: totalWins == freezed
           ? _value.totalWins
           : totalWins // ignore: cast_nullable_to_non_nullable
@@ -308,6 +323,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
       this.totalAst = 0,
       this.totalStl = 0,
       this.totalBlk = 0,
+      this.totalTO = 0,
       this.totalWins = 0,
       this.gamesPlayed = 0})
       : super._();
@@ -350,6 +366,9 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
   final int totalBlk;
   @JsonKey()
   @override
+  final int totalTO;
+  @JsonKey()
+  @override
   final int totalWins;
   @JsonKey()
   @override
@@ -357,7 +376,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OverviewStats(totalThreePA: $totalThreePA, totalThreePM: $totalThreePM, totalTwoPA: $totalTwoPA, totalTwoPM: $totalTwoPM, totalFta: $totalFta, totalFtm: $totalFtm, totalOReb: $totalOReb, totalDReb: $totalDReb, totalAst: $totalAst, totalStl: $totalStl, totalBlk: $totalBlk, totalWins: $totalWins, gamesPlayed: $gamesPlayed)';
+    return 'OverviewStats(totalThreePA: $totalThreePA, totalThreePM: $totalThreePM, totalTwoPA: $totalTwoPA, totalTwoPM: $totalTwoPM, totalFta: $totalFta, totalFtm: $totalFtm, totalOReb: $totalOReb, totalDReb: $totalDReb, totalAst: $totalAst, totalStl: $totalStl, totalBlk: $totalBlk, totalTO: $totalTO, totalWins: $totalWins, gamesPlayed: $gamesPlayed)';
   }
 
   @override
@@ -376,6 +395,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('totalAst', totalAst))
       ..add(DiagnosticsProperty('totalStl', totalStl))
       ..add(DiagnosticsProperty('totalBlk', totalBlk))
+      ..add(DiagnosticsProperty('totalTO', totalTO))
       ..add(DiagnosticsProperty('totalWins', totalWins))
       ..add(DiagnosticsProperty('gamesPlayed', gamesPlayed));
   }
@@ -400,6 +420,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.totalAst, totalAst) &&
             const DeepCollectionEquality().equals(other.totalStl, totalStl) &&
             const DeepCollectionEquality().equals(other.totalBlk, totalBlk) &&
+            const DeepCollectionEquality().equals(other.totalTO, totalTO) &&
             const DeepCollectionEquality().equals(other.totalWins, totalWins) &&
             const DeepCollectionEquality()
                 .equals(other.gamesPlayed, gamesPlayed));
@@ -419,6 +440,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(totalAst),
       const DeepCollectionEquality().hash(totalStl),
       const DeepCollectionEquality().hash(totalBlk),
+      const DeepCollectionEquality().hash(totalTO),
       const DeepCollectionEquality().hash(totalWins),
       const DeepCollectionEquality().hash(gamesPlayed));
 
@@ -446,6 +468,7 @@ abstract class _OverviewStats extends OverviewStats {
       int totalAst,
       int totalStl,
       int totalBlk,
+      int totalTO,
       int totalWins,
       int gamesPlayed}) = _$_OverviewStats;
   const _OverviewStats._() : super._();
@@ -475,6 +498,8 @@ abstract class _OverviewStats extends OverviewStats {
   int get totalStl;
   @override
   int get totalBlk;
+  @override
+  int get totalTO;
   @override
   int get totalWins;
   @override

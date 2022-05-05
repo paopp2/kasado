@@ -264,6 +264,31 @@ class StatRepository {
     );
   }
 
+  Future<void> recordPlayerTurnover({
+    required KasadoUser playerWhoTurnovered,
+    required String gameStatsId,
+    required CourtSlot courtSlot,
+    required bool isHomePlayer,
+    required bool isCancel,
+  }) async {
+    final fieldPrefix = (isHomePlayer) ? 'homeTeamStats' : 'awayTeamStats';
+    await firestoreHelper.setData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStatsId,
+      ),
+      data: {
+        fieldPrefix: {
+          playerWhoTurnovered.id: {
+            "turnover": FieldValue.increment((isCancel) ? -1 : 1)
+          }
+        }
+      },
+      merge: true,
+    );
+  }
+
   Future<void> cancelGame({
     required CourtSlot courtSlot,
     required GameStats gameStats,
@@ -367,6 +392,7 @@ class StatRepository {
             "totalAst": FieldValue.increment(playerStats.ast),
             "totalStl": FieldValue.increment(playerStats.stl),
             "totalBlk": FieldValue.increment(playerStats.blk),
+            "totalTO": FieldValue.increment(playerStats.turnover),
             "totalWins": FieldValue.increment(playerStats.hasWonGame! ? 1 : 0),
             "gamesPlayed": FieldValue.increment(1),
           }
