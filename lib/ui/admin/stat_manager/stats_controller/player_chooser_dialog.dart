@@ -3,8 +3,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 
-class StatPlayerChooserDialog extends HookConsumerWidget {
-  const StatPlayerChooserDialog({
+/// Used to choose a player in the context wherein the player to belongs to a team
+///
+/// Eg. Used in game teams setup and in selecting a player for a stat input
+class PlayerChooserDialog extends HookConsumerWidget {
+  const PlayerChooserDialog({
     Key? key,
     this.showOneAndShowHome,
     this.homeTeamPlayersOverride,
