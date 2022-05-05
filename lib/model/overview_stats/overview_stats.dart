@@ -46,7 +46,8 @@ class OverviewStats with _$OverviewStats {
           totalBlk +
           totalStl -
           (totalAttempts - totalMade) -
-          (totalFta - totalFtm)) /
+          (totalFta - totalFtm) -
+          totalTO) /
       gamesPlayed;
 
   factory OverviewStats.fromJson(Map<String, dynamic> json) =>
