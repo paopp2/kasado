@@ -1,3 +1,4 @@
+import 'package:algolia/algolia.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
@@ -53,3 +54,11 @@ final currentUserInfoProvider = StreamProvider.autoDispose<KasadoUserInfo?>(
 
 // Mixpanel instance for analytics
 final mixpanel = Provider<Mixpanel?>((ref) => null);
+
+// Algolia instance for search
+final algolia = Provider<Algolia>(
+  (ref) => const Algolia.init(
+    applicationId: "RQ51X9HY3C",
+    apiKey: "295776bbbf946adbe75ff6a9c29a7db1",
+  ),
+);

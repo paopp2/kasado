@@ -8,16 +8,14 @@ import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
-final userInfoQueryResultProvider =
-    StreamProvider.autoDispose.family<List<KasadoUserInfo>, String?>(
-  (ref, emailQuery) {
-    ref.maintainState = true;
-    final userInfoRepo = ref.watch(userInfoRepositoryProvider);
-    if (emailQuery == null) return Stream.value([]);
+final userInfoQueryResultProvider = FutureProvider.autoDispose
+    .family<List<KasadoUserInfo>, String?>((ref, query) {
+  ref.maintainState = true;
+  final userInfoRepo = ref.watch(userInfoRepositoryProvider);
+  if (query == null) return [];
 
-    return userInfoRepo.getUserInfosStream(emailQuery);
-  },
-);
+  return userInfoRepo.getUserInfoQueryResults(query);
+});
 
 class UserSearchPane extends HookConsumerWidget {
   const UserSearchPane({
@@ -55,7 +53,7 @@ class UserSearchPane extends HookConsumerWidget {
           children: [
             Expanded(
               child: DataEntryField(
-                hint: 'Search player email',
+                hint: 'Search players',
                 onChanged: _onChanged,
               ),
             ),
