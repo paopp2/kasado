@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court/court.dart';
@@ -10,12 +11,19 @@ import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/model/ticket/ticket.dart';
 
 final userInfoRepositoryProvider = Provider.autoDispose(
-  (ref) => UserInfoRepository(firestoreHelper: FirestoreHelper.instance),
+  (ref) => UserInfoRepository(
+    firestoreHelper: FirestoreHelper.instance,
+    read: ref.read,
+  ),
 );
 
 class UserInfoRepository {
-  UserInfoRepository({required this.firestoreHelper});
+  UserInfoRepository({
+    required this.firestoreHelper,
+    required this.read,
+  });
   final FirestoreHelper firestoreHelper;
+  final Reader read;
 
   Future<bool> userHasInfo(String userId) async {
     return await firestoreHelper.docExists(
@@ -63,6 +71,16 @@ class UserInfoRepository {
         isLessThanOrEqualTo: (userEmailQuery ?? '') + '\uf8ff',
       ),
     );
+  }
+
+  Future<List<KasadoUserInfo>> getUserInfoQueryResults([
+    String? userEmailQuery,
+  ]) async {
+    final query =
+        read(algolia).instance.index('user_info').query(userEmailQuery ?? '');
+    final snap = await query.getObjects();
+
+    return snap.hits.map((h) => KasadoUserInfo.fromJson(h.data)).toList();
   }
 
   Stream<KasadoUserInfo?> getUserInfoStream(String userId) {

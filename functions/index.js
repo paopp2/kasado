@@ -128,3 +128,16 @@ exports.triggerStatsUpdate = functions.https.onRequest(async (req, res) => {
 
     res.json({ result: "Triggered derived stats recalculation" });
 });
+
+exports.triggerUserInfoWrite = functions.https.onRequest(async (req, res) => {
+
+    await db.collection("user_info").get().then(function (querySnapshot) {
+        querySnapshot.forEach(async function (doc) {
+            await doc.ref.update({
+                "random": admin.firestore.FieldValue.increment(1),
+            }, { merge: true });
+        });
+    });
+
+    res.json({ result: "Triggered random user info write" });
+});

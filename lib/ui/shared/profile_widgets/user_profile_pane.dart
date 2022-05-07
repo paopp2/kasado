@@ -6,6 +6,7 @@ import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/profile/user_profile_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/ui/admin/player_manager/pondo_input_dialog.dart';
 import 'package:kasado/ui/home/components/pondo_info_dialog.dart';
 import 'package:kasado/ui/shared/profile_widgets/career_stats_list_pane.dart';
 import 'package:kasado/ui/shared/profile_widgets/game_history_list_pane.dart';
@@ -32,6 +33,14 @@ class UserProfilePane extends HookConsumerWidget {
         ref.watch(currentUserInfoProvider).value?.isSuperAdmin ?? false;
     final userCareerStats = userInfo?.overviewStats;
     final tabController = useTabController(initialLength: 2);
+
+    void _onAddPondoLongPressed() => showDialog(
+          context: context,
+          builder: (_) => PondoInputDialog(
+            model: model,
+            userInfo: userInfo!,
+          ),
+        );
 
     return (user == null)
         ? const Center(child: Text('No user info'))
@@ -76,6 +85,8 @@ class UserProfilePane extends HookConsumerWidget {
                         context: context,
                         builder: (_) => const PondoInfoDialog(),
                       ),
+                      onLongPress:
+                          (isSuperAdmin) ? _onAddPondoLongPressed : null,
                     ),
                   ],
                 ),

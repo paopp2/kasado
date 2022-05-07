@@ -3,21 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
-import 'package:kasado/ui/shared/data_entry_field.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 
-final userInfoQueryResultProvider =
-    StreamProvider.autoDispose.family<List<KasadoUserInfo>, String?>(
-  (ref, emailQuery) {
-    ref.maintainState = true;
-    final userInfoRepo = ref.watch(userInfoRepositoryProvider);
-    if (emailQuery == null) return Stream.value([]);
+final userInfoQueryResultProvider = FutureProvider.autoDispose
+    .family<List<KasadoUserInfo>, String?>((ref, query) {
+  ref.maintainState = true;
+  final userInfoRepo = ref.watch(userInfoRepositoryProvider);
+  if (query == null) return [];
 
-    return userInfoRepo.getUserInfosStream(emailQuery);
-  },
-);
+  return userInfoRepo.getUserInfoQueryResults(query);
+});
 
 class UserSearchPane extends HookConsumerWidget {
   const UserSearchPane({
@@ -43,7 +41,10 @@ class UserSearchPane extends HookConsumerWidget {
         const Duration(milliseconds: 650),
         // ignore: prefer-extracting-callbacks
         () {
-          if (query.isNotEmpty) (userEmailQuery.value = query);
+          if (query.isNotEmpty) {
+            ref.read(mixpanel)!.track("User search: '$query'");
+            userEmailQuery.value = query;
+          }
         },
       );
     }
@@ -54,34 +55,62 @@ class UserSearchPane extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              child: DataEntryField(
-                hint: 'Search player email',
-                onChanged: _onChanged,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25.0,
+                  vertical: 8.0,
+                ),
+                child: Material(
+                  elevation: 15,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextFormField(
+                    autofocus: true,
+                    onChanged: _onChanged,
+                    decoration: InputDecoration(
+                      hintText: "Search players",
+                      fillColor: Colors.grey.shade100,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.search_rounded,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
         ),
         Expanded(
-          child: userInfoQueryResult.when(
-            loading: () => const LoadingWidget(),
-            error: (e, _) => Text(e.toString()),
-            data: (userInfoList) => ListView.builder(
-              itemCount: userInfoList.length,
-              itemBuilder: (context, i) {
-                final userInfo = userInfoList[i];
-                final user = userInfo.user;
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: userInfoQueryResult.when(
+              loading: () => const LoadingWidget(),
+              error: (e, _) => Text(e.toString()),
+              data: (userInfoList) => ListView.builder(
+                itemCount: userInfoList.length,
+                itemBuilder: (context, i) {
+                  final userInfo = userInfoList[i];
+                  final user = userInfo.user;
 
-                return ListTile(
-                  leading: CircleAvatar(
-                    radius: 25,
-                    backgroundImage: NetworkImage(user.photoUrl!),
-                  ),
-                  title: Text(user.displayName!),
-                  subtitle: Text(user.email!),
-                  onTap: () => onUserTapped?.call(userInfo),
-                  trailing: trailingFromInfo?.call(userInfo),
-                );
-              },
+                  return ListTile(
+                    leading: CircleAvatar(
+                      radius: 25,
+                      backgroundImage: NetworkImage(user.photoUrl!),
+                    ),
+                    title: Text(user.displayName!),
+                    subtitle: Text(user.email!),
+                    onTap: () => onUserTapped?.call(userInfo),
+                    trailing: trailingFromInfo?.call(userInfo),
+                  );
+                },
+              ),
             ),
           ),
         ),

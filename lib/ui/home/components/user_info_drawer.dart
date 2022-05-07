@@ -38,7 +38,6 @@ class UserInfoDrawer extends HookConsumerWidget {
               loading: () => const LoadingWidget(),
               data: (userInfo) {
                 final isCurrentUserAdmin = userInfo!.isAdmin;
-                final isCurrentUserSuperAdmin = userInfo.isSuperAdmin;
 
                 return Column(
                   children: [
@@ -93,15 +92,6 @@ class UserInfoDrawer extends HookConsumerWidget {
                           ),
                           const SizedBox(height: 30),
                         ],
-                      ),
-                    ),
-                    Visibility(
-                      visible: isCurrentUserSuperAdmin,
-                      child: ListTile(
-                        title: const Text('Manage players'),
-                        leading: const Icon(Icons.people_alt),
-                        onTap: () =>
-                            context.pushNamed(Routes.playerManagerView),
                       ),
                     ),
                     Visibility(

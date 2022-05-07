@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
-import 'package:kasado/ui/admin/player_manager/player_manager_view.dart';
 import 'package:kasado/ui/admin/stat_manager/score_board/score_board_view.dart';
 import 'package:kasado/ui/auth/login_view.dart';
 import 'package:kasado/ui/court_details/court_details_view.dart';
@@ -15,6 +14,7 @@ import 'package:kasado/ui/home/home_view.dart';
 import 'package:kasado/ui/leaderboards/stat_leaders_view.dart';
 import 'package:kasado/ui/notifs/notifs_view.dart';
 import 'package:kasado/ui/profile/user_profile_view.dart';
+import 'package:kasado/ui/search/search_view.dart';
 
 class AppRouter {
   AppRouter._();
@@ -86,11 +86,6 @@ class AppRouter {
         ),
       ),
       GoRoute(
-        name: Routes.playerManagerView,
-        path: '/player-manager-view',
-        builder: (context, state) => const PlayerManagerView(),
-      ),
-      GoRoute(
         name: Routes.notifsView,
         path: '/notifs',
         builder: (context, state) {
@@ -114,6 +109,13 @@ class AppRouter {
         path: '/stat-leaders',
         builder: (context, state) {
           return const StatLeadersView();
+        },
+      ),
+      GoRoute(
+        name: Routes.searchView,
+        path: '/search',
+        builder: (context, state) {
+          return const SearchView();
         },
       ),
     ],
@@ -144,9 +146,9 @@ class Routes {
   static const courtSlotDetailsView = 'court_slot_details_view';
   static const courtsOwnedView = 'courts_owned_view';
   static const userProfileView = 'user_profile_view';
-  static const playerManagerView = 'player_manager_view';
   static const notifsView = 'notifs_view';
   static const feedbacksView = 'feedbacks_view';
   static const statLeadersView = 'stat_leaders_view';
   static const scoreBoardView = 'score_board_view';
+  static const searchView = 'search_view';
 }
