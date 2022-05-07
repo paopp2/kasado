@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
@@ -40,7 +41,10 @@ class UserSearchPane extends HookConsumerWidget {
         const Duration(milliseconds: 650),
         // ignore: prefer-extracting-callbacks
         () {
-          if (query.isNotEmpty) (userEmailQuery.value = query);
+          if (query.isNotEmpty) {
+            ref.read(mixpanel)!.track("User search: '$query'");
+            userEmailQuery.value = query;
+          }
         },
       );
     }
