@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/logic/admin/player_manager/player_manager_view_model.dart';
+import 'package:kasado/logic/profile/user_profile_view_model.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
@@ -14,7 +14,7 @@ class PondoInputDialog extends HookConsumerWidget {
   }) : super(key: key);
 
   final KasadoUserInfo userInfo;
-  final PlayerManagerViewModel model;
+  final UserProfileViewModel model;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
