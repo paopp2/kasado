@@ -15,6 +15,7 @@ import 'package:kasado/ui/home/home_view.dart';
 import 'package:kasado/ui/leaderboards/stat_leaders_view.dart';
 import 'package:kasado/ui/notifs/notifs_view.dart';
 import 'package:kasado/ui/profile/user_profile_view.dart';
+import 'package:kasado/ui/search/search_view.dart';
 
 class AppRouter {
   AppRouter._();
@@ -116,6 +117,13 @@ class AppRouter {
           return const StatLeadersView();
         },
       ),
+      GoRoute(
+        name: Routes.searchView,
+        path: '/search',
+        builder: (context, state) {
+          return const SearchView();
+        },
+      ),
     ],
     redirect: (state) {
       final isLoggedIn = fireAuthInstance.currentUser != null;
@@ -149,4 +157,5 @@ class Routes {
   static const feedbacksView = 'feedbacks_view';
   static const statLeadersView = 'stat_leaders_view';
   static const scoreBoardView = 'score_board_view';
+  static const searchView = 'search_view';
 }

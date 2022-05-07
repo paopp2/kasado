@@ -55,7 +55,7 @@ class HomeView extends HookConsumerWidget {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.search_rounded),
-                  onPressed: () => context.pushNamed(Routes.playerManagerView),
+                  onPressed: () => context.pushNamed(Routes.searchView),
                 ),
                 const HomeNotifButton(),
               ],
