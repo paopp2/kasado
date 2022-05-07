@@ -57,26 +57,29 @@ class HomeTab extends HookConsumerWidget {
                 child: Center(
                   child: (!isLoaded)
                       ? Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Lottie.asset(
-                              'assets/lottie/dunking_man.zip',
-                              height: constraints.maxHeight * 0.65,
-                              controller: _controller,
-                              onLoaded: (composition) => Future.delayed(
-                                composition.duration,
-                                // ignore: prefer-extracting-callbacks
-                                () {
-                                  _controller
-                                    ..duration = composition.duration
-                                    ..forward(from: 0.5);
-                                },
+                            SizedBox(
+                              height: constraints.maxHeight * 0.3,
+                              child: Lottie.asset(
+                                'assets/lottie/dunking_man.zip',
+                                height: constraints.maxHeight * 0.65,
+                                controller: _controller,
+                                onLoaded: (composition) => Future.delayed(
+                                  composition.duration,
+                                  // ignore: prefer-extracting-callbacks
+                                  () {
+                                    _controller
+                                      ..duration = composition.duration
+                                      ..forward(from: 0.5);
+                                  },
+                                ),
                               ),
                             ),
                             Text(
                               "Finding courts near you...",
                               style: TextStyle(
-                                fontSize: constraints.maxWidth * 0.05,
+                                fontSize: constraints.maxWidth * 0.035,
                                 color: Colors.grey,
                               ),
                             ),
