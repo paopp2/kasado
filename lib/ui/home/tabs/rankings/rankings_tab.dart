@@ -26,7 +26,7 @@ class RankingsTab extends HookConsumerWidget {
       body: StatLeadersPane(
         model: model,
         statType: StatType.effRating,
-        statDescription: 'Player Efficiency',
+        statDescription: 'Player Efficiency (EFF)',
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,
