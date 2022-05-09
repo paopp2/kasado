@@ -42,7 +42,10 @@ class UserSearchPane extends HookConsumerWidget {
         // ignore: prefer-extracting-callbacks
         () {
           if (query.isNotEmpty) {
-            ref.read(mixpanel)!.track("User search: '$query'");
+            ref.read(mixpanel)!.track(
+              "Searched a user",
+              properties: {"query": query},
+            );
             userEmailQuery.value = query;
           }
         },
