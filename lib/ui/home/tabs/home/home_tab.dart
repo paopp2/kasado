@@ -44,94 +44,89 @@ class HomeTab extends HookConsumerWidget {
       return;
     }, [isLocationRetrieved]);
 
-    return Stack(
-      children: [
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: Column(
-            children: [
-              Expanded(
-                child: Center(
-                  child: (!isLoaded)
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: constraints.maxHeight * 0.3,
-                              child: Lottie.asset(
-                                'assets/lottie/dunking_man.zip',
-                                height: constraints.maxHeight * 0.65,
-                                controller: _controller,
-                                onLoaded: (composition) => Future.delayed(
-                                  composition.duration,
-                                  // ignore: prefer-extracting-callbacks
-                                  () {
-                                    _controller
-                                      ..duration = composition.duration
-                                      ..forward(from: 0.5);
-                                  },
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "Finding courts near you...",
-                              style: TextStyle(
-                                fontSize: constraints.maxWidth * 0.035,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                          ],
-                        )
-                      : AnimationLimiter(
-                          child: ListView.builder(
-                            padding: const EdgeInsets.only(top: 75),
-                            itemCount: courtsList.length,
-                            itemBuilder: (context, i) {
-                              final court = courtsList[i];
-
-                              return StaggerListTileAnimation(
-                                index: i,
-                                child: NextCourtSlotCard(
-                                  constraints: constraints,
-                                  court: court,
-                                ),
-                              );
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            toolbarHeight: constraints.maxHeight * 0.1, // AppBar height
+            floating: true,
+            pinned: false,
+            snap: false,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 25.0,
+                vertical: 8.0,
+              ),
+              child: Material(
+                elevation: 15,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: PlaceSearchField(
+                  constraints: constraints,
+                  onLocationTapped: (location) => ref
+                      .read(selectedCenterLocProvider.notifier)
+                      .state = location,
+                ),
+              ),
+            ),
+          ),
+          (!isLoaded)
+              ? SliverFillRemaining(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: constraints.maxHeight * 0.3,
+                        child: Lottie.asset(
+                          'assets/lottie/dunking_man.zip',
+                          height: constraints.maxHeight * 0.65,
+                          controller: _controller,
+                          onLoaded: (composition) => Future.delayed(
+                            composition.duration,
+                            // ignore: prefer-extracting-callbacks
+                            () {
+                              _controller
+                                ..duration = composition.duration
+                                ..forward(from: 0.5);
                             },
                           ),
                         ),
+                      ),
+                      Text(
+                        "Finding courts near you...",
+                        style: TextStyle(
+                          fontSize: constraints.maxWidth * 0.035,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                )
+              : AnimationLimiter(
+                  child: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, i) {
+                        final court = courtsList[i];
+
+                        return StaggerListTileAnimation(
+                          index: i,
+                          child: NextCourtSlotCard(
+                            constraints: constraints,
+                            court: court,
+                          ),
+                        );
+                      },
+                      childCount: courtsList.length,
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 25.0,
-              vertical: 8.0,
-            ),
-            child: Material(
-              elevation: 15,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: PlaceSearchField(
-                constraints: constraints,
-                onLocationTapped: (location) => ref
-                    .read(selectedCenterLocProvider.notifier)
-                    .state = location,
-              ),
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
