@@ -22,7 +22,7 @@ class CourtsOwnedView extends HookConsumerWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
+          appBar: AppBar(),
           body: courtsOwnedList.when(
             error: (e, _) => Text(e.toString()),
             loading: () => const LoadingWidget(),

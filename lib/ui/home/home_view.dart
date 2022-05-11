@@ -50,8 +50,6 @@ class HomeView extends HookConsumerWidget {
               model: model,
             ),
             appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
               actions: [
                 IconButton(
                   icon: const Icon(Icons.search_rounded),

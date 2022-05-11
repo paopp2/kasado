@@ -57,10 +57,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
+          appBar: AppBar(),
           body: Padding(
             padding: const EdgeInsets.all(15.0),
             child: courtSlotStream.when(

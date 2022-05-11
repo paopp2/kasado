@@ -36,10 +36,7 @@ class NotifsView extends HookConsumerWidget {
       builder: (context, constraints) {
         return Scaffold(
           extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
+          appBar: AppBar(),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: userNotifsStream.when(

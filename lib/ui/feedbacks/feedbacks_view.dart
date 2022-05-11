@@ -37,10 +37,7 @@ class FeedbacksView extends HookConsumerWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-            ),
+            appBar: AppBar(),
             body: Column(
               children: [
                 Padding(

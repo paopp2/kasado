@@ -20,10 +20,7 @@ class SearchView extends HookConsumerWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
+          appBar: AppBar(),
           body: UserSearchPane(
             onUserTapped: (userInfo) => context.pushNamed(
               Routes.userProfileView,

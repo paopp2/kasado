@@ -39,10 +39,7 @@ class UserProfileView extends HookConsumerWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-            ),
+            appBar: AppBar(),
             body: userInfoStream.when(
               error: (e, _) => Text(e.toString()),
               loading: () => const LoadingWidget(),
