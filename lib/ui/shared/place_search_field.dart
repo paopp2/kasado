@@ -102,7 +102,13 @@ class PlaceSearchField extends HookConsumerWidget {
           ),
         ),
       ),
-      hideOnEmpty: true,
+      noItemsFoundBuilder: (context) => const Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Text(
+          "No places found",
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }
