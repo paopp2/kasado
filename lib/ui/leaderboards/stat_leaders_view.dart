@@ -24,8 +24,6 @@ class StatLeadersView extends HookConsumerWidget {
       builder: (context, constraints) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
             bottom: TabBar(
               labelColor: Colors.amber.shade600,
               indicatorColor: Colors.amber.shade600,

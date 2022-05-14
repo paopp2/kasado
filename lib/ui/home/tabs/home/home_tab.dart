@@ -53,8 +53,6 @@ class HomeTab extends HookConsumerWidget {
             floating: true,
             pinned: false,
             snap: false,
-            elevation: 0,
-            backgroundColor: Colors.transparent,
             flexibleSpace: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 25.0,
