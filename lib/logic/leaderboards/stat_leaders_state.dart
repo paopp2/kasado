@@ -7,28 +7,44 @@ import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 final statLeadersStreamProvider = StreamProvider.autoDispose
     .family<List<KasadoUserInfo>, StatType>((ref, statType) {
   final statRepo = ref.watch(statRepositoryProvider);
+
+  final Stream<List<KasadoUserInfo>> statLeadersStream;
   switch (statType) {
     case StatType.effRating:
-      return statRepo.getEffRatingLeadersStream();
+      statLeadersStream = statRepo.getEffRatingLeadersStream();
+      break;
     case StatType.standing:
-      return statRepo.getStandingLeadersStream();
+      statLeadersStream = statRepo.getStandingLeadersStream();
+      break;
     case StatType.ptsPerGame:
-      return statRepo.getPpgLeadersStream();
+      statLeadersStream = statRepo.getPpgLeadersStream();
+      break;
     case StatType.astPerGame:
-      return statRepo.getApgLeadersStream();
+      statLeadersStream = statRepo.getApgLeadersStream();
+      break;
     case StatType.rebPerGame:
-      return statRepo.getRpgLeadersStream();
+      statLeadersStream = statRepo.getRpgLeadersStream();
+      break;
     case StatType.blkPerGame:
-      return statRepo.getBpgLeadersStream();
+      statLeadersStream = statRepo.getBpgLeadersStream();
+      break;
     case StatType.stlPerGame:
-      return statRepo.getSpgLeadersStream();
+      statLeadersStream = statRepo.getSpgLeadersStream();
+      break;
     case StatType.fgPercent:
-      return statRepo.getFgPercentLeadersStream();
+      statLeadersStream = statRepo.getFgPercentLeadersStream();
+      break;
     case StatType.threePtPercent:
-      return statRepo.get3ptPercentLeadersStream();
+      statLeadersStream = statRepo.get3ptPercentLeadersStream();
+      break;
     case StatType.threePtMade:
-      return statRepo.get3ptMadeLeadersStream();
+      statLeadersStream = statRepo.get3ptMadeLeadersStream();
+      break;
   }
+
+  // Exclude users that opted out of being part of stat leader rankings
+  return statLeadersStream.map((userInfoList) => [...userInfoList]
+    ..removeWhere((uInfo) => uInfo.overviewStats.isHiddenFromRankings));
 });
 
 final rankNumProvider = Provider.autoDispose.family<Map<String, int>, StatType>(
