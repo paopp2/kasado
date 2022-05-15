@@ -22,6 +22,7 @@ class OverviewStats with _$OverviewStats {
     @Default(0) int totalTO,
     @Default(0) int totalWins,
     @Default(0) int gamesPlayed,
+    @Default(false) bool isHiddenFromRankings,
   }) = _OverviewStats;
 
   int get totalPoints => (totalThreePM * 3) + (totalTwoPM * 2) + totalFtm;

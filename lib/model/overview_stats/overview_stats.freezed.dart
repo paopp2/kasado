@@ -36,7 +36,8 @@ class _$OverviewStatsTearOff {
       int totalBlk = 0,
       int totalTO = 0,
       int totalWins = 0,
-      int gamesPlayed = 0}) {
+      int gamesPlayed = 0,
+      bool isHiddenFromRankings = false}) {
     return _OverviewStats(
       totalThreePA: totalThreePA,
       totalThreePM: totalThreePM,
@@ -52,6 +53,7 @@ class _$OverviewStatsTearOff {
       totalTO: totalTO,
       totalWins: totalWins,
       gamesPlayed: gamesPlayed,
+      isHiddenFromRankings: isHiddenFromRankings,
     );
   }
 
@@ -79,6 +81,7 @@ mixin _$OverviewStats {
   int get totalTO => throw _privateConstructorUsedError;
   int get totalWins => throw _privateConstructorUsedError;
   int get gamesPlayed => throw _privateConstructorUsedError;
+  bool get isHiddenFromRankings => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -105,7 +108,8 @@ abstract class $OverviewStatsCopyWith<$Res> {
       int totalBlk,
       int totalTO,
       int totalWins,
-      int gamesPlayed});
+      int gamesPlayed,
+      bool isHiddenFromRankings});
 }
 
 /// @nodoc
@@ -133,6 +137,7 @@ class _$OverviewStatsCopyWithImpl<$Res>
     Object? totalTO = freezed,
     Object? totalWins = freezed,
     Object? gamesPlayed = freezed,
+    Object? isHiddenFromRankings = freezed,
   }) {
     return _then(_value.copyWith(
       totalThreePA: totalThreePA == freezed
@@ -191,6 +196,10 @@ class _$OverviewStatsCopyWithImpl<$Res>
           ? _value.gamesPlayed
           : gamesPlayed // ignore: cast_nullable_to_non_nullable
               as int,
+      isHiddenFromRankings: isHiddenFromRankings == freezed
+          ? _value.isHiddenFromRankings
+          : isHiddenFromRankings // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -216,7 +225,8 @@ abstract class _$OverviewStatsCopyWith<$Res>
       int totalBlk,
       int totalTO,
       int totalWins,
-      int gamesPlayed});
+      int gamesPlayed,
+      bool isHiddenFromRankings});
 }
 
 /// @nodoc
@@ -246,6 +256,7 @@ class __$OverviewStatsCopyWithImpl<$Res>
     Object? totalTO = freezed,
     Object? totalWins = freezed,
     Object? gamesPlayed = freezed,
+    Object? isHiddenFromRankings = freezed,
   }) {
     return _then(_OverviewStats(
       totalThreePA: totalThreePA == freezed
@@ -304,6 +315,10 @@ class __$OverviewStatsCopyWithImpl<$Res>
           ? _value.gamesPlayed
           : gamesPlayed // ignore: cast_nullable_to_non_nullable
               as int,
+      isHiddenFromRankings: isHiddenFromRankings == freezed
+          ? _value.isHiddenFromRankings
+          : isHiddenFromRankings // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -325,7 +340,8 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
       this.totalBlk = 0,
       this.totalTO = 0,
       this.totalWins = 0,
-      this.gamesPlayed = 0})
+      this.gamesPlayed = 0,
+      this.isHiddenFromRankings = false})
       : super._();
 
   factory _$_OverviewStats.fromJson(Map<String, dynamic> json) =>
@@ -373,10 +389,13 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final int gamesPlayed;
+  @JsonKey()
+  @override
+  final bool isHiddenFromRankings;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OverviewStats(totalThreePA: $totalThreePA, totalThreePM: $totalThreePM, totalTwoPA: $totalTwoPA, totalTwoPM: $totalTwoPM, totalFta: $totalFta, totalFtm: $totalFtm, totalOReb: $totalOReb, totalDReb: $totalDReb, totalAst: $totalAst, totalStl: $totalStl, totalBlk: $totalBlk, totalTO: $totalTO, totalWins: $totalWins, gamesPlayed: $gamesPlayed)';
+    return 'OverviewStats(totalThreePA: $totalThreePA, totalThreePM: $totalThreePM, totalTwoPA: $totalTwoPA, totalTwoPM: $totalTwoPM, totalFta: $totalFta, totalFtm: $totalFtm, totalOReb: $totalOReb, totalDReb: $totalDReb, totalAst: $totalAst, totalStl: $totalStl, totalBlk: $totalBlk, totalTO: $totalTO, totalWins: $totalWins, gamesPlayed: $gamesPlayed, isHiddenFromRankings: $isHiddenFromRankings)';
   }
 
   @override
@@ -397,7 +416,8 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('totalBlk', totalBlk))
       ..add(DiagnosticsProperty('totalTO', totalTO))
       ..add(DiagnosticsProperty('totalWins', totalWins))
-      ..add(DiagnosticsProperty('gamesPlayed', gamesPlayed));
+      ..add(DiagnosticsProperty('gamesPlayed', gamesPlayed))
+      ..add(DiagnosticsProperty('isHiddenFromRankings', isHiddenFromRankings));
   }
 
   @override
@@ -423,7 +443,9 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
             const DeepCollectionEquality().equals(other.totalTO, totalTO) &&
             const DeepCollectionEquality().equals(other.totalWins, totalWins) &&
             const DeepCollectionEquality()
-                .equals(other.gamesPlayed, gamesPlayed));
+                .equals(other.gamesPlayed, gamesPlayed) &&
+            const DeepCollectionEquality()
+                .equals(other.isHiddenFromRankings, isHiddenFromRankings));
   }
 
   @override
@@ -442,7 +464,8 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(totalBlk),
       const DeepCollectionEquality().hash(totalTO),
       const DeepCollectionEquality().hash(totalWins),
-      const DeepCollectionEquality().hash(gamesPlayed));
+      const DeepCollectionEquality().hash(gamesPlayed),
+      const DeepCollectionEquality().hash(isHiddenFromRankings));
 
   @JsonKey(ignore: true)
   @override
@@ -470,7 +493,8 @@ abstract class _OverviewStats extends OverviewStats {
       int totalBlk,
       int totalTO,
       int totalWins,
-      int gamesPlayed}) = _$_OverviewStats;
+      int gamesPlayed,
+      bool isHiddenFromRankings}) = _$_OverviewStats;
   const _OverviewStats._() : super._();
 
   factory _OverviewStats.fromJson(Map<String, dynamic> json) =
@@ -504,6 +528,8 @@ abstract class _OverviewStats extends OverviewStats {
   int get totalWins;
   @override
   int get gamesPlayed;
+  @override
+  bool get isHiddenFromRankings;
   @override
   @JsonKey(ignore: true)
   _$OverviewStatsCopyWith<_OverviewStats> get copyWith =>
