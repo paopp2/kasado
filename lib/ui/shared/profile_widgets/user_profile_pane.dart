@@ -47,46 +47,127 @@ class UserProfilePane extends HookConsumerWidget {
         : Column(
             children: [
               const SizedBox(height: 10),
-              CircleAvatar(
-                backgroundImage: NetworkImage(user.photoUrl!),
-                radius: 40,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(user.photoUrl!),
+                    radius: 40,
+                  ),
+                  SizedBox(
+                    width: constraints.maxWidth * 0.5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          AutoSizeText(
+                            user.displayName!,
+                            style: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
+                          ),
+                          AutoSizeText(
+                            user.email!,
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                          ),
+                          Visibility(
+                            visible: isCurrentUser || isSuperAdmin,
+                            child: GestureDetector(
+                              onTap: () => showDialog(
+                                context: context,
+                                builder: (_) => const PondoInfoDialog(),
+                              ),
+                              onLongPress: (isSuperAdmin)
+                                  ? _onAddPondoLongPressed
+                                  : null,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0,
+                                ),
+                                child: Text(
+                                  '${userInfo?.pondo} Php',
+                                  style: const TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15.0,
-                  vertical: 8.0,
-                ),
-                child: AutoSizeText(
-                  user.displayName!,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1,
-                ),
-              ),
-              Text(user.email!),
-              Visibility(
-                visible: isCurrentUser || isSuperAdmin,
+              const Divider(),
+              SizedBox(
+                height: constraints.maxHeight * 0.075,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      'PONDO: ${userInfo?.pondo} Php',
-                      style: const TextStyle(fontSize: 15),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "5'11",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          "Height",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
                     ),
-                    TextButton(
-                      child: const Text(
-                        'ADD',
-                        style: TextStyle(color: Colors.green),
-                      ),
-                      onPressed: () => showDialog(
-                        context: context,
-                        builder: (_) => const PondoInfoDialog(),
-                      ),
-                      onLongPress:
-                          (isSuperAdmin) ? _onAddPondoLongPressed : null,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "82",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          "Weight",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "PF / C",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          "Position",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
