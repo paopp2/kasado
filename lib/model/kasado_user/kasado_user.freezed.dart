@@ -28,6 +28,7 @@ class _$KasadoUserTearOff {
       String? email,
       String? phoneNumber,
       String? photoUrl,
+      UserBio? userBio,
       String teamName = '',
       bool hasPaid = false}) {
     return _KasadoUser(
@@ -36,6 +37,7 @@ class _$KasadoUserTearOff {
       email: email,
       phoneNumber: phoneNumber,
       photoUrl: photoUrl,
+      userBio: userBio,
       teamName: teamName,
       hasPaid: hasPaid,
     );
@@ -56,6 +58,7 @@ mixin _$KasadoUser {
   String? get email => throw _privateConstructorUsedError;
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get photoUrl => throw _privateConstructorUsedError;
+  UserBio? get userBio => throw _privateConstructorUsedError;
   String get teamName => throw _privateConstructorUsedError;
   bool get hasPaid => throw _privateConstructorUsedError;
 
@@ -76,8 +79,11 @@ abstract class $KasadoUserCopyWith<$Res> {
       String? email,
       String? phoneNumber,
       String? photoUrl,
+      UserBio? userBio,
       String teamName,
       bool hasPaid});
+
+  $UserBioCopyWith<$Res>? get userBio;
 }
 
 /// @nodoc
@@ -95,6 +101,7 @@ class _$KasadoUserCopyWithImpl<$Res> implements $KasadoUserCopyWith<$Res> {
     Object? email = freezed,
     Object? phoneNumber = freezed,
     Object? photoUrl = freezed,
+    Object? userBio = freezed,
     Object? teamName = freezed,
     Object? hasPaid = freezed,
   }) {
@@ -119,6 +126,10 @@ class _$KasadoUserCopyWithImpl<$Res> implements $KasadoUserCopyWith<$Res> {
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      userBio: userBio == freezed
+          ? _value.userBio
+          : userBio // ignore: cast_nullable_to_non_nullable
+              as UserBio?,
       teamName: teamName == freezed
           ? _value.teamName
           : teamName // ignore: cast_nullable_to_non_nullable
@@ -128,6 +139,17 @@ class _$KasadoUserCopyWithImpl<$Res> implements $KasadoUserCopyWith<$Res> {
           : hasPaid // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
+  }
+
+  @override
+  $UserBioCopyWith<$Res>? get userBio {
+    if (_value.userBio == null) {
+      return null;
+    }
+
+    return $UserBioCopyWith<$Res>(_value.userBio!, (value) {
+      return _then(_value.copyWith(userBio: value));
+    });
   }
 }
 
@@ -143,8 +165,12 @@ abstract class _$KasadoUserCopyWith<$Res> implements $KasadoUserCopyWith<$Res> {
       String? email,
       String? phoneNumber,
       String? photoUrl,
+      UserBio? userBio,
       String teamName,
       bool hasPaid});
+
+  @override
+  $UserBioCopyWith<$Res>? get userBio;
 }
 
 /// @nodoc
@@ -164,6 +190,7 @@ class __$KasadoUserCopyWithImpl<$Res> extends _$KasadoUserCopyWithImpl<$Res>
     Object? email = freezed,
     Object? phoneNumber = freezed,
     Object? photoUrl = freezed,
+    Object? userBio = freezed,
     Object? teamName = freezed,
     Object? hasPaid = freezed,
   }) {
@@ -188,6 +215,10 @@ class __$KasadoUserCopyWithImpl<$Res> extends _$KasadoUserCopyWithImpl<$Res>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      userBio: userBio == freezed
+          ? _value.userBio
+          : userBio // ignore: cast_nullable_to_non_nullable
+              as UserBio?,
       teamName: teamName == freezed
           ? _value.teamName
           : teamName // ignore: cast_nullable_to_non_nullable
@@ -209,6 +240,7 @@ class _$_KasadoUser extends _KasadoUser with DiagnosticableTreeMixin {
       this.email,
       this.phoneNumber,
       this.photoUrl,
+      this.userBio,
       this.teamName = '',
       this.hasPaid = false})
       : super._();
@@ -226,6 +258,8 @@ class _$_KasadoUser extends _KasadoUser with DiagnosticableTreeMixin {
   final String? phoneNumber;
   @override
   final String? photoUrl;
+  @override
+  final UserBio? userBio;
   @JsonKey()
   @override
   final String teamName;
@@ -235,7 +269,7 @@ class _$_KasadoUser extends _KasadoUser with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUser(id: $id, displayName: $displayName, email: $email, phoneNumber: $phoneNumber, photoUrl: $photoUrl, teamName: $teamName, hasPaid: $hasPaid)';
+    return 'KasadoUser(id: $id, displayName: $displayName, email: $email, phoneNumber: $phoneNumber, photoUrl: $photoUrl, userBio: $userBio, teamName: $teamName, hasPaid: $hasPaid)';
   }
 
   @override
@@ -248,6 +282,7 @@ class _$_KasadoUser extends _KasadoUser with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('phoneNumber', phoneNumber))
       ..add(DiagnosticsProperty('photoUrl', photoUrl))
+      ..add(DiagnosticsProperty('userBio', userBio))
       ..add(DiagnosticsProperty('teamName', teamName))
       ..add(DiagnosticsProperty('hasPaid', hasPaid));
   }
@@ -264,6 +299,7 @@ class _$_KasadoUser extends _KasadoUser with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.phoneNumber, phoneNumber) &&
             const DeepCollectionEquality().equals(other.photoUrl, photoUrl) &&
+            const DeepCollectionEquality().equals(other.userBio, userBio) &&
             const DeepCollectionEquality().equals(other.teamName, teamName) &&
             const DeepCollectionEquality().equals(other.hasPaid, hasPaid));
   }
@@ -276,6 +312,7 @@ class _$_KasadoUser extends _KasadoUser with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(email),
       const DeepCollectionEquality().hash(phoneNumber),
       const DeepCollectionEquality().hash(photoUrl),
+      const DeepCollectionEquality().hash(userBio),
       const DeepCollectionEquality().hash(teamName),
       const DeepCollectionEquality().hash(hasPaid));
 
@@ -297,6 +334,7 @@ abstract class _KasadoUser extends KasadoUser {
       String? email,
       String? phoneNumber,
       String? photoUrl,
+      UserBio? userBio,
       String teamName,
       bool hasPaid}) = _$_KasadoUser;
   const _KasadoUser._() : super._();
@@ -314,6 +352,8 @@ abstract class _KasadoUser extends KasadoUser {
   String? get phoneNumber;
   @override
   String? get photoUrl;
+  @override
+  UserBio? get userBio;
   @override
   String get teamName;
   @override

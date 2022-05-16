@@ -23,6 +23,9 @@ _$_KasadoUserInfo _$$_KasadoUserInfoFromJson(Map<String, dynamic> json) =>
               ?.map((e) => Ticket.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      userBio: json['userBio'] == null
+          ? null
+          : UserBio.fromJson(json['userBio'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_KasadoUserInfoToJson(_$_KasadoUserInfo instance) =>
@@ -36,4 +39,5 @@ Map<String, dynamic> _$$_KasadoUserInfoToJson(_$_KasadoUserInfo instance) =>
       'overviewStats': instance.overviewStats.toJson(),
       'teamId': instance.teamId,
       'tickets': instance.tickets.map((e) => e.toJson()).toList(),
+      'userBio': instance.userBio?.toJson(),
     };

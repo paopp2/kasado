@@ -31,7 +31,8 @@ class _$KasadoUserInfoTearOff {
       bool isTeamCaptain = false,
       OverviewStats overviewStats = const OverviewStats(),
       String? teamId,
-      List<Ticket> tickets = const []}) {
+      List<Ticket> tickets = const [],
+      UserBio? userBio}) {
     return _KasadoUserInfo(
       id: id,
       user: user,
@@ -42,6 +43,7 @@ class _$KasadoUserInfoTearOff {
       overviewStats: overviewStats,
       teamId: teamId,
       tickets: tickets,
+      userBio: userBio,
     );
   }
 
@@ -64,6 +66,7 @@ mixin _$KasadoUserInfo {
   OverviewStats get overviewStats => throw _privateConstructorUsedError;
   String? get teamId => throw _privateConstructorUsedError;
   List<Ticket> get tickets => throw _privateConstructorUsedError;
+  UserBio? get userBio => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -85,10 +88,12 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
       bool isTeamCaptain,
       OverviewStats overviewStats,
       String? teamId,
-      List<Ticket> tickets});
+      List<Ticket> tickets,
+      UserBio? userBio});
 
   $KasadoUserCopyWith<$Res> get user;
   $OverviewStatsCopyWith<$Res> get overviewStats;
+  $UserBioCopyWith<$Res>? get userBio;
 }
 
 /// @nodoc
@@ -111,6 +116,7 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
     Object? overviewStats = freezed,
     Object? teamId = freezed,
     Object? tickets = freezed,
+    Object? userBio = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -149,6 +155,10 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.tickets
           : tickets // ignore: cast_nullable_to_non_nullable
               as List<Ticket>,
+      userBio: userBio == freezed
+          ? _value.userBio
+          : userBio // ignore: cast_nullable_to_non_nullable
+              as UserBio?,
     ));
   }
 
@@ -163,6 +173,17 @@ class _$KasadoUserInfoCopyWithImpl<$Res>
   $OverviewStatsCopyWith<$Res> get overviewStats {
     return $OverviewStatsCopyWith<$Res>(_value.overviewStats, (value) {
       return _then(_value.copyWith(overviewStats: value));
+    });
+  }
+
+  @override
+  $UserBioCopyWith<$Res>? get userBio {
+    if (_value.userBio == null) {
+      return null;
+    }
+
+    return $UserBioCopyWith<$Res>(_value.userBio!, (value) {
+      return _then(_value.copyWith(userBio: value));
     });
   }
 }
@@ -183,12 +204,15 @@ abstract class _$KasadoUserInfoCopyWith<$Res>
       bool isTeamCaptain,
       OverviewStats overviewStats,
       String? teamId,
-      List<Ticket> tickets});
+      List<Ticket> tickets,
+      UserBio? userBio});
 
   @override
   $KasadoUserCopyWith<$Res> get user;
   @override
   $OverviewStatsCopyWith<$Res> get overviewStats;
+  @override
+  $UserBioCopyWith<$Res>? get userBio;
 }
 
 /// @nodoc
@@ -213,6 +237,7 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
     Object? overviewStats = freezed,
     Object? teamId = freezed,
     Object? tickets = freezed,
+    Object? userBio = freezed,
   }) {
     return _then(_KasadoUserInfo(
       id: id == freezed
@@ -251,6 +276,10 @@ class __$KasadoUserInfoCopyWithImpl<$Res>
           ? _value.tickets
           : tickets // ignore: cast_nullable_to_non_nullable
               as List<Ticket>,
+      userBio: userBio == freezed
+          ? _value.userBio
+          : userBio // ignore: cast_nullable_to_non_nullable
+              as UserBio?,
     ));
   }
 }
@@ -267,7 +296,8 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       this.isTeamCaptain = false,
       this.overviewStats = const OverviewStats(),
       this.teamId,
-      this.tickets = const []})
+      this.tickets = const [],
+      this.userBio})
       : super._();
 
   factory _$_KasadoUserInfo.fromJson(Map<String, dynamic> json) =>
@@ -297,10 +327,12 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   @JsonKey()
   @override
   final List<Ticket> tickets;
+  @override
+  final UserBio? userBio;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, overviewStats: $overviewStats, teamId: $teamId, tickets: $tickets)';
+    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, overviewStats: $overviewStats, teamId: $teamId, tickets: $tickets, userBio: $userBio)';
   }
 
   @override
@@ -316,7 +348,8 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('isTeamCaptain', isTeamCaptain))
       ..add(DiagnosticsProperty('overviewStats', overviewStats))
       ..add(DiagnosticsProperty('teamId', teamId))
-      ..add(DiagnosticsProperty('tickets', tickets));
+      ..add(DiagnosticsProperty('tickets', tickets))
+      ..add(DiagnosticsProperty('userBio', userBio));
   }
 
   @override
@@ -335,7 +368,8 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
             const DeepCollectionEquality()
                 .equals(other.overviewStats, overviewStats) &&
             const DeepCollectionEquality().equals(other.teamId, teamId) &&
-            const DeepCollectionEquality().equals(other.tickets, tickets));
+            const DeepCollectionEquality().equals(other.tickets, tickets) &&
+            const DeepCollectionEquality().equals(other.userBio, userBio));
   }
 
   @override
@@ -349,7 +383,8 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(isTeamCaptain),
       const DeepCollectionEquality().hash(overviewStats),
       const DeepCollectionEquality().hash(teamId),
-      const DeepCollectionEquality().hash(tickets));
+      const DeepCollectionEquality().hash(tickets),
+      const DeepCollectionEquality().hash(userBio));
 
   @JsonKey(ignore: true)
   @override
@@ -372,7 +407,8 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
       bool isTeamCaptain,
       OverviewStats overviewStats,
       String? teamId,
-      List<Ticket> tickets}) = _$_KasadoUserInfo;
+      List<Ticket> tickets,
+      UserBio? userBio}) = _$_KasadoUserInfo;
   const _KasadoUserInfo._() : super._();
 
   factory _KasadoUserInfo.fromJson(Map<String, dynamic> json) =
@@ -396,6 +432,8 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   String? get teamId;
   @override
   List<Ticket> get tickets;
+  @override
+  UserBio? get userBio;
   @override
   @JsonKey(ignore: true)
   _$KasadoUserInfoCopyWith<_KasadoUserInfo> get copyWith =>
