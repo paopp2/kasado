@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -92,8 +93,8 @@ class EditProfileDialog extends HookConsumerWidget {
                   validator: null,
                 ),
                 const Divider(),
-                const Text(
-                  "Choose two positions you play best",
+                const AutoSizeText(
+                  "Choose at most 2 positions you play best",
                   textAlign: TextAlign.center,
                 ),
                 Row(
