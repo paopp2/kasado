@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/enums/player_position.dart';
 import 'package:kasado/logic/profile/user_profile_state.dart';
@@ -6,6 +7,7 @@ import 'package:kasado/logic/profile/user_profile_view_model.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/ui/profile/components/player_position_chip.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
+import 'package:kasado/ui/shared/loading_widget.dart';
 
 class EditProfileDialog extends HookConsumerWidget {
   const EditProfileDialog({
@@ -17,12 +19,19 @@ class EditProfileDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isLoadingState = useState(false);
     final utils = ref.watch(kasadoUtilsProvider);
     final selectedBirthdate = ref.watch(birthdateProvider);
     model.tecBirthdate.text = utils.getDateFormat(
       selectedBirthdate,
       showYear: true,
     );
+
+    Future<void> _onCheckFabPressed() async {
+      isLoadingState.value = true;
+      await model.pushUserBio(context);
+      isLoadingState.value = false;
+    }
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -112,8 +121,10 @@ class EditProfileDialog extends HookConsumerWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.check),
-            onPressed: model.pushUserBio,
+            child: (isLoadingState.value)
+                ? const LoadingWidget(color: Colors.white)
+                : const Icon(Icons.check),
+            onPressed: _onCheckFabPressed,
             backgroundColor: Colors.green,
             foregroundColor: Colors.white,
           ),

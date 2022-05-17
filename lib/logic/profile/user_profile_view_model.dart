@@ -8,6 +8,7 @@ import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/profile/user_profile_state.dart';
 import 'package:kasado/logic/profile/user_profile_tec_mixin.dart';
 import 'package:kasado/logic/shared/view_model.dart';
+import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/model/user_bio/user_bio.dart';
@@ -16,6 +17,7 @@ final userProfileViewModel = Provider.autoDispose(
   (ref) => UserProfileViewModel(
     read: ref.read,
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
+    currentUser: ref.watch(currentUserProvider)!,
   ),
 );
 
@@ -23,9 +25,11 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
   UserProfileViewModel({
     required Reader read,
     required this.userInfoRepo,
+    required this.currentUser,
   }) : super(read);
 
   final UserInfoRepository userInfoRepo;
+  final KasadoUser currentUser;
 
   @override
   void initState([Map<String, Object?>? params]) {
@@ -95,7 +99,7 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
     );
   }
 
-  Future<void> pushUserBio() async {
+  Future<void> pushUserBio(BuildContext context) async {
     final userBio = UserBio(
       birthdate: read(birthdateProvider),
       weight: double.parse(tecWeight.text),
@@ -103,6 +107,7 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
       heightIn: double.parse(tecHeightIn.text),
       positions: read(playerPositionsProvider),
     );
-    print(userBio);
+    await userInfoRepo.pushUserBio(userId: currentUser.id, userBio: userBio);
+    Navigator.pop(context);
   }
 }

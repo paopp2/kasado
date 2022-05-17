@@ -29,6 +29,7 @@ class UserProfilePane extends HookConsumerWidget {
     final currentUser = ref.watch(currentUserProvider)!;
     final utils = ref.watch(kasadoUtilsProvider);
     final user = userInfo?.user;
+    final userBio = userInfo?.userBio;
     final isCurrentUser = currentUser.id == user?.id;
     final isSuperAdmin =
         ref.watch(currentUserInfoProvider).value?.isSuperAdmin ?? false;
@@ -116,15 +117,18 @@ class UserProfilePane extends HookConsumerWidget {
                     children: [
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
-                            "5'11",
-                            style: TextStyle(
+                            (userBio?.heightFt != null &&
+                                    userBio?.heightIn != null)
+                                ? "${userBio!.heightFt!.toStringAsFixed(0)}'${userBio.heightIn!.toStringAsFixed(0)}"
+                                : "-",
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
                           ),
-                          Text(
+                          const Text(
                             "Height",
                             style: TextStyle(
                               fontSize: 12,
@@ -135,15 +139,17 @@ class UserProfilePane extends HookConsumerWidget {
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
-                            "82",
-                            style: TextStyle(
+                            (userBio?.weight != null)
+                                ? userBio!.weight!.toStringAsFixed(0)
+                                : "-",
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
                           ),
-                          Text(
+                          const Text(
                             "Weight",
                             style: TextStyle(
                               fontSize: 12,
@@ -154,15 +160,19 @@ class UserProfilePane extends HookConsumerWidget {
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
-                            "PF / C",
-                            style: TextStyle(
+                            (userBio != null && userBio.positions.isNotEmpty)
+                                ? (userBio.positions.length == 1)
+                                    ? userBio.positions.first.name.toUpperCase()
+                                    : "${userBio.positions.first.name.toUpperCase()} / ${userBio.positions.last.name.toUpperCase()}"
+                                : '-',
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
                           ),
-                          Text(
+                          const Text(
                             "Position",
                             style: TextStyle(
                               fontSize: 12,
