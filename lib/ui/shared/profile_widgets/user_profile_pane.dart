@@ -227,11 +227,10 @@ class UserProfilePane extends HookConsumerWidget {
               icon: const Icon(Icons.edit),
               backgroundColor: Colors.blueGrey,
               foregroundColor: Colors.white,
-              onPressed: () => showDialog(
+              onPressed: () => model.openEditProfileDialog(
                 context: context,
-                builder: (_) => EditProfileDialog(
-                  model: model,
-                ),
+                userBio: userBio,
+                dialog: EditProfileDialog(model: model),
               ),
             )
           : null,

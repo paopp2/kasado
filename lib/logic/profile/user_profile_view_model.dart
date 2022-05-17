@@ -42,6 +42,30 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
     );
   }
 
+  Future<void> openEditProfileDialog({
+    required BuildContext context,
+    required Widget dialog,
+    required UserBio? userBio,
+  }) async {
+    if (userBio != null) {
+      setupUserBioToEdit(
+        userBio,
+        (birthDate, positions) {
+          read(birthdateProvider.notifier).state = birthDate;
+          read(playerPositionsProvider.notifier).state = positions;
+        },
+      );
+    }
+    showDialog(
+      context: context,
+      builder: (_) => dialog,
+    ).then((_) {
+      read(birthdateProvider.notifier).state = null;
+      read(playerPositionsProvider.notifier).state = [];
+      clearAllTecs();
+    });
+  }
+
   List<MapEntry> getSortedStatsAsMapEntries(Stats stats) {
     final statsMap = {
       'PTS': stats.points,
@@ -102,9 +126,9 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
   Future<void> pushUserBio(BuildContext context) async {
     final userBio = UserBio(
       birthdate: read(birthdateProvider),
-      weight: double.parse(tecWeight.text),
-      heightFt: double.parse(tecHeightFt.text),
-      heightIn: double.parse(tecHeightIn.text),
+      weight: double.tryParse(tecWeight.text),
+      heightFt: double.tryParse(tecHeightFt.text),
+      heightIn: double.tryParse(tecHeightIn.text),
       positions: read(playerPositionsProvider),
     );
     await userInfoRepo.pushUserBio(userId: currentUser.id, userBio: userBio);
