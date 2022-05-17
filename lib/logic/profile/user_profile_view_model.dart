@@ -131,6 +131,7 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
       heightIn: double.tryParse(tecHeightIn.text),
       positions: read(playerPositionsProvider),
     );
+    read(mixpanel)!.track("Pushed UserBio", properties: userBio.toJson());
     await userInfoRepo.pushUserBio(userId: currentUser.id, userBio: userBio);
     Navigator.pop(context);
   }
