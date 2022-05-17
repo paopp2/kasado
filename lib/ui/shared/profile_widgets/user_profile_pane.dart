@@ -166,11 +166,10 @@ class UserProfilePane extends HookConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            (userBio != null && userBio.positions.isNotEmpty)
-                                ? (userBio.positions.length == 1)
-                                    ? userBio.positions.first.name.toUpperCase()
-                                    : "${userBio.positions.first.name.toUpperCase()} / ${userBio.positions.last.name.toUpperCase()}"
-                                : '-',
+                            userBio?.positionAsString(
+                                  showDashWhenEmpty: true,
+                                ) ??
+                                '-',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,

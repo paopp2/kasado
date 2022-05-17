@@ -101,6 +101,7 @@ class SlotPlayerTile extends StatelessWidget {
                   backgroundImage: NetworkImage(player.photoUrl!),
                 ),
               ),
+              trailing: Text(player.userBio?.positionAsString() ?? ''),
             );
           },
         ),

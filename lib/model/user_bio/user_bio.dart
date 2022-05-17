@@ -16,6 +16,12 @@ class UserBio with _$UserBio {
     @Default([]) List<PlayerPosition> positions,
   }) = _UserBio;
 
+  String positionAsString({bool showDashWhenEmpty = false}) => positions.isEmpty
+      ? (showDashWhenEmpty ? '-' : '')
+      : positions.length == 1
+          ? positions.first.name.toUpperCase()
+          : "${positions.first.name.toUpperCase()} / ${positions.last.name.toUpperCase()}";
+
   factory UserBio.fromJson(Map<String, dynamic> json) =>
       _$UserBioFromJson(json);
 }
