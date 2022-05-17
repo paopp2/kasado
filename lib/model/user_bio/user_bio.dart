@@ -9,6 +9,7 @@ part 'user_bio.g.dart';
 class UserBio with _$UserBio {
   const UserBio._();
   const factory UserBio({
+    DateTime? birthdate,
     double? heightFt,
     double? heightIn,
     double? weight,

@@ -7,6 +7,9 @@ part of 'user_bio.dart';
 // **************************************************************************
 
 _$_UserBio _$$_UserBioFromJson(Map<String, dynamic> json) => _$_UserBio(
+      birthdate: json['birthdate'] == null
+          ? null
+          : DateTime.parse(json['birthdate'] as String),
       heightFt: (json['heightFt'] as num?)?.toDouble(),
       heightIn: (json['heightIn'] as num?)?.toDouble(),
       weight: (json['weight'] as num?)?.toDouble(),
@@ -18,6 +21,7 @@ _$_UserBio _$$_UserBioFromJson(Map<String, dynamic> json) => _$_UserBio(
 
 Map<String, dynamic> _$$_UserBioToJson(_$_UserBio instance) =>
     <String, dynamic>{
+      'birthdate': instance.birthdate?.toIso8601String(),
       'heightFt': instance.heightFt,
       'heightIn': instance.heightIn,
       'weight': instance.weight,

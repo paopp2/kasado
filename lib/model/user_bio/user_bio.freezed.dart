@@ -23,11 +23,13 @@ class _$UserBioTearOff {
   const _$UserBioTearOff();
 
   _UserBio call(
-      {double? heightFt,
+      {DateTime? birthdate,
+      double? heightFt,
       double? heightIn,
       double? weight,
       List<PlayerPosition> positions = const []}) {
     return _UserBio(
+      birthdate: birthdate,
       heightFt: heightFt,
       heightIn: heightIn,
       weight: weight,
@@ -45,6 +47,7 @@ const $UserBio = _$UserBioTearOff();
 
 /// @nodoc
 mixin _$UserBio {
+  DateTime? get birthdate => throw _privateConstructorUsedError;
   double? get heightFt => throw _privateConstructorUsedError;
   double? get heightIn => throw _privateConstructorUsedError;
   double? get weight => throw _privateConstructorUsedError;
@@ -60,7 +63,8 @@ abstract class $UserBioCopyWith<$Res> {
   factory $UserBioCopyWith(UserBio value, $Res Function(UserBio) then) =
       _$UserBioCopyWithImpl<$Res>;
   $Res call(
-      {double? heightFt,
+      {DateTime? birthdate,
+      double? heightFt,
       double? heightIn,
       double? weight,
       List<PlayerPosition> positions});
@@ -76,12 +80,17 @@ class _$UserBioCopyWithImpl<$Res> implements $UserBioCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? birthdate = freezed,
     Object? heightFt = freezed,
     Object? heightIn = freezed,
     Object? weight = freezed,
     Object? positions = freezed,
   }) {
     return _then(_value.copyWith(
+      birthdate: birthdate == freezed
+          ? _value.birthdate
+          : birthdate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       heightFt: heightFt == freezed
           ? _value.heightFt
           : heightFt // ignore: cast_nullable_to_non_nullable
@@ -108,7 +117,8 @@ abstract class _$UserBioCopyWith<$Res> implements $UserBioCopyWith<$Res> {
       __$UserBioCopyWithImpl<$Res>;
   @override
   $Res call(
-      {double? heightFt,
+      {DateTime? birthdate,
+      double? heightFt,
       double? heightIn,
       double? weight,
       List<PlayerPosition> positions});
@@ -125,12 +135,17 @@ class __$UserBioCopyWithImpl<$Res> extends _$UserBioCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? birthdate = freezed,
     Object? heightFt = freezed,
     Object? heightIn = freezed,
     Object? weight = freezed,
     Object? positions = freezed,
   }) {
     return _then(_UserBio(
+      birthdate: birthdate == freezed
+          ? _value.birthdate
+          : birthdate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       heightFt: heightFt == freezed
           ? _value.heightFt
           : heightFt // ignore: cast_nullable_to_non_nullable
@@ -155,12 +170,18 @@ class __$UserBioCopyWithImpl<$Res> extends _$UserBioCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_UserBio extends _UserBio with DiagnosticableTreeMixin {
   const _$_UserBio(
-      {this.heightFt, this.heightIn, this.weight, this.positions = const []})
+      {this.birthdate,
+      this.heightFt,
+      this.heightIn,
+      this.weight,
+      this.positions = const []})
       : super._();
 
   factory _$_UserBio.fromJson(Map<String, dynamic> json) =>
       _$$_UserBioFromJson(json);
 
+  @override
+  final DateTime? birthdate;
   @override
   final double? heightFt;
   @override
@@ -173,7 +194,7 @@ class _$_UserBio extends _UserBio with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserBio(heightFt: $heightFt, heightIn: $heightIn, weight: $weight, positions: $positions)';
+    return 'UserBio(birthdate: $birthdate, heightFt: $heightFt, heightIn: $heightIn, weight: $weight, positions: $positions)';
   }
 
   @override
@@ -181,6 +202,7 @@ class _$_UserBio extends _UserBio with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserBio'))
+      ..add(DiagnosticsProperty('birthdate', birthdate))
       ..add(DiagnosticsProperty('heightFt', heightFt))
       ..add(DiagnosticsProperty('heightIn', heightIn))
       ..add(DiagnosticsProperty('weight', weight))
@@ -192,6 +214,7 @@ class _$_UserBio extends _UserBio with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UserBio &&
+            const DeepCollectionEquality().equals(other.birthdate, birthdate) &&
             const DeepCollectionEquality().equals(other.heightFt, heightFt) &&
             const DeepCollectionEquality().equals(other.heightIn, heightIn) &&
             const DeepCollectionEquality().equals(other.weight, weight) &&
@@ -201,6 +224,7 @@ class _$_UserBio extends _UserBio with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(birthdate),
       const DeepCollectionEquality().hash(heightFt),
       const DeepCollectionEquality().hash(heightIn),
       const DeepCollectionEquality().hash(weight),
@@ -219,7 +243,8 @@ class _$_UserBio extends _UserBio with DiagnosticableTreeMixin {
 
 abstract class _UserBio extends UserBio {
   const factory _UserBio(
-      {double? heightFt,
+      {DateTime? birthdate,
+      double? heightFt,
       double? heightIn,
       double? weight,
       List<PlayerPosition> positions}) = _$_UserBio;
@@ -227,6 +252,8 @@ abstract class _UserBio extends UserBio {
 
   factory _UserBio.fromJson(Map<String, dynamic> json) = _$_UserBio.fromJson;
 
+  @override
+  DateTime? get birthdate;
   @override
   double? get heightFt;
   @override
