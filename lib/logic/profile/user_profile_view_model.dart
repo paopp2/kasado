@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
+import 'package:kasado/logic/profile/user_profile_tec_mixin.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/stats/stats.dart';
@@ -14,7 +15,7 @@ final userProfileViewModel = Provider.autoDispose(
   ),
 );
 
-class UserProfileViewModel extends ViewModel {
+class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
   UserProfileViewModel({
     required Reader read,
     required this.userInfoRepo,
