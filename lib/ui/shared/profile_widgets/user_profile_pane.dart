@@ -54,8 +54,12 @@ class UserProfilePane extends HookConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     CircleAvatar(
-                      backgroundImage: NetworkImage(user.photoUrl!),
-                      radius: 40,
+                      radius: 42,
+                      backgroundColor: Colors.blueGrey,
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(user.photoUrl!),
+                        radius: 40,
+                      ),
                     ),
                     SizedBox(
                       width: constraints.maxWidth * 0.5,
@@ -63,6 +67,7 @@ class UserProfilePane extends HookConsumerWidget {
                         padding: const EdgeInsets.all(15.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             AutoSizeText(
                               user.displayName!,
@@ -76,6 +81,7 @@ class UserProfilePane extends HookConsumerWidget {
                               user.email!,
                               textAlign: TextAlign.left,
                               maxLines: 1,
+                              style: const TextStyle(color: Colors.grey),
                             ),
                             Visibility(
                               visible: isCurrentUser || isSuperAdmin,
@@ -88,9 +94,7 @@ class UserProfilePane extends HookConsumerWidget {
                                     ? _onAddPondoLongPressed
                                     : null,
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0,
-                                  ),
+                                  padding: const EdgeInsets.only(top: 8),
                                   child: Text(
                                     '${userInfo?.pondo} Php',
                                     style: const TextStyle(

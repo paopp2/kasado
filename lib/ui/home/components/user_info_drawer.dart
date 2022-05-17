@@ -56,7 +56,7 @@ class UserInfoDrawer extends HookConsumerWidget {
                               vertical: constraints.maxHeight * 0.03,
                             ),
                             child: CircleAvatar(
-                              backgroundColor: const Color(0xFF5F45A4),
+                              backgroundColor: Colors.blueGrey,
                               radius: 48,
                               child: CircleAvatar(
                                 radius: 45,
