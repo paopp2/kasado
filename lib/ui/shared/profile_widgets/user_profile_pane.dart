@@ -8,6 +8,7 @@ import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/ui/admin/player_manager/pondo_input_dialog.dart';
 import 'package:kasado/ui/home/components/pondo_info_dialog.dart';
+import 'package:kasado/ui/profile/components/edit_profile_dialog.dart';
 import 'package:kasado/ui/shared/profile_widgets/career_stats_list_pane.dart';
 import 'package:kasado/ui/shared/profile_widgets/game_history_list_pane.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -216,7 +217,10 @@ class UserProfilePane extends HookConsumerWidget {
               icon: const Icon(Icons.edit),
               backgroundColor: Colors.blueGrey,
               foregroundColor: Colors.white,
-              onPressed: () => print("Allow editing of profile"),
+              onPressed: () => showDialog(
+                context: context,
+                builder: (_) => const EditProfileDialog(),
+              ),
             )
           : null,
     );
