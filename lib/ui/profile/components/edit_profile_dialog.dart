@@ -62,6 +62,7 @@ class EditProfileDialog extends HookConsumerWidget {
                     tec: model.tecBirthdate,
                     hint: 'Birthdate',
                     isDisabled: true,
+                    validator: null,
                   ),
                 ),
                 Row(
@@ -71,6 +72,7 @@ class EditProfileDialog extends HookConsumerWidget {
                         tec: model.tecHeightFt,
                         hint: 'Height (ft)',
                         isDouble: true,
+                        validator: null,
                       ),
                     ),
                     Expanded(
@@ -78,6 +80,7 @@ class EditProfileDialog extends HookConsumerWidget {
                         tec: model.tecHeightIn,
                         hint: 'Height (in)',
                         isDouble: true,
+                        validator: null,
                       ),
                     ),
                   ],
@@ -86,6 +89,7 @@ class EditProfileDialog extends HookConsumerWidget {
                   tec: model.tecWeight,
                   hint: 'Weight (kg)',
                   isDouble: true,
+                  validator: null,
                 ),
                 const Divider(),
                 const Text(
