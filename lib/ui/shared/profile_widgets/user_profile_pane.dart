@@ -29,7 +29,7 @@ class UserProfilePane extends HookConsumerWidget {
     final currentUser = ref.watch(currentUserProvider)!;
     final utils = ref.watch(kasadoUtilsProvider);
     final user = userInfo?.user;
-    final userBio = userInfo?.userBio;
+    final userBio = userInfo?.user.userBio;
     final isCurrentUser = currentUser.id == user?.id;
     final isSuperAdmin =
         ref.watch(currentUserInfoProvider).value?.isSuperAdmin ?? false;

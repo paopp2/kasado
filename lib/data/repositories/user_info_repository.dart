@@ -48,7 +48,11 @@ class UserInfoRepository {
   }) async {
     await firestoreHelper.setData(
       path: FirestorePath.docUserInfo(userId),
-      data: {'userBio': userBio.toJson()},
+      data: {
+        'user': {
+          'userBio': userBio.toJson(),
+        },
+      },
       merge: true,
     );
   }
