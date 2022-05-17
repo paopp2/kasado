@@ -74,6 +74,7 @@ class EditProfileDialog extends HookConsumerWidget {
                         hint: 'Height (ft)',
                         isDouble: true,
                         validator: null,
+                        maxLength: 1,
                       ),
                     ),
                     Expanded(
@@ -82,6 +83,7 @@ class EditProfileDialog extends HookConsumerWidget {
                         hint: 'Height (in)',
                         isDouble: true,
                         validator: null,
+                        maxLength: 2,
                       ),
                     ),
                   ],
