@@ -62,7 +62,7 @@ class PondoInputDialog extends HookConsumerWidget {
             DataEntryField(
               tec: pondoTec,
               hint: 'Pondo to add/deduct',
-              isMoney: true,
+              isDouble: true,
             ),
             (isLoadingState.value)
                 ? const LoadingWidget()

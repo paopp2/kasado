@@ -10,6 +10,7 @@ import 'package:kasado/logic/profile/user_profile_tec_mixin.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/stats/stats.dart';
+import 'package:kasado/model/user_bio/user_bio.dart';
 
 final userProfileViewModel = Provider.autoDispose(
   (ref) => UserProfileViewModel(
@@ -65,8 +66,8 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
   }
 
   Future<void> setBirthDate(BuildContext context) async {
-    final initialDate = read(birthDateProvider) ?? DateTime.now();
-    read(birthDateProvider.notifier).state = await showDatePicker(
+    final initialDate = read(birthdateProvider) ?? DateTime.now();
+    read(birthdateProvider.notifier).state = await showDatePicker(
       context: context,
       initialDate: initialDate,
       firstDate: DateTime(1980),
@@ -92,5 +93,16 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
         }
       },
     );
+  }
+
+  Future<void> pushUserBio() async {
+    final userBio = UserBio(
+      birthdate: read(birthdateProvider),
+      weight: double.parse(tecWeight.text),
+      heightFt: double.parse(tecHeightFt.text),
+      heightIn: double.parse(tecHeightIn.text),
+      positions: read(playerPositionsProvider),
+    );
+    print(userBio);
   }
 }

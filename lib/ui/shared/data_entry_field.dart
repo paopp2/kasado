@@ -10,7 +10,7 @@ class DataEntryField extends StatelessWidget {
     this.maxLength,
     this.isDisabled = false,
     this.validator = InputValidators.mustNotBeEmpty,
-    this.isMoney = false,
+    this.isDouble = false,
     this.onChanged,
     this.maxLines = 1,
     this.onFieldSubmitted,
@@ -24,7 +24,7 @@ class DataEntryField extends StatelessWidget {
   final TextEditingController? tec;
   final int? maxLength;
   final bool isDisabled;
-  final bool isMoney;
+  final bool isDouble;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final int? maxLines;
@@ -37,7 +37,7 @@ class DataEntryField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<TextInputFormatter> textInputFormatters = [];
-    if (isMoney) {
+    if (isDouble) {
       textInputFormatters.add(
         FilteringTextInputFormatter.allow(
           RegExp(r'^\d+\.?\d{0,2}'),
@@ -73,6 +73,9 @@ class DataEntryField extends StatelessWidget {
         ),
         textInputAction: textInputAction,
         autofocus: autofocus,
+        keyboardType: isDouble
+            ? const TextInputType.numberWithOptions(decimal: true)
+            : null,
       ),
     );
   }

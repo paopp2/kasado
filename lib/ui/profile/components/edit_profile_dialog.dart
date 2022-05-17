@@ -18,9 +18,9 @@ class EditProfileDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final utils = ref.watch(kasadoUtilsProvider);
-    final selectedBirthDate = ref.watch(birthDateProvider);
+    final selectedBirthdate = ref.watch(birthdateProvider);
     model.tecBirthdate.text = utils.getDateFormat(
-      selectedBirthDate,
+      selectedBirthdate,
       showYear: true,
     );
 
@@ -61,12 +61,14 @@ class EditProfileDialog extends HookConsumerWidget {
                       child: DataEntryField(
                         tec: model.tecHeightFt,
                         hint: 'Height (ft)',
+                        isDouble: true,
                       ),
                     ),
                     Expanded(
                       child: DataEntryField(
                         tec: model.tecHeightIn,
                         hint: 'Height (in)',
+                        isDouble: true,
                       ),
                     ),
                   ],
@@ -74,6 +76,7 @@ class EditProfileDialog extends HookConsumerWidget {
                 DataEntryField(
                   tec: model.tecWeight,
                   hint: 'Weight (kg)',
+                  isDouble: true,
                 ),
                 const Divider(),
                 const Text(
@@ -110,7 +113,7 @@ class EditProfileDialog extends HookConsumerWidget {
           ),
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.check),
-            onPressed: () {},
+            onPressed: model.pushUserBio,
             backgroundColor: Colors.green,
             foregroundColor: Colors.white,
           ),

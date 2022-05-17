@@ -20,7 +20,7 @@ final userStatsStreamProvider =
   return userInfoRepo.getUserStatsStream(userId);
 });
 
-final birthDateProvider = StateProvider<DateTime?>((ref) => null);
+final birthdateProvider = StateProvider<DateTime?>((ref) => null);
 
 final playerPositionsProvider =
     StateProvider<List<PlayerPosition>>((ref) => []);
