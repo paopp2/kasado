@@ -9,6 +9,7 @@ import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/model/ticket/ticket.dart';
+import 'package:kasado/model/user_bio/user_bio.dart';
 
 final userInfoRepositoryProvider = Provider.autoDispose(
   (ref) => UserInfoRepository(
@@ -39,6 +40,21 @@ class UserInfoRepository {
         data: KasadoUserInfo(id: user.id, user: user).toJson(),
       );
     }
+  }
+
+  Future<void> pushUserBio({
+    required String userId,
+    required UserBio userBio,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docUserInfo(userId),
+      data: {
+        'user': {
+          'userBio': userBio.toJson(),
+        },
+      },
+      merge: true,
+    );
   }
 
   Future<KasadoUserInfo?> getUserInfo(String userId) async {

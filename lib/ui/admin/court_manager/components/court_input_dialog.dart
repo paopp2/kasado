@@ -47,7 +47,7 @@ class CourtInputDialog extends HookConsumerWidget {
                     ),
                     DataEntryField(
                       hint: 'Ticket Price',
-                      isMoney: true,
+                      isDouble: true,
                       tec: controller.tecTicketPrice,
                     ),
                     Row(

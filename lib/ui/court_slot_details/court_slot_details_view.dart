@@ -34,8 +34,8 @@ class CourtSlotDetailsView extends HookConsumerWidget {
       courtSlotStreamProvider('${court.id}|${baseCourtSlot.slotId}'),
     );
     final utils = ref.watch(kasadoUtilsProvider);
-    final tabIndex = useState(0);
-    final tabController = useTabController(initialLength: (isAdmin) ? 4 : 2);
+    final pageIndex = useState(0);
+    final pageController = usePageController();
 
     useEffect(() {
       ref.read(mixpanel)!.track(
@@ -48,7 +48,6 @@ class CourtSlotDetailsView extends HookConsumerWidget {
           ),
         },
       );
-      tabController.addListener(() => (tabIndex.value = tabController.index));
       model.initState({'court_id': baseCourtSlot.courtId});
 
       return model.dispose;
@@ -92,8 +91,9 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                     ),
                     const Divider(thickness: 2),
                     Expanded(
-                      child: TabBarView(
-                        controller: tabController,
+                      child: PageView(
+                        controller: pageController,
+                        onPageChanged: (i) => pageIndex.value = i,
                         children: [
                           SlotPlayersTab(
                             constraints: constraints,
@@ -128,8 +128,12 @@ class CourtSlotDetailsView extends HookConsumerWidget {
           ),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            onTap: tabController.animateTo,
-            currentIndex: tabIndex.value,
+            onTap: (i) => pageController.animateToPage(
+              i,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.ease,
+            ),
+            currentIndex: pageIndex.value,
             selectedItemColor: Colors.black,
             items: [
               const BottomNavigationBarItem(

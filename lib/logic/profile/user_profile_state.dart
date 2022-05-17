@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/enums/player_position.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/stats/stats.dart';
@@ -18,3 +19,8 @@ final userStatsStreamProvider =
 
   return userInfoRepo.getUserStatsStream(userId);
 });
+
+final birthdateProvider = StateProvider<DateTime?>((ref) => null);
+
+final playerPositionsProvider =
+    StateProvider<List<PlayerPosition>>((ref) => []);

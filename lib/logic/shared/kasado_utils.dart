@@ -152,13 +152,13 @@ class KasadoUtils {
   }
 
   String getPercentageFormat(double number) {
-    if (number.isNaN) return "N/A";
+    if (number.isNaN) return "-";
 
     return "${number.toStringAsFixed(0)}%";
   }
 
   String getDoubleFormat(double number) {
-    if (number.isNaN) return "N/A";
+    if (number.isNaN) return "-";
 
     return number.toStringAsFixed(1);
   }

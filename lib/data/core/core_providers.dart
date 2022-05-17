@@ -23,17 +23,19 @@ final authStateChangesProvider = StreamProvider<User?>(
     (ref) => ref.watch(fireauthProvider).authStateChanges());
 
 final currentUserProvider = Provider.autoDispose<KasadoUser?>((ref) {
+  final userInfo = ref.watch(currentUserInfoProvider);
   User? firebaseUser = ref.watch(fireauthProvider).currentUser;
 
   if (firebaseUser == null) return null;
 
-  return KasadoUser(
-    id: firebaseUser.uid,
-    displayName: firebaseUser.displayName,
-    email: firebaseUser.email,
-    phoneNumber: firebaseUser.phoneNumber,
-    photoUrl: firebaseUser.photoURL,
-  );
+  return userInfo.value?.user ??
+      KasadoUser(
+        id: firebaseUser.uid,
+        displayName: firebaseUser.displayName,
+        email: firebaseUser.email,
+        phoneNumber: firebaseUser.phoneNumber,
+        photoUrl: firebaseUser.photoURL,
+      );
 });
 
 final currentUserInfoProvider = StreamProvider.autoDispose<KasadoUserInfo?>(

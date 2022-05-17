@@ -17,7 +17,7 @@ class RankingsTab extends HookConsumerWidget {
     final model = ref.watch(statLeadersViewModel);
 
     useEffect(() {
-      ref.read(mixpanel)!.track("Viewed StandingsTab");
+      ref.read(mixpanel)!.track("Viewed RankingsTab");
 
       return;
     }, []);
