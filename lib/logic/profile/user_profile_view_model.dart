@@ -1,8 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/enums/player_position.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
+import 'package:kasado/logic/profile/user_profile_state.dart';
 import 'package:kasado/logic/profile/user_profile_tec_mixin.dart';
 import 'package:kasado/logic/shared/view_model.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
@@ -59,5 +62,35 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
       pondo: pondo,
     );
     Navigator.pop(context);
+  }
+
+  Future<void> setBirthDate(BuildContext context) async {
+    final initialDate = read(birthDateProvider) ?? DateTime.now();
+    read(birthDateProvider.notifier).state = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(1980),
+      lastDate: DateTime.now(),
+      initialEntryMode: DatePickerEntryMode.input,
+    );
+  }
+
+  void modifyPlayerPositionList({
+    required PlayerPosition position,
+    required bool isAdd,
+  }) {
+    read(playerPositionsProvider.notifier).update(
+      (state) {
+        if (state.length == 2 && isAdd) {
+          Fluttertoast.showToast(msg: "Maximum of 2 positions only");
+
+          return state;
+        } else if (isAdd) {
+          return [...state, position];
+        } else {
+          return [...state]..remove(position);
+        }
+      },
+    );
   }
 }

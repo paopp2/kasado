@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/enums/player_position.dart';
+import 'package:kasado/logic/profile/user_profile_state.dart';
+import 'package:kasado/logic/profile/user_profile_view_model.dart';
+import 'package:kasado/logic/shared/kasado_utils.dart';
+import 'package:kasado/ui/profile/components/player_position_chip.dart';
 import 'package:kasado/ui/shared/data_entry_field.dart';
 
-class EditProfileDialog extends StatelessWidget {
+class EditProfileDialog extends HookConsumerWidget {
   const EditProfileDialog({
     Key? key,
+    required this.model,
   }) : super(key: key);
 
+  final UserProfileViewModel model;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final utils = ref.watch(kasadoUtilsProvider);
+    final selectedBirthDate = ref.watch(birthDateProvider);
+    model.tecBirthdate.text = utils.getDateFormat(
+      selectedBirthDate,
+      showYear: true,
+    );
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -31,27 +47,62 @@ class EditProfileDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-                const DataEntryField(hint: 'Birthdate'),
+                GestureDetector(
+                  onTap: () => model.setBirthDate(context),
+                  child: DataEntryField(
+                    tec: model.tecBirthdate,
+                    hint: 'Birthdate',
+                    isDisabled: true,
+                  ),
+                ),
                 Row(
-                  children: const [
-                    Expanded(child: DataEntryField(hint: 'Height (ft)')),
-                    Expanded(child: DataEntryField(hint: 'Height (in)')),
+                  children: [
+                    Expanded(
+                      child: DataEntryField(
+                        tec: model.tecHeightFt,
+                        hint: 'Height (ft)',
+                      ),
+                    ),
+                    Expanded(
+                      child: DataEntryField(
+                        tec: model.tecHeightIn,
+                        hint: 'Height (in)',
+                      ),
+                    ),
                   ],
                 ),
-                const DataEntryField(hint: 'Weight (kg)'),
+                DataEntryField(
+                  tec: model.tecWeight,
+                  hint: 'Weight (kg)',
+                ),
                 const Divider(),
                 const Text(
                   "Choose two positions you play best",
                   textAlign: TextAlign.center,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Chip(label: Text('PG')),
-                    Chip(label: Text('SG')),
-                    Chip(label: Text('SF')),
-                    Chip(label: Text('PF')),
-                    Chip(label: Text('C')),
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    PlayerPositionChip(
+                      model: model,
+                      position: PlayerPosition.pg,
+                    ),
+                    PlayerPositionChip(
+                      model: model,
+                      position: PlayerPosition.sg,
+                    ),
+                    PlayerPositionChip(
+                      model: model,
+                      position: PlayerPosition.sf,
+                    ),
+                    PlayerPositionChip(
+                      model: model,
+                      position: PlayerPosition.pf,
+                    ),
+                    PlayerPositionChip(
+                      model: model,
+                      position: PlayerPosition.c,
+                    ),
                   ],
                 ),
               ],

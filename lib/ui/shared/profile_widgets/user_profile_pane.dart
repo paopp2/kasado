@@ -219,7 +219,9 @@ class UserProfilePane extends HookConsumerWidget {
               foregroundColor: Colors.white,
               onPressed: () => showDialog(
                 context: context,
-                builder: (_) => const EditProfileDialog(),
+                builder: (_) => EditProfileDialog(
+                  model: model,
+                ),
               ),
             )
           : null,
