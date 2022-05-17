@@ -4,7 +4,6 @@ import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/overview_stats/overview_stats.dart';
 import 'package:kasado/model/ticket/ticket.dart';
-import 'package:kasado/model/user_bio/user_bio.dart';
 
 part 'kasado_user_info.freezed.dart';
 part 'kasado_user_info.g.dart';
@@ -22,7 +21,6 @@ class KasadoUserInfo with _$KasadoUserInfo {
     @Default(OverviewStats()) OverviewStats overviewStats,
     String? teamId,
     @Default([]) List<Ticket> tickets,
-    UserBio? userBio,
   }) = _KasadoUserInfo;
 
   bool get hasReserved {
