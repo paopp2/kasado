@@ -143,7 +143,9 @@ class GameTeamsSetupPane extends HookConsumerWidget {
                     ),
                     title: Text(player.displayName!),
                     subtitle: Text(
-                      "GP: ${courtSlot.slotInfoPerPlayer[player.id]?.timesPlayed ?? 0}",
+                      "GP: ${courtSlot.slotInfoPerPlayer[player.id]?.timesPlayed ?? 0}"
+                      "${player.userBio?.positions == null ? '' : ' | '}"
+                      "${(player.userBio?.positions == null) ? '' : player.userBio?.positions.map((pos) => pos.name.toUpperCase()).toList().join(',')}",
                     ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
