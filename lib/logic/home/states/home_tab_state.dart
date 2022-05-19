@@ -23,5 +23,3 @@ final courtsStreamProvider = StreamProvider.autoDispose(
         : const Stream.empty();
   },
 );
-
-final isLoadedProvider = StateProvider((ref) => false);
