@@ -2,7 +2,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kasado/constants/enums/slot_and_user_state.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/court_slot_details/court_slot_details_view_model.dart';
 import 'package:kasado/model/court/court.dart';
@@ -39,7 +38,6 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const _buttonTextStyle = TextStyle(fontSize: 18, color: Colors.white);
-    final slotAndUserState = model.getSlotAndUserState(courtSlot);
     final isSuperAdmin = currentUserInfo.isSuperAdmin;
     final isModifyingSlot = useState(false);
     final slotHasPlayerAndLeaveDisallowed =
@@ -116,23 +114,53 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
       isModifyingSlot.value = false;
     }
 
-    VoidCallback? _getJoinLeaveCallback() {
-      if (slotHasPlayerAndLeaveDisallowed) return null;
+    // TODO: Refactor this to logic layer (temp quick fix for prod)
+    JoinLeaveSlotButtonState getButtonState() {
+      final slotHasPlayer = courtSlot.hasPlayer(currentUser);
 
-      final disabledSlotAndUserStates = [
-        SlotAndUserState.error,
-        SlotAndUserState.loading,
-        SlotAndUserState.slotClosedByAdmin,
-        SlotAndUserState.slotEnded,
-        SlotAndUserState.slotFull,
-        SlotAndUserState.userHasConflictWithOtherSlot,
-      ];
+      if (slotHasPlayerAndLeaveDisallowed) {
+        return JoinLeaveSlotButtonState(
+          onPressed: null,
+          color: null,
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.check, color: Colors.white),
+              Text('JOINED', style: _buttonTextStyle),
+            ],
+          ),
+        );
+      }
 
-      return (disabledSlotAndUserStates.contains(slotAndUserState))
-          ? (slotAndUserState == SlotAndUserState.slotEnded && isSuperAdmin)
-              ? _joinLeaveSlot
-              : null
-          : _joinLeaveSlot;
+      if (courtSlot.isFull && courtSlot.hasPlayer(currentUser) && allowLeave) {
+        return JoinLeaveSlotButtonState(
+          onPressed: _joinLeaveSlot,
+          color: Colors.red.shade300,
+          content: const Text("LEAVE GAME", style: _buttonTextStyle),
+        );
+      }
+
+      final slotIsFull = courtSlot.isFull;
+      if (slotIsFull ||
+          (currentUserInfo.hasSchedConflict(courtSlot) && !slotHasPlayer)) {
+        return JoinLeaveSlotButtonState(
+          onPressed: null,
+          color: null,
+          content: Text(
+            (slotIsFull) ? "FULL" : "IN CONFLICT",
+            style: _buttonTextStyle,
+          ),
+        );
+      }
+
+      return JoinLeaveSlotButtonState(
+        onPressed: _joinLeaveSlot,
+        color: slotHasPlayer ? Colors.red.shade300 : Colors.green.shade300,
+        content: Text(
+          (slotHasPlayer) ? "LEAVE GAME" : "JOIN GAME",
+          style: _buttonTextStyle,
+        ),
+      );
     }
 
     Future<void> _onSuperAdminLongPressed() async {
@@ -143,6 +171,8 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
       );
     }
 
+    final buttonState = getButtonState();
+
     return Visibility(
       visible: showButton,
       child: SizedBox(
@@ -151,24 +181,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
         child: ElevatedButton(
           child: isModifyingSlot.value
               ? const LoadingWidget(color: Colors.white)
-              : (slotHasPlayerAndLeaveDisallowed)
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.check, color: Colors.white),
-                        Text('JOINED', style: _buttonTextStyle),
-                      ],
-                    )
-                  : Text(
-                      slotAndUserState.when(
-                        slotClosedByAdmin: () => "CLOSED BY ADMIN",
-                        userHasConflictWithOtherSlot: () => "IN CONFLICT",
-                        slotFull: () => "FULL",
-                        slotHasUser: () => "LEAVE GAME",
-                        orElse: () => "JOIN GAME",
-                      ),
-                      style: _buttonTextStyle,
-                    ),
+              : buttonState.content,
           style: ButtonStyle(
             elevation: MaterialStateProperty.all(0),
             shape: MaterialStateProperty.all(
@@ -176,20 +189,25 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
                 borderRadius: BorderRadius.circular(30),
               ),
             ),
-            backgroundColor: MaterialStateProperty.resolveWith((states) {
-              return slotAndUserState.when(
-                slotHasUser: () => (allowLeave)
-                    ? Colors.red.shade300 // Color for "LEAVE GAME"
-                    : Colors.green.shade100, // Color for "🗸 JOINED"
-                userAvailable: () => Colors.green.shade300,
-                orElse: () => null,
-              );
-            }),
+            backgroundColor: MaterialStateProperty.resolveWith(
+              (states) => buttonState.color,
+            ),
           ),
-          onPressed: _getJoinLeaveCallback(),
+          onPressed: buttonState.onPressed,
           onLongPress: (isSuperAdmin) ? _onSuperAdminLongPressed : null,
         ),
       ),
     );
   }
+}
+
+class JoinLeaveSlotButtonState {
+  const JoinLeaveSlotButtonState({
+    required this.onPressed,
+    required this.color,
+    required this.content,
+  });
+  final VoidCallback? onPressed;
+  final Color? color;
+  final Widget content;
 }

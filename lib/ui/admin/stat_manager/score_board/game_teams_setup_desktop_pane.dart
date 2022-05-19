@@ -71,6 +71,9 @@ class GameTeamsSetupDesktopPane extends HookConsumerWidget {
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(player.photoUrl!),
                           ),
+                          trailing: Text(
+                            player.userBio?.positionAsString() ?? '',
+                          ),
                         );
                       },
                     ),
