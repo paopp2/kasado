@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
@@ -39,16 +40,26 @@ class StatsControllerTab extends HookConsumerWidget {
       error: (e, _) => Text(e.toString()),
       loading: () => const LoadingWidget(),
       data: (gameStats) {
-        return (gameStats == null)
-            ? GameTeamsSetupPane(
-                controller: controller,
-                courtSlot: courtSlot,
-              )
-            : LiveStatsInputPane(
-                controller: controller,
-                courtSlot: courtSlot,
-                gameStats: gameStats,
-              );
+        final pageController = usePageController(
+          initialPage: gameStats == null ? 0 : 1,
+        );
+
+        return PageView(
+          controller: pageController,
+          children: [
+            GameTeamsSetupPane(
+              controller: controller,
+              courtSlot: courtSlot,
+            ),
+            (gameStats == null)
+                ? const Center(child: Text('Game not started'))
+                : LiveStatsInputPane(
+                    controller: controller,
+                    courtSlot: courtSlot,
+                    gameStats: gameStats,
+                  ),
+          ],
+        );
       },
     );
   }
