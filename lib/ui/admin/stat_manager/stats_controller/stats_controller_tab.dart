@@ -52,7 +52,7 @@ class StatsControllerTab extends HookConsumerWidget {
               courtSlot: courtSlot,
             ),
             (gameStats == null)
-                ? const Center(child: Text('Game not started'))
+                ? const Center(child: Text('Game not started yet'))
                 : LiveStatsInputPane(
                     controller: controller,
                     courtSlot: courtSlot,

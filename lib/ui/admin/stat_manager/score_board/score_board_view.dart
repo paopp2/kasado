@@ -30,18 +30,30 @@ class ScoreBoardView extends HookConsumerWidget {
             error: (e, _) => Text(e.toString()),
             loading: () => const LoadingWidget(),
             data: (gameStats) {
-              return (gameStats == null)
-                  ? GameTeamsSetupDesktopPane(
-                      constraints: constraints,
-                      baseCourtSlot: baseCourtSlot,
-                      controller: controller,
-                    )
-                  : ScoreBoardPane(
-                      controller: controller,
-                      baseCourtSlot: baseCourtSlot,
-                      constraints: constraints,
-                      gameStats: gameStats,
-                    );
+              final pageController = PageController(
+                initialPage: gameStats == null ? 0 : 1,
+              );
+
+              return PageView(
+                controller: pageController,
+                children: [
+                  GameTeamsSetupDesktopPane(
+                    constraints: constraints,
+                    baseCourtSlot: baseCourtSlot,
+                    controller: controller,
+                  ),
+                  (gameStats == null)
+                      ? const Center(
+                          child: Text('Game not started yet'),
+                        )
+                      : ScoreBoardPane(
+                          controller: controller,
+                          baseCourtSlot: baseCourtSlot,
+                          constraints: constraints,
+                          gameStats: gameStats,
+                        ),
+                ],
+              );
             },
           ),
         );
