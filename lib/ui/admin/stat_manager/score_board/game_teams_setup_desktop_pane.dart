@@ -48,68 +48,89 @@ class GameTeamsSetupDesktopPane extends HookConsumerWidget {
           children: [
             Column(
               children: [
-                Text(
-                  'HOME',
-                  style: TextStyle(
-                    fontSize: constraints.maxHeight * 0.1,
-                    color: Colors.blue.shade200,
-                  ),
-                ),
-                Expanded(
-                  child: SizedBox(
-                    width: constraints.maxWidth * 0.3,
-                    child: ListView.builder(
-                      itemCount: homeTeamPlayers.length,
-                      itemBuilder: (context, i) {
-                        final player = homeTeamPlayers[i];
-
-                        return ListTile(
-                          title: Text(
-                            player.displayName!,
-                            style: const TextStyle(fontSize: 35),
-                          ),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(player.photoUrl!),
-                          ),
-                          trailing: Text(
-                            player.userBio?.positionAsString() ?? '',
-                          ),
-                        );
-                      },
+                Center(
+                  child: Text(
+                    "NEXT GAME",
+                    style: TextStyle(
+                      fontSize: constraints.maxHeight * 0.1,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-              ],
-            ),
-            const VerticalDivider(),
-            Column(
-              children: [
-                Text(
-                  'AWAY',
-                  style: TextStyle(
-                    color: Colors.red.shade200,
-                    fontSize: constraints.maxHeight * 0.1,
-                  ),
-                ),
                 Expanded(
-                  child: SizedBox(
-                    width: constraints.maxWidth * 0.3,
-                    child: ListView.builder(
-                      itemCount: awayTeamPlayers.length,
-                      itemBuilder: (context, i) {
-                        final player = awayTeamPlayers[i];
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            'HOME',
+                            style: TextStyle(
+                              fontSize: constraints.maxHeight * 0.1,
+                              color: Colors.blue.shade200,
+                            ),
+                          ),
+                          Expanded(
+                            child: SizedBox(
+                              width: constraints.maxWidth * 0.3,
+                              child: ListView.builder(
+                                itemCount: homeTeamPlayers.length,
+                                itemBuilder: (context, i) {
+                                  final player = homeTeamPlayers[i];
 
-                        return ListTile(
-                          title: Text(
-                            player.displayName!,
-                            style: const TextStyle(fontSize: 35),
+                                  return ListTile(
+                                    title: Text(
+                                      player.displayName!,
+                                      style: const TextStyle(fontSize: 35),
+                                    ),
+                                    leading: CircleAvatar(
+                                      backgroundImage:
+                                          NetworkImage(player.photoUrl!),
+                                    ),
+                                    trailing: Text(
+                                      player.userBio?.positionAsString() ?? '',
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           ),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(player.photoUrl!),
+                        ],
+                      ),
+                      const VerticalDivider(),
+                      Column(
+                        children: [
+                          Text(
+                            'AWAY',
+                            style: TextStyle(
+                              color: Colors.red.shade200,
+                              fontSize: constraints.maxHeight * 0.1,
+                            ),
                           ),
-                        );
-                      },
-                    ),
+                          Expanded(
+                            child: SizedBox(
+                              width: constraints.maxWidth * 0.3,
+                              child: ListView.builder(
+                                itemCount: awayTeamPlayers.length,
+                                itemBuilder: (context, i) {
+                                  final player = awayTeamPlayers[i];
+
+                                  return ListTile(
+                                    title: Text(
+                                      player.displayName!,
+                                      style: const TextStyle(fontSize: 35),
+                                    ),
+                                    leading: CircleAvatar(
+                                      backgroundImage:
+                                          NetworkImage(player.photoUrl!),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
