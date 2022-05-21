@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/app_router.dart';
@@ -14,6 +15,19 @@ class HomeNotifButton extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUserInfo = ref.watch(currentUserInfoProvider).value;
+
+    useEffect(() {
+      // User's age set here (for analytics) since this is where the
+      // userInfo is first read by the app
+      final userBirthdate = currentUserInfo?.user.userBio?.birthdate;
+      if (userBirthdate != null) {
+        final ageDuration = DateTime.now().difference(userBirthdate);
+        final ageInYears = ageDuration.inDays ~/ 365;
+        ref.read(mixpanel)!.getPeople().set('age', ageInYears);
+      }
+
+      return;
+    }, [currentUserInfo]);
 
     return (currentUserInfo == null)
         ? const SizedBox()
