@@ -88,11 +88,37 @@ class LiveStatsInputPane extends StatelessWidget {
                   ),
                 ],
               ),
-              TimerButton(
-                controller: controller,
-                courtSlot: courtSlot,
-                gameStats: gameStats,
-                showMillis: true,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TimerButton(
+                    controller: controller,
+                    courtSlot: courtSlot,
+                    gameStats: gameStats,
+                    showMillis: true,
+                  ),
+                  if (gameStats.isPaused) ...[
+                    const SizedBox(width: 50),
+                    IconButton(
+                      icon: const Icon(Icons.remove),
+                      color: Colors.red,
+                      onPressed: () => controller.addMinusGameClock(
+                        courtSlot: courtSlot,
+                        gameStats: gameStats,
+                        isAdd: false,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.add),
+                      color: Colors.green,
+                      onPressed: () => controller.addMinusGameClock(
+                        courtSlot: courtSlot,
+                        gameStats: gameStats,
+                        isAdd: true,
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ],
           ),

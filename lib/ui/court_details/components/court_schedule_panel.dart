@@ -109,7 +109,6 @@ _AppointmentDataSource _getCalendarDataSource(Court court, bool isAdmin) {
                 RecurrenceProperties(
                   recurrenceType: RecurrenceType.weekly,
                   startDate: DateTime.now(),
-                  endDate: DateTime(2022, 5, 22),
                   weekDays: [weekdaysList[sched.weekdayIndex]],
                 ),
                 DateTime(2015, 1, 1),

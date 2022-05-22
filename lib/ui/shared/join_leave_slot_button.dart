@@ -114,9 +114,17 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
       isModifyingSlot.value = false;
     }
 
-    // TODO: Refactor this to logic layer (temp quick fix for prod)
+    // TODO: Move this function elsewhere (temp quick fix for prod)
     JoinLeaveSlotButtonState getButtonState() {
       final slotHasPlayer = courtSlot.hasPlayer(currentUser);
+
+      if (courtSlot.isClosedByAdmin) {
+        return const JoinLeaveSlotButtonState(
+          onPressed: null,
+          color: null,
+          content: Text('CLOSED', style: _buttonTextStyle),
+        );
+      }
 
       if (slotHasPlayerAndLeaveDisallowed) {
         return JoinLeaveSlotButtonState(
