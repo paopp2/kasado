@@ -129,7 +129,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
       if (slotHasPlayerAndLeaveDisallowed) {
         return JoinLeaveSlotButtonState(
           onPressed: null,
-          color: null,
+          color: Colors.green.shade100,
           content: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
