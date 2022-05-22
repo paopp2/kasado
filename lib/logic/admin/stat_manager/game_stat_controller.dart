@@ -370,6 +370,18 @@ class GameStatController {
     );
   }
 
+  Future<void> addMinusGameClock({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+    required bool isAdd,
+  }) async {
+    await statRepo.addMinusGameClock(
+      courtSlot: courtSlot,
+      gameStats: gameStats,
+      isAdd: isAdd,
+    );
+  }
+
   void toggleToNextSortState() {
     final sortState = read(teamsPlayersSetupSortProvider);
     read(teamsPlayersSetupSortProvider.notifier).update(

@@ -8,6 +8,7 @@ import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/stats/stats.dart';
+import 'package:time/time.dart';
 
 final statRepositoryProvider = Provider.autoDispose(
   (ref) => StatRepository(
@@ -61,6 +62,29 @@ class StatRepository {
               'remainingMsOnPaused':
                   gameStats.endsAt!.difference(DateTime.now()).inMilliseconds
             },
+      merge: true,
+    );
+  }
+
+  Future<void> addMinusGameClock({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+    required bool isAdd,
+  }) async {
+    final remainingMins = gameStats.remainingOnPaused!.inMinutes;
+    final newRemaningTime =
+        (isAdd ? (remainingMins + 1) : (remainingMins - 1)).minutes;
+    final newEndsAt = DateTime.now().add(newRemaningTime);
+    await firestoreHelper.setData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStats.id,
+      ),
+      data: {
+        'endsAt': newEndsAt.toIso8601String(),
+        'remainingMsOnPaused': newRemaningTime.inMilliseconds,
+      },
       merge: true,
     );
   }
