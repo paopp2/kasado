@@ -12,6 +12,8 @@ import 'package:kasado/model/court_sched/court_sched.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_location/kasado_location.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
+import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/ui/shared/user_search/user_search_pane.dart';
 import 'package:uuid/uuid.dart';
 
 final courtAdminController = Provider.autoDispose(
@@ -172,6 +174,38 @@ class CourtAdminController with CourtAdminTecMixin {
     );
 
     Navigator.pop(context);
+  }
+
+  Future<void> addAdminForCourt({
+    required BuildContext context,
+    required Court court,
+  }) async {
+    final selectedUserInfo = await showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        child: UserSearchPane(
+          onUserTapped: (uInfo) => Navigator.pop(context, uInfo),
+        ),
+      ),
+    ) as KasadoUserInfo?;
+    if (selectedUserInfo == null) return;
+
+    final newAdminId = selectedUserInfo.id;
+
+    final List<String> updatedAdminIdList = [
+      ...court.adminIds,
+      newAdminId,
+    ];
+
+    await courtRepo.updateAdminIdList(
+      courtId: court.id,
+      updatedAdminIdList: updatedAdminIdList,
+    );
+
+    await userInfoRepo.setUserAdminPrivileges(
+      userId: newAdminId,
+      isAdmin: true,
+    );
   }
 
   Future<void> setCourtSlotClosed({
