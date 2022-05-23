@@ -74,6 +74,8 @@ class StatLeadersPane extends HookConsumerWidget {
                                         : null,
                                   ),
                                   builder: (context, snapshot) {
+                                    final stats = userInfo.overviewStats;
+
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10),
@@ -108,9 +110,8 @@ class StatLeadersPane extends HookConsumerWidget {
                                               ),
                                               title: Text(player.displayName!),
                                               trailing: Text(
-                                                model.getStatValue(
-                                                  stats: userInfo.overviewStats,
-                                                  statType: statType,
+                                                stats.getStatValueAsString(
+                                                  statType,
                                                 ),
                                                 style: const TextStyle(
                                                     fontSize: 15),

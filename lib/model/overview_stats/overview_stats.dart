@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kasado/constants/enums/stat_type.dart';
 
 part 'overview_stats.freezed.dart';
 part 'overview_stats.g.dart';
@@ -50,6 +51,50 @@ class OverviewStats with _$OverviewStats {
           (totalFta - totalFtm) -
           totalTO) /
       gamesPlayed;
+
+  String getStatValueAsString(StatType statType) {
+    final double statValue;
+    switch (statType) {
+      case StatType.effRating:
+        statValue = effRating;
+        break;
+      case StatType.standing:
+        statValue = winPercent;
+        break;
+      case StatType.ptsPerGame:
+        statValue = avePointsPerGame;
+        break;
+      case StatType.astPerGame:
+        statValue = aveAssistsPerGame;
+        break;
+      case StatType.rebPerGame:
+        statValue = aveReboundsPerGame;
+        break;
+      case StatType.blkPerGame:
+        statValue = aveBlocksPerGame;
+        break;
+      case StatType.stlPerGame:
+        statValue = aveStlPerGame;
+        break;
+      case StatType.fgPercent:
+        statValue = aveFgPercent;
+        break;
+      case StatType.threePtPercent:
+        statValue = aveThreePtPercent;
+        break;
+      case StatType.threePtMade:
+        statValue = totalThreePM.toDouble();
+        break;
+    }
+
+    return (statType == StatType.standing)
+        ? '$totalWins - $totalLosses'
+        : (statType == StatType.threePtMade)
+            ? statValue.toStringAsFixed(0) // No decimals
+            : statValue.isNaN
+                ? '-'
+                : statValue.toStringAsFixed(1);
+  }
 
   factory OverviewStats.fromJson(Map<String, dynamic> json) =>
       _$OverviewStatsFromJson(json);
