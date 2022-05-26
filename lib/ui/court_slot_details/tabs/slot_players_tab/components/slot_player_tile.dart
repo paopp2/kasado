@@ -38,12 +38,27 @@ class SlotPlayerTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final isQueuedAtCourt = fetchedCourtSlot.playerIdQueue.contains(player.id);
 
-    return Dismissible(
-      key: UniqueKey(),
-      onDismissed: (_) => model.removeFromCourtSlot(
+    Future<void> _onSlotPlayerTileDismissed(
+      DismissDirection dismissDirection,
+    ) async {
+      // Assert that the removed player's ID is not in the game queue.
+      // If player is removed from the courtSlot but still in the queue, this
+      // will result to a null exception as the referenced playerId (from queue)
+      // doesn't exist anymore (removed from courtSlot.players)
+      await adminController.removePlayerFromQueue(
+        player: player,
+        courtSlot: fetchedCourtSlot,
+      );
+
+      await model.removeFromCourtSlot(
         playerToRemove: player,
         baseCourtSlot: fetchedCourtSlot,
-      ),
+      );
+    }
+
+    return Dismissible(
+      key: UniqueKey(),
+      onDismissed: _onSlotPlayerTileDismissed,
       direction: isAdmin ? DismissDirection.startToEnd : DismissDirection.none,
       child: Padding(
         padding: const EdgeInsets.all(3.0),

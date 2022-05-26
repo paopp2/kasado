@@ -39,6 +39,17 @@ class CourtRepository {
     );
   }
 
+  Future<void> updateAdminIdList({
+    required String courtId,
+    required List<String> updatedAdminIdList,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docCourt(courtId),
+      data: {'adminIds': updatedAdminIdList},
+      merge: true,
+    );
+  }
+
   Future<void> deleteCourt(Court court) async {
     await firestoreHelper.deleteData(path: FirestorePath.docCourt(court.id));
   }

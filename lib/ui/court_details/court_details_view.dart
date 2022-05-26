@@ -199,9 +199,10 @@ class CourtDetailsView extends HookConsumerWidget {
                             forEdit: true,
                             court: court,
                           )
-                      : () {
-                          // TODO: Add an admin for court
-                        },
+                      : () => adminController.addAdminForCourt(
+                            context: context,
+                            court: court,
+                          ),
                   label: Text(
                     tabIndex.value == 0 ? 'Edit Court' : 'Add Admin',
                   ),
