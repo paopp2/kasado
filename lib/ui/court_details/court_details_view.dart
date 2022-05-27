@@ -89,6 +89,8 @@ class CourtDetailsView extends HookConsumerWidget {
                               ),
                               right: 0,
                               left: 0,
+                              top: 0,
+                              bottom: 0,
                             ),
                             Positioned(
                               bottom: 0,
