@@ -298,6 +298,13 @@ class GameStatController {
   }) async {
     final homePlayers = [...courtSlot.stageHomeTeamPlayers!];
     final awayPlayers = [...courtSlot.stageAwayTeamPlayers!];
+
+    if (homePlayers.length != 5 || awayPlayers.length != 5) {
+      Fluttertoast.showToast(msg: "Lacking players");
+
+      return;
+    }
+
     final isPlayerFromHome = homePlayers.contains(playerToTrade);
     final playerOrigTeam = isPlayerFromHome ? homePlayers : awayPlayers;
     final playerFutureTeam = isPlayerFromHome ? awayPlayers : homePlayers;
