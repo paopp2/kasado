@@ -111,8 +111,10 @@ class GameTeamsSetupPane extends HookConsumerWidget {
             (sortState == 0)
                 ? "Queued Only"
                 : (sortState == 1)
-                    ? "All (Alphabetical)"
-                    : "All (According to Games Played)",
+                    ? "Added to stage teams"
+                    : (sortState == 2)
+                        ? "All (Alphabetical)"
+                        : "All (According to Games Played)",
           ),
           style: TextButton.styleFrom(
             padding: const EdgeInsets.all(10.0),

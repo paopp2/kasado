@@ -385,7 +385,7 @@ class GameStatController {
   void toggleToNextSortState() {
     final sortState = read(teamsPlayersSetupSortProvider);
     read(teamsPlayersSetupSortProvider.notifier).update(
-      (s) => (sortState < 2) ? s + 1 : 0,
+      (s) => (sortState < 3) ? s + 1 : 0,
     );
   }
 
@@ -405,17 +405,26 @@ class GameStatController {
     ];
     final allPlayers = [...courtSlot.players];
 
-    if (sortState != 0) {
-      allPlayers.sort((a, b) {
-        return (sortState == 1)
-            ? a.displayName!
-                .toLowerCase()
-                .compareTo(b.displayName!.toLowerCase())
-            : (courtSlot.slotInfoPerPlayer[a.id]?.timesPlayed ?? 0)
-                .compareTo(courtSlot.slotInfoPerPlayer[b.id]?.timesPlayed ?? 0);
-      });
+    // If sortState == 0, show players added to queue only
+    if (sortState == 0) return queuedPlayers;
+
+    // If sortState == 1, show players staged to home & away teams
+    if (sortState == 1) {
+      return [
+        ...courtSlot.stageHomeTeamPlayers!,
+        ...courtSlot.stageAwayTeamPlayers!,
+      ];
     }
 
-    return (sortState == 0) ? queuedPlayers : allPlayers;
+    allPlayers.sort((a, b) {
+      return (sortState == 2)
+          // If sortState == 2, show players alphabetically
+          ? a.displayName!.toLowerCase().compareTo(b.displayName!.toLowerCase())
+          // If sortState == 3, show players according to games played
+          : (courtSlot.slotInfoPerPlayer[a.id]?.timesPlayed ?? 0)
+              .compareTo(courtSlot.slotInfoPerPlayer[b.id]?.timesPlayed ?? 0);
+    });
+
+    return allPlayers;
   }
 }
