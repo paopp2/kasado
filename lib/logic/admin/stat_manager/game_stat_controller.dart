@@ -1,3 +1,4 @@
+import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -375,6 +376,31 @@ class GameStatController {
       gameStats: gameStats,
       isPaused: isPaused,
     );
+  }
+
+  Future<void> setGameClock({
+    required BuildContext context,
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+    required bool isPaused,
+  }) async {
+    if (isPaused) {
+      final remainingOnPaused = gameStats.remainingOnPaused!;
+      final newRemainingTime = await showDurationPicker(
+        context: context,
+        initialTime: remainingOnPaused,
+        baseUnit: BaseUnit.second,
+      );
+      if (newRemainingTime == null) return;
+
+      await statRepo.setGameClock(
+        courtSlot: courtSlot,
+        gameStats: gameStats,
+        newRemainingTime: newRemainingTime,
+      );
+    } else {
+      Fluttertoast.showToast(msg: "Pause before setting a new time");
+    }
   }
 
   Future<void> addMinusGameClock({

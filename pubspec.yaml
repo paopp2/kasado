@@ -60,6 +60,7 @@ dependencies:
   flutter_typeahead: ^3.2.5
   mobile_scanner: ^1.0.0
   algolia: ^1.1.1
+  duration_picker: ^1.1.0+1
 
 dev_dependencies:
   flutter_test:

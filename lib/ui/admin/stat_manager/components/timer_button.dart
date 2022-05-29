@@ -83,6 +83,14 @@ class TimerButton extends HookConsumerWidget {
                 isPaused: isPaused,
               );
             },
+      onLongPress: (displayTimeOnly)
+          ? null
+          : () => controller.setGameClock(
+                context: context,
+                courtSlot: courtSlot,
+                gameStats: gameStats,
+                isPaused: isPaused,
+              ),
     );
   }
 }

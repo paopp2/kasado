@@ -66,6 +66,26 @@ class StatRepository {
     );
   }
 
+  Future<void> setGameClock({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+    required Duration newRemainingTime,
+  }) async {
+    final newEndsAt = DateTime.now().add(newRemainingTime);
+    await firestoreHelper.setData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStats.id,
+      ),
+      data: {
+        'endsAt': newEndsAt.toIso8601String(),
+        'remainingMsOnPaused': newRemainingTime.inMilliseconds,
+      },
+      merge: true,
+    );
+  }
+
   Future<void> addMinusGameClock({
     required CourtSlot courtSlot,
     required GameStats gameStats,
