@@ -8,7 +8,6 @@ import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/model/stats/stats.dart';
-import 'package:time/time.dart';
 
 final statRepositoryProvider = Provider.autoDispose(
   (ref) => StatRepository(
@@ -66,15 +65,12 @@ class StatRepository {
     );
   }
 
-  Future<void> addMinusGameClock({
+  Future<void> setGameClock({
     required CourtSlot courtSlot,
     required GameStats gameStats,
-    required bool isAdd,
+    required Duration newRemainingTime,
   }) async {
-    final remainingMins = gameStats.remainingOnPaused!.inMinutes;
-    final newRemaningTime =
-        (isAdd ? (remainingMins + 1) : (remainingMins - 1)).minutes;
-    final newEndsAt = DateTime.now().add(newRemaningTime);
+    final newEndsAt = DateTime.now().add(newRemainingTime);
     await firestoreHelper.setData(
       path: FirestorePath.docGameStats(
         courtSlot.courtId,
@@ -83,7 +79,7 @@ class StatRepository {
       ),
       data: {
         'endsAt': newEndsAt.toIso8601String(),
-        'remainingMsOnPaused': newRemaningTime.inMilliseconds,
+        'remainingMsOnPaused': newRemainingTime.inMilliseconds,
       },
       merge: true,
     );
