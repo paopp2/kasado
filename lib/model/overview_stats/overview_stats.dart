@@ -56,6 +56,9 @@ class OverviewStats with _$OverviewStats {
   String getStatValueAsString(StatType statType) {
     final double statValue;
     switch (statType) {
+      case StatType.mmr:
+        statValue = mmr.toDouble();
+        break;
       case StatType.effRating:
         statValue = effRating;
         break;
@@ -90,7 +93,7 @@ class OverviewStats with _$OverviewStats {
 
     return (statType == StatType.standing)
         ? '$totalWins - $totalLosses'
-        : (statType == StatType.threePtMade)
+        : (statType == StatType.threePtMade || statType == StatType.mmr)
             ? statValue.toStringAsFixed(0) // No decimals
             : statValue.isNaN
                 ? '-'

@@ -425,6 +425,18 @@ class StatRepository {
     );
   }
 
+  Stream<List<KasadoUserInfo>> getMmrLeadersStream() {
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) =>
+              query.orderBy('overviewStats.mmr', descending: true).limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) => user.overviewStats.gamesPlayed == 0));
+  }
+
   Stream<List<KasadoUserInfo>> getEffRatingLeadersStream() {
     return firestoreHelper
         .collectionStream(
