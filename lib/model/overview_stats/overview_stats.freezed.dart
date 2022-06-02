@@ -23,7 +23,8 @@ class _$OverviewStatsTearOff {
   const _$OverviewStatsTearOff();
 
   _OverviewStats call(
-      {int totalThreePA = 0,
+      {int mmr = 0,
+      int totalThreePA = 0,
       int totalThreePM = 0,
       int totalTwoPA = 0,
       int totalTwoPM = 0,
@@ -39,6 +40,7 @@ class _$OverviewStatsTearOff {
       int gamesPlayed = 0,
       bool isHiddenFromRankings = false}) {
     return _OverviewStats(
+      mmr: mmr,
       totalThreePA: totalThreePA,
       totalThreePM: totalThreePM,
       totalTwoPA: totalTwoPA,
@@ -67,6 +69,7 @@ const $OverviewStats = _$OverviewStatsTearOff();
 
 /// @nodoc
 mixin _$OverviewStats {
+  int get mmr => throw _privateConstructorUsedError;
   int get totalThreePA => throw _privateConstructorUsedError;
   int get totalThreePM => throw _privateConstructorUsedError;
   int get totalTwoPA => throw _privateConstructorUsedError;
@@ -95,7 +98,8 @@ abstract class $OverviewStatsCopyWith<$Res> {
           OverviewStats value, $Res Function(OverviewStats) then) =
       _$OverviewStatsCopyWithImpl<$Res>;
   $Res call(
-      {int totalThreePA,
+      {int mmr,
+      int totalThreePA,
       int totalThreePM,
       int totalTwoPA,
       int totalTwoPM,
@@ -123,6 +127,7 @@ class _$OverviewStatsCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? mmr = freezed,
     Object? totalThreePA = freezed,
     Object? totalThreePM = freezed,
     Object? totalTwoPA = freezed,
@@ -140,6 +145,10 @@ class _$OverviewStatsCopyWithImpl<$Res>
     Object? isHiddenFromRankings = freezed,
   }) {
     return _then(_value.copyWith(
+      mmr: mmr == freezed
+          ? _value.mmr
+          : mmr // ignore: cast_nullable_to_non_nullable
+              as int,
       totalThreePA: totalThreePA == freezed
           ? _value.totalThreePA
           : totalThreePA // ignore: cast_nullable_to_non_nullable
@@ -212,7 +221,8 @@ abstract class _$OverviewStatsCopyWith<$Res>
       __$OverviewStatsCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int totalThreePA,
+      {int mmr,
+      int totalThreePA,
       int totalThreePM,
       int totalTwoPA,
       int totalTwoPM,
@@ -242,6 +252,7 @@ class __$OverviewStatsCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? mmr = freezed,
     Object? totalThreePA = freezed,
     Object? totalThreePM = freezed,
     Object? totalTwoPA = freezed,
@@ -259,6 +270,10 @@ class __$OverviewStatsCopyWithImpl<$Res>
     Object? isHiddenFromRankings = freezed,
   }) {
     return _then(_OverviewStats(
+      mmr: mmr == freezed
+          ? _value.mmr
+          : mmr // ignore: cast_nullable_to_non_nullable
+              as int,
       totalThreePA: totalThreePA == freezed
           ? _value.totalThreePA
           : totalThreePA // ignore: cast_nullable_to_non_nullable
@@ -327,7 +342,8 @@ class __$OverviewStatsCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
   const _$_OverviewStats(
-      {this.totalThreePA = 0,
+      {this.mmr = 0,
+      this.totalThreePA = 0,
       this.totalThreePM = 0,
       this.totalTwoPA = 0,
       this.totalTwoPM = 0,
@@ -347,6 +363,9 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
   factory _$_OverviewStats.fromJson(Map<String, dynamic> json) =>
       _$$_OverviewStatsFromJson(json);
 
+  @JsonKey()
+  @override
+  final int mmr;
   @JsonKey()
   @override
   final int totalThreePA;
@@ -395,7 +414,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OverviewStats(totalThreePA: $totalThreePA, totalThreePM: $totalThreePM, totalTwoPA: $totalTwoPA, totalTwoPM: $totalTwoPM, totalFta: $totalFta, totalFtm: $totalFtm, totalOReb: $totalOReb, totalDReb: $totalDReb, totalAst: $totalAst, totalStl: $totalStl, totalBlk: $totalBlk, totalTO: $totalTO, totalWins: $totalWins, gamesPlayed: $gamesPlayed, isHiddenFromRankings: $isHiddenFromRankings)';
+    return 'OverviewStats(mmr: $mmr, totalThreePA: $totalThreePA, totalThreePM: $totalThreePM, totalTwoPA: $totalTwoPA, totalTwoPM: $totalTwoPM, totalFta: $totalFta, totalFtm: $totalFtm, totalOReb: $totalOReb, totalDReb: $totalDReb, totalAst: $totalAst, totalStl: $totalStl, totalBlk: $totalBlk, totalTO: $totalTO, totalWins: $totalWins, gamesPlayed: $gamesPlayed, isHiddenFromRankings: $isHiddenFromRankings)';
   }
 
   @override
@@ -403,6 +422,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'OverviewStats'))
+      ..add(DiagnosticsProperty('mmr', mmr))
       ..add(DiagnosticsProperty('totalThreePA', totalThreePA))
       ..add(DiagnosticsProperty('totalThreePM', totalThreePM))
       ..add(DiagnosticsProperty('totalTwoPA', totalTwoPA))
@@ -425,6 +445,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _OverviewStats &&
+            const DeepCollectionEquality().equals(other.mmr, mmr) &&
             const DeepCollectionEquality()
                 .equals(other.totalThreePA, totalThreePA) &&
             const DeepCollectionEquality()
@@ -451,6 +472,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(mmr),
       const DeepCollectionEquality().hash(totalThreePA),
       const DeepCollectionEquality().hash(totalThreePM),
       const DeepCollectionEquality().hash(totalTwoPA),
@@ -480,7 +502,8 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
 
 abstract class _OverviewStats extends OverviewStats {
   const factory _OverviewStats(
-      {int totalThreePA,
+      {int mmr,
+      int totalThreePA,
       int totalThreePM,
       int totalTwoPA,
       int totalTwoPM,
@@ -500,6 +523,8 @@ abstract class _OverviewStats extends OverviewStats {
   factory _OverviewStats.fromJson(Map<String, dynamic> json) =
       _$_OverviewStats.fromJson;
 
+  @override
+  int get mmr;
   @override
   int get totalThreePA;
   @override

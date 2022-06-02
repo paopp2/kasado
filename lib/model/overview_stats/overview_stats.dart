@@ -9,6 +9,7 @@ part 'overview_stats.g.dart';
 class OverviewStats with _$OverviewStats {
   const OverviewStats._();
   const factory OverviewStats({
+    @Default(0) int mmr,
     @Default(0) int totalThreePA,
     @Default(0) int totalThreePM,
     @Default(0) int totalTwoPA,

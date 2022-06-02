@@ -398,9 +398,12 @@ class StatRepository {
       baseColPath: FirestorePath.colUserInfos(),
       dataFromId: (playerId) {
         final playerStats = gameStats[playerId]!;
+        final mmrIncrement =
+            playerStats.eff + (playerStats.hasWonGame! ? 10 : -10);
 
         return {
           "overviewStats": {
+            "mmr": FieldValue.increment(mmrIncrement),
             "totalThreePA": FieldValue.increment(playerStats.threePA),
             "totalThreePM": FieldValue.increment(playerStats.threePM),
             "totalTwoPA": FieldValue.increment(playerStats.twoPA),
