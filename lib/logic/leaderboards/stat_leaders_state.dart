@@ -9,6 +9,9 @@ final statLeadersStreamProvider = StreamProvider.autoDispose
 
   final Stream<List<KasadoUserInfo>> statLeadersStream;
   switch (statType) {
+    case StatType.mmr:
+      statLeadersStream = statRepo.getMmrLeadersStream();
+      break;
     case StatType.effRating:
       statLeadersStream = statRepo.getEffRatingLeadersStream();
       break;

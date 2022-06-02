@@ -398,9 +398,12 @@ class StatRepository {
       baseColPath: FirestorePath.colUserInfos(),
       dataFromId: (playerId) {
         final playerStats = gameStats[playerId]!;
+        final mmrIncrement =
+            playerStats.eff + (playerStats.hasWonGame! ? 10 : -10);
 
         return {
           "overviewStats": {
+            "mmr": FieldValue.increment(mmrIncrement),
             "totalThreePA": FieldValue.increment(playerStats.threePA),
             "totalThreePM": FieldValue.increment(playerStats.threePM),
             "totalTwoPA": FieldValue.increment(playerStats.twoPA),
@@ -420,6 +423,18 @@ class StatRepository {
       },
       merge: true,
     );
+  }
+
+  Stream<List<KasadoUserInfo>> getMmrLeadersStream() {
+    return firestoreHelper
+        .collectionStream(
+          path: FirestorePath.colUserInfos(),
+          builder: (data, _) => KasadoUserInfo.fromJson(data),
+          queryBuilder: (query) =>
+              query.orderBy('overviewStats.mmr', descending: true).limit(100),
+        )
+        .map((userInfoList) => userInfoList
+          ..removeWhere((user) => user.overviewStats.gamesPlayed == 0));
   }
 
   Stream<List<KasadoUserInfo>> getEffRatingLeadersStream() {

@@ -9,6 +9,7 @@ part 'overview_stats.g.dart';
 class OverviewStats with _$OverviewStats {
   const OverviewStats._();
   const factory OverviewStats({
+    @Default(0) int mmr,
     @Default(0) int totalThreePA,
     @Default(0) int totalThreePM,
     @Default(0) int totalTwoPA,
@@ -55,6 +56,9 @@ class OverviewStats with _$OverviewStats {
   String getStatValueAsString(StatType statType) {
     final double statValue;
     switch (statType) {
+      case StatType.mmr:
+        statValue = mmr.toDouble();
+        break;
       case StatType.effRating:
         statValue = effRating;
         break;
@@ -89,7 +93,7 @@ class OverviewStats with _$OverviewStats {
 
     return (statType == StatType.standing)
         ? '$totalWins - $totalLosses'
-        : (statType == StatType.threePtMade)
+        : (statType == StatType.threePtMade || statType == StatType.mmr)
             ? statValue.toStringAsFixed(0) // No decimals
             : statValue.isNaN
                 ? '-'
