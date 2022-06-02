@@ -53,13 +53,19 @@ class UserProfilePane extends HookConsumerWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    CircleAvatar(
-                      radius: 42,
-                      backgroundColor: Colors.blueGrey,
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(user.photoUrl!),
-                        radius: 40,
-                      ),
+                    Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 42,
+                          backgroundColor: Colors.blueGrey,
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(user.photoUrl!),
+                            radius: 40,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const Text("146 MMR"),
+                      ],
                     ),
                     SizedBox(
                       width: constraints.maxWidth * 0.5,
