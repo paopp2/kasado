@@ -35,6 +35,15 @@ class Stats with _$Stats {
   double get threePtPercent => (threePM / threePA) * 100;
   double get fgPercent => (totalMade / totalAttempts) * 100;
   double get ftPercent => (ftM / ftA) * 100;
+  int get eff =>
+      points +
+      ast +
+      rebounds +
+      blk +
+      stl -
+      (totalAttempts - totalMade) -
+      (ftA - ftM) -
+      turnover;
 
   factory Stats.fromJson(Map<String, dynamic> json) => _$StatsFromJson(json);
 }
