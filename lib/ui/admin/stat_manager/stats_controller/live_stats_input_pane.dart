@@ -287,6 +287,17 @@ class LiveStatsInputPane extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
+                InkWell(
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Icon(
+                      Icons.restart_alt,
+                      size: 40,
+                      color: Colors.red,
+                    ),
+                  ),
+                  onLongPress: () {/*UNDO LAST ACTION*/},
+                ),
                 StatButton(
                   color: Colors.grey,
                   content: 'TO',
