@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'overview_stats.dart';
 
@@ -12,60 +12,11 @@ part of 'overview_stats.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 OverviewStats _$OverviewStatsFromJson(Map<String, dynamic> json) {
   return _OverviewStats.fromJson(json);
 }
-
-/// @nodoc
-class _$OverviewStatsTearOff {
-  const _$OverviewStatsTearOff();
-
-  _OverviewStats call(
-      {int mmr = 0,
-      int totalThreePA = 0,
-      int totalThreePM = 0,
-      int totalTwoPA = 0,
-      int totalTwoPM = 0,
-      int totalFta = 0,
-      int totalFtm = 0,
-      int totalOReb = 0,
-      int totalDReb = 0,
-      int totalAst = 0,
-      int totalStl = 0,
-      int totalBlk = 0,
-      int totalTO = 0,
-      int totalWins = 0,
-      int gamesPlayed = 0,
-      bool isHiddenFromRankings = false}) {
-    return _OverviewStats(
-      mmr: mmr,
-      totalThreePA: totalThreePA,
-      totalThreePM: totalThreePM,
-      totalTwoPA: totalTwoPA,
-      totalTwoPM: totalTwoPM,
-      totalFta: totalFta,
-      totalFtm: totalFtm,
-      totalOReb: totalOReb,
-      totalDReb: totalDReb,
-      totalAst: totalAst,
-      totalStl: totalStl,
-      totalBlk: totalBlk,
-      totalTO: totalTO,
-      totalWins: totalWins,
-      gamesPlayed: gamesPlayed,
-      isHiddenFromRankings: isHiddenFromRankings,
-    );
-  }
-
-  OverviewStats fromJson(Map<String, Object?> json) {
-    return OverviewStats.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $OverviewStats = _$OverviewStatsTearOff();
 
 /// @nodoc
 mixin _$OverviewStats {
@@ -96,7 +47,8 @@ mixin _$OverviewStats {
 abstract class $OverviewStatsCopyWith<$Res> {
   factory $OverviewStatsCopyWith(
           OverviewStats value, $Res Function(OverviewStats) then) =
-      _$OverviewStatsCopyWithImpl<$Res>;
+      _$OverviewStatsCopyWithImpl<$Res, OverviewStats>;
+  @useResult
   $Res call(
       {int mmr,
       int totalThreePA,
@@ -117,109 +69,112 @@ abstract class $OverviewStatsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OverviewStatsCopyWithImpl<$Res>
+class _$OverviewStatsCopyWithImpl<$Res, $Val extends OverviewStats>
     implements $OverviewStatsCopyWith<$Res> {
   _$OverviewStatsCopyWithImpl(this._value, this._then);
 
-  final OverviewStats _value;
   // ignore: unused_field
-  final $Res Function(OverviewStats) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mmr = freezed,
-    Object? totalThreePA = freezed,
-    Object? totalThreePM = freezed,
-    Object? totalTwoPA = freezed,
-    Object? totalTwoPM = freezed,
-    Object? totalFta = freezed,
-    Object? totalFtm = freezed,
-    Object? totalOReb = freezed,
-    Object? totalDReb = freezed,
-    Object? totalAst = freezed,
-    Object? totalStl = freezed,
-    Object? totalBlk = freezed,
-    Object? totalTO = freezed,
-    Object? totalWins = freezed,
-    Object? gamesPlayed = freezed,
-    Object? isHiddenFromRankings = freezed,
+    Object? mmr = null,
+    Object? totalThreePA = null,
+    Object? totalThreePM = null,
+    Object? totalTwoPA = null,
+    Object? totalTwoPM = null,
+    Object? totalFta = null,
+    Object? totalFtm = null,
+    Object? totalOReb = null,
+    Object? totalDReb = null,
+    Object? totalAst = null,
+    Object? totalStl = null,
+    Object? totalBlk = null,
+    Object? totalTO = null,
+    Object? totalWins = null,
+    Object? gamesPlayed = null,
+    Object? isHiddenFromRankings = null,
   }) {
     return _then(_value.copyWith(
-      mmr: mmr == freezed
+      mmr: null == mmr
           ? _value.mmr
           : mmr // ignore: cast_nullable_to_non_nullable
               as int,
-      totalThreePA: totalThreePA == freezed
+      totalThreePA: null == totalThreePA
           ? _value.totalThreePA
           : totalThreePA // ignore: cast_nullable_to_non_nullable
               as int,
-      totalThreePM: totalThreePM == freezed
+      totalThreePM: null == totalThreePM
           ? _value.totalThreePM
           : totalThreePM // ignore: cast_nullable_to_non_nullable
               as int,
-      totalTwoPA: totalTwoPA == freezed
+      totalTwoPA: null == totalTwoPA
           ? _value.totalTwoPA
           : totalTwoPA // ignore: cast_nullable_to_non_nullable
               as int,
-      totalTwoPM: totalTwoPM == freezed
+      totalTwoPM: null == totalTwoPM
           ? _value.totalTwoPM
           : totalTwoPM // ignore: cast_nullable_to_non_nullable
               as int,
-      totalFta: totalFta == freezed
+      totalFta: null == totalFta
           ? _value.totalFta
           : totalFta // ignore: cast_nullable_to_non_nullable
               as int,
-      totalFtm: totalFtm == freezed
+      totalFtm: null == totalFtm
           ? _value.totalFtm
           : totalFtm // ignore: cast_nullable_to_non_nullable
               as int,
-      totalOReb: totalOReb == freezed
+      totalOReb: null == totalOReb
           ? _value.totalOReb
           : totalOReb // ignore: cast_nullable_to_non_nullable
               as int,
-      totalDReb: totalDReb == freezed
+      totalDReb: null == totalDReb
           ? _value.totalDReb
           : totalDReb // ignore: cast_nullable_to_non_nullable
               as int,
-      totalAst: totalAst == freezed
+      totalAst: null == totalAst
           ? _value.totalAst
           : totalAst // ignore: cast_nullable_to_non_nullable
               as int,
-      totalStl: totalStl == freezed
+      totalStl: null == totalStl
           ? _value.totalStl
           : totalStl // ignore: cast_nullable_to_non_nullable
               as int,
-      totalBlk: totalBlk == freezed
+      totalBlk: null == totalBlk
           ? _value.totalBlk
           : totalBlk // ignore: cast_nullable_to_non_nullable
               as int,
-      totalTO: totalTO == freezed
+      totalTO: null == totalTO
           ? _value.totalTO
           : totalTO // ignore: cast_nullable_to_non_nullable
               as int,
-      totalWins: totalWins == freezed
+      totalWins: null == totalWins
           ? _value.totalWins
           : totalWins // ignore: cast_nullable_to_non_nullable
               as int,
-      gamesPlayed: gamesPlayed == freezed
+      gamesPlayed: null == gamesPlayed
           ? _value.gamesPlayed
           : gamesPlayed // ignore: cast_nullable_to_non_nullable
               as int,
-      isHiddenFromRankings: isHiddenFromRankings == freezed
+      isHiddenFromRankings: null == isHiddenFromRankings
           ? _value.isHiddenFromRankings
           : isHiddenFromRankings // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$OverviewStatsCopyWith<$Res>
+abstract class _$$_OverviewStatsCopyWith<$Res>
     implements $OverviewStatsCopyWith<$Res> {
-  factory _$OverviewStatsCopyWith(
-          _OverviewStats value, $Res Function(_OverviewStats) then) =
-      __$OverviewStatsCopyWithImpl<$Res>;
+  factory _$$_OverviewStatsCopyWith(
+          _$_OverviewStats value, $Res Function(_$_OverviewStats) then) =
+      __$$_OverviewStatsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int mmr,
       int totalThreePA,
@@ -240,97 +195,95 @@ abstract class _$OverviewStatsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$OverviewStatsCopyWithImpl<$Res>
-    extends _$OverviewStatsCopyWithImpl<$Res>
-    implements _$OverviewStatsCopyWith<$Res> {
-  __$OverviewStatsCopyWithImpl(
-      _OverviewStats _value, $Res Function(_OverviewStats) _then)
-      : super(_value, (v) => _then(v as _OverviewStats));
+class __$$_OverviewStatsCopyWithImpl<$Res>
+    extends _$OverviewStatsCopyWithImpl<$Res, _$_OverviewStats>
+    implements _$$_OverviewStatsCopyWith<$Res> {
+  __$$_OverviewStatsCopyWithImpl(
+      _$_OverviewStats _value, $Res Function(_$_OverviewStats) _then)
+      : super(_value, _then);
 
-  @override
-  _OverviewStats get _value => super._value as _OverviewStats;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? mmr = freezed,
-    Object? totalThreePA = freezed,
-    Object? totalThreePM = freezed,
-    Object? totalTwoPA = freezed,
-    Object? totalTwoPM = freezed,
-    Object? totalFta = freezed,
-    Object? totalFtm = freezed,
-    Object? totalOReb = freezed,
-    Object? totalDReb = freezed,
-    Object? totalAst = freezed,
-    Object? totalStl = freezed,
-    Object? totalBlk = freezed,
-    Object? totalTO = freezed,
-    Object? totalWins = freezed,
-    Object? gamesPlayed = freezed,
-    Object? isHiddenFromRankings = freezed,
+    Object? mmr = null,
+    Object? totalThreePA = null,
+    Object? totalThreePM = null,
+    Object? totalTwoPA = null,
+    Object? totalTwoPM = null,
+    Object? totalFta = null,
+    Object? totalFtm = null,
+    Object? totalOReb = null,
+    Object? totalDReb = null,
+    Object? totalAst = null,
+    Object? totalStl = null,
+    Object? totalBlk = null,
+    Object? totalTO = null,
+    Object? totalWins = null,
+    Object? gamesPlayed = null,
+    Object? isHiddenFromRankings = null,
   }) {
-    return _then(_OverviewStats(
-      mmr: mmr == freezed
+    return _then(_$_OverviewStats(
+      mmr: null == mmr
           ? _value.mmr
           : mmr // ignore: cast_nullable_to_non_nullable
               as int,
-      totalThreePA: totalThreePA == freezed
+      totalThreePA: null == totalThreePA
           ? _value.totalThreePA
           : totalThreePA // ignore: cast_nullable_to_non_nullable
               as int,
-      totalThreePM: totalThreePM == freezed
+      totalThreePM: null == totalThreePM
           ? _value.totalThreePM
           : totalThreePM // ignore: cast_nullable_to_non_nullable
               as int,
-      totalTwoPA: totalTwoPA == freezed
+      totalTwoPA: null == totalTwoPA
           ? _value.totalTwoPA
           : totalTwoPA // ignore: cast_nullable_to_non_nullable
               as int,
-      totalTwoPM: totalTwoPM == freezed
+      totalTwoPM: null == totalTwoPM
           ? _value.totalTwoPM
           : totalTwoPM // ignore: cast_nullable_to_non_nullable
               as int,
-      totalFta: totalFta == freezed
+      totalFta: null == totalFta
           ? _value.totalFta
           : totalFta // ignore: cast_nullable_to_non_nullable
               as int,
-      totalFtm: totalFtm == freezed
+      totalFtm: null == totalFtm
           ? _value.totalFtm
           : totalFtm // ignore: cast_nullable_to_non_nullable
               as int,
-      totalOReb: totalOReb == freezed
+      totalOReb: null == totalOReb
           ? _value.totalOReb
           : totalOReb // ignore: cast_nullable_to_non_nullable
               as int,
-      totalDReb: totalDReb == freezed
+      totalDReb: null == totalDReb
           ? _value.totalDReb
           : totalDReb // ignore: cast_nullable_to_non_nullable
               as int,
-      totalAst: totalAst == freezed
+      totalAst: null == totalAst
           ? _value.totalAst
           : totalAst // ignore: cast_nullable_to_non_nullable
               as int,
-      totalStl: totalStl == freezed
+      totalStl: null == totalStl
           ? _value.totalStl
           : totalStl // ignore: cast_nullable_to_non_nullable
               as int,
-      totalBlk: totalBlk == freezed
+      totalBlk: null == totalBlk
           ? _value.totalBlk
           : totalBlk // ignore: cast_nullable_to_non_nullable
               as int,
-      totalTO: totalTO == freezed
+      totalTO: null == totalTO
           ? _value.totalTO
           : totalTO // ignore: cast_nullable_to_non_nullable
               as int,
-      totalWins: totalWins == freezed
+      totalWins: null == totalWins
           ? _value.totalWins
           : totalWins // ignore: cast_nullable_to_non_nullable
               as int,
-      gamesPlayed: gamesPlayed == freezed
+      gamesPlayed: null == gamesPlayed
           ? _value.gamesPlayed
           : gamesPlayed // ignore: cast_nullable_to_non_nullable
               as int,
-      isHiddenFromRankings: isHiddenFromRankings == freezed
+      isHiddenFromRankings: null == isHiddenFromRankings
           ? _value.isHiddenFromRankings
           : isHiddenFromRankings // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -363,53 +316,53 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
   factory _$_OverviewStats.fromJson(Map<String, dynamic> json) =>
       _$$_OverviewStatsFromJson(json);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final int mmr;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalThreePA;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalThreePM;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalTwoPA;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalTwoPM;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalFta;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalFtm;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalOReb;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalDReb;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalAst;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalStl;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalBlk;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalTO;
-  @JsonKey()
   @override
+  @JsonKey()
   final int totalWins;
-  @JsonKey()
   @override
+  @JsonKey()
   final int gamesPlayed;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isHiddenFromRankings;
 
   @override
@@ -444,80 +397,92 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _OverviewStats &&
-            const DeepCollectionEquality().equals(other.mmr, mmr) &&
-            const DeepCollectionEquality()
-                .equals(other.totalThreePA, totalThreePA) &&
-            const DeepCollectionEquality()
-                .equals(other.totalThreePM, totalThreePM) &&
-            const DeepCollectionEquality()
-                .equals(other.totalTwoPA, totalTwoPA) &&
-            const DeepCollectionEquality()
-                .equals(other.totalTwoPM, totalTwoPM) &&
-            const DeepCollectionEquality().equals(other.totalFta, totalFta) &&
-            const DeepCollectionEquality().equals(other.totalFtm, totalFtm) &&
-            const DeepCollectionEquality().equals(other.totalOReb, totalOReb) &&
-            const DeepCollectionEquality().equals(other.totalDReb, totalDReb) &&
-            const DeepCollectionEquality().equals(other.totalAst, totalAst) &&
-            const DeepCollectionEquality().equals(other.totalStl, totalStl) &&
-            const DeepCollectionEquality().equals(other.totalBlk, totalBlk) &&
-            const DeepCollectionEquality().equals(other.totalTO, totalTO) &&
-            const DeepCollectionEquality().equals(other.totalWins, totalWins) &&
-            const DeepCollectionEquality()
-                .equals(other.gamesPlayed, gamesPlayed) &&
-            const DeepCollectionEquality()
-                .equals(other.isHiddenFromRankings, isHiddenFromRankings));
+            other is _$_OverviewStats &&
+            (identical(other.mmr, mmr) || other.mmr == mmr) &&
+            (identical(other.totalThreePA, totalThreePA) ||
+                other.totalThreePA == totalThreePA) &&
+            (identical(other.totalThreePM, totalThreePM) ||
+                other.totalThreePM == totalThreePM) &&
+            (identical(other.totalTwoPA, totalTwoPA) ||
+                other.totalTwoPA == totalTwoPA) &&
+            (identical(other.totalTwoPM, totalTwoPM) ||
+                other.totalTwoPM == totalTwoPM) &&
+            (identical(other.totalFta, totalFta) ||
+                other.totalFta == totalFta) &&
+            (identical(other.totalFtm, totalFtm) ||
+                other.totalFtm == totalFtm) &&
+            (identical(other.totalOReb, totalOReb) ||
+                other.totalOReb == totalOReb) &&
+            (identical(other.totalDReb, totalDReb) ||
+                other.totalDReb == totalDReb) &&
+            (identical(other.totalAst, totalAst) ||
+                other.totalAst == totalAst) &&
+            (identical(other.totalStl, totalStl) ||
+                other.totalStl == totalStl) &&
+            (identical(other.totalBlk, totalBlk) ||
+                other.totalBlk == totalBlk) &&
+            (identical(other.totalTO, totalTO) || other.totalTO == totalTO) &&
+            (identical(other.totalWins, totalWins) ||
+                other.totalWins == totalWins) &&
+            (identical(other.gamesPlayed, gamesPlayed) ||
+                other.gamesPlayed == gamesPlayed) &&
+            (identical(other.isHiddenFromRankings, isHiddenFromRankings) ||
+                other.isHiddenFromRankings == isHiddenFromRankings));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(mmr),
-      const DeepCollectionEquality().hash(totalThreePA),
-      const DeepCollectionEquality().hash(totalThreePM),
-      const DeepCollectionEquality().hash(totalTwoPA),
-      const DeepCollectionEquality().hash(totalTwoPM),
-      const DeepCollectionEquality().hash(totalFta),
-      const DeepCollectionEquality().hash(totalFtm),
-      const DeepCollectionEquality().hash(totalOReb),
-      const DeepCollectionEquality().hash(totalDReb),
-      const DeepCollectionEquality().hash(totalAst),
-      const DeepCollectionEquality().hash(totalStl),
-      const DeepCollectionEquality().hash(totalBlk),
-      const DeepCollectionEquality().hash(totalTO),
-      const DeepCollectionEquality().hash(totalWins),
-      const DeepCollectionEquality().hash(gamesPlayed),
-      const DeepCollectionEquality().hash(isHiddenFromRankings));
 
   @JsonKey(ignore: true)
   @override
-  _$OverviewStatsCopyWith<_OverviewStats> get copyWith =>
-      __$OverviewStatsCopyWithImpl<_OverviewStats>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      mmr,
+      totalThreePA,
+      totalThreePM,
+      totalTwoPA,
+      totalTwoPM,
+      totalFta,
+      totalFtm,
+      totalOReb,
+      totalDReb,
+      totalAst,
+      totalStl,
+      totalBlk,
+      totalTO,
+      totalWins,
+      gamesPlayed,
+      isHiddenFromRankings);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_OverviewStatsCopyWith<_$_OverviewStats> get copyWith =>
+      __$$_OverviewStatsCopyWithImpl<_$_OverviewStats>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OverviewStatsToJson(this);
+    return _$$_OverviewStatsToJson(
+      this,
+    );
   }
 }
 
 abstract class _OverviewStats extends OverviewStats {
   const factory _OverviewStats(
-      {int mmr,
-      int totalThreePA,
-      int totalThreePM,
-      int totalTwoPA,
-      int totalTwoPM,
-      int totalFta,
-      int totalFtm,
-      int totalOReb,
-      int totalDReb,
-      int totalAst,
-      int totalStl,
-      int totalBlk,
-      int totalTO,
-      int totalWins,
-      int gamesPlayed,
-      bool isHiddenFromRankings}) = _$_OverviewStats;
+      {final int mmr,
+      final int totalThreePA,
+      final int totalThreePM,
+      final int totalTwoPA,
+      final int totalTwoPM,
+      final int totalFta,
+      final int totalFtm,
+      final int totalOReb,
+      final int totalDReb,
+      final int totalAst,
+      final int totalStl,
+      final int totalBlk,
+      final int totalTO,
+      final int totalWins,
+      final int gamesPlayed,
+      final bool isHiddenFromRankings}) = _$_OverviewStats;
   const _OverviewStats._() : super._();
 
   factory _OverviewStats.fromJson(Map<String, dynamic> json) =
@@ -557,6 +522,6 @@ abstract class _OverviewStats extends OverviewStats {
   bool get isHiddenFromRankings;
   @override
   @JsonKey(ignore: true)
-  _$OverviewStatsCopyWith<_OverviewStats> get copyWith =>
+  _$$_OverviewStatsCopyWith<_$_OverviewStats> get copyWith =>
       throw _privateConstructorUsedError;
 }

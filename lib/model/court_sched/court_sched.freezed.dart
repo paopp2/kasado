@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'court_sched.dart';
 
@@ -12,34 +12,11 @@ part of 'court_sched.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 CourtSched _$CourtSchedFromJson(Map<String, dynamic> json) {
   return _CourtSched.fromJson(json);
 }
-
-/// @nodoc
-class _$CourtSchedTearOff {
-  const _$CourtSchedTearOff();
-
-  _CourtSched call(
-      {required int weekdayIndex,
-      required TimeRange timeRange,
-      DateTime? endDate}) {
-    return _CourtSched(
-      weekdayIndex: weekdayIndex,
-      timeRange: timeRange,
-      endDate: endDate,
-    );
-  }
-
-  CourtSched fromJson(Map<String, Object?> json) {
-    return CourtSched.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $CourtSched = _$CourtSchedTearOff();
 
 /// @nodoc
 mixin _$CourtSched {
@@ -57,56 +34,63 @@ mixin _$CourtSched {
 abstract class $CourtSchedCopyWith<$Res> {
   factory $CourtSchedCopyWith(
           CourtSched value, $Res Function(CourtSched) then) =
-      _$CourtSchedCopyWithImpl<$Res>;
+      _$CourtSchedCopyWithImpl<$Res, CourtSched>;
+  @useResult
   $Res call({int weekdayIndex, TimeRange timeRange, DateTime? endDate});
 
   $TimeRangeCopyWith<$Res> get timeRange;
 }
 
 /// @nodoc
-class _$CourtSchedCopyWithImpl<$Res> implements $CourtSchedCopyWith<$Res> {
+class _$CourtSchedCopyWithImpl<$Res, $Val extends CourtSched>
+    implements $CourtSchedCopyWith<$Res> {
   _$CourtSchedCopyWithImpl(this._value, this._then);
 
-  final CourtSched _value;
   // ignore: unused_field
-  final $Res Function(CourtSched) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? weekdayIndex = freezed,
-    Object? timeRange = freezed,
+    Object? weekdayIndex = null,
+    Object? timeRange = null,
     Object? endDate = freezed,
   }) {
     return _then(_value.copyWith(
-      weekdayIndex: weekdayIndex == freezed
+      weekdayIndex: null == weekdayIndex
           ? _value.weekdayIndex
           : weekdayIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      timeRange: timeRange == freezed
+      timeRange: null == timeRange
           ? _value.timeRange
           : timeRange // ignore: cast_nullable_to_non_nullable
               as TimeRange,
-      endDate: endDate == freezed
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TimeRangeCopyWith<$Res> get timeRange {
     return $TimeRangeCopyWith<$Res>(_value.timeRange, (value) {
-      return _then(_value.copyWith(timeRange: value));
+      return _then(_value.copyWith(timeRange: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$CourtSchedCopyWith<$Res> implements $CourtSchedCopyWith<$Res> {
-  factory _$CourtSchedCopyWith(
-          _CourtSched value, $Res Function(_CourtSched) then) =
-      __$CourtSchedCopyWithImpl<$Res>;
+abstract class _$$_CourtSchedCopyWith<$Res>
+    implements $CourtSchedCopyWith<$Res> {
+  factory _$$_CourtSchedCopyWith(
+          _$_CourtSched value, $Res Function(_$_CourtSched) then) =
+      __$$_CourtSchedCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int weekdayIndex, TimeRange timeRange, DateTime? endDate});
 
   @override
@@ -114,31 +98,30 @@ abstract class _$CourtSchedCopyWith<$Res> implements $CourtSchedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$CourtSchedCopyWithImpl<$Res> extends _$CourtSchedCopyWithImpl<$Res>
-    implements _$CourtSchedCopyWith<$Res> {
-  __$CourtSchedCopyWithImpl(
-      _CourtSched _value, $Res Function(_CourtSched) _then)
-      : super(_value, (v) => _then(v as _CourtSched));
+class __$$_CourtSchedCopyWithImpl<$Res>
+    extends _$CourtSchedCopyWithImpl<$Res, _$_CourtSched>
+    implements _$$_CourtSchedCopyWith<$Res> {
+  __$$_CourtSchedCopyWithImpl(
+      _$_CourtSched _value, $Res Function(_$_CourtSched) _then)
+      : super(_value, _then);
 
-  @override
-  _CourtSched get _value => super._value as _CourtSched;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? weekdayIndex = freezed,
-    Object? timeRange = freezed,
+    Object? weekdayIndex = null,
+    Object? timeRange = null,
     Object? endDate = freezed,
   }) {
-    return _then(_CourtSched(
-      weekdayIndex: weekdayIndex == freezed
+    return _then(_$_CourtSched(
+      weekdayIndex: null == weekdayIndex
           ? _value.weekdayIndex
           : weekdayIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      timeRange: timeRange == freezed
+      timeRange: null == timeRange
           ? _value.timeRange
           : timeRange // ignore: cast_nullable_to_non_nullable
               as TimeRange,
-      endDate: endDate == freezed
+      endDate: freezed == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
@@ -181,36 +164,38 @@ class _$_CourtSched with DiagnosticableTreeMixin implements _CourtSched {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CourtSched &&
-            const DeepCollectionEquality()
-                .equals(other.weekdayIndex, weekdayIndex) &&
-            const DeepCollectionEquality().equals(other.timeRange, timeRange) &&
-            const DeepCollectionEquality().equals(other.endDate, endDate));
+            other is _$_CourtSched &&
+            (identical(other.weekdayIndex, weekdayIndex) ||
+                other.weekdayIndex == weekdayIndex) &&
+            (identical(other.timeRange, timeRange) ||
+                other.timeRange == timeRange) &&
+            (identical(other.endDate, endDate) || other.endDate == endDate));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(weekdayIndex),
-      const DeepCollectionEquality().hash(timeRange),
-      const DeepCollectionEquality().hash(endDate));
 
   @JsonKey(ignore: true)
   @override
-  _$CourtSchedCopyWith<_CourtSched> get copyWith =>
-      __$CourtSchedCopyWithImpl<_CourtSched>(this, _$identity);
+  int get hashCode =>
+      Object.hash(runtimeType, weekdayIndex, timeRange, endDate);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CourtSchedCopyWith<_$_CourtSched> get copyWith =>
+      __$$_CourtSchedCopyWithImpl<_$_CourtSched>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CourtSchedToJson(this);
+    return _$$_CourtSchedToJson(
+      this,
+    );
   }
 }
 
 abstract class _CourtSched implements CourtSched {
   const factory _CourtSched(
-      {required int weekdayIndex,
-      required TimeRange timeRange,
-      DateTime? endDate}) = _$_CourtSched;
+      {required final int weekdayIndex,
+      required final TimeRange timeRange,
+      final DateTime? endDate}) = _$_CourtSched;
 
   factory _CourtSched.fromJson(Map<String, dynamic> json) =
       _$_CourtSched.fromJson;
@@ -223,6 +208,6 @@ abstract class _CourtSched implements CourtSched {
   DateTime? get endDate;
   @override
   @JsonKey(ignore: true)
-  _$CourtSchedCopyWith<_CourtSched> get copyWith =>
+  _$$_CourtSchedCopyWith<_$_CourtSched> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'stat_input.dart';
 
@@ -12,7 +12,7 @@ part of 'stat_input.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 StatInput _$StatInputFromJson(Map<String, dynamic> json) {
   switch (json['runtimeType']) {
@@ -36,66 +36,8 @@ StatInput _$StatInputFromJson(Map<String, dynamic> json) {
 }
 
 /// @nodoc
-class _$StatInputTearOff {
-  const _$StatInputTearOff();
-
-  ShotAttempt shotAttempt(
-      {required KasadoUser? player,
-      required KasadoUser? playerWhoAssisted,
-      required bool isThree,
-      required bool wasMade}) {
-    return ShotAttempt(
-      player: player,
-      playerWhoAssisted: playerWhoAssisted,
-      isThree: isThree,
-      wasMade: wasMade,
-    );
-  }
-
-  Block block({required KasadoUser? player}) {
-    return Block(
-      player: player,
-    );
-  }
-
-  Steal steal({required KasadoUser? player}) {
-    return Steal(
-      player: player,
-    );
-  }
-
-  FtAttempt ftAttempt({required KasadoUser? player, required bool wasMade}) {
-    return FtAttempt(
-      player: player,
-      wasMade: wasMade,
-    );
-  }
-
-  Rebound rebound({required KasadoUser? player, required bool isDefensive}) {
-    return Rebound(
-      player: player,
-      isDefensive: isDefensive,
-    );
-  }
-
-  Turnover turnover({required KasadoUser? player}) {
-    return Turnover(
-      player: player,
-    );
-  }
-
-  StatInput fromJson(Map<String, Object?> json) {
-    return StatInput.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $StatInput = _$StatInputTearOff();
-
-/// @nodoc
 mixin _$StatInput {
   KasadoUser? get player => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
@@ -110,14 +52,14 @@ mixin _$StatInput {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
+    TResult? Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
             bool isThree, bool wasMade)?
         shotAttempt,
-    TResult Function(KasadoUser? player)? block,
-    TResult Function(KasadoUser? player)? steal,
-    TResult Function(KasadoUser? player, bool wasMade)? ftAttempt,
-    TResult Function(KasadoUser? player, bool isDefensive)? rebound,
-    TResult Function(KasadoUser? player)? turnover,
+    TResult? Function(KasadoUser? player)? block,
+    TResult? Function(KasadoUser? player)? steal,
+    TResult? Function(KasadoUser? player, bool wasMade)? ftAttempt,
+    TResult? Function(KasadoUser? player, bool isDefensive)? rebound,
+    TResult? Function(KasadoUser? player)? turnover,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -145,12 +87,12 @@ mixin _$StatInput {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShotAttempt value)? shotAttempt,
-    TResult Function(Block value)? block,
-    TResult Function(Steal value)? steal,
-    TResult Function(FtAttempt value)? ftAttempt,
-    TResult Function(Rebound value)? rebound,
-    TResult Function(Turnover value)? turnover,
+    TResult? Function(ShotAttempt value)? shotAttempt,
+    TResult? Function(Block value)? block,
+    TResult? Function(Steal value)? steal,
+    TResult? Function(FtAttempt value)? ftAttempt,
+    TResult? Function(Rebound value)? rebound,
+    TResult? Function(Turnover value)? turnover,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -173,50 +115,57 @@ mixin _$StatInput {
 /// @nodoc
 abstract class $StatInputCopyWith<$Res> {
   factory $StatInputCopyWith(StatInput value, $Res Function(StatInput) then) =
-      _$StatInputCopyWithImpl<$Res>;
+      _$StatInputCopyWithImpl<$Res, StatInput>;
+  @useResult
   $Res call({KasadoUser? player});
 
   $KasadoUserCopyWith<$Res>? get player;
 }
 
 /// @nodoc
-class _$StatInputCopyWithImpl<$Res> implements $StatInputCopyWith<$Res> {
+class _$StatInputCopyWithImpl<$Res, $Val extends StatInput>
+    implements $StatInputCopyWith<$Res> {
   _$StatInputCopyWithImpl(this._value, this._then);
 
-  final StatInput _value;
   // ignore: unused_field
-  final $Res Function(StatInput) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? player = freezed,
   }) {
     return _then(_value.copyWith(
-      player: player == freezed
+      player: freezed == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
               as KasadoUser?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $KasadoUserCopyWith<$Res>? get player {
     if (_value.player == null) {
       return null;
     }
 
     return $KasadoUserCopyWith<$Res>(_value.player!, (value) {
-      return _then(_value.copyWith(player: value));
+      return _then(_value.copyWith(player: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class $ShotAttemptCopyWith<$Res> implements $StatInputCopyWith<$Res> {
-  factory $ShotAttemptCopyWith(
-          ShotAttempt value, $Res Function(ShotAttempt) then) =
-      _$ShotAttemptCopyWithImpl<$Res>;
+abstract class _$$ShotAttemptCopyWith<$Res>
+    implements $StatInputCopyWith<$Res> {
+  factory _$$ShotAttemptCopyWith(
+          _$ShotAttempt value, $Res Function(_$ShotAttempt) then) =
+      __$$ShotAttemptCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {KasadoUser? player,
       KasadoUser? playerWhoAssisted,
@@ -229,36 +178,35 @@ abstract class $ShotAttemptCopyWith<$Res> implements $StatInputCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ShotAttemptCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
-    implements $ShotAttemptCopyWith<$Res> {
-  _$ShotAttemptCopyWithImpl(
-      ShotAttempt _value, $Res Function(ShotAttempt) _then)
-      : super(_value, (v) => _then(v as ShotAttempt));
+class __$$ShotAttemptCopyWithImpl<$Res>
+    extends _$StatInputCopyWithImpl<$Res, _$ShotAttempt>
+    implements _$$ShotAttemptCopyWith<$Res> {
+  __$$ShotAttemptCopyWithImpl(
+      _$ShotAttempt _value, $Res Function(_$ShotAttempt) _then)
+      : super(_value, _then);
 
-  @override
-  ShotAttempt get _value => super._value as ShotAttempt;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? player = freezed,
     Object? playerWhoAssisted = freezed,
-    Object? isThree = freezed,
-    Object? wasMade = freezed,
+    Object? isThree = null,
+    Object? wasMade = null,
   }) {
-    return _then(ShotAttempt(
-      player: player == freezed
+    return _then(_$ShotAttempt(
+      player: freezed == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
               as KasadoUser?,
-      playerWhoAssisted: playerWhoAssisted == freezed
+      playerWhoAssisted: freezed == playerWhoAssisted
           ? _value.playerWhoAssisted
           : playerWhoAssisted // ignore: cast_nullable_to_non_nullable
               as KasadoUser?,
-      isThree: isThree == freezed
+      isThree: null == isThree
           ? _value.isThree
           : isThree // ignore: cast_nullable_to_non_nullable
               as bool,
-      wasMade: wasMade == freezed
+      wasMade: null == wasMade
           ? _value.wasMade
           : wasMade // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -266,6 +214,7 @@ class _$ShotAttemptCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $KasadoUserCopyWith<$Res>? get playerWhoAssisted {
     if (_value.playerWhoAssisted == null) {
       return null;
@@ -285,7 +234,7 @@ class _$ShotAttempt extends ShotAttempt with DiagnosticableTreeMixin {
       required this.playerWhoAssisted,
       required this.isThree,
       required this.wasMade,
-      String? $type})
+      final String? $type})
       : $type = $type ?? 'shotAttempt',
         super._();
 
@@ -298,7 +247,8 @@ class _$ShotAttempt extends ShotAttempt with DiagnosticableTreeMixin {
   final KasadoUser? playerWhoAssisted;
   @override
   final bool isThree;
-  @override // isTwo if otherwise
+// isTwo if otherwise
+  @override
   final bool wasMade;
 
   @JsonKey(name: 'runtimeType')
@@ -324,26 +274,24 @@ class _$ShotAttempt extends ShotAttempt with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ShotAttempt &&
-            const DeepCollectionEquality().equals(other.player, player) &&
-            const DeepCollectionEquality()
-                .equals(other.playerWhoAssisted, playerWhoAssisted) &&
-            const DeepCollectionEquality().equals(other.isThree, isThree) &&
-            const DeepCollectionEquality().equals(other.wasMade, wasMade));
+            other is _$ShotAttempt &&
+            (identical(other.player, player) || other.player == player) &&
+            (identical(other.playerWhoAssisted, playerWhoAssisted) ||
+                other.playerWhoAssisted == playerWhoAssisted) &&
+            (identical(other.isThree, isThree) || other.isThree == isThree) &&
+            (identical(other.wasMade, wasMade) || other.wasMade == wasMade));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(player),
-      const DeepCollectionEquality().hash(playerWhoAssisted),
-      const DeepCollectionEquality().hash(isThree),
-      const DeepCollectionEquality().hash(wasMade));
 
   @JsonKey(ignore: true)
   @override
-  $ShotAttemptCopyWith<ShotAttempt> get copyWith =>
-      _$ShotAttemptCopyWithImpl<ShotAttempt>(this, _$identity);
+  int get hashCode =>
+      Object.hash(runtimeType, player, playerWhoAssisted, isThree, wasMade);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ShotAttemptCopyWith<_$ShotAttempt> get copyWith =>
+      __$$ShotAttemptCopyWithImpl<_$ShotAttempt>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -363,14 +311,14 @@ class _$ShotAttempt extends ShotAttempt with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
+    TResult? Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
             bool isThree, bool wasMade)?
         shotAttempt,
-    TResult Function(KasadoUser? player)? block,
-    TResult Function(KasadoUser? player)? steal,
-    TResult Function(KasadoUser? player, bool wasMade)? ftAttempt,
-    TResult Function(KasadoUser? player, bool isDefensive)? rebound,
-    TResult Function(KasadoUser? player)? turnover,
+    TResult? Function(KasadoUser? player)? block,
+    TResult? Function(KasadoUser? player)? steal,
+    TResult? Function(KasadoUser? player, bool wasMade)? ftAttempt,
+    TResult? Function(KasadoUser? player, bool isDefensive)? rebound,
+    TResult? Function(KasadoUser? player)? turnover,
   }) {
     return shotAttempt?.call(player, playerWhoAssisted, isThree, wasMade);
   }
@@ -410,12 +358,12 @@ class _$ShotAttempt extends ShotAttempt with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShotAttempt value)? shotAttempt,
-    TResult Function(Block value)? block,
-    TResult Function(Steal value)? steal,
-    TResult Function(FtAttempt value)? ftAttempt,
-    TResult Function(Rebound value)? rebound,
-    TResult Function(Turnover value)? turnover,
+    TResult? Function(ShotAttempt value)? shotAttempt,
+    TResult? Function(Block value)? block,
+    TResult? Function(Steal value)? steal,
+    TResult? Function(FtAttempt value)? ftAttempt,
+    TResult? Function(Rebound value)? rebound,
+    TResult? Function(Turnover value)? turnover,
   }) {
     return shotAttempt?.call(this);
   }
@@ -439,16 +387,18 @@ class _$ShotAttempt extends ShotAttempt with DiagnosticableTreeMixin {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ShotAttemptToJson(this);
+    return _$$ShotAttemptToJson(
+      this,
+    );
   }
 }
 
 abstract class ShotAttempt extends StatInput {
   const factory ShotAttempt(
-      {required KasadoUser? player,
-      required KasadoUser? playerWhoAssisted,
-      required bool isThree,
-      required bool wasMade}) = _$ShotAttempt;
+      {required final KasadoUser? player,
+      required final KasadoUser? playerWhoAssisted,
+      required final bool isThree,
+      required final bool wasMade}) = _$ShotAttempt;
   const ShotAttempt._() : super._();
 
   factory ShotAttempt.fromJson(Map<String, dynamic> json) =
@@ -461,15 +411,16 @@ abstract class ShotAttempt extends StatInput {
   bool get wasMade;
   @override
   @JsonKey(ignore: true)
-  $ShotAttemptCopyWith<ShotAttempt> get copyWith =>
+  _$$ShotAttemptCopyWith<_$ShotAttempt> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BlockCopyWith<$Res> implements $StatInputCopyWith<$Res> {
-  factory $BlockCopyWith(Block value, $Res Function(Block) then) =
-      _$BlockCopyWithImpl<$Res>;
+abstract class _$$BlockCopyWith<$Res> implements $StatInputCopyWith<$Res> {
+  factory _$$BlockCopyWith(_$Block value, $Res Function(_$Block) then) =
+      __$$BlockCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({KasadoUser? player});
 
   @override
@@ -477,20 +428,18 @@ abstract class $BlockCopyWith<$Res> implements $StatInputCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BlockCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
-    implements $BlockCopyWith<$Res> {
-  _$BlockCopyWithImpl(Block _value, $Res Function(Block) _then)
-      : super(_value, (v) => _then(v as Block));
+class __$$BlockCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res, _$Block>
+    implements _$$BlockCopyWith<$Res> {
+  __$$BlockCopyWithImpl(_$Block _value, $Res Function(_$Block) _then)
+      : super(_value, _then);
 
-  @override
-  Block get _value => super._value as Block;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? player = freezed,
   }) {
-    return _then(Block(
-      player: player == freezed
+    return _then(_$Block(
+      player: freezed == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
               as KasadoUser?,
@@ -501,7 +450,7 @@ class _$BlockCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$Block extends Block with DiagnosticableTreeMixin {
-  const _$Block({required this.player, String? $type})
+  const _$Block({required this.player, final String? $type})
       : $type = $type ?? 'block',
         super._();
 
@@ -530,18 +479,19 @@ class _$Block extends Block with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Block &&
-            const DeepCollectionEquality().equals(other.player, player));
+            other is _$Block &&
+            (identical(other.player, player) || other.player == player));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(player));
 
   @JsonKey(ignore: true)
   @override
-  $BlockCopyWith<Block> get copyWith =>
-      _$BlockCopyWithImpl<Block>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, player);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BlockCopyWith<_$Block> get copyWith =>
+      __$$BlockCopyWithImpl<_$Block>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -561,14 +511,14 @@ class _$Block extends Block with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
+    TResult? Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
             bool isThree, bool wasMade)?
         shotAttempt,
-    TResult Function(KasadoUser? player)? block,
-    TResult Function(KasadoUser? player)? steal,
-    TResult Function(KasadoUser? player, bool wasMade)? ftAttempt,
-    TResult Function(KasadoUser? player, bool isDefensive)? rebound,
-    TResult Function(KasadoUser? player)? turnover,
+    TResult? Function(KasadoUser? player)? block,
+    TResult? Function(KasadoUser? player)? steal,
+    TResult? Function(KasadoUser? player, bool wasMade)? ftAttempt,
+    TResult? Function(KasadoUser? player, bool isDefensive)? rebound,
+    TResult? Function(KasadoUser? player)? turnover,
   }) {
     return block?.call(player);
   }
@@ -608,12 +558,12 @@ class _$Block extends Block with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShotAttempt value)? shotAttempt,
-    TResult Function(Block value)? block,
-    TResult Function(Steal value)? steal,
-    TResult Function(FtAttempt value)? ftAttempt,
-    TResult Function(Rebound value)? rebound,
-    TResult Function(Turnover value)? turnover,
+    TResult? Function(ShotAttempt value)? shotAttempt,
+    TResult? Function(Block value)? block,
+    TResult? Function(Steal value)? steal,
+    TResult? Function(FtAttempt value)? ftAttempt,
+    TResult? Function(Rebound value)? rebound,
+    TResult? Function(Turnover value)? turnover,
   }) {
     return block?.call(this);
   }
@@ -637,12 +587,14 @@ class _$Block extends Block with DiagnosticableTreeMixin {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$BlockToJson(this);
+    return _$$BlockToJson(
+      this,
+    );
   }
 }
 
 abstract class Block extends StatInput {
-  const factory Block({required KasadoUser? player}) = _$Block;
+  const factory Block({required final KasadoUser? player}) = _$Block;
   const Block._() : super._();
 
   factory Block.fromJson(Map<String, dynamic> json) = _$Block.fromJson;
@@ -651,14 +603,15 @@ abstract class Block extends StatInput {
   KasadoUser? get player;
   @override
   @JsonKey(ignore: true)
-  $BlockCopyWith<Block> get copyWith => throw _privateConstructorUsedError;
+  _$$BlockCopyWith<_$Block> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StealCopyWith<$Res> implements $StatInputCopyWith<$Res> {
-  factory $StealCopyWith(Steal value, $Res Function(Steal) then) =
-      _$StealCopyWithImpl<$Res>;
+abstract class _$$StealCopyWith<$Res> implements $StatInputCopyWith<$Res> {
+  factory _$$StealCopyWith(_$Steal value, $Res Function(_$Steal) then) =
+      __$$StealCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({KasadoUser? player});
 
   @override
@@ -666,20 +619,18 @@ abstract class $StealCopyWith<$Res> implements $StatInputCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StealCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
-    implements $StealCopyWith<$Res> {
-  _$StealCopyWithImpl(Steal _value, $Res Function(Steal) _then)
-      : super(_value, (v) => _then(v as Steal));
+class __$$StealCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res, _$Steal>
+    implements _$$StealCopyWith<$Res> {
+  __$$StealCopyWithImpl(_$Steal _value, $Res Function(_$Steal) _then)
+      : super(_value, _then);
 
-  @override
-  Steal get _value => super._value as Steal;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? player = freezed,
   }) {
-    return _then(Steal(
-      player: player == freezed
+    return _then(_$Steal(
+      player: freezed == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
               as KasadoUser?,
@@ -690,7 +641,7 @@ class _$StealCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$Steal extends Steal with DiagnosticableTreeMixin {
-  const _$Steal({required this.player, String? $type})
+  const _$Steal({required this.player, final String? $type})
       : $type = $type ?? 'steal',
         super._();
 
@@ -719,18 +670,19 @@ class _$Steal extends Steal with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Steal &&
-            const DeepCollectionEquality().equals(other.player, player));
+            other is _$Steal &&
+            (identical(other.player, player) || other.player == player));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(player));
 
   @JsonKey(ignore: true)
   @override
-  $StealCopyWith<Steal> get copyWith =>
-      _$StealCopyWithImpl<Steal>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, player);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StealCopyWith<_$Steal> get copyWith =>
+      __$$StealCopyWithImpl<_$Steal>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -750,14 +702,14 @@ class _$Steal extends Steal with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
+    TResult? Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
             bool isThree, bool wasMade)?
         shotAttempt,
-    TResult Function(KasadoUser? player)? block,
-    TResult Function(KasadoUser? player)? steal,
-    TResult Function(KasadoUser? player, bool wasMade)? ftAttempt,
-    TResult Function(KasadoUser? player, bool isDefensive)? rebound,
-    TResult Function(KasadoUser? player)? turnover,
+    TResult? Function(KasadoUser? player)? block,
+    TResult? Function(KasadoUser? player)? steal,
+    TResult? Function(KasadoUser? player, bool wasMade)? ftAttempt,
+    TResult? Function(KasadoUser? player, bool isDefensive)? rebound,
+    TResult? Function(KasadoUser? player)? turnover,
   }) {
     return steal?.call(player);
   }
@@ -797,12 +749,12 @@ class _$Steal extends Steal with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShotAttempt value)? shotAttempt,
-    TResult Function(Block value)? block,
-    TResult Function(Steal value)? steal,
-    TResult Function(FtAttempt value)? ftAttempt,
-    TResult Function(Rebound value)? rebound,
-    TResult Function(Turnover value)? turnover,
+    TResult? Function(ShotAttempt value)? shotAttempt,
+    TResult? Function(Block value)? block,
+    TResult? Function(Steal value)? steal,
+    TResult? Function(FtAttempt value)? ftAttempt,
+    TResult? Function(Rebound value)? rebound,
+    TResult? Function(Turnover value)? turnover,
   }) {
     return steal?.call(this);
   }
@@ -826,12 +778,14 @@ class _$Steal extends Steal with DiagnosticableTreeMixin {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$StealToJson(this);
+    return _$$StealToJson(
+      this,
+    );
   }
 }
 
 abstract class Steal extends StatInput {
-  const factory Steal({required KasadoUser? player}) = _$Steal;
+  const factory Steal({required final KasadoUser? player}) = _$Steal;
   const Steal._() : super._();
 
   factory Steal.fromJson(Map<String, dynamic> json) = _$Steal.fromJson;
@@ -840,14 +794,16 @@ abstract class Steal extends StatInput {
   KasadoUser? get player;
   @override
   @JsonKey(ignore: true)
-  $StealCopyWith<Steal> get copyWith => throw _privateConstructorUsedError;
+  _$$StealCopyWith<_$Steal> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FtAttemptCopyWith<$Res> implements $StatInputCopyWith<$Res> {
-  factory $FtAttemptCopyWith(FtAttempt value, $Res Function(FtAttempt) then) =
-      _$FtAttemptCopyWithImpl<$Res>;
+abstract class _$$FtAttemptCopyWith<$Res> implements $StatInputCopyWith<$Res> {
+  factory _$$FtAttemptCopyWith(
+          _$FtAttempt value, $Res Function(_$FtAttempt) then) =
+      __$$FtAttemptCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({KasadoUser? player, bool wasMade});
 
   @override
@@ -855,25 +811,25 @@ abstract class $FtAttemptCopyWith<$Res> implements $StatInputCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$FtAttemptCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
-    implements $FtAttemptCopyWith<$Res> {
-  _$FtAttemptCopyWithImpl(FtAttempt _value, $Res Function(FtAttempt) _then)
-      : super(_value, (v) => _then(v as FtAttempt));
+class __$$FtAttemptCopyWithImpl<$Res>
+    extends _$StatInputCopyWithImpl<$Res, _$FtAttempt>
+    implements _$$FtAttemptCopyWith<$Res> {
+  __$$FtAttemptCopyWithImpl(
+      _$FtAttempt _value, $Res Function(_$FtAttempt) _then)
+      : super(_value, _then);
 
-  @override
-  FtAttempt get _value => super._value as FtAttempt;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? player = freezed,
-    Object? wasMade = freezed,
+    Object? wasMade = null,
   }) {
-    return _then(FtAttempt(
-      player: player == freezed
+    return _then(_$FtAttempt(
+      player: freezed == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
               as KasadoUser?,
-      wasMade: wasMade == freezed
+      wasMade: null == wasMade
           ? _value.wasMade
           : wasMade // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -885,7 +841,7 @@ class _$FtAttemptCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FtAttempt extends FtAttempt with DiagnosticableTreeMixin {
   const _$FtAttempt(
-      {required this.player, required this.wasMade, String? $type})
+      {required this.player, required this.wasMade, final String? $type})
       : $type = $type ?? 'ftAttempt',
         super._();
 
@@ -918,21 +874,20 @@ class _$FtAttempt extends FtAttempt with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is FtAttempt &&
-            const DeepCollectionEquality().equals(other.player, player) &&
-            const DeepCollectionEquality().equals(other.wasMade, wasMade));
+            other is _$FtAttempt &&
+            (identical(other.player, player) || other.player == player) &&
+            (identical(other.wasMade, wasMade) || other.wasMade == wasMade));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(player),
-      const DeepCollectionEquality().hash(wasMade));
 
   @JsonKey(ignore: true)
   @override
-  $FtAttemptCopyWith<FtAttempt> get copyWith =>
-      _$FtAttemptCopyWithImpl<FtAttempt>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, player, wasMade);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FtAttemptCopyWith<_$FtAttempt> get copyWith =>
+      __$$FtAttemptCopyWithImpl<_$FtAttempt>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -952,14 +907,14 @@ class _$FtAttempt extends FtAttempt with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
+    TResult? Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
             bool isThree, bool wasMade)?
         shotAttempt,
-    TResult Function(KasadoUser? player)? block,
-    TResult Function(KasadoUser? player)? steal,
-    TResult Function(KasadoUser? player, bool wasMade)? ftAttempt,
-    TResult Function(KasadoUser? player, bool isDefensive)? rebound,
-    TResult Function(KasadoUser? player)? turnover,
+    TResult? Function(KasadoUser? player)? block,
+    TResult? Function(KasadoUser? player)? steal,
+    TResult? Function(KasadoUser? player, bool wasMade)? ftAttempt,
+    TResult? Function(KasadoUser? player, bool isDefensive)? rebound,
+    TResult? Function(KasadoUser? player)? turnover,
   }) {
     return ftAttempt?.call(player, wasMade);
   }
@@ -999,12 +954,12 @@ class _$FtAttempt extends FtAttempt with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShotAttempt value)? shotAttempt,
-    TResult Function(Block value)? block,
-    TResult Function(Steal value)? steal,
-    TResult Function(FtAttempt value)? ftAttempt,
-    TResult Function(Rebound value)? rebound,
-    TResult Function(Turnover value)? turnover,
+    TResult? Function(ShotAttempt value)? shotAttempt,
+    TResult? Function(Block value)? block,
+    TResult? Function(Steal value)? steal,
+    TResult? Function(FtAttempt value)? ftAttempt,
+    TResult? Function(Rebound value)? rebound,
+    TResult? Function(Turnover value)? turnover,
   }) {
     return ftAttempt?.call(this);
   }
@@ -1028,13 +983,16 @@ class _$FtAttempt extends FtAttempt with DiagnosticableTreeMixin {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$FtAttemptToJson(this);
+    return _$$FtAttemptToJson(
+      this,
+    );
   }
 }
 
 abstract class FtAttempt extends StatInput {
   const factory FtAttempt(
-      {required KasadoUser? player, required bool wasMade}) = _$FtAttempt;
+      {required final KasadoUser? player,
+      required final bool wasMade}) = _$FtAttempt;
   const FtAttempt._() : super._();
 
   factory FtAttempt.fromJson(Map<String, dynamic> json) = _$FtAttempt.fromJson;
@@ -1044,15 +1002,16 @@ abstract class FtAttempt extends StatInput {
   bool get wasMade;
   @override
   @JsonKey(ignore: true)
-  $FtAttemptCopyWith<FtAttempt> get copyWith =>
+  _$$FtAttemptCopyWith<_$FtAttempt> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ReboundCopyWith<$Res> implements $StatInputCopyWith<$Res> {
-  factory $ReboundCopyWith(Rebound value, $Res Function(Rebound) then) =
-      _$ReboundCopyWithImpl<$Res>;
+abstract class _$$ReboundCopyWith<$Res> implements $StatInputCopyWith<$Res> {
+  factory _$$ReboundCopyWith(_$Rebound value, $Res Function(_$Rebound) then) =
+      __$$ReboundCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({KasadoUser? player, bool isDefensive});
 
   @override
@@ -1060,25 +1019,24 @@ abstract class $ReboundCopyWith<$Res> implements $StatInputCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ReboundCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
-    implements $ReboundCopyWith<$Res> {
-  _$ReboundCopyWithImpl(Rebound _value, $Res Function(Rebound) _then)
-      : super(_value, (v) => _then(v as Rebound));
+class __$$ReboundCopyWithImpl<$Res>
+    extends _$StatInputCopyWithImpl<$Res, _$Rebound>
+    implements _$$ReboundCopyWith<$Res> {
+  __$$ReboundCopyWithImpl(_$Rebound _value, $Res Function(_$Rebound) _then)
+      : super(_value, _then);
 
-  @override
-  Rebound get _value => super._value as Rebound;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? player = freezed,
-    Object? isDefensive = freezed,
+    Object? isDefensive = null,
   }) {
-    return _then(Rebound(
-      player: player == freezed
+    return _then(_$Rebound(
+      player: freezed == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
               as KasadoUser?,
-      isDefensive: isDefensive == freezed
+      isDefensive: null == isDefensive
           ? _value.isDefensive
           : isDefensive // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -1090,7 +1048,7 @@ class _$ReboundCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
 @JsonSerializable()
 class _$Rebound extends Rebound with DiagnosticableTreeMixin {
   const _$Rebound(
-      {required this.player, required this.isDefensive, String? $type})
+      {required this.player, required this.isDefensive, final String? $type})
       : $type = $type ?? 'rebound',
         super._();
 
@@ -1123,22 +1081,21 @@ class _$Rebound extends Rebound with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Rebound &&
-            const DeepCollectionEquality().equals(other.player, player) &&
-            const DeepCollectionEquality()
-                .equals(other.isDefensive, isDefensive));
+            other is _$Rebound &&
+            (identical(other.player, player) || other.player == player) &&
+            (identical(other.isDefensive, isDefensive) ||
+                other.isDefensive == isDefensive));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(player),
-      const DeepCollectionEquality().hash(isDefensive));
 
   @JsonKey(ignore: true)
   @override
-  $ReboundCopyWith<Rebound> get copyWith =>
-      _$ReboundCopyWithImpl<Rebound>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, player, isDefensive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReboundCopyWith<_$Rebound> get copyWith =>
+      __$$ReboundCopyWithImpl<_$Rebound>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1158,14 +1115,14 @@ class _$Rebound extends Rebound with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
+    TResult? Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
             bool isThree, bool wasMade)?
         shotAttempt,
-    TResult Function(KasadoUser? player)? block,
-    TResult Function(KasadoUser? player)? steal,
-    TResult Function(KasadoUser? player, bool wasMade)? ftAttempt,
-    TResult Function(KasadoUser? player, bool isDefensive)? rebound,
-    TResult Function(KasadoUser? player)? turnover,
+    TResult? Function(KasadoUser? player)? block,
+    TResult? Function(KasadoUser? player)? steal,
+    TResult? Function(KasadoUser? player, bool wasMade)? ftAttempt,
+    TResult? Function(KasadoUser? player, bool isDefensive)? rebound,
+    TResult? Function(KasadoUser? player)? turnover,
   }) {
     return rebound?.call(player, isDefensive);
   }
@@ -1205,12 +1162,12 @@ class _$Rebound extends Rebound with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShotAttempt value)? shotAttempt,
-    TResult Function(Block value)? block,
-    TResult Function(Steal value)? steal,
-    TResult Function(FtAttempt value)? ftAttempt,
-    TResult Function(Rebound value)? rebound,
-    TResult Function(Turnover value)? turnover,
+    TResult? Function(ShotAttempt value)? shotAttempt,
+    TResult? Function(Block value)? block,
+    TResult? Function(Steal value)? steal,
+    TResult? Function(FtAttempt value)? ftAttempt,
+    TResult? Function(Rebound value)? rebound,
+    TResult? Function(Turnover value)? turnover,
   }) {
     return rebound?.call(this);
   }
@@ -1234,13 +1191,16 @@ class _$Rebound extends Rebound with DiagnosticableTreeMixin {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ReboundToJson(this);
+    return _$$ReboundToJson(
+      this,
+    );
   }
 }
 
 abstract class Rebound extends StatInput {
   const factory Rebound(
-      {required KasadoUser? player, required bool isDefensive}) = _$Rebound;
+      {required final KasadoUser? player,
+      required final bool isDefensive}) = _$Rebound;
   const Rebound._() : super._();
 
   factory Rebound.fromJson(Map<String, dynamic> json) = _$Rebound.fromJson;
@@ -1250,14 +1210,17 @@ abstract class Rebound extends StatInput {
   bool get isDefensive;
   @override
   @JsonKey(ignore: true)
-  $ReboundCopyWith<Rebound> get copyWith => throw _privateConstructorUsedError;
+  _$$ReboundCopyWith<_$Rebound> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TurnoverCopyWith<$Res> implements $StatInputCopyWith<$Res> {
-  factory $TurnoverCopyWith(Turnover value, $Res Function(Turnover) then) =
-      _$TurnoverCopyWithImpl<$Res>;
+abstract class _$$TurnoverCopyWith<$Res> implements $StatInputCopyWith<$Res> {
+  factory _$$TurnoverCopyWith(
+          _$Turnover value, $Res Function(_$Turnover) then) =
+      __$$TurnoverCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({KasadoUser? player});
 
   @override
@@ -1265,20 +1228,19 @@ abstract class $TurnoverCopyWith<$Res> implements $StatInputCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TurnoverCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
-    implements $TurnoverCopyWith<$Res> {
-  _$TurnoverCopyWithImpl(Turnover _value, $Res Function(Turnover) _then)
-      : super(_value, (v) => _then(v as Turnover));
+class __$$TurnoverCopyWithImpl<$Res>
+    extends _$StatInputCopyWithImpl<$Res, _$Turnover>
+    implements _$$TurnoverCopyWith<$Res> {
+  __$$TurnoverCopyWithImpl(_$Turnover _value, $Res Function(_$Turnover) _then)
+      : super(_value, _then);
 
-  @override
-  Turnover get _value => super._value as Turnover;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? player = freezed,
   }) {
-    return _then(Turnover(
-      player: player == freezed
+    return _then(_$Turnover(
+      player: freezed == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
               as KasadoUser?,
@@ -1289,7 +1251,7 @@ class _$TurnoverCopyWithImpl<$Res> extends _$StatInputCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$Turnover extends Turnover with DiagnosticableTreeMixin {
-  const _$Turnover({required this.player, String? $type})
+  const _$Turnover({required this.player, final String? $type})
       : $type = $type ?? 'turnover',
         super._();
 
@@ -1319,18 +1281,19 @@ class _$Turnover extends Turnover with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is Turnover &&
-            const DeepCollectionEquality().equals(other.player, player));
+            other is _$Turnover &&
+            (identical(other.player, player) || other.player == player));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(player));
 
   @JsonKey(ignore: true)
   @override
-  $TurnoverCopyWith<Turnover> get copyWith =>
-      _$TurnoverCopyWithImpl<Turnover>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, player);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TurnoverCopyWith<_$Turnover> get copyWith =>
+      __$$TurnoverCopyWithImpl<_$Turnover>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1350,14 +1313,14 @@ class _$Turnover extends Turnover with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
+    TResult? Function(KasadoUser? player, KasadoUser? playerWhoAssisted,
             bool isThree, bool wasMade)?
         shotAttempt,
-    TResult Function(KasadoUser? player)? block,
-    TResult Function(KasadoUser? player)? steal,
-    TResult Function(KasadoUser? player, bool wasMade)? ftAttempt,
-    TResult Function(KasadoUser? player, bool isDefensive)? rebound,
-    TResult Function(KasadoUser? player)? turnover,
+    TResult? Function(KasadoUser? player)? block,
+    TResult? Function(KasadoUser? player)? steal,
+    TResult? Function(KasadoUser? player, bool wasMade)? ftAttempt,
+    TResult? Function(KasadoUser? player, bool isDefensive)? rebound,
+    TResult? Function(KasadoUser? player)? turnover,
   }) {
     return turnover?.call(player);
   }
@@ -1397,12 +1360,12 @@ class _$Turnover extends Turnover with DiagnosticableTreeMixin {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(ShotAttempt value)? shotAttempt,
-    TResult Function(Block value)? block,
-    TResult Function(Steal value)? steal,
-    TResult Function(FtAttempt value)? ftAttempt,
-    TResult Function(Rebound value)? rebound,
-    TResult Function(Turnover value)? turnover,
+    TResult? Function(ShotAttempt value)? shotAttempt,
+    TResult? Function(Block value)? block,
+    TResult? Function(Steal value)? steal,
+    TResult? Function(FtAttempt value)? ftAttempt,
+    TResult? Function(Rebound value)? rebound,
+    TResult? Function(Turnover value)? turnover,
   }) {
     return turnover?.call(this);
   }
@@ -1426,12 +1389,14 @@ class _$Turnover extends Turnover with DiagnosticableTreeMixin {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TurnoverToJson(this);
+    return _$$TurnoverToJson(
+      this,
+    );
   }
 }
 
 abstract class Turnover extends StatInput {
-  const factory Turnover({required KasadoUser? player}) = _$Turnover;
+  const factory Turnover({required final KasadoUser? player}) = _$Turnover;
   const Turnover._() : super._();
 
   factory Turnover.fromJson(Map<String, dynamic> json) = _$Turnover.fromJson;
@@ -1440,6 +1405,6 @@ abstract class Turnover extends StatInput {
   KasadoUser? get player;
   @override
   @JsonKey(ignore: true)
-  $TurnoverCopyWith<Turnover> get copyWith =>
+  _$$TurnoverCopyWith<_$Turnover> get copyWith =>
       throw _privateConstructorUsedError;
 }

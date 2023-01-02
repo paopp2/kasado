@@ -26,7 +26,7 @@ Map<String, dynamic> _$$_UserBioToJson(_$_UserBio instance) =>
       'heightIn': instance.heightIn,
       'weight': instance.weight,
       'positions':
-          instance.positions.map((e) => _$PlayerPositionEnumMap[e]).toList(),
+          instance.positions.map((e) => _$PlayerPositionEnumMap[e]!).toList(),
     };
 
 const _$PlayerPositionEnumMap = {

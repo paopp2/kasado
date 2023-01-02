@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'court_slot.dart';
 
@@ -12,56 +12,11 @@ part of 'court_slot.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 CourtSlot _$CourtSlotFromJson(Map<String, dynamic> json) {
   return _CourtSlot.fromJson(json);
 }
-
-/// @nodoc
-class _$CourtSlotTearOff {
-  const _$CourtSlotTearOff();
-
-  _CourtSlot call(
-      {required String slotId,
-      required String courtId,
-      required TimeRange timeRange,
-      String courtName = 'Pitogo Basketball Court',
-      double ticketPrice = 30,
-      List<KasadoUser> players = const [],
-      bool isClosedByAdmin = false,
-      String? liveGameStatsId = null,
-      List<KasadoUser>? stageHomeTeamPlayers = const [],
-      List<KasadoUser>? stageAwayTeamPlayers = const [],
-      Map<String, SlotPlayerInfo> slotInfoPerPlayer = const {},
-      int maxPlayerCount = 25,
-      int minPlayerCount = 15,
-      List<String> playerIdQueue = const []}) {
-    return _CourtSlot(
-      slotId: slotId,
-      courtId: courtId,
-      timeRange: timeRange,
-      courtName: courtName,
-      ticketPrice: ticketPrice,
-      players: players,
-      isClosedByAdmin: isClosedByAdmin,
-      liveGameStatsId: liveGameStatsId,
-      stageHomeTeamPlayers: stageHomeTeamPlayers,
-      stageAwayTeamPlayers: stageAwayTeamPlayers,
-      slotInfoPerPlayer: slotInfoPerPlayer,
-      maxPlayerCount: maxPlayerCount,
-      minPlayerCount: minPlayerCount,
-      playerIdQueue: playerIdQueue,
-    );
-  }
-
-  CourtSlot fromJson(Map<String, Object?> json) {
-    return CourtSlot.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $CourtSlot = _$CourtSlotTearOff();
 
 /// @nodoc
 mixin _$CourtSlot {
@@ -94,7 +49,8 @@ mixin _$CourtSlot {
 /// @nodoc
 abstract class $CourtSlotCopyWith<$Res> {
   factory $CourtSlotCopyWith(CourtSlot value, $Res Function(CourtSlot) then) =
-      _$CourtSlotCopyWithImpl<$Res>;
+      _$CourtSlotCopyWithImpl<$Res, CourtSlot>;
+  @useResult
   $Res call(
       {String slotId,
       String courtId,
@@ -115,104 +71,109 @@ abstract class $CourtSlotCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CourtSlotCopyWithImpl<$Res> implements $CourtSlotCopyWith<$Res> {
+class _$CourtSlotCopyWithImpl<$Res, $Val extends CourtSlot>
+    implements $CourtSlotCopyWith<$Res> {
   _$CourtSlotCopyWithImpl(this._value, this._then);
 
-  final CourtSlot _value;
   // ignore: unused_field
-  final $Res Function(CourtSlot) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? slotId = freezed,
-    Object? courtId = freezed,
-    Object? timeRange = freezed,
-    Object? courtName = freezed,
-    Object? ticketPrice = freezed,
-    Object? players = freezed,
-    Object? isClosedByAdmin = freezed,
+    Object? slotId = null,
+    Object? courtId = null,
+    Object? timeRange = null,
+    Object? courtName = null,
+    Object? ticketPrice = null,
+    Object? players = null,
+    Object? isClosedByAdmin = null,
     Object? liveGameStatsId = freezed,
     Object? stageHomeTeamPlayers = freezed,
     Object? stageAwayTeamPlayers = freezed,
-    Object? slotInfoPerPlayer = freezed,
-    Object? maxPlayerCount = freezed,
-    Object? minPlayerCount = freezed,
-    Object? playerIdQueue = freezed,
+    Object? slotInfoPerPlayer = null,
+    Object? maxPlayerCount = null,
+    Object? minPlayerCount = null,
+    Object? playerIdQueue = null,
   }) {
     return _then(_value.copyWith(
-      slotId: slotId == freezed
+      slotId: null == slotId
           ? _value.slotId
           : slotId // ignore: cast_nullable_to_non_nullable
               as String,
-      courtId: courtId == freezed
+      courtId: null == courtId
           ? _value.courtId
           : courtId // ignore: cast_nullable_to_non_nullable
               as String,
-      timeRange: timeRange == freezed
+      timeRange: null == timeRange
           ? _value.timeRange
           : timeRange // ignore: cast_nullable_to_non_nullable
               as TimeRange,
-      courtName: courtName == freezed
+      courtName: null == courtName
           ? _value.courtName
           : courtName // ignore: cast_nullable_to_non_nullable
               as String,
-      ticketPrice: ticketPrice == freezed
+      ticketPrice: null == ticketPrice
           ? _value.ticketPrice
           : ticketPrice // ignore: cast_nullable_to_non_nullable
               as double,
-      players: players == freezed
+      players: null == players
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>,
-      isClosedByAdmin: isClosedByAdmin == freezed
+      isClosedByAdmin: null == isClosedByAdmin
           ? _value.isClosedByAdmin
           : isClosedByAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
-      liveGameStatsId: liveGameStatsId == freezed
+      liveGameStatsId: freezed == liveGameStatsId
           ? _value.liveGameStatsId
           : liveGameStatsId // ignore: cast_nullable_to_non_nullable
               as String?,
-      stageHomeTeamPlayers: stageHomeTeamPlayers == freezed
+      stageHomeTeamPlayers: freezed == stageHomeTeamPlayers
           ? _value.stageHomeTeamPlayers
           : stageHomeTeamPlayers // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>?,
-      stageAwayTeamPlayers: stageAwayTeamPlayers == freezed
+      stageAwayTeamPlayers: freezed == stageAwayTeamPlayers
           ? _value.stageAwayTeamPlayers
           : stageAwayTeamPlayers // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>?,
-      slotInfoPerPlayer: slotInfoPerPlayer == freezed
+      slotInfoPerPlayer: null == slotInfoPerPlayer
           ? _value.slotInfoPerPlayer
           : slotInfoPerPlayer // ignore: cast_nullable_to_non_nullable
               as Map<String, SlotPlayerInfo>,
-      maxPlayerCount: maxPlayerCount == freezed
+      maxPlayerCount: null == maxPlayerCount
           ? _value.maxPlayerCount
           : maxPlayerCount // ignore: cast_nullable_to_non_nullable
               as int,
-      minPlayerCount: minPlayerCount == freezed
+      minPlayerCount: null == minPlayerCount
           ? _value.minPlayerCount
           : minPlayerCount // ignore: cast_nullable_to_non_nullable
               as int,
-      playerIdQueue: playerIdQueue == freezed
+      playerIdQueue: null == playerIdQueue
           ? _value.playerIdQueue
           : playerIdQueue // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TimeRangeCopyWith<$Res> get timeRange {
     return $TimeRangeCopyWith<$Res>(_value.timeRange, (value) {
-      return _then(_value.copyWith(timeRange: value));
+      return _then(_value.copyWith(timeRange: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$CourtSlotCopyWith<$Res> implements $CourtSlotCopyWith<$Res> {
-  factory _$CourtSlotCopyWith(
-          _CourtSlot value, $Res Function(_CourtSlot) then) =
-      __$CourtSlotCopyWithImpl<$Res>;
+abstract class _$$_CourtSlotCopyWith<$Res> implements $CourtSlotCopyWith<$Res> {
+  factory _$$_CourtSlotCopyWith(
+          _$_CourtSlot value, $Res Function(_$_CourtSlot) then) =
+      __$$_CourtSlotCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String slotId,
       String courtId,
@@ -234,86 +195,86 @@ abstract class _$CourtSlotCopyWith<$Res> implements $CourtSlotCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$CourtSlotCopyWithImpl<$Res> extends _$CourtSlotCopyWithImpl<$Res>
-    implements _$CourtSlotCopyWith<$Res> {
-  __$CourtSlotCopyWithImpl(_CourtSlot _value, $Res Function(_CourtSlot) _then)
-      : super(_value, (v) => _then(v as _CourtSlot));
+class __$$_CourtSlotCopyWithImpl<$Res>
+    extends _$CourtSlotCopyWithImpl<$Res, _$_CourtSlot>
+    implements _$$_CourtSlotCopyWith<$Res> {
+  __$$_CourtSlotCopyWithImpl(
+      _$_CourtSlot _value, $Res Function(_$_CourtSlot) _then)
+      : super(_value, _then);
 
-  @override
-  _CourtSlot get _value => super._value as _CourtSlot;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? slotId = freezed,
-    Object? courtId = freezed,
-    Object? timeRange = freezed,
-    Object? courtName = freezed,
-    Object? ticketPrice = freezed,
-    Object? players = freezed,
-    Object? isClosedByAdmin = freezed,
+    Object? slotId = null,
+    Object? courtId = null,
+    Object? timeRange = null,
+    Object? courtName = null,
+    Object? ticketPrice = null,
+    Object? players = null,
+    Object? isClosedByAdmin = null,
     Object? liveGameStatsId = freezed,
     Object? stageHomeTeamPlayers = freezed,
     Object? stageAwayTeamPlayers = freezed,
-    Object? slotInfoPerPlayer = freezed,
-    Object? maxPlayerCount = freezed,
-    Object? minPlayerCount = freezed,
-    Object? playerIdQueue = freezed,
+    Object? slotInfoPerPlayer = null,
+    Object? maxPlayerCount = null,
+    Object? minPlayerCount = null,
+    Object? playerIdQueue = null,
   }) {
-    return _then(_CourtSlot(
-      slotId: slotId == freezed
+    return _then(_$_CourtSlot(
+      slotId: null == slotId
           ? _value.slotId
           : slotId // ignore: cast_nullable_to_non_nullable
               as String,
-      courtId: courtId == freezed
+      courtId: null == courtId
           ? _value.courtId
           : courtId // ignore: cast_nullable_to_non_nullable
               as String,
-      timeRange: timeRange == freezed
+      timeRange: null == timeRange
           ? _value.timeRange
           : timeRange // ignore: cast_nullable_to_non_nullable
               as TimeRange,
-      courtName: courtName == freezed
+      courtName: null == courtName
           ? _value.courtName
           : courtName // ignore: cast_nullable_to_non_nullable
               as String,
-      ticketPrice: ticketPrice == freezed
+      ticketPrice: null == ticketPrice
           ? _value.ticketPrice
           : ticketPrice // ignore: cast_nullable_to_non_nullable
               as double,
-      players: players == freezed
-          ? _value.players
+      players: null == players
+          ? _value._players
           : players // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>,
-      isClosedByAdmin: isClosedByAdmin == freezed
+      isClosedByAdmin: null == isClosedByAdmin
           ? _value.isClosedByAdmin
           : isClosedByAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
-      liveGameStatsId: liveGameStatsId == freezed
+      liveGameStatsId: freezed == liveGameStatsId
           ? _value.liveGameStatsId
           : liveGameStatsId // ignore: cast_nullable_to_non_nullable
               as String?,
-      stageHomeTeamPlayers: stageHomeTeamPlayers == freezed
-          ? _value.stageHomeTeamPlayers
+      stageHomeTeamPlayers: freezed == stageHomeTeamPlayers
+          ? _value._stageHomeTeamPlayers
           : stageHomeTeamPlayers // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>?,
-      stageAwayTeamPlayers: stageAwayTeamPlayers == freezed
-          ? _value.stageAwayTeamPlayers
+      stageAwayTeamPlayers: freezed == stageAwayTeamPlayers
+          ? _value._stageAwayTeamPlayers
           : stageAwayTeamPlayers // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>?,
-      slotInfoPerPlayer: slotInfoPerPlayer == freezed
-          ? _value.slotInfoPerPlayer
+      slotInfoPerPlayer: null == slotInfoPerPlayer
+          ? _value._slotInfoPerPlayer
           : slotInfoPerPlayer // ignore: cast_nullable_to_non_nullable
               as Map<String, SlotPlayerInfo>,
-      maxPlayerCount: maxPlayerCount == freezed
+      maxPlayerCount: null == maxPlayerCount
           ? _value.maxPlayerCount
           : maxPlayerCount // ignore: cast_nullable_to_non_nullable
               as int,
-      minPlayerCount: minPlayerCount == freezed
+      minPlayerCount: null == minPlayerCount
           ? _value.minPlayerCount
           : minPlayerCount // ignore: cast_nullable_to_non_nullable
               as int,
-      playerIdQueue: playerIdQueue == freezed
-          ? _value.playerIdQueue
+      playerIdQueue: null == playerIdQueue
+          ? _value._playerIdQueue
           : playerIdQueue // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -329,16 +290,21 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
       required this.timeRange,
       this.courtName = 'Pitogo Basketball Court',
       this.ticketPrice = 30,
-      this.players = const [],
+      final List<KasadoUser> players = const [],
       this.isClosedByAdmin = false,
       this.liveGameStatsId = null,
-      this.stageHomeTeamPlayers = const [],
-      this.stageAwayTeamPlayers = const [],
-      this.slotInfoPerPlayer = const {},
+      final List<KasadoUser>? stageHomeTeamPlayers = const [],
+      final List<KasadoUser>? stageAwayTeamPlayers = const [],
+      final Map<String, SlotPlayerInfo> slotInfoPerPlayer = const {},
       this.maxPlayerCount = 25,
       this.minPlayerCount = 15,
-      this.playerIdQueue = const []})
-      : super._();
+      final List<String> playerIdQueue = const []})
+      : _players = players,
+        _stageHomeTeamPlayers = stageHomeTeamPlayers,
+        _stageAwayTeamPlayers = stageAwayTeamPlayers,
+        _slotInfoPerPlayer = slotInfoPerPlayer,
+        _playerIdQueue = playerIdQueue,
+        super._();
 
   factory _$_CourtSlot.fromJson(Map<String, dynamic> json) =>
       _$$_CourtSlotFromJson(json);
@@ -349,40 +315,77 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   final String courtId;
   @override
   final TimeRange timeRange;
-  @JsonKey()
-  @override // TODO: Assert courtName and ticketPrice as required
+// TODO: Assert courtName and ticketPrice as required
 // (Firestore might have to be edited manually to avoid null errors)
+  @override
+  @JsonKey()
   final String courtName;
-  @JsonKey()
   @override
+  @JsonKey()
   final double ticketPrice;
-  @JsonKey()
+  final List<KasadoUser> _players;
   @override
-  final List<KasadoUser> players;
   @JsonKey()
+  List<KasadoUser> get players {
+    if (_players is EqualUnmodifiableListView) return _players;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_players);
+  }
+
   @override
+  @JsonKey()
   final bool isClosedByAdmin;
-  @JsonKey()
   @override
+  @JsonKey()
   final String? liveGameStatsId;
-  @JsonKey()
+  final List<KasadoUser>? _stageHomeTeamPlayers;
   @override
-  final List<KasadoUser>? stageHomeTeamPlayers;
   @JsonKey()
+  List<KasadoUser>? get stageHomeTeamPlayers {
+    final value = _stageHomeTeamPlayers;
+    if (value == null) return null;
+    if (_stageHomeTeamPlayers is EqualUnmodifiableListView)
+      return _stageHomeTeamPlayers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<KasadoUser>? _stageAwayTeamPlayers;
   @override
-  final List<KasadoUser>? stageAwayTeamPlayers;
   @JsonKey()
+  List<KasadoUser>? get stageAwayTeamPlayers {
+    final value = _stageAwayTeamPlayers;
+    if (value == null) return null;
+    if (_stageAwayTeamPlayers is EqualUnmodifiableListView)
+      return _stageAwayTeamPlayers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final Map<String, SlotPlayerInfo> _slotInfoPerPlayer;
   @override
-  final Map<String, SlotPlayerInfo> slotInfoPerPlayer;
   @JsonKey()
+  Map<String, SlotPlayerInfo> get slotInfoPerPlayer {
+    if (_slotInfoPerPlayer is EqualUnmodifiableMapView)
+      return _slotInfoPerPlayer;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_slotInfoPerPlayer);
+  }
+
   @override
+  @JsonKey()
   final int maxPlayerCount;
-  @JsonKey()
   @override
+  @JsonKey()
   final int minPlayerCount;
-  @JsonKey()
+  final List<String> _playerIdQueue;
   @override
-  final List<String> playerIdQueue;
+  @JsonKey()
+  List<String> get playerIdQueue {
+    if (_playerIdQueue is EqualUnmodifiableListView) return _playerIdQueue;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_playerIdQueue);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -414,77 +417,83 @@ class _$_CourtSlot extends _CourtSlot with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CourtSlot &&
-            const DeepCollectionEquality().equals(other.slotId, slotId) &&
-            const DeepCollectionEquality().equals(other.courtId, courtId) &&
-            const DeepCollectionEquality().equals(other.timeRange, timeRange) &&
-            const DeepCollectionEquality().equals(other.courtName, courtName) &&
+            other is _$_CourtSlot &&
+            (identical(other.slotId, slotId) || other.slotId == slotId) &&
+            (identical(other.courtId, courtId) || other.courtId == courtId) &&
+            (identical(other.timeRange, timeRange) ||
+                other.timeRange == timeRange) &&
+            (identical(other.courtName, courtName) ||
+                other.courtName == courtName) &&
+            (identical(other.ticketPrice, ticketPrice) ||
+                other.ticketPrice == ticketPrice) &&
+            const DeepCollectionEquality().equals(other._players, _players) &&
+            (identical(other.isClosedByAdmin, isClosedByAdmin) ||
+                other.isClosedByAdmin == isClosedByAdmin) &&
+            (identical(other.liveGameStatsId, liveGameStatsId) ||
+                other.liveGameStatsId == liveGameStatsId) &&
             const DeepCollectionEquality()
-                .equals(other.ticketPrice, ticketPrice) &&
-            const DeepCollectionEquality().equals(other.players, players) &&
+                .equals(other._stageHomeTeamPlayers, _stageHomeTeamPlayers) &&
             const DeepCollectionEquality()
-                .equals(other.isClosedByAdmin, isClosedByAdmin) &&
+                .equals(other._stageAwayTeamPlayers, _stageAwayTeamPlayers) &&
             const DeepCollectionEquality()
-                .equals(other.liveGameStatsId, liveGameStatsId) &&
+                .equals(other._slotInfoPerPlayer, _slotInfoPerPlayer) &&
+            (identical(other.maxPlayerCount, maxPlayerCount) ||
+                other.maxPlayerCount == maxPlayerCount) &&
+            (identical(other.minPlayerCount, minPlayerCount) ||
+                other.minPlayerCount == minPlayerCount) &&
             const DeepCollectionEquality()
-                .equals(other.stageHomeTeamPlayers, stageHomeTeamPlayers) &&
-            const DeepCollectionEquality()
-                .equals(other.stageAwayTeamPlayers, stageAwayTeamPlayers) &&
-            const DeepCollectionEquality()
-                .equals(other.slotInfoPerPlayer, slotInfoPerPlayer) &&
-            const DeepCollectionEquality()
-                .equals(other.maxPlayerCount, maxPlayerCount) &&
-            const DeepCollectionEquality()
-                .equals(other.minPlayerCount, minPlayerCount) &&
-            const DeepCollectionEquality()
-                .equals(other.playerIdQueue, playerIdQueue));
+                .equals(other._playerIdQueue, _playerIdQueue));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(slotId),
-      const DeepCollectionEquality().hash(courtId),
-      const DeepCollectionEquality().hash(timeRange),
-      const DeepCollectionEquality().hash(courtName),
-      const DeepCollectionEquality().hash(ticketPrice),
-      const DeepCollectionEquality().hash(players),
-      const DeepCollectionEquality().hash(isClosedByAdmin),
-      const DeepCollectionEquality().hash(liveGameStatsId),
-      const DeepCollectionEquality().hash(stageHomeTeamPlayers),
-      const DeepCollectionEquality().hash(stageAwayTeamPlayers),
-      const DeepCollectionEquality().hash(slotInfoPerPlayer),
-      const DeepCollectionEquality().hash(maxPlayerCount),
-      const DeepCollectionEquality().hash(minPlayerCount),
-      const DeepCollectionEquality().hash(playerIdQueue));
 
   @JsonKey(ignore: true)
   @override
-  _$CourtSlotCopyWith<_CourtSlot> get copyWith =>
-      __$CourtSlotCopyWithImpl<_CourtSlot>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      slotId,
+      courtId,
+      timeRange,
+      courtName,
+      ticketPrice,
+      const DeepCollectionEquality().hash(_players),
+      isClosedByAdmin,
+      liveGameStatsId,
+      const DeepCollectionEquality().hash(_stageHomeTeamPlayers),
+      const DeepCollectionEquality().hash(_stageAwayTeamPlayers),
+      const DeepCollectionEquality().hash(_slotInfoPerPlayer),
+      maxPlayerCount,
+      minPlayerCount,
+      const DeepCollectionEquality().hash(_playerIdQueue));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CourtSlotCopyWith<_$_CourtSlot> get copyWith =>
+      __$$_CourtSlotCopyWithImpl<_$_CourtSlot>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CourtSlotToJson(this);
+    return _$$_CourtSlotToJson(
+      this,
+    );
   }
 }
 
 abstract class _CourtSlot extends CourtSlot {
   const factory _CourtSlot(
-      {required String slotId,
-      required String courtId,
-      required TimeRange timeRange,
-      String courtName,
-      double ticketPrice,
-      List<KasadoUser> players,
-      bool isClosedByAdmin,
-      String? liveGameStatsId,
-      List<KasadoUser>? stageHomeTeamPlayers,
-      List<KasadoUser>? stageAwayTeamPlayers,
-      Map<String, SlotPlayerInfo> slotInfoPerPlayer,
-      int maxPlayerCount,
-      int minPlayerCount,
-      List<String> playerIdQueue}) = _$_CourtSlot;
+      {required final String slotId,
+      required final String courtId,
+      required final TimeRange timeRange,
+      final String courtName,
+      final double ticketPrice,
+      final List<KasadoUser> players,
+      final bool isClosedByAdmin,
+      final String? liveGameStatsId,
+      final List<KasadoUser>? stageHomeTeamPlayers,
+      final List<KasadoUser>? stageAwayTeamPlayers,
+      final Map<String, SlotPlayerInfo> slotInfoPerPlayer,
+      final int maxPlayerCount,
+      final int minPlayerCount,
+      final List<String> playerIdQueue}) = _$_CourtSlot;
   const _CourtSlot._() : super._();
 
   factory _CourtSlot.fromJson(Map<String, dynamic> json) =
@@ -521,6 +530,6 @@ abstract class _CourtSlot extends CourtSlot {
   List<String> get playerIdQueue;
   @override
   @JsonKey(ignore: true)
-  _$CourtSlotCopyWith<_CourtSlot> get copyWith =>
+  _$$_CourtSlotCopyWith<_$_CourtSlot> get copyWith =>
       throw _privateConstructorUsedError;
 }
