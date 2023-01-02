@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -119,8 +121,9 @@ class AppRouter {
         },
       ),
     ],
-    redirect: (state) {
-      final isLoggedIn = fireAuthInstance.currentUser != null;
+    redirect: (context, state) async {
+      final currentUser = await fireAuthInstance.authStateChanges().first;
+      final isLoggedIn = currentUser != null;
       final loggingIn = state.subloc == '/login';
 
       // If the user is not logged in, they must login
@@ -133,7 +136,7 @@ class AppRouter {
       // No need to redirect at all
       return null;
     },
-    refreshListenable: GoRouterRefreshStream(
+    refreshListenable: _GoRouterRefreshStream(
       fireAuthInstance.authStateChanges(),
     ),
   );
@@ -151,4 +154,22 @@ class Routes {
   static const statLeadersView = 'stat_leaders_view';
   static const scoreBoardView = 'score_board_view';
   static const searchView = 'search_view';
+}
+
+// Converts a Stream to a Listenable
+class _GoRouterRefreshStream extends ChangeNotifier {
+  _GoRouterRefreshStream(Stream<dynamic> stream) {
+    notifyListeners();
+    _subscription = stream.asBroadcastStream().listen(
+          (dynamic _) => notifyListeners(),
+        );
+  }
+
+  late final StreamSubscription<dynamic> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
 }
