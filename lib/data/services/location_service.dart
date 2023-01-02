@@ -6,12 +6,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/model/kasado_location/kasado_location.dart';
 
 final locationServiceProvider =
-    Provider.autoDispose((ref) => LocationService(ref.read));
+    Provider.autoDispose((ref) => LocationService(ref));
 
 class LocationService {
-  LocationService(this.read);
+  LocationService(this.ref);
 
-  final Reader read;
+  final Ref ref;
   final serviceStatusController = StreamController<ServiceStatus>();
   final permissionStatusController =
       StreamController<LocationPermission>.broadcast();

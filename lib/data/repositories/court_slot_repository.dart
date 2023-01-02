@@ -259,7 +259,8 @@ class CourtSlotRepository {
         courtSlot.players.where((p) => _teamPlayerIds.contains(p.id)).toList();
 
     final updatedPlayerList = courtSlot.players
-      ..removeWhere((player) => _teamPlayersFromCourtSlot.contains(player));
+        .where((player) => !_teamPlayersFromCourtSlot.contains(player))
+        .toList();
 
     // Remove this slot's ticket for the team
     await teamRepo.removeTeamTicket(

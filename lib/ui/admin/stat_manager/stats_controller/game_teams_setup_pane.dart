@@ -120,7 +120,7 @@ class GameTeamsSetupPane extends HookConsumerWidget {
             padding: const EdgeInsets.all(10.0),
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            primary: Colors.blueGrey,
+            foregroundColor: Colors.blueGrey,
           ),
           onPressed: controller.toggleToNextSortState,
         ),

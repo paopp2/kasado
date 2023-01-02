@@ -13,18 +13,18 @@ import 'package:kasado/model/user_bio/user_bio.dart';
 
 final userInfoRepositoryProvider = Provider.autoDispose(
   (ref) => UserInfoRepository(
+    ref: ref,
     firestoreHelper: FirestoreHelper.instance,
-    read: ref.read,
   ),
 );
 
 class UserInfoRepository {
   UserInfoRepository({
     required this.firestoreHelper,
-    required this.read,
+    required this.ref,
   });
   final FirestoreHelper firestoreHelper;
-  final Reader read;
+  final Ref ref;
 
   Future<bool> userHasInfo(String userId) async {
     return await firestoreHelper.docExists(
@@ -92,8 +92,11 @@ class UserInfoRepository {
   Future<List<KasadoUserInfo>> getUserInfoQueryResults([
     String? userEmailQuery,
   ]) async {
-    final query =
-        read(algolia).instance.index('user_info').query(userEmailQuery ?? '');
+    final query = ref
+        .read(algolia)
+        .instance
+        .index('user_info')
+        .query(userEmailQuery ?? '');
     final snap = await query.getObjects();
 
     return snap.hits.map((h) => KasadoUserInfo.fromJson(h.data)).toList();

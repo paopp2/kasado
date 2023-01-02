@@ -4,14 +4,12 @@ import 'package:kasado/model/court_sched/court_sched.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 import 'package:time/time.dart';
 
-final kasadoUtilsProvider = Provider.autoDispose(
-  (ref) => KasadoUtils(ref.read),
-);
+final kasadoUtilsProvider = Provider.autoDispose(KasadoUtils.new);
 
 class KasadoUtils {
-  KasadoUtils(this.read);
+  KasadoUtils(this.ref);
 
-  final Reader read;
+  final Ref ref;
 
   TimeRange getNextTimeSlot({
     required DateTime from,

@@ -92,7 +92,7 @@ class PlayerChooserDialog extends HookConsumerWidget {
                     fontSize: 35,
                   ),
                 ),
-                style: ElevatedButton.styleFrom(primary: Colors.red),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () => Navigator.pop(context),
               ),
             ),

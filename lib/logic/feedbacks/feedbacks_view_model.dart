@@ -11,7 +11,7 @@ import 'package:uuid/uuid.dart';
 
 final feedbacksViewModel = Provider.autoDispose(
   (ref) => FeedbacksViewModel(
-    read: ref.read,
+    ref: ref,
     feedbacksRepo: ref.watch(feedbacksRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
   ),
@@ -19,10 +19,10 @@ final feedbacksViewModel = Provider.autoDispose(
 
 class FeedbacksViewModel extends ViewModel with FeedbacksTecMixin {
   FeedbacksViewModel({
-    required Reader read,
+    required Ref ref,
     required this.feedbacksRepo,
     required this.currentUser,
-  }) : super(read);
+  }) : super(ref);
 
   final FeedbacksRepository feedbacksRepo;
   final KasadoUser currentUser;
@@ -35,7 +35,7 @@ class FeedbacksViewModel extends ViewModel with FeedbacksTecMixin {
 
   Future<void> pushFeedback(BuildContext context) async {
     if (feedbackInputFormKey.currentState!.validate()) {
-      read(mixpanel)!.track("Sent a feedback");
+      ref.read(mixpanel)!.track("Sent a feedback");
       await feedbacksRepo.pushFeedback(
         kasado.Feedback(
           id: const Uuid().v4(),

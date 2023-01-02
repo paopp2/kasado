@@ -15,7 +15,7 @@ import 'package:uuid/uuid.dart';
 
 final gameStatController = Provider.autoDispose(
   (ref) => GameStatController(
-    read: ref.read,
+    ref: ref,
     statRepo: ref.watch(statRepositoryProvider),
     courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
   ),
@@ -23,24 +23,24 @@ final gameStatController = Provider.autoDispose(
 
 class GameStatController {
   GameStatController({
-    required this.read,
+    required this.ref,
     required this.statRepo,
     required this.courtSlotRepo,
   });
-  final Reader read;
+  final Ref ref;
   final StatRepository statRepo;
   final CourtSlotRepository courtSlotRepo;
 
   bool isHomePlayer(KasadoUser player) {
-    return read(homeTeamPlayersProvider).contains(player);
+    return ref.read(homeTeamPlayersProvider).contains(player);
   }
 
   bool isAwayPlayer(KasadoUser player) {
-    return read(awayTeamPlayersProvider).contains(player);
+    return ref.read(awayTeamPlayersProvider).contains(player);
   }
 
   void selectSlotGameStats(GameStats gameStats) {
-    read(selectedGameStatsProvider.notifier).state = gameStats;
+    ref.read(selectedGameStatsProvider.notifier).state = gameStats;
   }
 
   Future<void> onPlayerShot({
@@ -404,10 +404,10 @@ class GameStatController {
   }
 
   void toggleToNextSortState() {
-    final sortState = read(teamsPlayersSetupSortProvider);
-    read(teamsPlayersSetupSortProvider.notifier).update(
-      (s) => (sortState < 3) ? s + 1 : 0,
-    );
+    final sortState = ref.read(teamsPlayersSetupSortProvider);
+    ref.read(teamsPlayersSetupSortProvider.notifier).update(
+          (s) => (sortState < 3) ? s + 1 : 0,
+        );
   }
 
   /// Get players to show when setting up teams for a new game

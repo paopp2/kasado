@@ -30,7 +30,7 @@ class StatButton extends StatelessWidget {
         onPressed: onPressed,
         onLongPress: onLongPressed,
         style: ElevatedButton.styleFrom(
-          primary: color,
+          backgroundColor: color,
           fixedSize: const Size(75, 75),
           shape: const CircleBorder(),
         ),

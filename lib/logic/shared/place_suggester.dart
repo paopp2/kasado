@@ -3,14 +3,14 @@ import 'package:kasado/data/services/places_service.dart';
 import 'package:kasado/model/kasado_location/kasado_location.dart';
 
 final placeSuggesterProvider = Provider.autoDispose(
-  (ref) => PlaceSuggester(read: ref.read),
+  (ref) => PlaceSuggester(ref: ref),
 );
 
 class PlaceSuggester {
   PlaceSuggester({
-    required this.read,
+    required this.ref,
   });
-  final Reader read;
+  final Ref ref;
   final _placesService = PlacesService.instance;
 
   /// Used to store all autocomplete suggestion Maps in order to obtain the "id"

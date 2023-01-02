@@ -7,16 +7,16 @@ import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 
 final statLeadersViewModel = Provider.autoDispose(
   (ref) => StatLeadersViewModel(
-    read: ref.read,
+    ref: ref,
     utils: ref.watch(kasadoUtilsProvider),
   ),
 );
 
 class StatLeadersViewModel extends ViewModel {
   StatLeadersViewModel({
-    required Reader read,
+    required Ref ref,
     required this.utils,
-  }) : super(read);
+  }) : super(ref);
 
   final KasadoUtils utils;
 
@@ -29,12 +29,12 @@ class StatLeadersViewModel extends ViewModel {
   }) {
     final precedingStats = precedingUserInfo?.overviewStats;
     final stats = userInfo.overviewStats;
-    final rankNum =
-        read(rankNumProvider(statType))[stats.getStatValueAsString(statType)];
+    final rankNum = ref
+        .read(rankNumProvider(statType))[stats.getStatValueAsString(statType)];
     final isSameRankWithPreceding = (precedingStats == null)
         ? false
         : rankNum ==
-            read(rankNumProvider(statType))[
+            ref.read(rankNumProvider(statType))[
                 precedingStats.getStatValueAsString(statType)];
 
     return (isSameRankWithPreceding) ? '' : rankNum.toString();

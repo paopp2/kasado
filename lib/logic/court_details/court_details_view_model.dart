@@ -7,7 +7,7 @@ import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 
 final courtDetailsViewModel = Provider.autoDispose(
   (ref) => CourtDetailsViewModel(
-    read: ref.read,
+    ref: ref,
     currentUser: ref.watch(currentUserProvider)!,
     currentUserInfo: ref.watch(currentUserInfoProvider).value,
   ),
@@ -15,10 +15,10 @@ final courtDetailsViewModel = Provider.autoDispose(
 
 class CourtDetailsViewModel extends ViewModel {
   CourtDetailsViewModel({
-    required Reader read,
+    required Ref ref,
     required this.currentUser,
     required this.currentUserInfo,
-  }) : super(read);
+  }) : super(ref);
 
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;

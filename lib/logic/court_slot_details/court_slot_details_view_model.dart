@@ -21,7 +21,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 final courtSlotDetailsViewModel = Provider.autoDispose(
   (ref) => CourtSlotDetailsViewModel(
-    read: ref.read,
+    ref: ref,
     courtRepo: ref.watch(courtRepositoryProvider),
     courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
@@ -35,7 +35,7 @@ final courtSlotDetailsViewModel = Provider.autoDispose(
 
 class CourtSlotDetailsViewModel extends ViewModel {
   CourtSlotDetailsViewModel({
-    required Reader read,
+    required Ref ref,
     required this.courtRepo,
     required this.courtSlotRepo,
     required this.userInfoRepo,
@@ -44,7 +44,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required this.currentUserInfo,
     required this.utils,
     required this.statRepo,
-  }) : super(read);
+  }) : super(ref);
 
   final CourtRepository courtRepo;
   final CourtSlotRepository courtSlotRepo;
@@ -182,7 +182,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required CourtSlot baseCourtSlot,
     required Future<bool> Function() onNotEnoughPondo,
   }) async {
-    read(mixpanel)!.track("Join a courtSlot", properties: {
+    ref.read(mixpanel)!.track("Join a courtSlot", properties: {
       "isSingle": true,
       "courtName": baseCourtSlot.courtName,
       "courtSlotTimeRange": utils.getTimeRangeFormat(
@@ -212,7 +212,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required KasadoUser playerToRemove,
     required CourtSlot baseCourtSlot,
   }) async {
-    read(mixpanel)!.track("Leave a courtSlot", properties: {
+    ref.read(mixpanel)!.track("Leave a courtSlot", properties: {
       "isSingle": true,
       "courtName": baseCourtSlot.courtName,
       "courtSlotTimeRange": utils.getTimeRangeFormat(
@@ -237,7 +237,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required CourtSlot baseCourtSlot,
     required Future<bool> Function(List<KasadoUserInfo>) onNotAllHasEnoughPondo,
   }) async {
-    read(mixpanel)!.track("Join a courtSlot", properties: {
+    ref.read(mixpanel)!.track("Join a courtSlot", properties: {
       "isSingle": false,
       "courtName": baseCourtSlot.courtName,
       "courtSlotTimeRange": utils.getTimeRangeFormat(
@@ -280,7 +280,7 @@ class CourtSlotDetailsViewModel extends ViewModel {
     required CourtSlot baseCourtSlot,
     BuildContext? context,
   }) async {
-    read(mixpanel)!.track("Leave a courtSlot", properties: {
+    ref.read(mixpanel)!.track("Leave a courtSlot", properties: {
       "isSingle": false,
       "courtName": baseCourtSlot.courtName,
       "courtSlotTimeRange": utils.getTimeRangeFormat(

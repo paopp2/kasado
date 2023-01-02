@@ -96,7 +96,8 @@ class TicketScannerTab extends HookConsumerWidget {
                       TextButton(
                         child: const Text("Cancel"),
                         onPressed: () => isQrScannerOpenState.value = true,
-                        style: TextButton.styleFrom(primary: Colors.red),
+                        style:
+                            TextButton.styleFrom(foregroundColor: Colors.red),
                       ),
                       TextButton(
                         child: const Text("Add to Queue"),
@@ -111,7 +112,8 @@ class TicketScannerTab extends HookConsumerWidget {
                           );
                           isQrScannerOpenState.value = true;
                         },
-                        style: TextButton.styleFrom(primary: Colors.green),
+                        style:
+                            TextButton.styleFrom(foregroundColor: Colors.green),
                       ),
                     ],
                   ),

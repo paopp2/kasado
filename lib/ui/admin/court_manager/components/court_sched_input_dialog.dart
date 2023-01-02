@@ -82,7 +82,8 @@ class CourtSchedInputDialog extends HookConsumerWidget {
             (isSpecial)
                 ? TextButton(
                     style: TextButton.styleFrom(
-                      primary: (isSchedDateSet) ? Colors.green : Colors.red,
+                      foregroundColor:
+                          (isSchedDateSet) ? Colors.green : Colors.red,
                     ),
                     child: Text(
                       (isSchedDateSet)
@@ -126,7 +127,7 @@ class CourtSchedInputDialog extends HookConsumerWidget {
               child: const Text("Add CourtSched"),
               onPressed: _onAddCourtSchedPressed,
               style: TextButton.styleFrom(
-                primary: Colors.green,
+                foregroundColor: Colors.green,
               ),
             ),
           ],
