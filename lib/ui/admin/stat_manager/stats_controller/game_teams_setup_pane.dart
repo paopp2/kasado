@@ -205,12 +205,27 @@ class GameTeamsSetupPane extends HookConsumerWidget {
             ),
             (isStartingGameState.value)
                 ? const LoadingWidget()
-                : TextButton(
-                    child: const Text(
-                      'START GAME',
-                      style: TextStyle(color: Colors.green),
-                    ),
-                    onPressed: _onStartGamePressed,
+                : Row(
+                    children: [
+                      TextButton(
+                        child: const Text(
+                          'WITH\nSTATS',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
+                        ),
+                        onPressed: _onStartGamePressed,
+                      ),
+                      TextButton(
+                        child: const Text(
+                          'WITHOUT\nSTATS',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.green),
+                        ),
+                        onPressed: _onStartGamePressed,
+                      ),
+                    ],
                   ),
           ],
         ),
