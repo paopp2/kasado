@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -67,16 +68,19 @@ class TeamTab extends HookConsumerWidget {
                                     return StaggerListTileAnimation(
                                       index: i,
                                       child: ListTile(
-                                        leading: Badge(
+                                        leading: badges.Badge(
                                           badgeContent: const FaIcon(
                                             FontAwesomeIcons.crown,
                                             size: 8,
                                           ),
-                                          badgeColor: Colors.amber,
+                                          badgeStyle: const BadgeStyle(
+                                            badgeColor: Colors.amber,
+                                          ),
                                           showBadge: isTeamCaptain,
                                           child: CircleAvatar(
-                                            backgroundImage:
-                                                NetworkImage(player.photoUrl!),
+                                            backgroundImage: NetworkImage(
+                                              player.photoUrl!,
+                                            ),
                                           ),
                                         ),
                                         title: Text(

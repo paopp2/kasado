@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -63,8 +64,10 @@ class SlotGameSelectorRow extends HookConsumerWidget {
                 .entries
                 .map(
                   (gameStatEntry) => TextButton(
-                    child: Badge(
-                      badgeColor: Colors.green,
+                    child: badges.Badge(
+                      badgeStyle: const BadgeStyle(
+                        badgeColor: Colors.green,
+                      ),
                       showBadge: gameStatEntry.value.isLive,
                       child: Text(
                         'G${gameStatEntry.key + 1}',

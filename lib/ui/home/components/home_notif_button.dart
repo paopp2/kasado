@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
@@ -44,7 +44,7 @@ class HomeNotifButton extends HookConsumerWidget {
                       error: (e, _) => Text(e.toString()),
                       loading: () => const Icon(Icons.notifications),
                       data: (unreadNotifCount) {
-                        return Badge(
+                        return badges.Badge(
                           showBadge: unreadNotifCount != 0,
                           badgeContent: Text(
                             unreadNotifCount.toString(),
