@@ -50,8 +50,8 @@ class TicketScannerTab extends HookConsumerWidget {
                         width: constraints.maxWidth * 0.40,
                         child: MobileScanner(
                           controller: scanController,
-                          onDetect: ((barcode, args) async {
-                            final qrData = barcode.rawValue!.split('~');
+                          onDetect: ((barcode) async {
+                            final qrData = barcode.raw!.split('~');
                             final courtId = qrData[3];
                             final slotId = qrData[4];
 
@@ -64,7 +64,6 @@ class TicketScannerTab extends HookConsumerWidget {
                             scannedQrData.value = qrData;
                             isQrScannerOpenState.value = false;
                           }),
-                          allowDuplicates: false,
                         ),
                       ),
                     ),

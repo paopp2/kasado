@@ -35,6 +35,7 @@ Future<void> main() async {
   final mixpanelInstance = await Mixpanel.init(
     "2d8fa8dd56a27950bb14036586c618e6",
     optOutTrackingDefault: inDebugMode,
+    trackAutomaticEvents: true,
   );
 
   runApp(ProviderScope(
