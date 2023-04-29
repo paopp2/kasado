@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
@@ -434,7 +435,7 @@ class StatRepository {
               query.orderBy('overviewStats.mmr', descending: true).limit(100),
         )
         .map((userInfoList) => userInfoList
-          ..removeWhere((user) => user.overviewStats.gamesPlayed == 0));
+            .excludeWhere((user) => user.overviewStats.gamesPlayed == 0));
   }
 
   Stream<List<KasadoUserInfo>> getEffRatingLeadersStream() {
@@ -447,7 +448,7 @@ class StatRepository {
               .limit(100),
         )
         .map((userInfoList) => userInfoList
-          ..removeWhere((user) => user.overviewStats.gamesPlayed == 0));
+            .excludeWhere((user) => user.overviewStats.gamesPlayed == 0));
   }
 
   Stream<List<KasadoUserInfo>> getStandingLeadersStream() {
@@ -462,7 +463,7 @@ class StatRepository {
               .limit(100),
         )
         .map((userInfoList) => userInfoList
-          ..removeWhere((user) => user.overviewStats.gamesPlayed == 0));
+            .excludeWhere((user) => user.overviewStats.gamesPlayed == 0));
   }
 
   Stream<List<KasadoUserInfo>> getPpgLeadersStream() {
@@ -474,10 +475,9 @@ class StatRepository {
               .orderBy('overviewStats.avePointsPerGame', descending: true)
               .limit(100),
         )
-        .map((userInfoList) => userInfoList
-          ..removeWhere((user) =>
-              user.overviewStats.avePointsPerGame.isNaN ||
-              user.overviewStats.avePointsPerGame == 0));
+        .map((userInfoList) => userInfoList.excludeWhere((user) =>
+            user.overviewStats.avePointsPerGame.isNaN ||
+            user.overviewStats.avePointsPerGame == 0));
   }
 
   Stream<List<KasadoUserInfo>> getApgLeadersStream() {
@@ -489,10 +489,9 @@ class StatRepository {
               .orderBy('overviewStats.aveAssistsPerGame', descending: true)
               .limit(100),
         )
-        .map((userInfoList) => userInfoList
-          ..removeWhere((user) =>
-              user.overviewStats.aveAssistsPerGame.isNaN ||
-              user.overviewStats.aveAssistsPerGame == 0));
+        .map((userInfoList) => userInfoList.excludeWhere((user) =>
+            user.overviewStats.aveAssistsPerGame.isNaN ||
+            user.overviewStats.aveAssistsPerGame == 0));
   }
 
   Stream<List<KasadoUserInfo>> getRpgLeadersStream() {
@@ -504,10 +503,9 @@ class StatRepository {
               .orderBy('overviewStats.aveReboundsPerGame', descending: true)
               .limit(100),
         )
-        .map((userInfoList) => userInfoList
-          ..removeWhere((user) =>
-              user.overviewStats.aveReboundsPerGame.isNaN ||
-              user.overviewStats.aveReboundsPerGame == 0));
+        .map((userInfoList) => userInfoList.excludeWhere((user) =>
+            user.overviewStats.aveReboundsPerGame.isNaN ||
+            user.overviewStats.aveReboundsPerGame == 0));
   }
 
   Stream<List<KasadoUserInfo>> getSpgLeadersStream() {
@@ -519,10 +517,9 @@ class StatRepository {
               .orderBy('overviewStats.aveStlPerGame', descending: true)
               .limit(100),
         )
-        .map((userInfoList) => userInfoList
-          ..removeWhere((user) =>
-              user.overviewStats.aveStlPerGame.isNaN ||
-              user.overviewStats.aveStlPerGame == 0));
+        .map((userInfoList) => userInfoList.excludeWhere((user) =>
+            user.overviewStats.aveStlPerGame.isNaN ||
+            user.overviewStats.aveStlPerGame == 0));
   }
 
   Stream<List<KasadoUserInfo>> getBpgLeadersStream() {
@@ -534,10 +531,9 @@ class StatRepository {
               .orderBy('overviewStats.aveBlocksPerGame', descending: true)
               .limit(100),
         )
-        .map((userInfoList) => userInfoList
-          ..removeWhere((user) =>
-              user.overviewStats.aveBlocksPerGame.isNaN ||
-              user.overviewStats.aveBlocksPerGame == 0));
+        .map((userInfoList) => userInfoList.excludeWhere((user) =>
+            user.overviewStats.aveBlocksPerGame.isNaN ||
+            user.overviewStats.aveBlocksPerGame == 0));
   }
 
   Stream<List<KasadoUserInfo>> getFgPercentLeadersStream() {
@@ -549,10 +545,9 @@ class StatRepository {
               .orderBy('overviewStats.aveFgPercent', descending: true)
               .limit(100),
         )
-        .map((userInfoList) => userInfoList
-          ..removeWhere((user) =>
-              user.overviewStats.aveFgPercent.isNaN ||
-              user.overviewStats.aveFgPercent == 0));
+        .map((userInfoList) => userInfoList.excludeWhere((user) =>
+            user.overviewStats.aveFgPercent.isNaN ||
+            user.overviewStats.aveFgPercent == 0));
   }
 
   Stream<List<KasadoUserInfo>> get3ptPercentLeadersStream() {
@@ -564,10 +559,9 @@ class StatRepository {
               .orderBy('overviewStats.aveThreePtPercent', descending: true)
               .limit(100),
         )
-        .map((userInfoList) => userInfoList
-          ..removeWhere((user) =>
-              user.overviewStats.aveThreePtPercent.isNaN ||
-              user.overviewStats.aveThreePtPercent == 0));
+        .map((userInfoList) => userInfoList.excludeWhere((user) =>
+            user.overviewStats.aveThreePtPercent.isNaN ||
+            user.overviewStats.aveThreePtPercent == 0));
   }
 
   Stream<List<KasadoUserInfo>> get3ptMadeLeadersStream() {
@@ -580,6 +574,6 @@ class StatRepository {
               .limit(100),
         )
         .map((userInfoList) => userInfoList
-          ..removeWhere((user) => user.overviewStats.totalThreePM == 0));
+            .excludeWhere((user) => user.overviewStats.totalThreePM == 0));
   }
 }

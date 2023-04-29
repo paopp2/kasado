@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/team_repository.dart';
 import 'package:kasado/logic/home/states/team_tab_state.dart';
@@ -61,7 +62,7 @@ class TeamTabModel extends ViewModel {
       return [...state, user];
     });
     ref.read(teamPlayersListProvider.notifier).update((state) {
-      return [...state]..remove(user);
+      return [...state].exclude(user);
     });
   }
 

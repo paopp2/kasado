@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
@@ -102,7 +103,7 @@ class CourtAdminController with CourtAdminTecMixin {
     final schedListProvider =
         (isSpecial) ? specialCourtSchedListProvider : courtSchedListProvider;
     ref.read(schedListProvider.notifier).update(
-          (s) => [...s]..remove(sched),
+          (s) => [...s].exclude(sched),
         );
   }
 

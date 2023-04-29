@@ -2,6 +2,7 @@ import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
@@ -282,7 +283,7 @@ class GameStatController {
       }
       updatedTeamPlayers = [...currentTeamPlayers, player];
     } else {
-      updatedTeamPlayers = currentTeamPlayers..remove(player);
+      updatedTeamPlayers = currentTeamPlayers.exclude(player);
     }
     await courtSlotRepo.updateStageTeamPlayers(
       courtId: courtSlot.courtId,

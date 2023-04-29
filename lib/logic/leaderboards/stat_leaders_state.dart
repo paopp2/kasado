@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/enums/stat_type.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 
@@ -46,7 +47,7 @@ final statLeadersStreamProvider = StreamProvider.autoDispose
 
   // Exclude users that opted out of being part of stat leader rankings
   return statLeadersStream.map((userInfoList) => [...userInfoList]
-    ..removeWhere((uInfo) => uInfo.overviewStats.isHiddenFromRankings));
+      .excludeWhere((uInfo) => uInfo.overviewStats.isHiddenFromRankings));
 });
 
 final rankNumProvider = Provider.autoDispose.family<Map<String, int>, StatType>(

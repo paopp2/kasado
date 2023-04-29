@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/model/kasado_location/kasado_location.dart';
 
@@ -19,7 +20,7 @@ final courtsStreamProvider = StreamProvider.autoDispose(
               centerLoc: ref.watch(selectedCenterLocProvider),
             )
             .map((courtList) =>
-                courtList..removeWhere((court) => court.isHidden))
+                courtList.excludeWhere((court) => court.isHidden))
         : const Stream.empty();
   },
 );

@@ -1,5 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/model/court_sched/court_sched.dart';
 import 'package:kasado/model/time_range/time_range.dart';
 import 'package:time/time.dart';
@@ -17,7 +18,7 @@ class KasadoUtils {
   }) {
     // Filter courtScheds to remove scheds has an end date before [from]
     final _courtScheds = [...courtScheds]
-      ..removeWhere((sched) => (sched.endDate?.isBefore(from) ?? false));
+        .excludeWhere((sched) => (sched.endDate?.isBefore(from) ?? false));
 
     // Weekdays are represented as numbers => MON:0, TUE:1,..., SUN:6
     final weekdays =

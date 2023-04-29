@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
@@ -28,7 +29,7 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
 
     void _removePlayerFromHomeTeam(KasadoUser player) {
       final currentHomeTeamPlayers = homeTeamPlayers.value;
-      homeTeamPlayers.value = [...currentHomeTeamPlayers]..remove(player);
+      homeTeamPlayers.value = [...currentHomeTeamPlayers].exclude(player);
     }
 
     void _addPlayerToAwayTeam(KasadoUser player) {
@@ -38,7 +39,7 @@ class GameTeamsSetupDialog extends HookConsumerWidget {
 
     void _removePlayerFromAwayTeam(KasadoUser player) {
       final currentAwayTeamPlayers = awayTeamPlayers.value;
-      awayTeamPlayers.value = [...currentAwayTeamPlayers]..remove(player);
+      awayTeamPlayers.value = [...currentAwayTeamPlayers].exclude(player);
     }
 
     return Dialog(

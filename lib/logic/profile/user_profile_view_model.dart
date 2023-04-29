@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/enums/player_position.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/profile/user_profile_state.dart';
@@ -117,7 +118,7 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
         } else if (isAdd) {
           return [...state, position];
         } else {
-          return [...state]..remove(position);
+          return [...state].exclude(position);
         }
       },
     );
