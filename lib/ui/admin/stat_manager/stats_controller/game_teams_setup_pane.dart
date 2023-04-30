@@ -193,7 +193,7 @@ class GameTeamsSetupPane extends HookConsumerWidget {
               child: const Text('ENLARGE'),
               onPressed: () => context.pushNamed(
                 Routes.scoreBoardView,
-                params: {'courtId': courtSlot.courtId},
+                pathParameters: {'courtId': courtSlot.courtId},
                 extra: courtSlot,
               ),
             ),

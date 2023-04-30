@@ -76,7 +76,7 @@ class SlotPlayerTile extends StatelessWidget {
               tileColor: snapshot.data,
               onTap: () => context.pushNamed(
                 Routes.userProfileView,
-                params: {'uid': player.id},
+                pathParameters: {'uid': player.id},
               ),
               onLongPress: (isSuperAdmin)
                   ? () => showDialog(

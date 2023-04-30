@@ -30,7 +30,7 @@ class TeamStatTable extends StatelessWidget {
       dataAsList: statsList,
       onRowSelected: (stats) => context.pushNamed(
         Routes.userProfileView,
-        params: {'uid': stats!.player.id},
+        pathParameters: {'uid': stats!.player.id},
       ),
       columnDataList: [
         ColumnData(

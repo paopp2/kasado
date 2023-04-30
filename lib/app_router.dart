@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
@@ -44,7 +42,7 @@ class AppRouter {
         path: '/court-details/:courtId',
         builder: (context, state) {
           return CourtDetailsView(
-            courtId: state.params['courtId']!,
+            courtId: state.pathParameters['courtId']!,
           );
         },
         routes: [
@@ -52,7 +50,7 @@ class AppRouter {
             name: Routes.courtSlotDetailsView,
             path: 'slot-details',
             builder: (context, state) {
-              final params = state.queryParams;
+              final params = state.queryParameters;
 
               return CourtSlotDetailsView(
                 isAdmin: (state.extra as bool?) ?? false,
@@ -81,7 +79,7 @@ class AppRouter {
         name: Routes.userProfileView,
         path: '/user-profile-view/:uid',
         builder: (context, state) => UserProfileView(
-          userId: state.params['uid']!,
+          userId: state.pathParameters['uid']!,
         ),
       ),
       GoRoute(
@@ -121,7 +119,7 @@ class AppRouter {
     redirect: (context, state) async {
       final currentUser = await fireAuthInstance.authStateChanges().first;
       final isLoggedIn = currentUser != null;
-      final loggingIn = state.subloc == '/login';
+      final loggingIn = state.matchedLocation == '/login';
 
       // If the user is not logged in, they must login
       if (!isLoggedIn) return loggingIn ? null : '/login';
@@ -133,9 +131,6 @@ class AppRouter {
       // No need to redirect at all
       return null;
     },
-    refreshListenable: _GoRouterRefreshStream(
-      fireAuthInstance.authStateChanges(),
-    ),
   );
 }
 
@@ -151,22 +146,4 @@ class Routes {
   static const statLeadersView = 'stat_leaders_view';
   static const scoreBoardView = 'score_board_view';
   static const searchView = 'search_view';
-}
-
-// Converts a Stream to a Listenable
-class _GoRouterRefreshStream extends ChangeNotifier {
-  _GoRouterRefreshStream(Stream<dynamic> stream) {
-    notifyListeners();
-    _subscription = stream.asBroadcastStream().listen(
-          (dynamic _) => notifyListeners(),
-        );
-  }
-
-  late final StreamSubscription<dynamic> _subscription;
-
-  @override
-  void dispose() {
-    _subscription.cancel();
-    super.dispose();
-  }
 }

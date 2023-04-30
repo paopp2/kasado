@@ -110,7 +110,10 @@ class UserInfoDrawer extends HookConsumerWidget {
                     ListTile(
                       title: const Text('Logout'),
                       leading: const Icon(Icons.logout),
-                      onTap: model.signOut,
+                      onTap: () async {
+                        await model.signOut();
+                        context.pushReplacementNamed(Routes.loginView);
+                      },
                     ),
                     const Spacer(),
                     Padding(

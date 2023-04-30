@@ -52,8 +52,8 @@ class CourtSlotTile extends HookConsumerWidget {
                 ? null
                 : () => context.pushNamed(
                       Routes.courtSlotDetailsView,
-                      params: {'courtId': court.id},
-                      queryParams: {
+                      pathParameters: {'courtId': court.id},
+                      queryParameters: {
                         'court': jsonEncode(court.toJson()),
                         'baseCourtSlot': jsonEncode(courtSlot.toJson()),
                         'isDone':

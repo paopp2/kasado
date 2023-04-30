@@ -44,7 +44,7 @@ class CourtsOwnedView extends HookConsumerWidget {
                           ),
                           onTap: () => context.pushNamed(
                             Routes.courtDetailsView,
-                            params: {"courtId": court.id},
+                            pathParameters: {"courtId": court.id},
                           ),
                           trailing: IconButton(
                             icon: const Icon(Icons.delete),

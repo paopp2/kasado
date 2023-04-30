@@ -37,7 +37,7 @@ class LiveStatsInputPane extends StatelessWidget {
                     ),
                     onPressed: () => context.pushNamed(
                       Routes.scoreBoardView,
-                      params: {'courtId': courtSlot.courtId},
+                      pathParameters: {'courtId': courtSlot.courtId},
                       extra: courtSlot,
                     ),
                   ),

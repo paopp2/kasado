@@ -31,7 +31,7 @@ class NextCourtSlotCard extends StatelessWidget {
         child: InkWell(
           onTap: () => context.pushNamed(
             Routes.courtDetailsView,
-            params: {'courtId': court.id},
+            pathParameters: {'courtId': court.id},
           ),
           customBorder: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),

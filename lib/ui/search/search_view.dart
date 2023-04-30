@@ -24,7 +24,7 @@ class SearchView extends HookConsumerWidget {
           body: UserSearchPane(
             onUserTapped: (userInfo) => context.pushNamed(
               Routes.userProfileView,
-              params: {'uid': userInfo.id},
+              pathParameters: {'uid': userInfo.id},
             ),
           ),
         );

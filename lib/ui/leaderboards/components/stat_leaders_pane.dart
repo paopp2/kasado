@@ -118,7 +118,9 @@ class StatLeadersPane extends HookConsumerWidget {
                                               ),
                                               onTap: () => context.pushNamed(
                                                 Routes.userProfileView,
-                                                params: {'uid': player.id},
+                                                pathParameters: {
+                                                  'uid': player.id
+                                                },
                                               ),
                                             ),
                                           ),
