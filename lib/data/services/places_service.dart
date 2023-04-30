@@ -1,62 +1,42 @@
-import 'dart:convert';
-
 import 'package:kasado/model/kasado_location/kasado_location.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 
 const googleApiKey = "AIzaSyDN3zQFHS9fHxVZEEO_uDoc-xjw_WuDPXU";
 
 class PlacesService {
   PlacesService._();
   static final instance = PlacesService._();
+  final _placesApi = FlutterGooglePlacesSdk(googleApiKey);
 
   /// Returns a list of maps containing the "id" (placeId) of the suggestion
   /// and the "address" containing the description of the suggestion
   Future<List<Map<String, String?>>> getAutocompleteSuggestions(
       String query) async {
     if (query.isEmpty) return [];
-    final predictionsJson = await _getPlacePredictions(query);
+    final apiResponse = await _placesApi.findAutocompletePredictions(query);
+    final List<AutocompletePrediction> predictions = apiResponse.predictions;
 
-    return (predictionsJson.isNotEmpty)
-        ? predictionsJson
+    return (predictions.isNotEmpty)
+        ? predictions
             .map((p) => {
-                  "id": p['place_id'] as String,
-                  "address": p['description'] as String,
+                  "id": p.placeId,
+                  "address": p.fullText,
                 })
             .toList()
         : [];
   }
 
   Future<KasadoLocation?> getLocFromPlaceId(String placeId) async {
-    final placeDetailsJson = await _getPlaceDetails(placeId: placeId);
-    final latitude = placeDetailsJson['geometry']?['location']?['lat'];
-    final longitude = placeDetailsJson['geometry']?['location']?['lng'];
+    final apiResponse = await _placesApi.fetchPlace(placeId, fields: [
+      PlaceField.Name,
+      PlaceField.Location,
+    ]);
+    final placeDetails = apiResponse.place;
+    final latitude = placeDetails?.latLng?.lat;
+    final longitude = placeDetails?.latLng?.lng;
 
     return (latitude != null && longitude != null)
         ? KasadoLocation(lat: latitude, lng: longitude)
         : null;
-  }
-
-  Future<List<dynamic>> _getPlacePredictions(String query) async {
-    final res = await http.get(Uri.parse(
-      'https://maps.googleapis.com/maps/api/place/queryautocomplete/json'
-      '?input=${Uri.decodeFull(query)}'
-      '&key=$googleApiKey',
-    ));
-
-    return jsonDecode(res.body)['predictions']?.toList();
-  }
-
-  Future<dynamic> _getPlaceDetails({
-    required String placeId,
-    List<String> fields = const ['name', 'geometry'],
-  }) async {
-    final res = await http.get(Uri.parse(
-      "https://maps.googleapis.com/maps/api/place/details/json"
-      "?fields=${Uri.decodeFull(fields.join(','))}"
-      "&place_id=$placeId"
-      "&key=$googleApiKey",
-    ));
-
-    return jsonDecode(res.body)['result'];
   }
 }
