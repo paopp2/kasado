@@ -46,8 +46,6 @@ class KasadoTable<T extends Object> extends StatelessWidget {
           selectionColor: Colors.blue.shade100.withOpacity(0.4),
         ),
         child: SfDataGrid(
-          allowSorting: true,
-          allowTriStateSorting: true,
           frozenColumnsCount: frozenColumnCount,
           columnWidthMode: defaultColumnWidthMode,
           columnWidthCalculationRange: ColumnWidthCalculationRange.allRows,
