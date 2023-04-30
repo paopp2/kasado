@@ -43,11 +43,8 @@ class AppRouter {
         name: Routes.courtDetailsView,
         path: '/court-details/:courtId',
         builder: (context, state) {
-          final isAdmin = state.extra as bool?;
-
           return CourtDetailsView(
             courtId: state.params['courtId']!,
-            isAdmin: (isAdmin ?? false),
           );
         },
         routes: [

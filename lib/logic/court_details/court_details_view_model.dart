@@ -2,6 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/shared/view_model.dart';
+import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 
@@ -33,5 +34,9 @@ class CourtDetailsViewModel extends ViewModel {
         'court_id': params!['court_id'],
       },
     );
+  }
+
+  bool isCurrentUserAdminAt(Court court) {
+    return court.adminIds.contains(currentUser.id);
   }
 }
