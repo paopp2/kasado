@@ -200,6 +200,15 @@ class GameStatController {
       gameStatsId: null,
     );
 
+    // Decrement games played by 1 (reset to original)
+    await courtSlotRepo.addGamesPlayedForPlayers(
+      delta: -1,
+      courtSlot: courtSlot,
+      gamePlayerIds: [
+        ...gameStats.awayTeamStats.keys,
+        ...gameStats.homeTeamStats.keys,
+      ],
+    );
     await statRepo.cancelGame(courtSlot: courtSlot, gameStats: gameStats);
   }
 
@@ -255,6 +264,14 @@ class GameStatController {
     await courtSlotRepo.setCourtSlotLiveGameStatsId(
       courtSlot: courtSlot,
       gameStatsId: gameStatId,
+    );
+
+    await courtSlotRepo.addGamesPlayedForPlayers(
+      courtSlot: courtSlot,
+      gamePlayerIds: [
+        ...homeTeamPlayers,
+        ...awayTeamPlayers,
+      ].map((player) => player.id).toList(),
     );
   }
 

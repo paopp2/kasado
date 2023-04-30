@@ -38,17 +38,17 @@ class CourtSlotRepository {
     );
   }
 
-  Future<void> incGamesPlayedForPlayers({
+  Future<void> addGamesPlayedForPlayers({
+    int delta = 1,
     required CourtSlot courtSlot,
-    required List<KasadoUser> gamePlayers,
+    required List<String> gamePlayerIds,
   }) async {
-    final playerIdList = gamePlayers.map((u) => u.id).toList();
     await firestoreHelper.setData(
       path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
       data: {
         "slotInfoPerPlayer": {
-          for (final playerId in playerIdList)
-            playerId: {"timesPlayed": FieldValue.increment(1)}
+          for (final playerId in gamePlayerIds)
+            playerId: {"timesPlayed": FieldValue.increment(delta)}
         },
       },
       merge: true,

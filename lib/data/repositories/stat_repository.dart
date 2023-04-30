@@ -373,12 +373,6 @@ class StatRepository {
       gameStats: updatedGameStats,
     );
 
-    // Increase gamesPlayed count for players at this game
-    await courtSlotRepo.incGamesPlayedForPlayers(
-      courtSlot: courtSlot,
-      gamePlayers: updatedGameStats.values.map((s) => s.player).toList(),
-    );
-
     // Save each of the player's stats to their corresponding userInfos
     await firestoreHelper.setBatchData(
       baseColPath: FirestorePath.colUserInfos(),
