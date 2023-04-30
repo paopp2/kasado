@@ -38,7 +38,7 @@ class HomeBottomNavBar extends StatelessWidget {
         ),
         SalomonBottomBarItem(
           icon: const FaIcon(
-            FontAwesomeIcons.ticketAlt,
+            FontAwesomeIcons.ticketSimple,
             size: 20,
           ),
           title: const Text('Tickets'),

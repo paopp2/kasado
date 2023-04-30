@@ -37,12 +37,10 @@ final notifMetaStreamProvider =
 final unreadUserNotifCountStream =
     StreamProvider.autoDispose.family<int, String>(
   (ref, userId) {
-    return ref.watch(userNotifsStreamProvider(userId).stream).map((notifList) {
-      return notifList.where((notif) {
-        notif as NotifObject;
+    final notifRepo = ref.watch(notifRepositoryProvider);
 
-        return !notif.isRead;
-      }).length;
+    return notifRepo.getUserNotifsStream(userId: userId).map((notifList) {
+      return notifList.where((notif) => !(notif as NotifObject).isRead).length;
     });
   },
 );

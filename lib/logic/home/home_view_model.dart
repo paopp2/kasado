@@ -82,7 +82,7 @@ class HomeViewModel extends ViewModel {
     ref.read(mixpanel)!.track("Viewed warning for using app on desktop");
     AwesomeDialog(
       context: params['context'] as BuildContext,
-      dialogType: DialogType.WARNING,
+      dialogType: DialogType.warning,
       title: "Web app not yet optimized for desktop",
       desc: "Pasidaan lang pre, bisan tuod mugana ra diri, kiwaw pa gamay "
           "tan-awn sa desktop kay sa mobile pa gifocus ang design. Adjust-on "
