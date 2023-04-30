@@ -27,7 +27,6 @@ dependencies:
   geoflutterfire2: ^2.3.15
   # Google-related
   google_sign_in: ^6.1.0
-  google_place: ^0.4.7
   # Design
   syncfusion_flutter_calendar: ^21.1.41
   syncfusion_flutter_datagrid: ^21.1.41
@@ -62,6 +61,7 @@ dependencies:
   mobile_scanner: ^3.2.0
   algolia: ^1.1.1
   duration_picker: ^1.1.0+1
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
