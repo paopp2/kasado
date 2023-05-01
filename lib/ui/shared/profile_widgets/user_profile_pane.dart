@@ -64,7 +64,6 @@ class UserProfilePane extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Text("${userCareerStats?.mmr ?? 0} MMR"),
                       ],
                     ),
                     SizedBox(

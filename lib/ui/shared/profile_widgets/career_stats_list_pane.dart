@@ -34,100 +34,104 @@ class CareerStatsListPane extends HookConsumerWidget {
         child: ListView(
           children: [
             PlayerStatTile(
-              statDescription: "Efficiency Rating",
-              statValue: utils.getDoubleFormat(userStats.effRating),
+              statDescription: "Plus-Minus",
+              statValue: userStats.avePlusMinus > 0
+                  ? "+${utils.getDoubleFormat(userStats.avePlusMinus)}"
+                  : utils.getDoubleFormat(userStats.avePlusMinus),
               index: 0,
+              trailingTextColor:
+                  userStats.avePlusMinus < 0 ? Colors.red : Colors.green,
             ),
             PlayerStatTile(
               statDescription: "Standing",
               statValue: "${userStats.totalWins} - ${userStats.totalLosses}",
-              index: 0,
+              index: 1,
             ),
             PlayerStatTile(
               statDescription: "Win %",
               statValue: utils.getPercentageFormat(
                 userStats.winPercent,
               ),
-              index: 1,
+              index: 2,
             ),
             PlayerStatTile(
               statDescription: "Points Per Game",
               statValue: utils.getDoubleFormat(
                 userStats.avePointsPerGame,
               ),
-              index: 2,
+              index: 3,
             ),
             PlayerStatTile(
               statDescription: "Assists Per Game",
               statValue: utils.getDoubleFormat(
                 userStats.aveAssistsPerGame,
               ),
-              index: 3,
+              index: 4,
             ),
             PlayerStatTile(
               statDescription: "Rebounds Per Game",
               statValue: utils.getDoubleFormat(
                 userStats.aveReboundsPerGame,
               ),
-              index: 4,
+              index: 5,
             ),
             PlayerStatTile(
               statDescription: "Blocks Per Game",
               statValue: utils.getDoubleFormat(
                 userStats.aveBlocksPerGame,
               ),
-              index: 5,
+              index: 6,
             ),
             PlayerStatTile(
               statDescription: "Steals Per Game",
               statValue: utils.getDoubleFormat(
                 userStats.aveStlPerGame,
               ),
-              index: 6,
+              index: 7,
             ),
             PlayerStatTile(
               statDescription: "Total Points",
               statValue: userStats.totalPoints.toString(),
-              index: 7,
+              index: 8,
             ),
             PlayerStatTile(
               statDescription: "Total Assists",
               statValue: userStats.totalAst.toString(),
-              index: 8,
+              index: 9,
             ),
             PlayerStatTile(
               statDescription: "Total Rebounds",
               statValue: userStats.totalRebounds.toString(),
-              index: 9,
+              index: 10,
             ),
             PlayerStatTile(
               statDescription: "Total Blocks",
               statValue: userStats.totalBlk.toString(),
-              index: 10,
+              index: 11,
             ),
             PlayerStatTile(
               statDescription: "Total Steals",
               statValue: userStats.totalStl.toString(),
-              index: 11,
+              index: 12,
             ),
             PlayerStatTile(
               statDescription: "Average FG%",
               statValue: utils.getPercentageFormat(userStats.aveFgPercent),
-              index: 12,
+              index: 13,
             ),
             PlayerStatTile(
               statDescription: "Average 3PT%",
               statValue: utils.getPercentageFormat(
                 userStats.aveThreePtPercent,
               ),
-              index: 13,
+              index: 14,
             ),
             PlayerStatTile(
               statDescription: "Average FT%",
               statValue: utils.getPercentageFormat(
                 userStats.aveFtPercent,
               ),
-              index: 14,
+              index: 15,
             ),
           ],
         ),

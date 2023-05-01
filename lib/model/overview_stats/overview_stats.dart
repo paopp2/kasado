@@ -43,6 +43,7 @@ class OverviewStats with _$OverviewStats {
   double get aveReboundsPerGame => totalRebounds / gamesPlayed;
   double get aveBlocksPerGame => totalBlk / gamesPlayed;
   double get aveStlPerGame => totalStl / gamesPlayed;
+  double get avePlusMinus => totalPlusMinus / totalGamesPlayed;
 
   int get totalLosses => totalGamesPlayed - totalWins;
   double get winPercent => (totalWins / totalGamesPlayed) * 100;

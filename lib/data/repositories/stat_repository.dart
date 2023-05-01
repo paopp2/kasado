@@ -576,7 +576,7 @@ class StatRepository {
     );
 
     // Merge the stats of all game players to a single Map<playerId, Stats>
-    final Map<String, Stats> updatedGameStats = {
+    final Map<String, Stats> updatedPlayerStats = {
       ...updatedHomeTeamStats,
       ...updatedAwayTeamStats,
     }.map(
@@ -588,8 +588,9 @@ class StatRepository {
 
     // Update each player's overviewStats based on the updated gameStats
     await updatePlayersOverviewStats(
+      gameStats: gameStats,
       gamePlayerIds: gamePlayerIds,
-      gameStats: updatedGameStats,
+      gamePlayerStats: updatedPlayerStats,
       scoreOnly: gameStats is GameStatsScoreOnly,
     );
 
@@ -597,9 +598,9 @@ class StatRepository {
     await firestoreHelper.setBatchData(
       baseColPath: FirestorePath.colUserInfos(),
       endPath: FirestorePath.docPartialUserStats(gameStats.id),
-      dataFromId: (playerId) => updatedGameStats[playerId]!.toJson(),
+      dataFromId: (playerId) => updatedPlayerStats[playerId]!.toJson(),
       queryBuilder: (query) =>
-          query.where('id', whereIn: updatedGameStats.keys.toList()),
+          query.where('id', whereIn: updatedPlayerStats.keys.toList()),
     );
 
     // Reset localStatEntryHistory
@@ -608,19 +609,22 @@ class StatRepository {
 
   /// Batch update data to each of the userInfo.overviewStats
   Future<void> updatePlayersOverviewStats({
+    required GameStats gameStats,
     required List<String> gamePlayerIds,
-    required Map<String, Stats> gameStats,
+    required Map<String, Stats> gamePlayerStats,
     required bool scoreOnly,
   }) async {
     await firestoreHelper.setBatchDataForDocInList(
       docIdList: gamePlayerIds,
       baseColPath: FirestorePath.colUserInfos(),
       dataFromId: (playerId) {
-        final playerStats = gameStats[playerId]!;
+        final playerStats = gamePlayerStats[playerId]!;
         final mmrIncrement =
             playerStats.eff + (playerStats.hasWonGame! ? 10 : -10);
         final gamesPlayedField =
             scoreOnly ? 'gamesPlayedNoStats' : 'gamesPlayed';
+        final scoreDifference =
+            (gameStats.awayScore - gameStats.homeScore).abs();
 
         return {
           "overviewStats": {
@@ -638,6 +642,9 @@ class StatRepository {
             "totalBlk": FieldValue.increment(playerStats.blk),
             "totalTO": FieldValue.increment(playerStats.turnover),
             "totalWins": FieldValue.increment(playerStats.hasWonGame! ? 1 : 0),
+            "totalPlusMinus": FieldValue.increment(
+              playerStats.hasWonGame! ? scoreDifference : -scoreDifference,
+            ),
             gamesPlayedField: FieldValue.increment(1),
           }
         };
