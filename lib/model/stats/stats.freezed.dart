@@ -36,6 +36,7 @@ mixin _$Stats {
   int get blk => throw _privateConstructorUsedError;
   int get turnover => throw _privateConstructorUsedError;
   bool? get hasWonGame => throw _privateConstructorUsedError;
+  bool get noStats => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -63,7 +64,8 @@ abstract class $StatsCopyWith<$Res> {
       int stl,
       int blk,
       int turnover,
-      bool? hasWonGame});
+      bool? hasWonGame,
+      bool noStats});
 
   $KasadoUserCopyWith<$Res> get player;
   $CourtSlotCopyWith<$Res> get courtSlot;
@@ -98,6 +100,7 @@ class _$StatsCopyWithImpl<$Res, $Val extends Stats>
     Object? blk = null,
     Object? turnover = null,
     Object? hasWonGame = freezed,
+    Object? noStats = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -164,6 +167,10 @@ class _$StatsCopyWithImpl<$Res, $Val extends Stats>
           ? _value.hasWonGame
           : hasWonGame // ignore: cast_nullable_to_non_nullable
               as bool?,
+      noStats: null == noStats
+          ? _value.noStats
+          : noStats // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -206,7 +213,8 @@ abstract class _$$_StatsCopyWith<$Res> implements $StatsCopyWith<$Res> {
       int stl,
       int blk,
       int turnover,
-      bool? hasWonGame});
+      bool? hasWonGame,
+      bool noStats});
 
   @override
   $KasadoUserCopyWith<$Res> get player;
@@ -239,6 +247,7 @@ class __$$_StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res, _$_Stats>
     Object? blk = null,
     Object? turnover = null,
     Object? hasWonGame = freezed,
+    Object? noStats = null,
   }) {
     return _then(_$_Stats(
       id: freezed == id
@@ -305,6 +314,10 @@ class __$$_StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res, _$_Stats>
           ? _value.hasWonGame
           : hasWonGame // ignore: cast_nullable_to_non_nullable
               as bool?,
+      noStats: null == noStats
+          ? _value.noStats
+          : noStats // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -328,7 +341,8 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
       this.stl = 0,
       this.blk = 0,
       this.turnover = 0,
-      this.hasWonGame})
+      this.hasWonGame,
+      this.noStats = false})
       : super._();
 
   factory _$_Stats.fromJson(Map<String, dynamic> json) =>
@@ -378,10 +392,13 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
   final int turnover;
   @override
   final bool? hasWonGame;
+  @override
+  @JsonKey()
+  final bool noStats;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Stats(id: $id, player: $player, courtSlot: $courtSlot, threePA: $threePA, threePM: $threePM, twoPA: $twoPA, twoPM: $twoPM, ftA: $ftA, ftM: $ftM, oReb: $oReb, dReb: $dReb, ast: $ast, stl: $stl, blk: $blk, turnover: $turnover, hasWonGame: $hasWonGame)';
+    return 'Stats(id: $id, player: $player, courtSlot: $courtSlot, threePA: $threePA, threePM: $threePM, twoPA: $twoPA, twoPM: $twoPM, ftA: $ftA, ftM: $ftM, oReb: $oReb, dReb: $dReb, ast: $ast, stl: $stl, blk: $blk, turnover: $turnover, hasWonGame: $hasWonGame, noStats: $noStats)';
   }
 
   @override
@@ -404,7 +421,8 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('stl', stl))
       ..add(DiagnosticsProperty('blk', blk))
       ..add(DiagnosticsProperty('turnover', turnover))
-      ..add(DiagnosticsProperty('hasWonGame', hasWonGame));
+      ..add(DiagnosticsProperty('hasWonGame', hasWonGame))
+      ..add(DiagnosticsProperty('noStats', noStats));
   }
 
   @override
@@ -430,7 +448,8 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
             (identical(other.turnover, turnover) ||
                 other.turnover == turnover) &&
             (identical(other.hasWonGame, hasWonGame) ||
-                other.hasWonGame == hasWonGame));
+                other.hasWonGame == hasWonGame) &&
+            (identical(other.noStats, noStats) || other.noStats == noStats));
   }
 
   @JsonKey(ignore: true)
@@ -452,7 +471,8 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
       stl,
       blk,
       turnover,
-      hasWonGame);
+      hasWonGame,
+      noStats);
 
   @JsonKey(ignore: true)
   @override
@@ -485,7 +505,8 @@ abstract class _Stats extends Stats {
       final int stl,
       final int blk,
       final int turnover,
-      final bool? hasWonGame}) = _$_Stats;
+      final bool? hasWonGame,
+      final bool noStats}) = _$_Stats;
   const _Stats._() : super._();
 
   factory _Stats.fromJson(Map<String, dynamic> json) = _$_Stats.fromJson;
@@ -522,6 +543,8 @@ abstract class _Stats extends Stats {
   int get turnover;
   @override
   bool? get hasWonGame;
+  @override
+  bool get noStats;
   @override
   @JsonKey(ignore: true)
   _$$_StatsCopyWith<_$_Stats> get copyWith =>

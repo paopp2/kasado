@@ -26,6 +26,7 @@ class Stats with _$Stats {
     @Default(0) int blk,
     @Default(0) int turnover,
     bool? hasWonGame,
+    @Default(false) bool noStats,
   }) = _Stats;
 
   int get points => (threePM * 3) + (twoPM * 2) + ftM;
