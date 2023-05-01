@@ -576,13 +576,14 @@ class StatRepository {
     );
 
     // Merge the stats of all game players to a single Map<playerId, Stats>
-    final Map<String, Stats> updatedPlayerStats = {
-      ...updatedHomeTeamStats,
-      ...updatedAwayTeamStats,
-    }.map(
+    final Map<String, Stats> updatedPlayerStats =
+        {...updatedHomeTeamStats, ...updatedAwayTeamStats}.map(
       (playerId, stats) => MapEntry(
         playerId,
-        stats.copyWith(noStats: gameStats is GameStatsScoreOnly),
+        stats.copyWith(
+          noStats: gameStats is GameStatsScoreOnly,
+          savedAt: DateTime.now(),
+        ),
       ),
     );
 

@@ -36,6 +36,7 @@ mixin _$Stats {
   int get blk => throw _privateConstructorUsedError;
   int get turnover => throw _privateConstructorUsedError;
   bool? get hasWonGame => throw _privateConstructorUsedError;
+  DateTime? get savedAt => throw _privateConstructorUsedError;
   bool get noStats => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -65,6 +66,7 @@ abstract class $StatsCopyWith<$Res> {
       int blk,
       int turnover,
       bool? hasWonGame,
+      DateTime? savedAt,
       bool noStats});
 
   $KasadoUserCopyWith<$Res> get player;
@@ -100,6 +102,7 @@ class _$StatsCopyWithImpl<$Res, $Val extends Stats>
     Object? blk = null,
     Object? turnover = null,
     Object? hasWonGame = freezed,
+    Object? savedAt = freezed,
     Object? noStats = null,
   }) {
     return _then(_value.copyWith(
@@ -167,6 +170,10 @@ class _$StatsCopyWithImpl<$Res, $Val extends Stats>
           ? _value.hasWonGame
           : hasWonGame // ignore: cast_nullable_to_non_nullable
               as bool?,
+      savedAt: freezed == savedAt
+          ? _value.savedAt
+          : savedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       noStats: null == noStats
           ? _value.noStats
           : noStats // ignore: cast_nullable_to_non_nullable
@@ -214,6 +221,7 @@ abstract class _$$_StatsCopyWith<$Res> implements $StatsCopyWith<$Res> {
       int blk,
       int turnover,
       bool? hasWonGame,
+      DateTime? savedAt,
       bool noStats});
 
   @override
@@ -247,6 +255,7 @@ class __$$_StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res, _$_Stats>
     Object? blk = null,
     Object? turnover = null,
     Object? hasWonGame = freezed,
+    Object? savedAt = freezed,
     Object? noStats = null,
   }) {
     return _then(_$_Stats(
@@ -314,6 +323,10 @@ class __$$_StatsCopyWithImpl<$Res> extends _$StatsCopyWithImpl<$Res, _$_Stats>
           ? _value.hasWonGame
           : hasWonGame // ignore: cast_nullable_to_non_nullable
               as bool?,
+      savedAt: freezed == savedAt
+          ? _value.savedAt
+          : savedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       noStats: null == noStats
           ? _value.noStats
           : noStats // ignore: cast_nullable_to_non_nullable
@@ -342,6 +355,7 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
       this.blk = 0,
       this.turnover = 0,
       this.hasWonGame,
+      this.savedAt,
       this.noStats = false})
       : super._();
 
@@ -393,12 +407,14 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
   @override
   final bool? hasWonGame;
   @override
+  final DateTime? savedAt;
+  @override
   @JsonKey()
   final bool noStats;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Stats(id: $id, player: $player, courtSlot: $courtSlot, threePA: $threePA, threePM: $threePM, twoPA: $twoPA, twoPM: $twoPM, ftA: $ftA, ftM: $ftM, oReb: $oReb, dReb: $dReb, ast: $ast, stl: $stl, blk: $blk, turnover: $turnover, hasWonGame: $hasWonGame, noStats: $noStats)';
+    return 'Stats(id: $id, player: $player, courtSlot: $courtSlot, threePA: $threePA, threePM: $threePM, twoPA: $twoPA, twoPM: $twoPM, ftA: $ftA, ftM: $ftM, oReb: $oReb, dReb: $dReb, ast: $ast, stl: $stl, blk: $blk, turnover: $turnover, hasWonGame: $hasWonGame, savedAt: $savedAt, noStats: $noStats)';
   }
 
   @override
@@ -422,6 +438,7 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('blk', blk))
       ..add(DiagnosticsProperty('turnover', turnover))
       ..add(DiagnosticsProperty('hasWonGame', hasWonGame))
+      ..add(DiagnosticsProperty('savedAt', savedAt))
       ..add(DiagnosticsProperty('noStats', noStats));
   }
 
@@ -449,6 +466,7 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
                 other.turnover == turnover) &&
             (identical(other.hasWonGame, hasWonGame) ||
                 other.hasWonGame == hasWonGame) &&
+            (identical(other.savedAt, savedAt) || other.savedAt == savedAt) &&
             (identical(other.noStats, noStats) || other.noStats == noStats));
   }
 
@@ -472,6 +490,7 @@ class _$_Stats extends _Stats with DiagnosticableTreeMixin {
       blk,
       turnover,
       hasWonGame,
+      savedAt,
       noStats);
 
   @JsonKey(ignore: true)
@@ -506,6 +525,7 @@ abstract class _Stats extends Stats {
       final int blk,
       final int turnover,
       final bool? hasWonGame,
+      final DateTime? savedAt,
       final bool noStats}) = _$_Stats;
   const _Stats._() : super._();
 
@@ -543,6 +563,8 @@ abstract class _Stats extends Stats {
   int get turnover;
   @override
   bool? get hasWonGame;
+  @override
+  DateTime? get savedAt;
   @override
   bool get noStats;
   @override
