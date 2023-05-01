@@ -237,6 +237,7 @@ class GameStatController {
     required CourtSlot courtSlot,
     required List<KasadoUser> homeTeamPlayers,
     required List<KasadoUser> awayTeamPlayers,
+    bool scoreOnly = false,
   }) async {
     if (homeTeamPlayers.length != 5 || awayTeamPlayers.length != 5) {
       Fluttertoast.showToast(msg: "Incorrect number of players");
@@ -245,21 +246,35 @@ class GameStatController {
     }
 
     final gameStatId = const Uuid().v4();
-    final initializedGameStats = GameStats(
-      id: gameStatId,
-      recordedAt: DateTime.now(),
-      homeTeamStats: {
-        for (final player in homeTeamPlayers)
-          player.id: Stats(player: player, courtSlot: courtSlot)
-      },
-      awayTeamStats: {
-        for (final player in awayTeamPlayers)
-          player.id: Stats(player: player, courtSlot: courtSlot)
-      },
-      isLive: true,
-      remainingMsOnPaused: 15.minutes.inMilliseconds,
-      endsAt: DateTime.now() + 15.minutes,
-    );
+    final homeTeamStats = {
+      for (final player in homeTeamPlayers)
+        player.id: Stats(player: player, courtSlot: courtSlot)
+    };
+    final awayTeamStats = {
+      for (final player in awayTeamPlayers)
+        player.id: Stats(player: player, courtSlot: courtSlot)
+    };
+
+    final initializedGameStats = scoreOnly
+        ? GameStats.scoreOnly(
+            id: gameStatId,
+            recordedAt: DateTime.now(),
+            homeTeamStats: homeTeamStats,
+            awayTeamStats: awayTeamStats,
+            isLive: true,
+            remainingMsOnPaused: 15.minutes.inMilliseconds,
+            endsAt: DateTime.now() + 15.minutes,
+          )
+        : GameStats(
+            id: gameStatId,
+            recordedAt: DateTime.now(),
+            homeTeamStats: homeTeamStats,
+            awayTeamStats: awayTeamStats,
+            isLive: true,
+            remainingMsOnPaused: 15.minutes.inMilliseconds,
+            endsAt: DateTime.now() + 15.minutes,
+          );
+
     await statRepo.pushGameStats(
       courtSlot: courtSlot,
       gameStats: initializedGameStats,
