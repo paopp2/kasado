@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/enums/game_stat_entry_type.dart';
 import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
+import 'package:kasado/model/game_stat_entry/game_stat_entry.dart';
 import 'package:kasado/model/game_stats/game_stats.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
@@ -108,6 +110,24 @@ class StatRepository {
     );
   }
 
+  Future<void> _pushToStatHistory({
+    required CourtSlot courtSlot,
+    required String gameStatsId,
+    required GameStatEntry gameStatEntry,
+  }) async {
+    await firestoreHelper.setData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStatsId,
+      ),
+      data: {
+        'statEntryHistory': FieldValue.arrayUnion([gameStatEntry.toJson()])
+      },
+      merge: true,
+    );
+  }
+
   Future<void> recordPlayerShotAttempt({
     required KasadoUser playerWhoScored,
     required KasadoUser? playerWhoAssisted,
@@ -155,6 +175,21 @@ class StatRepository {
         isCancel: isCancel,
       );
     }
+
+    await _pushToStatHistory(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatsId,
+      gameStatEntry: GameStatEntry(
+        player: playerWhoScored,
+        statType: GameStatEntryType.shotAttempt,
+        isHome: isHomePlayer,
+        statMeta: {
+          'isThree': isThree,
+          'wasMade': wasMade,
+          'playerWhoAssisted': playerWhoAssisted?.toJson(),
+        },
+      ),
+    );
   }
 
   Future<void> recordPlayerAssist({
@@ -205,6 +240,16 @@ class StatRepository {
       },
       merge: true,
     );
+
+    await _pushToStatHistory(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatsId,
+      gameStatEntry: GameStatEntry(
+        player: playerWhoBlocked,
+        statType: GameStatEntryType.block,
+        isHome: isHomePlayer,
+      ),
+    );
   }
 
   Future<void> recordPlayerSteal({
@@ -229,6 +274,16 @@ class StatRepository {
         }
       },
       merge: true,
+    );
+
+    await _pushToStatHistory(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatsId,
+      gameStatEntry: GameStatEntry(
+        player: playerWhoStealed,
+        statType: GameStatEntryType.steal,
+        isHome: isHomePlayer,
+      ),
     );
   }
 
@@ -257,6 +312,17 @@ class StatRepository {
       },
       merge: true,
     );
+
+    await _pushToStatHistory(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatsId,
+      gameStatEntry: GameStatEntry(
+        player: shootingPlayer,
+        statType: GameStatEntryType.ftAttempt,
+        isHome: isHomePlayer,
+        statMeta: {'wasMade': wasMade},
+      ),
+    );
   }
 
   Future<void> recordPlayerRebound({
@@ -283,6 +349,17 @@ class StatRepository {
       },
       merge: true,
     );
+
+    await _pushToStatHistory(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatsId,
+      gameStatEntry: GameStatEntry(
+        player: reboundingPlayer,
+        statType: GameStatEntryType.rebound,
+        isHome: isHomePlayer,
+        statMeta: {'isDefensive': isDefensive},
+      ),
+    );
   }
 
   Future<void> recordPlayerTurnover({
@@ -307,6 +384,16 @@ class StatRepository {
         }
       },
       merge: true,
+    );
+
+    await _pushToStatHistory(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatsId,
+      gameStatEntry: GameStatEntry(
+        player: playerWhoTurnovered,
+        statType: GameStatEntryType.turnover,
+        isHome: isHomePlayer,
+      ),
     );
   }
 
