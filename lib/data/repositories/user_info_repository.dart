@@ -197,10 +197,9 @@ class UserInfoRepository {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colUserStats(userId),
       builder: (data, docId) => Stats.fromJson(data).copyWith(id: docId),
-      queryBuilder: (query) => query.orderBy(
-        'courtSlot.timeRange.startsAt',
-        descending: true,
-      ),
+      queryBuilder: (query) => query
+          .orderBy('courtSlot.timeRange.startsAt', descending: true)
+          .orderBy('savedAt', descending: true),
     );
   }
 }
