@@ -22,19 +22,40 @@ class GameStats with _$GameStats {
     DateTime? endsAt,
   }) = _GameStats;
 
+  const factory GameStats.scoreOnly({
+    required String id,
+    required DateTime recordedAt,
+    required Map<String, Stats> homeTeamStats,
+    required Map<String, Stats> awayTeamStats,
+    @Default(false) bool isLive,
+    int? remainingMsOnPaused, // 900000 milliseconds == 15 mins
+    // Set as nullable for backward compatibility (property nonexistent before)
+    DateTime? endsAt,
+    @Default(0) int homeTeamScore,
+    @Default(0) int awayTeamScore,
+  }) = GameStatsScoreOnly;
+
   Duration? get remainingOnPaused => remainingMsOnPaused?.milliseconds;
 
   bool get isPaused => remainingMsOnPaused != null;
 
-  int get homeScore => homeTeamStats.entries
-      .map((statEntry) => statEntry.value.points)
-      .toList()
-      .reduce((a, b) => a + b);
+  int get homeScore {
+    return map(
+      (gameStats) => gameStats.homeTeamStats.values
+          .map((statEntry) => statEntry.points)
+          .reduce((a, b) => a + b),
+      scoreOnly: (gameStats) => gameStats.homeTeamScore,
+    );
+  }
 
-  int get awayScore => awayTeamStats.entries
-      .map((statEntry) => statEntry.value.points)
-      .toList()
-      .reduce((a, b) => a + b);
+  int get awayScore {
+    return map(
+      (gameStats) => gameStats.awayTeamStats.values
+          .map((statEntry) => statEntry.points)
+          .reduce((a, b) => a + b),
+      scoreOnly: (gameStats) => gameStats.awayTeamScore,
+    );
+  }
 
   bool get isHomeWinner => homeScore > awayScore;
 
