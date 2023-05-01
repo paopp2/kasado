@@ -23,7 +23,9 @@ class OverviewStats with _$OverviewStats {
     @Default(0) int totalBlk,
     @Default(0) int totalTO,
     @Default(0) int totalWins,
+    @Default(0) int totalPlusMinus,
     @Default(0) int gamesPlayed,
+    @Default(0) int gamesPlayedNoStats,
     @Default(false) bool isHiddenFromRankings,
   }) = _OverviewStats;
 
