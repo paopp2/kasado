@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kasado/model/game_stat_entry/game_stat_entry.dart';
 import 'package:kasado/model/stats/stats.dart';
 import 'package:time/time.dart';
 
@@ -14,6 +15,7 @@ class GameStats with _$GameStats {
     required DateTime recordedAt,
     required Map<String, Stats> homeTeamStats,
     required Map<String, Stats> awayTeamStats,
+    @Default([]) List<GameStatEntry> statEntryHistory,
     @Default(false) bool isLive,
     int? remainingMsOnPaused, // 900000 milliseconds == 15 mins
     // Set as nullable for backward compatibility (property nonexistent before)
