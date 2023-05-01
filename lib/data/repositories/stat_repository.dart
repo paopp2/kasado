@@ -27,7 +27,7 @@ class StatRepository {
 
   final FirestoreHelper firestoreHelper;
   final CourtSlotRepository courtSlotRepo;
-  List<GameStatEntry> localStatEntryHistory = [];
+  List<Map<String, dynamic>> localStatEntryJsonHistory = [];
 
   Future<void> pushGameStats({
     required CourtSlot courtSlot,
@@ -116,6 +116,8 @@ class StatRepository {
     required String gameStatsId,
     required GameStatEntry gameStatEntry,
   }) async {
+    final gameStatEntryAsJson =
+        gameStatEntry.copyWith(savedAt: DateTime.now()).toJson();
     await firestoreHelper.setData(
       path: FirestorePath.docGameStats(
         courtSlot.courtId,
@@ -123,25 +125,25 @@ class StatRepository {
         gameStatsId,
       ),
       data: {
-        'statEntryHistory': FieldValue.arrayUnion([gameStatEntry.toJson()])
+        'statEntryHistory': FieldValue.arrayUnion([gameStatEntryAsJson])
       },
       merge: true,
     );
 
-    localStatEntryHistory.add(gameStatEntry);
+    localStatEntryJsonHistory.add(gameStatEntryAsJson);
   }
 
   Future<void> cancelLastStatEntry({
     required CourtSlot courtSlot,
     required String gameStatsId,
   }) async {
-    if (localStatEntryHistory.isEmpty) return;
+    if (localStatEntryJsonHistory.isEmpty) return;
 
-    final lastStatEntry = localStatEntryHistory.removeLast();
+    final lastStatEntryJson = localStatEntryJsonHistory.removeLast();
     await invokeGameStatEntryCancel(
       courtSlot: courtSlot,
       gameStatsId: gameStatsId,
-      statEntry: lastStatEntry,
+      statEntry: GameStatEntry.fromJson(lastStatEntryJson),
     );
 
     await firestoreHelper.setData(
@@ -151,7 +153,7 @@ class StatRepository {
         gameStatsId,
       ),
       data: {
-        'statEntryHistory': FieldValue.arrayRemove([lastStatEntry.toJson()])
+        'statEntryHistory': FieldValue.arrayRemove([lastStatEntryJson])
       },
       merge: true,
     );
@@ -514,7 +516,7 @@ class StatRepository {
     );
 
     // Reset localStatEntryHistory
-    localStatEntryHistory = [];
+    localStatEntryJsonHistory = [];
   }
 
   /// Finalize game stats and publish each player's individual stats to their corresponding userInfos
@@ -577,7 +579,7 @@ class StatRepository {
     );
 
     // Reset localStatEntryHistory
-    localStatEntryHistory = [];
+    localStatEntryJsonHistory = [];
   }
 
   /// Batch update data to each of the userInfo.overviewStats
