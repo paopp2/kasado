@@ -296,7 +296,10 @@ class LiveStatsInputPane extends StatelessWidget {
                       color: Colors.red,
                     ),
                   ),
-                  onLongPress: () {/*UNDO LAST ACTION*/},
+                  onLongPress: () => controller.onUndoLastAction(
+                    courtSlot: courtSlot,
+                    gameStatsId: gameStats.id,
+                  ),
                 ),
                 StatButton(
                   color: Colors.grey,

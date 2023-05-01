@@ -27,6 +27,7 @@ class StatRepository {
 
   final FirestoreHelper firestoreHelper;
   final CourtSlotRepository courtSlotRepo;
+  List<GameStatEntry> localStatEntryHistory = [];
 
   Future<void> pushGameStats({
     required CourtSlot courtSlot,
@@ -126,6 +127,103 @@ class StatRepository {
       },
       merge: true,
     );
+
+    localStatEntryHistory.add(gameStatEntry);
+  }
+
+  Future<void> cancelLastStatEntry({
+    required CourtSlot courtSlot,
+    required String gameStatsId,
+  }) async {
+    if (localStatEntryHistory.isEmpty) return;
+
+    final lastStatEntry = localStatEntryHistory.removeLast();
+    await invokeGameStatEntryCancel(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatsId,
+      statEntry: lastStatEntry,
+    );
+
+    await firestoreHelper.setData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStatsId,
+      ),
+      data: {
+        'statEntryHistory': FieldValue.arrayRemove([lastStatEntry.toJson()])
+      },
+      merge: true,
+    );
+  }
+
+  // ignore: long-method
+  Future<void> invokeGameStatEntryCancel({
+    required CourtSlot courtSlot,
+    required String gameStatsId,
+    required GameStatEntry statEntry,
+  }) async {
+    final player = statEntry.player;
+    final isHomePlayer = statEntry.isHome;
+    final statMeta = statEntry.statMeta;
+
+    switch (statEntry.statType) {
+      case GameStatEntryType.shotAttempt:
+        return recordPlayerShotAttempt(
+          gameStatsId: gameStatsId,
+          courtSlot: courtSlot,
+          playerWhoScored: player,
+          isHomePlayer: isHomePlayer,
+          playerWhoAssisted: KasadoUser.fromJson(
+            statMeta!['playerWhoAssisted'],
+          ),
+          isThree: statMeta['isThree'],
+          wasMade: statMeta['wasMade'],
+          isCancel: true,
+        );
+      case GameStatEntryType.block:
+        return recordPlayerBlock(
+          playerWhoBlocked: player,
+          gameStatsId: gameStatsId,
+          courtSlot: courtSlot,
+          isHomePlayer: isHomePlayer,
+          isCancel: true,
+        );
+      case GameStatEntryType.steal:
+        return recordPlayerSteal(
+          playerWhoStealed: player,
+          gameStatsId: gameStatsId,
+          courtSlot: courtSlot,
+          isHomePlayer: isHomePlayer,
+          isCancel: true,
+        );
+      case GameStatEntryType.ftAttempt:
+        return recordPlayerFT(
+          shootingPlayer: player,
+          gameStatsId: gameStatsId,
+          courtSlot: courtSlot,
+          isHomePlayer: isHomePlayer,
+          wasMade: statMeta!['wasMade'],
+          isCancel: true,
+        );
+      case GameStatEntryType.turnover:
+        return recordPlayerTurnover(
+          playerWhoTurnovered: player,
+          gameStatsId: gameStatsId,
+          courtSlot: courtSlot,
+          isHomePlayer: isHomePlayer,
+          isCancel: true,
+        );
+      case GameStatEntryType.rebound:
+        return recordPlayerRebound(
+          reboundingPlayer: player,
+          gameStatsId: gameStatsId,
+          courtSlot: courtSlot,
+          isHomePlayer: isHomePlayer,
+          isDefensive: statMeta!['isDefensive'],
+          isCancel: true,
+        );
+    }
   }
 
   Future<void> recordPlayerShotAttempt({
@@ -176,6 +274,7 @@ class StatRepository {
       );
     }
 
+    if (isCancel) return;
     await _pushToStatHistory(
       courtSlot: courtSlot,
       gameStatsId: gameStatsId,
@@ -241,6 +340,7 @@ class StatRepository {
       merge: true,
     );
 
+    if (isCancel) return;
     await _pushToStatHistory(
       courtSlot: courtSlot,
       gameStatsId: gameStatsId,
@@ -276,6 +376,7 @@ class StatRepository {
       merge: true,
     );
 
+    if (isCancel) return;
     await _pushToStatHistory(
       courtSlot: courtSlot,
       gameStatsId: gameStatsId,
@@ -313,6 +414,7 @@ class StatRepository {
       merge: true,
     );
 
+    if (isCancel) return;
     await _pushToStatHistory(
       courtSlot: courtSlot,
       gameStatsId: gameStatsId,
@@ -350,6 +452,7 @@ class StatRepository {
       merge: true,
     );
 
+    if (isCancel) return;
     await _pushToStatHistory(
       courtSlot: courtSlot,
       gameStatsId: gameStatsId,
@@ -386,6 +489,7 @@ class StatRepository {
       merge: true,
     );
 
+    if (isCancel) return;
     await _pushToStatHistory(
       courtSlot: courtSlot,
       gameStatsId: gameStatsId,
@@ -408,6 +512,9 @@ class StatRepository {
         gameStats.id,
       ),
     );
+
+    // Reset localStatEntryHistory
+    localStatEntryHistory = [];
   }
 
   /// Finalize game stats and publish each player's individual stats to their corresponding userInfos
@@ -468,6 +575,9 @@ class StatRepository {
       queryBuilder: (query) =>
           query.where('id', whereIn: updatedGameStats.keys.toList()),
     );
+
+    // Reset localStatEntryHistory
+    localStatEntryHistory = [];
   }
 
   /// Batch update data to each of the userInfo.overviewStats

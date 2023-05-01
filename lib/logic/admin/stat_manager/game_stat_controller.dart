@@ -44,6 +44,17 @@ class GameStatController {
     ref.read(selectedGameStatsProvider.notifier).state = gameStats;
   }
 
+  Future<void> onUndoLastAction({
+    required CourtSlot courtSlot,
+    required String gameStatsId,
+  }) async {
+    await statRepo.cancelLastStatEntry(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatsId,
+    );
+    Fluttertoast.showToast(msg: "Cancelled last input");
+  }
+
   Future<void> onPlayerShot({
     required BuildContext context,
     required bool isThree, // isTwo otherwise
