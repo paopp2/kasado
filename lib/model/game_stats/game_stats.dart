@@ -7,7 +7,7 @@ import 'package:time/time.dart';
 part 'game_stats.freezed.dart';
 part 'game_stats.g.dart';
 
-@freezed
+@Freezed(fallbackUnion: 'default')
 class GameStats with _$GameStats {
   const GameStats._();
   const factory GameStats({

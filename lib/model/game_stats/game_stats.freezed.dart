@@ -16,14 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 GameStats _$GameStatsFromJson(Map<String, dynamic> json) {
   switch (json['runtimeType']) {
-    case 'default':
-      return _GameStats.fromJson(json);
     case 'scoreOnly':
       return GameStatsScoreOnly.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'GameStats',
-          'Invalid union type "${json['runtimeType']}"!');
+      return _GameStats.fromJson(json);
   }
 }
 
