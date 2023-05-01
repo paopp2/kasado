@@ -579,12 +579,18 @@ class StatRepository {
     final Map<String, Stats> updatedGameStats = {
       ...updatedHomeTeamStats,
       ...updatedAwayTeamStats,
-    };
+    }.map(
+      (playerId, stats) => MapEntry(
+        playerId,
+        stats.copyWith(noStats: gameStats is GameStatsScoreOnly),
+      ),
+    );
 
     // Update each player's overviewStats based on the updated gameStats
     await updatePlayersOverviewStats(
       gamePlayerIds: gamePlayerIds,
       gameStats: updatedGameStats,
+      scoreOnly: gameStats is GameStatsScoreOnly,
     );
 
     // Save each of the player's stats to their corresponding userInfos
@@ -604,6 +610,7 @@ class StatRepository {
   Future<void> updatePlayersOverviewStats({
     required List<String> gamePlayerIds,
     required Map<String, Stats> gameStats,
+    required bool scoreOnly,
   }) async {
     await firestoreHelper.setBatchDataForDocInList(
       docIdList: gamePlayerIds,
@@ -612,6 +619,8 @@ class StatRepository {
         final playerStats = gameStats[playerId]!;
         final mmrIncrement =
             playerStats.eff + (playerStats.hasWonGame! ? 10 : -10);
+        final gamesPlayedField =
+            scoreOnly ? 'gamesPlayedNoStats' : 'gamesPlayed';
 
         return {
           "overviewStats": {
@@ -629,7 +638,7 @@ class StatRepository {
             "totalBlk": FieldValue.increment(playerStats.blk),
             "totalTO": FieldValue.increment(playerStats.turnover),
             "totalWins": FieldValue.increment(playerStats.hasWonGame! ? 1 : 0),
-            "gamesPlayed": FieldValue.increment(1),
+            gamesPlayedField: FieldValue.increment(1),
           }
         };
       },

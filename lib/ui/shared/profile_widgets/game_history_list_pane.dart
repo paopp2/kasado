@@ -68,24 +68,29 @@ class GameHistoryListPane extends HookConsumerWidget {
                             width: constraints.maxWidth * 0.25,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: model
-                                  .getSortedStatsAsMapEntries(userGameStats)
-                                  .sublist(0, 3)
-                                  .map((statEntry) {
-                                return Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      statEntry.value.toString(),
-                                      style: const TextStyle(fontSize: 15),
-                                    ),
-                                    Text(
-                                      statEntry.key,
-                                      style: const TextStyle(fontSize: 10),
-                                    )
-                                  ],
-                                );
-                              }).toList(),
+                              children: userGameStats.noStats
+                                  ? const [Spacer(), Text('NO STATS')]
+                                  : model
+                                      .getSortedStatsAsMapEntries(userGameStats)
+                                      .sublist(0, 3)
+                                      .map((statEntry) {
+                                      return Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            statEntry.value.toString(),
+                                            style:
+                                                const TextStyle(fontSize: 15),
+                                          ),
+                                          Text(
+                                            statEntry.key,
+                                            style:
+                                                const TextStyle(fontSize: 10),
+                                          )
+                                        ],
+                                      );
+                                    }).toList(),
                             ),
                           ),
                           onTap: () => showDialog(

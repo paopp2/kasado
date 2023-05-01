@@ -33,6 +33,8 @@ class OverviewStats with _$OverviewStats {
   int get totalAttempts => totalThreePA + totalTwoPA;
   int get totalMade => totalThreePM + totalTwoPM;
   int get totalRebounds => totalOReb + totalDReb;
+  int get totalGamesPlayed => gamesPlayed + gamesPlayedNoStats;
+
   double get aveFgPercent => (totalMade / totalAttempts) * 100;
   double get aveThreePtPercent => (totalThreePM / totalThreePA) * 100;
   double get aveFtPercent => (totalFtm / totalFta) * 100;
@@ -41,8 +43,9 @@ class OverviewStats with _$OverviewStats {
   double get aveReboundsPerGame => totalRebounds / gamesPlayed;
   double get aveBlocksPerGame => totalBlk / gamesPlayed;
   double get aveStlPerGame => totalStl / gamesPlayed;
-  int get totalLosses => gamesPlayed - totalWins;
-  double get winPercent => (totalWins / gamesPlayed) * 100;
+
+  int get totalLosses => totalGamesPlayed - totalWins;
+  double get winPercent => (totalWins / totalGamesPlayed) * 100;
   int get winLossDifference => totalWins - totalLosses;
   double get effRating =>
       (totalPoints +
