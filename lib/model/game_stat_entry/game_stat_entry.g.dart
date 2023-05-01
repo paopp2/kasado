@@ -11,6 +11,9 @@ _$_GameStatEntry _$$_GameStatEntryFromJson(Map<String, dynamic> json) =>
       player: KasadoUser.fromJson(json['player'] as Map<String, dynamic>),
       statType: $enumDecode(_$GameStatEntryTypeEnumMap, json['statType']),
       isHome: json['isHome'] as bool,
+      savedAt: json['savedAt'] == null
+          ? null
+          : DateTime.parse(json['savedAt'] as String),
       statMeta: json['statMeta'] as Map<String, dynamic>?,
     );
 
@@ -19,6 +22,7 @@ Map<String, dynamic> _$$_GameStatEntryToJson(_$_GameStatEntry instance) =>
       'player': instance.player.toJson(),
       'statType': _$GameStatEntryTypeEnumMap[instance.statType]!,
       'isHome': instance.isHome,
+      'savedAt': instance.savedAt?.toIso8601String(),
       'statMeta': instance.statMeta,
     };
 

@@ -11,6 +11,7 @@ class GameStatEntry with _$GameStatEntry {
     required KasadoUser player,
     required GameStatEntryType statType,
     required bool isHome,
+    DateTime? savedAt,
     Map<String, dynamic>? statMeta,
   }) = _GameStatEntry;
 

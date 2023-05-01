@@ -23,6 +23,7 @@ mixin _$GameStatEntry {
   KasadoUser get player => throw _privateConstructorUsedError;
   GameStatEntryType get statType => throw _privateConstructorUsedError;
   bool get isHome => throw _privateConstructorUsedError;
+  DateTime? get savedAt => throw _privateConstructorUsedError;
   Map<String, dynamic>? get statMeta => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $GameStatEntryCopyWith<$Res> {
       {KasadoUser player,
       GameStatEntryType statType,
       bool isHome,
+      DateTime? savedAt,
       Map<String, dynamic>? statMeta});
 
   $KasadoUserCopyWith<$Res> get player;
@@ -62,6 +64,7 @@ class _$GameStatEntryCopyWithImpl<$Res, $Val extends GameStatEntry>
     Object? player = null,
     Object? statType = null,
     Object? isHome = null,
+    Object? savedAt = freezed,
     Object? statMeta = freezed,
   }) {
     return _then(_value.copyWith(
@@ -77,6 +80,10 @@ class _$GameStatEntryCopyWithImpl<$Res, $Val extends GameStatEntry>
           ? _value.isHome
           : isHome // ignore: cast_nullable_to_non_nullable
               as bool,
+      savedAt: freezed == savedAt
+          ? _value.savedAt
+          : savedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       statMeta: freezed == statMeta
           ? _value.statMeta
           : statMeta // ignore: cast_nullable_to_non_nullable
@@ -105,6 +112,7 @@ abstract class _$$_GameStatEntryCopyWith<$Res>
       {KasadoUser player,
       GameStatEntryType statType,
       bool isHome,
+      DateTime? savedAt,
       Map<String, dynamic>? statMeta});
 
   @override
@@ -125,6 +133,7 @@ class __$$_GameStatEntryCopyWithImpl<$Res>
     Object? player = null,
     Object? statType = null,
     Object? isHome = null,
+    Object? savedAt = freezed,
     Object? statMeta = freezed,
   }) {
     return _then(_$_GameStatEntry(
@@ -140,6 +149,10 @@ class __$$_GameStatEntryCopyWithImpl<$Res>
           ? _value.isHome
           : isHome // ignore: cast_nullable_to_non_nullable
               as bool,
+      savedAt: freezed == savedAt
+          ? _value.savedAt
+          : savedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       statMeta: freezed == statMeta
           ? _value._statMeta
           : statMeta // ignore: cast_nullable_to_non_nullable
@@ -155,6 +168,7 @@ class _$_GameStatEntry implements _GameStatEntry {
       {required this.player,
       required this.statType,
       required this.isHome,
+      this.savedAt,
       final Map<String, dynamic>? statMeta})
       : _statMeta = statMeta;
 
@@ -167,6 +181,8 @@ class _$_GameStatEntry implements _GameStatEntry {
   final GameStatEntryType statType;
   @override
   final bool isHome;
+  @override
+  final DateTime? savedAt;
   final Map<String, dynamic>? _statMeta;
   @override
   Map<String, dynamic>? get statMeta {
@@ -179,7 +195,7 @@ class _$_GameStatEntry implements _GameStatEntry {
 
   @override
   String toString() {
-    return 'GameStatEntry(player: $player, statType: $statType, isHome: $isHome, statMeta: $statMeta)';
+    return 'GameStatEntry(player: $player, statType: $statType, isHome: $isHome, savedAt: $savedAt, statMeta: $statMeta)';
   }
 
   @override
@@ -191,13 +207,14 @@ class _$_GameStatEntry implements _GameStatEntry {
             (identical(other.statType, statType) ||
                 other.statType == statType) &&
             (identical(other.isHome, isHome) || other.isHome == isHome) &&
+            (identical(other.savedAt, savedAt) || other.savedAt == savedAt) &&
             const DeepCollectionEquality().equals(other._statMeta, _statMeta));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, player, statType, isHome,
-      const DeepCollectionEquality().hash(_statMeta));
+      savedAt, const DeepCollectionEquality().hash(_statMeta));
 
   @JsonKey(ignore: true)
   @override
@@ -218,6 +235,7 @@ abstract class _GameStatEntry implements GameStatEntry {
       {required final KasadoUser player,
       required final GameStatEntryType statType,
       required final bool isHome,
+      final DateTime? savedAt,
       final Map<String, dynamic>? statMeta}) = _$_GameStatEntry;
 
   factory _GameStatEntry.fromJson(Map<String, dynamic> json) =
@@ -229,6 +247,8 @@ abstract class _GameStatEntry implements GameStatEntry {
   GameStatEntryType get statType;
   @override
   bool get isHome;
+  @override
+  DateTime? get savedAt;
   @override
   Map<String, dynamic>? get statMeta;
   @override
