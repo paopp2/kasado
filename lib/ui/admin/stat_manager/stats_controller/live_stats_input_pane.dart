@@ -248,14 +248,36 @@ class LiveStatsInputPane extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   StatButton(
-                    color: Colors.blue,
+                    color: Colors.blue.shade300,
                     content: '3',
-                    onPressed: () {},
+                    onPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: 3,
+                      isHome: true,
+                    ),
+                    onLongPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: -3,
+                      isHome: true,
+                    ),
                   ),
                   StatButton(
-                    color: Colors.red,
+                    color: Colors.red.shade300,
                     content: '3',
-                    onPressed: () {},
+                    onPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: 3,
+                      isHome: false,
+                    ),
+                    onLongPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: -3,
+                      isHome: false,
+                    ),
                   ),
                 ],
               ),
@@ -263,14 +285,36 @@ class LiveStatsInputPane extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   StatButton(
-                    color: Colors.blue,
+                    color: Colors.blue.shade300,
                     content: '2',
-                    onPressed: () {},
+                    onPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: 2,
+                      isHome: true,
+                    ),
+                    onLongPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: -2,
+                      isHome: true,
+                    ),
                   ),
                   StatButton(
-                    color: Colors.red,
+                    color: Colors.red.shade300,
                     content: '2',
-                    onPressed: () {},
+                    onPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: 2,
+                      isHome: false,
+                    ),
+                    onLongPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: -2,
+                      isHome: false,
+                    ),
                   ),
                 ],
               ),
@@ -278,14 +322,36 @@ class LiveStatsInputPane extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   StatButton(
-                    color: Colors.blue,
+                    color: Colors.blue.shade300,
                     content: '1',
-                    onPressed: () {},
+                    onPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: 1,
+                      isHome: true,
+                    ),
+                    onLongPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: -1,
+                      isHome: true,
+                    ),
                   ),
                   StatButton(
-                    color: Colors.red,
+                    color: Colors.red.shade300,
                     content: '1',
-                    onPressed: () {},
+                    onPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: 1,
+                      isHome: false,
+                    ),
+                    onLongPressed: () => controller.onTeamShot(
+                      courtSlot: courtSlot,
+                      gameStats: gameStats,
+                      pts: -1,
+                      isHome: false,
+                    ),
                   ),
                 ],
               ),

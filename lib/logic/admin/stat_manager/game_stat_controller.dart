@@ -55,6 +55,20 @@ class GameStatController {
     Fluttertoast.showToast(msg: "Cancelled last input");
   }
 
+  Future<void> onTeamShot({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+    required int pts,
+    required bool isHome,
+  }) async {
+    await statRepo.addTeamPoints(
+      pts: pts,
+      isHome: isHome,
+      courtSlot: courtSlot,
+      gameStatsId: gameStats.id,
+    );
+  }
+
   Future<void> onPlayerShot({
     required BuildContext context,
     required bool isThree, // isTwo otherwise

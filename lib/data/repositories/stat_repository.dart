@@ -228,6 +228,24 @@ class StatRepository {
     }
   }
 
+  Future<void> addTeamPoints({
+    required int pts,
+    required bool isHome,
+    required CourtSlot courtSlot,
+    required String gameStatsId,
+  }) async {
+    final fieldPrefix = (isHome) ? 'homeTeamScore' : 'awayTeamScore';
+    await firestoreHelper.setData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStatsId,
+      ),
+      data: {fieldPrefix: FieldValue.increment(pts)},
+      merge: true,
+    );
+  }
+
   Future<void> recordPlayerShotAttempt({
     required KasadoUser playerWhoScored,
     required KasadoUser? playerWhoAssisted,
