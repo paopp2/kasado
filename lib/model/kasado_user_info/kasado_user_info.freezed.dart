@@ -22,11 +22,11 @@ KasadoUserInfo _$KasadoUserInfoFromJson(Map<String, dynamic> json) {
 mixin _$KasadoUserInfo {
   String get id => throw _privateConstructorUsedError;
   KasadoUser get user => throw _privateConstructorUsedError;
+  OverviewStats get overviewStats => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
   bool get isSuperAdmin => throw _privateConstructorUsedError;
   double get pondo => throw _privateConstructorUsedError;
   bool get isTeamCaptain => throw _privateConstructorUsedError;
-  OverviewStats get overviewStats => throw _privateConstructorUsedError;
   String? get teamId => throw _privateConstructorUsedError;
   List<Ticket> get tickets => throw _privateConstructorUsedError;
 
@@ -45,11 +45,11 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
   $Res call(
       {String id,
       KasadoUser user,
+      OverviewStats overviewStats,
       bool isAdmin,
       bool isSuperAdmin,
       double pondo,
       bool isTeamCaptain,
-      OverviewStats overviewStats,
       String? teamId,
       List<Ticket> tickets});
 
@@ -72,11 +72,11 @@ class _$KasadoUserInfoCopyWithImpl<$Res, $Val extends KasadoUserInfo>
   $Res call({
     Object? id = null,
     Object? user = null,
+    Object? overviewStats = null,
     Object? isAdmin = null,
     Object? isSuperAdmin = null,
     Object? pondo = null,
     Object? isTeamCaptain = null,
-    Object? overviewStats = null,
     Object? teamId = freezed,
     Object? tickets = null,
   }) {
@@ -89,6 +89,10 @@ class _$KasadoUserInfoCopyWithImpl<$Res, $Val extends KasadoUserInfo>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as KasadoUser,
+      overviewStats: null == overviewStats
+          ? _value.overviewStats
+          : overviewStats // ignore: cast_nullable_to_non_nullable
+              as OverviewStats,
       isAdmin: null == isAdmin
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
@@ -105,10 +109,6 @@ class _$KasadoUserInfoCopyWithImpl<$Res, $Val extends KasadoUserInfo>
           ? _value.isTeamCaptain
           : isTeamCaptain // ignore: cast_nullable_to_non_nullable
               as bool,
-      overviewStats: null == overviewStats
-          ? _value.overviewStats
-          : overviewStats // ignore: cast_nullable_to_non_nullable
-              as OverviewStats,
       teamId: freezed == teamId
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
@@ -148,11 +148,11 @@ abstract class _$$_KasadoUserInfoCopyWith<$Res>
   $Res call(
       {String id,
       KasadoUser user,
+      OverviewStats overviewStats,
       bool isAdmin,
       bool isSuperAdmin,
       double pondo,
       bool isTeamCaptain,
-      OverviewStats overviewStats,
       String? teamId,
       List<Ticket> tickets});
 
@@ -175,11 +175,11 @@ class __$$_KasadoUserInfoCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? user = null,
+    Object? overviewStats = null,
     Object? isAdmin = null,
     Object? isSuperAdmin = null,
     Object? pondo = null,
     Object? isTeamCaptain = null,
-    Object? overviewStats = null,
     Object? teamId = freezed,
     Object? tickets = null,
   }) {
@@ -192,6 +192,10 @@ class __$$_KasadoUserInfoCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as KasadoUser,
+      overviewStats: null == overviewStats
+          ? _value.overviewStats
+          : overviewStats // ignore: cast_nullable_to_non_nullable
+              as OverviewStats,
       isAdmin: null == isAdmin
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
@@ -208,10 +212,6 @@ class __$$_KasadoUserInfoCopyWithImpl<$Res>
           ? _value.isTeamCaptain
           : isTeamCaptain // ignore: cast_nullable_to_non_nullable
               as bool,
-      overviewStats: null == overviewStats
-          ? _value.overviewStats
-          : overviewStats // ignore: cast_nullable_to_non_nullable
-              as OverviewStats,
       teamId: freezed == teamId
           ? _value.teamId
           : teamId // ignore: cast_nullable_to_non_nullable
@@ -230,11 +230,11 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   const _$_KasadoUserInfo(
       {required this.id,
       required this.user,
+      required this.overviewStats,
       this.isAdmin = false,
       this.isSuperAdmin = false,
       this.pondo = 0,
       this.isTeamCaptain = false,
-      this.overviewStats = const OverviewStats(),
       this.teamId,
       final List<Ticket> tickets = const []})
       : _tickets = tickets,
@@ -248,6 +248,8 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   @override
   final KasadoUser user;
   @override
+  final OverviewStats overviewStats;
+  @override
   @JsonKey()
   final bool isAdmin;
   @override
@@ -259,9 +261,6 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final bool isTeamCaptain;
-  @override
-  @JsonKey()
-  final OverviewStats overviewStats;
   @override
   final String? teamId;
   final List<Ticket> _tickets;
@@ -275,7 +274,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, overviewStats: $overviewStats, teamId: $teamId, tickets: $tickets)';
+    return 'KasadoUserInfo(id: $id, user: $user, overviewStats: $overviewStats, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, teamId: $teamId, tickets: $tickets)';
   }
 
   @override
@@ -285,11 +284,11 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'KasadoUserInfo'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('user', user))
+      ..add(DiagnosticsProperty('overviewStats', overviewStats))
       ..add(DiagnosticsProperty('isAdmin', isAdmin))
       ..add(DiagnosticsProperty('isSuperAdmin', isSuperAdmin))
       ..add(DiagnosticsProperty('pondo', pondo))
       ..add(DiagnosticsProperty('isTeamCaptain', isTeamCaptain))
-      ..add(DiagnosticsProperty('overviewStats', overviewStats))
       ..add(DiagnosticsProperty('teamId', teamId))
       ..add(DiagnosticsProperty('tickets', tickets));
   }
@@ -301,14 +300,14 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
             other is _$_KasadoUserInfo &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.user, user) || other.user == user) &&
+            (identical(other.overviewStats, overviewStats) ||
+                other.overviewStats == overviewStats) &&
             (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin) &&
             (identical(other.isSuperAdmin, isSuperAdmin) ||
                 other.isSuperAdmin == isSuperAdmin) &&
             (identical(other.pondo, pondo) || other.pondo == pondo) &&
             (identical(other.isTeamCaptain, isTeamCaptain) ||
                 other.isTeamCaptain == isTeamCaptain) &&
-            (identical(other.overviewStats, overviewStats) ||
-                other.overviewStats == overviewStats) &&
             (identical(other.teamId, teamId) || other.teamId == teamId) &&
             const DeepCollectionEquality().equals(other._tickets, _tickets));
   }
@@ -319,11 +318,11 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       runtimeType,
       id,
       user,
+      overviewStats,
       isAdmin,
       isSuperAdmin,
       pondo,
       isTeamCaptain,
-      overviewStats,
       teamId,
       const DeepCollectionEquality().hash(_tickets));
 
@@ -345,11 +344,11 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   const factory _KasadoUserInfo(
       {required final String id,
       required final KasadoUser user,
+      required final OverviewStats overviewStats,
       final bool isAdmin,
       final bool isSuperAdmin,
       final double pondo,
       final bool isTeamCaptain,
-      final OverviewStats overviewStats,
       final String? teamId,
       final List<Ticket> tickets}) = _$_KasadoUserInfo;
   const _KasadoUserInfo._() : super._();
@@ -362,6 +361,8 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   @override
   KasadoUser get user;
   @override
+  OverviewStats get overviewStats;
+  @override
   bool get isAdmin;
   @override
   bool get isSuperAdmin;
@@ -369,8 +370,6 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   double get pondo;
   @override
   bool get isTeamCaptain;
-  @override
-  OverviewStats get overviewStats;
   @override
   String? get teamId;
   @override

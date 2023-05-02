@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kasado/constants/enums/stat_type.dart';
+import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 part 'overview_stats.freezed.dart';
 part 'overview_stats.g.dart';
@@ -8,7 +9,8 @@ part 'overview_stats.g.dart';
 @freezed
 class OverviewStats with _$OverviewStats {
   const OverviewStats._();
-  const factory OverviewStats({
+  const factory OverviewStats(
+    KasadoUser? player, {
     @Default(0) int mmr,
     @Default(0) int totalThreePA,
     @Default(0) int totalThreePM,

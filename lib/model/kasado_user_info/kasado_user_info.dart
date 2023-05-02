@@ -14,14 +14,22 @@ class KasadoUserInfo with _$KasadoUserInfo {
   const factory KasadoUserInfo({
     required String id,
     required KasadoUser user,
+    required OverviewStats overviewStats,
     @Default(false) bool isAdmin,
     @Default(false) bool isSuperAdmin,
     @Default(0) double pondo,
     @Default(false) bool isTeamCaptain,
-    @Default(OverviewStats()) OverviewStats overviewStats,
     String? teamId,
     @Default([]) List<Ticket> tickets,
   }) = _KasadoUserInfo;
+
+  static KasadoUserInfo newInstance(KasadoUser user) {
+    return KasadoUserInfo(
+      id: user.id,
+      user: user,
+      overviewStats: OverviewStats(user),
+    );
+  }
 
   bool get hasReserved {
     if (tickets.isEmpty) return false;

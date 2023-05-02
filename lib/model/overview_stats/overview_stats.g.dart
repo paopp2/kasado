@@ -8,6 +8,9 @@ part of 'overview_stats.dart';
 
 _$_OverviewStats _$$_OverviewStatsFromJson(Map<String, dynamic> json) =>
     _$_OverviewStats(
+      json['player'] == null
+          ? null
+          : KasadoUser.fromJson(json['player'] as Map<String, dynamic>),
       mmr: json['mmr'] as int? ?? 0,
       totalThreePA: json['totalThreePA'] as int? ?? 0,
       totalThreePM: json['totalThreePM'] as int? ?? 0,
@@ -30,6 +33,7 @@ _$_OverviewStats _$$_OverviewStatsFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_OverviewStatsToJson(_$_OverviewStats instance) =>
     <String, dynamic>{
+      'player': instance.player?.toJson(),
       'mmr': instance.mmr,
       'totalThreePA': instance.totalThreePA,
       'totalThreePM': instance.totalThreePM,

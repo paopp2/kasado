@@ -37,7 +37,7 @@ class UserInfoRepository {
     if (!userInfoExists) {
       await firestoreHelper.setData(
         path: FirestorePath.docUserInfo(user.id),
-        data: KasadoUserInfo(id: user.id, user: user).toJson(),
+        data: KasadoUserInfo.newInstance(user).toJson(),
       );
     }
   }
