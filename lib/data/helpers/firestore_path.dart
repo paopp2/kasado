@@ -12,6 +12,7 @@ class FirestorePath {
       'courts/$courtId/court_slots/$slotId/stats';
   static String colFeedbacks() => 'feedbacks';
   static String colUserStats(String userId) => 'user_info/$userId/user_stats';
+  static String colGroupUserSeasonStats() => 'season_stats';
 
   // DOCUMENT paths
   static String docAppMeta() => 'app_meta/app_meta';
@@ -30,4 +31,8 @@ class FirestorePath {
       'user_stats/$gameStatsId';
   static String docUserStats(String userId, String gameStatsId) =>
       'user_info/$userId/user_stats/$gameStatsId';
+  static String docUserSeasonStats(String userId, String seasonId) =>
+      'user_info/$userId/season_stats/$seasonId';
+  static String docPartialUserSeasonStats(String seasonId) =>
+      'season_stats/$seasonId';
 }
