@@ -211,6 +211,16 @@ class UserInfoRepository {
         userInfoList.map((userInfo) => userInfo.user).toList());
   }
 
+  Stream<OverviewStats?> getUserOverviewStatsStream({
+    required String userId,
+    required String seasonId,
+  }) {
+    return firestoreHelper.documentStream(
+      path: FirestorePath.docUserSeasonStats(userId, "season0"),
+      builder: (data, _) => OverviewStats.fromJson(data),
+    );
+  }
+
   Stream<List<Stats>> getUserStatsStream(String userId) {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colUserStats(userId),
