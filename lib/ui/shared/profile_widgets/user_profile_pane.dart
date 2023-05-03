@@ -209,25 +209,26 @@ class UserProfilePane extends HookConsumerWidget {
                   ),
                 ),
                 Expanded(
-                  child: (overviewStats == null)
-                      ? const Center(child: Text('No stats available'))
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: TabBarView(
-                            controller: tabController,
-                            children: [
-                              CareerStatsListPane(
-                                userStats: overviewStats,
-                                utils: utils,
-                              ),
-                              GameHistoryListPane(
-                                model: model,
-                                userId: user.id,
-                                constraints: constraints,
-                              ),
-                            ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TabBarView(
+                      controller: tabController,
+                      children: [
+                        if (overviewStats == null)
+                          const Center(child: Text("No stats availabe"))
+                        else
+                          CareerStatsListPane(
+                            userStats: overviewStats,
+                            utils: utils,
                           ),
+                        GameHistoryListPane(
+                          model: model,
+                          userId: user.id,
+                          constraints: constraints,
                         ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
