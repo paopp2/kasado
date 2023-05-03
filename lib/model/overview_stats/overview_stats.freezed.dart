@@ -20,7 +20,8 @@ OverviewStats _$OverviewStatsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OverviewStats {
-  KasadoUser? get player => throw _privateConstructorUsedError;
+  KasadoUser get player => throw _privateConstructorUsedError;
+  String get seasonId => throw _privateConstructorUsedError;
   int get mmr => throw _privateConstructorUsedError;
   int get totalThreePA => throw _privateConstructorUsedError;
   int get totalThreePM => throw _privateConstructorUsedError;
@@ -53,7 +54,8 @@ abstract class $OverviewStatsCopyWith<$Res> {
       _$OverviewStatsCopyWithImpl<$Res, OverviewStats>;
   @useResult
   $Res call(
-      {KasadoUser? player,
+      {KasadoUser player,
+      String seasonId,
       int mmr,
       int totalThreePA,
       int totalThreePM,
@@ -73,7 +75,7 @@ abstract class $OverviewStatsCopyWith<$Res> {
       int gamesPlayedNoStats,
       bool isHiddenFromRankings});
 
-  $KasadoUserCopyWith<$Res>? get player;
+  $KasadoUserCopyWith<$Res> get player;
 }
 
 /// @nodoc
@@ -89,7 +91,8 @@ class _$OverviewStatsCopyWithImpl<$Res, $Val extends OverviewStats>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? player = freezed,
+    Object? player = null,
+    Object? seasonId = null,
     Object? mmr = null,
     Object? totalThreePA = null,
     Object? totalThreePM = null,
@@ -110,10 +113,14 @@ class _$OverviewStatsCopyWithImpl<$Res, $Val extends OverviewStats>
     Object? isHiddenFromRankings = null,
   }) {
     return _then(_value.copyWith(
-      player: freezed == player
+      player: null == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
-              as KasadoUser?,
+              as KasadoUser,
+      seasonId: null == seasonId
+          ? _value.seasonId
+          : seasonId // ignore: cast_nullable_to_non_nullable
+              as String,
       mmr: null == mmr
           ? _value.mmr
           : mmr // ignore: cast_nullable_to_non_nullable
@@ -191,12 +198,8 @@ class _$OverviewStatsCopyWithImpl<$Res, $Val extends OverviewStats>
 
   @override
   @pragma('vm:prefer-inline')
-  $KasadoUserCopyWith<$Res>? get player {
-    if (_value.player == null) {
-      return null;
-    }
-
-    return $KasadoUserCopyWith<$Res>(_value.player!, (value) {
+  $KasadoUserCopyWith<$Res> get player {
+    return $KasadoUserCopyWith<$Res>(_value.player, (value) {
       return _then(_value.copyWith(player: value) as $Val);
     });
   }
@@ -211,7 +214,8 @@ abstract class _$$_OverviewStatsCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {KasadoUser? player,
+      {KasadoUser player,
+      String seasonId,
       int mmr,
       int totalThreePA,
       int totalThreePM,
@@ -232,7 +236,7 @@ abstract class _$$_OverviewStatsCopyWith<$Res>
       bool isHiddenFromRankings});
 
   @override
-  $KasadoUserCopyWith<$Res>? get player;
+  $KasadoUserCopyWith<$Res> get player;
 }
 
 /// @nodoc
@@ -246,7 +250,8 @@ class __$$_OverviewStatsCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? player = freezed,
+    Object? player = null,
+    Object? seasonId = null,
     Object? mmr = null,
     Object? totalThreePA = null,
     Object? totalThreePM = null,
@@ -267,10 +272,14 @@ class __$$_OverviewStatsCopyWithImpl<$Res>
     Object? isHiddenFromRankings = null,
   }) {
     return _then(_$_OverviewStats(
-      freezed == player
+      null == player
           ? _value.player
           : player // ignore: cast_nullable_to_non_nullable
-              as KasadoUser?,
+              as KasadoUser,
+      null == seasonId
+          ? _value.seasonId
+          : seasonId // ignore: cast_nullable_to_non_nullable
+              as String,
       mmr: null == mmr
           ? _value.mmr
           : mmr // ignore: cast_nullable_to_non_nullable
@@ -350,7 +359,7 @@ class __$$_OverviewStatsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
-  const _$_OverviewStats(this.player,
+  const _$_OverviewStats(this.player, this.seasonId,
       {this.mmr = 0,
       this.totalThreePA = 0,
       this.totalThreePM = 0,
@@ -375,7 +384,9 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
       _$$_OverviewStatsFromJson(json);
 
   @override
-  final KasadoUser? player;
+  final KasadoUser player;
+  @override
+  final String seasonId;
   @override
   @JsonKey()
   final int mmr;
@@ -433,7 +444,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'OverviewStats(player: $player, mmr: $mmr, totalThreePA: $totalThreePA, totalThreePM: $totalThreePM, totalTwoPA: $totalTwoPA, totalTwoPM: $totalTwoPM, totalFta: $totalFta, totalFtm: $totalFtm, totalOReb: $totalOReb, totalDReb: $totalDReb, totalAst: $totalAst, totalStl: $totalStl, totalBlk: $totalBlk, totalTO: $totalTO, totalWins: $totalWins, totalPlusMinus: $totalPlusMinus, gamesPlayed: $gamesPlayed, gamesPlayedNoStats: $gamesPlayedNoStats, isHiddenFromRankings: $isHiddenFromRankings)';
+    return 'OverviewStats(player: $player, seasonId: $seasonId, mmr: $mmr, totalThreePA: $totalThreePA, totalThreePM: $totalThreePM, totalTwoPA: $totalTwoPA, totalTwoPM: $totalTwoPM, totalFta: $totalFta, totalFtm: $totalFtm, totalOReb: $totalOReb, totalDReb: $totalDReb, totalAst: $totalAst, totalStl: $totalStl, totalBlk: $totalBlk, totalTO: $totalTO, totalWins: $totalWins, totalPlusMinus: $totalPlusMinus, gamesPlayed: $gamesPlayed, gamesPlayedNoStats: $gamesPlayedNoStats, isHiddenFromRankings: $isHiddenFromRankings)';
   }
 
   @override
@@ -442,6 +453,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'OverviewStats'))
       ..add(DiagnosticsProperty('player', player))
+      ..add(DiagnosticsProperty('seasonId', seasonId))
       ..add(DiagnosticsProperty('mmr', mmr))
       ..add(DiagnosticsProperty('totalThreePA', totalThreePA))
       ..add(DiagnosticsProperty('totalThreePM', totalThreePM))
@@ -468,6 +480,8 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is _$_OverviewStats &&
             (identical(other.player, player) || other.player == player) &&
+            (identical(other.seasonId, seasonId) ||
+                other.seasonId == seasonId) &&
             (identical(other.mmr, mmr) || other.mmr == mmr) &&
             (identical(other.totalThreePA, totalThreePA) ||
                 other.totalThreePA == totalThreePA) &&
@@ -509,6 +523,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
   int get hashCode => Object.hashAll([
         runtimeType,
         player,
+        seasonId,
         mmr,
         totalThreePA,
         totalThreePM,
@@ -544,7 +559,7 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
 }
 
 abstract class _OverviewStats extends OverviewStats {
-  const factory _OverviewStats(final KasadoUser? player,
+  const factory _OverviewStats(final KasadoUser player, final String seasonId,
       {final int mmr,
       final int totalThreePA,
       final int totalThreePM,
@@ -569,7 +584,9 @@ abstract class _OverviewStats extends OverviewStats {
       _$_OverviewStats.fromJson;
 
   @override
-  KasadoUser? get player;
+  KasadoUser get player;
+  @override
+  String get seasonId;
   @override
   int get mmr;
   @override

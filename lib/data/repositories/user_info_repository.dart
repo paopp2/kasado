@@ -7,6 +7,7 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/overview_stats/overview_stats.dart';
 import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/model/ticket/ticket.dart';
 import 'package:kasado/model/user_bio/user_bio.dart';
@@ -26,18 +27,35 @@ class UserInfoRepository {
   final FirestoreHelper firestoreHelper;
   final Ref ref;
 
-  Future<bool> userHasInfo(String userId) async {
+  Future<bool> _userHasInfo(String userId) async {
     return await firestoreHelper.docExists(
       path: FirestorePath.docUserInfo(userId),
     );
   }
 
+  Future<bool> _userHasSeasonStats(
+    String userId,
+    String seasonId,
+  ) async {
+    return await firestoreHelper.docExists(
+      path: FirestorePath.docUserSeasonStats(userId, seasonId),
+    );
+  }
+
   Future<void> pushUserInfoIfNonExistent(KasadoUser user) async {
-    final bool userInfoExists = await userHasInfo(user.id);
+    final bool userInfoExists = await _userHasInfo(user.id);
     if (!userInfoExists) {
       await firestoreHelper.setData(
         path: FirestorePath.docUserInfo(user.id),
         data: KasadoUserInfo.newInstance(user).toJson(),
+      );
+    }
+
+    final hasSeasonStats = await _userHasSeasonStats(user.id, "season0");
+    if (!hasSeasonStats) {
+      await firestoreHelper.setData(
+        path: FirestorePath.docUserSeasonStats(user.id, "season0"),
+        data: OverviewStats(user, "season0").toJson(),
       );
     }
   }

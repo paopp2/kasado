@@ -22,7 +22,6 @@ KasadoUserInfo _$KasadoUserInfoFromJson(Map<String, dynamic> json) {
 mixin _$KasadoUserInfo {
   String get id => throw _privateConstructorUsedError;
   KasadoUser get user => throw _privateConstructorUsedError;
-  OverviewStats get overviewStats => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
   bool get isSuperAdmin => throw _privateConstructorUsedError;
   double get pondo => throw _privateConstructorUsedError;
@@ -45,7 +44,6 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
   $Res call(
       {String id,
       KasadoUser user,
-      OverviewStats overviewStats,
       bool isAdmin,
       bool isSuperAdmin,
       double pondo,
@@ -54,7 +52,6 @@ abstract class $KasadoUserInfoCopyWith<$Res> {
       List<Ticket> tickets});
 
   $KasadoUserCopyWith<$Res> get user;
-  $OverviewStatsCopyWith<$Res> get overviewStats;
 }
 
 /// @nodoc
@@ -72,7 +69,6 @@ class _$KasadoUserInfoCopyWithImpl<$Res, $Val extends KasadoUserInfo>
   $Res call({
     Object? id = null,
     Object? user = null,
-    Object? overviewStats = null,
     Object? isAdmin = null,
     Object? isSuperAdmin = null,
     Object? pondo = null,
@@ -89,10 +85,6 @@ class _$KasadoUserInfoCopyWithImpl<$Res, $Val extends KasadoUserInfo>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as KasadoUser,
-      overviewStats: null == overviewStats
-          ? _value.overviewStats
-          : overviewStats // ignore: cast_nullable_to_non_nullable
-              as OverviewStats,
       isAdmin: null == isAdmin
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
@@ -127,14 +119,6 @@ class _$KasadoUserInfoCopyWithImpl<$Res, $Val extends KasadoUserInfo>
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $OverviewStatsCopyWith<$Res> get overviewStats {
-    return $OverviewStatsCopyWith<$Res>(_value.overviewStats, (value) {
-      return _then(_value.copyWith(overviewStats: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -148,7 +132,6 @@ abstract class _$$_KasadoUserInfoCopyWith<$Res>
   $Res call(
       {String id,
       KasadoUser user,
-      OverviewStats overviewStats,
       bool isAdmin,
       bool isSuperAdmin,
       double pondo,
@@ -158,8 +141,6 @@ abstract class _$$_KasadoUserInfoCopyWith<$Res>
 
   @override
   $KasadoUserCopyWith<$Res> get user;
-  @override
-  $OverviewStatsCopyWith<$Res> get overviewStats;
 }
 
 /// @nodoc
@@ -175,7 +156,6 @@ class __$$_KasadoUserInfoCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? user = null,
-    Object? overviewStats = null,
     Object? isAdmin = null,
     Object? isSuperAdmin = null,
     Object? pondo = null,
@@ -192,10 +172,6 @@ class __$$_KasadoUserInfoCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as KasadoUser,
-      overviewStats: null == overviewStats
-          ? _value.overviewStats
-          : overviewStats // ignore: cast_nullable_to_non_nullable
-              as OverviewStats,
       isAdmin: null == isAdmin
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
@@ -230,7 +206,6 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   const _$_KasadoUserInfo(
       {required this.id,
       required this.user,
-      required this.overviewStats,
       this.isAdmin = false,
       this.isSuperAdmin = false,
       this.pondo = 0,
@@ -247,8 +222,6 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
   final String id;
   @override
   final KasadoUser user;
-  @override
-  final OverviewStats overviewStats;
   @override
   @JsonKey()
   final bool isAdmin;
@@ -274,7 +247,7 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'KasadoUserInfo(id: $id, user: $user, overviewStats: $overviewStats, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, teamId: $teamId, tickets: $tickets)';
+    return 'KasadoUserInfo(id: $id, user: $user, isAdmin: $isAdmin, isSuperAdmin: $isSuperAdmin, pondo: $pondo, isTeamCaptain: $isTeamCaptain, teamId: $teamId, tickets: $tickets)';
   }
 
   @override
@@ -284,7 +257,6 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'KasadoUserInfo'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('user', user))
-      ..add(DiagnosticsProperty('overviewStats', overviewStats))
       ..add(DiagnosticsProperty('isAdmin', isAdmin))
       ..add(DiagnosticsProperty('isSuperAdmin', isSuperAdmin))
       ..add(DiagnosticsProperty('pondo', pondo))
@@ -300,8 +272,6 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
             other is _$_KasadoUserInfo &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.overviewStats, overviewStats) ||
-                other.overviewStats == overviewStats) &&
             (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin) &&
             (identical(other.isSuperAdmin, isSuperAdmin) ||
                 other.isSuperAdmin == isSuperAdmin) &&
@@ -318,7 +288,6 @@ class _$_KasadoUserInfo extends _KasadoUserInfo with DiagnosticableTreeMixin {
       runtimeType,
       id,
       user,
-      overviewStats,
       isAdmin,
       isSuperAdmin,
       pondo,
@@ -344,7 +313,6 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   const factory _KasadoUserInfo(
       {required final String id,
       required final KasadoUser user,
-      required final OverviewStats overviewStats,
       final bool isAdmin,
       final bool isSuperAdmin,
       final double pondo,
@@ -360,8 +328,6 @@ abstract class _KasadoUserInfo extends KasadoUserInfo {
   String get id;
   @override
   KasadoUser get user;
-  @override
-  OverviewStats get overviewStats;
   @override
   bool get isAdmin;
   @override

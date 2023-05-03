@@ -1,5 +1,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const firestore = require("firebase-admin/firestore");
+
 const user_info_data = require("./test_data/user_info.json");
 const courts_data = require("./test_data/courts.json");
 const teams_data = require("./test_data/teams.json");
@@ -7,18 +9,31 @@ const test_data = Object.assign({}, teams_data, courts_data, user_info_data);
 
 admin.initializeApp();
 const db = admin.firestore();
+const appMetaRef = db.collection('app_meta').doc('app_meta');
 const userInfoRef = db.collection('user_info');
 const courtsRef = db.collection('courts');
 const teamsRef = db.collection('teams');
 
 exports.populateAll = functions.https.onRequest(async (req, res) => {
+    await appMetaRef.set({ seasonId: "season0" });
+
     test_data.userInfoList.forEach(addUserInfo);
     async function addUserInfo(userInfo) {
         await userInfoRef.doc(userInfo.id).set(userInfo);
+        await userInfoRef.doc(userInfo.id)
+            .collection("season_stats")
+            .doc("season0")
+            .set({ player: userInfo.user, seasonId: "season0" });
     }
     test_data.courtsList.forEach(addCourt);
     async function addCourt(court) {
         await courtsRef.doc(court.id).set(court);
+        await courtsRef.doc(court.id).update({
+            'geo.geopoint': new firestore.GeoPoint(
+                court.location.lat,
+                court.location.lng,
+            ),
+        }, { merge: true });
     }
     test_data.teamsList.forEach(addTeam);
     async function addTeam(team) {
@@ -31,6 +46,10 @@ exports.populateUserInfo = functions.https.onRequest(async (req, res) => {
     test_data.userInfoList.forEach(addUserInfo);
     async function addUserInfo(userInfo) {
         await userInfoRef.doc(userInfo.id).set(userInfo);
+        await userInfoRef.doc(userInfo.id)
+            .collection("season_stats")
+            .doc("season0")
+            .set({ "player": userInfo.user });
     }
     res.json({ result: "Populated 'user_info'" });
 });
@@ -51,19 +70,19 @@ exports.populateTeams = functions.https.onRequest(async (req, res) => {
     res.json({ result: "Populated 'teams'" });
 });
 
-exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}').onUpdate(async (change, context) => {
-    const preUserInfo = change.before.data();
-    const updatedUserInfo = change.after.data();
-    if (updatedUserInfo && updatedUserInfo.overviewStats && updatedUserInfo.overviewStats.hasOwnProperty('gamesPlayed')) {
+exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}/season_stats/{seasonId}').onUpdate(async (change, context) => {
+    const preUserStats = change.before.data();
+    const updatedUserStats = change.after.data();
+    if (updatedUserStats && updatedUserStats.hasOwnProperty('gamesPlayed')) {
         let preGamesPlayed;
         try {
-            preGamesPlayed = preUserInfo.overviewStats.gamesPlayed;
+            preGamesPlayed = preUserStats.gamesPlayed;
         } catch {
             preGamesPlayed = 0;
         }
-        if (preGamesPlayed != updatedUserInfo.overviewStats.gamesPlayed) {
 
-            const stats = updatedUserInfo.overviewStats;
+        if (preGamesPlayed != updatedUserStats.gamesPlayed) {
+            const stats = updatedUserStats;
             const totalPoints = (stats.totalThreePM * 3) + (stats.totalTwoPM * 2) + stats.totalFtm;
             const totalAttempts = stats.totalThreePA + stats.totalTwoPA;
             const totalMade = stats.totalThreePM + stats.totalTwoPM;
@@ -81,8 +100,10 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}')
             const winLossDifference = stats.totalWins - totalLosses;
             const effRating = (totalPoints + stats.totalAst + totalRebounds + stats.totalStl + stats.totalBlk - (totalAttempts - totalMade) - (stats.totalFta - stats.totalFtm) - stats.totalTO) / stats.gamesPlayed;
 
-            await userInfoRef.doc(updatedUserInfo.id).set({
-                "overviewStats": {
+            await userInfoRef.doc(stats.player.id)
+                .collection("season_stats")
+                .doc("season0")
+                .set({
                     "totalPoints": totalPoints,
                     "totalAttempts": totalAttempts,
                     "totalMade": totalMade,
@@ -99,8 +120,7 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}')
                     "winPercent": winPercent,
                     "winLossDifference": winLossDifference,
                     "effRating": effRating,
-                }
-            }, { merge: true });
+                }, { merge: true });
         }
 
     }
@@ -110,8 +130,8 @@ exports.triggerStatsUpdate = functions.https.onRequest(async (req, res) => {
 
     await db.collection("user_info").get().then(function (querySnapshot) {
         querySnapshot.forEach(async function (doc) {
-            await doc.ref.update({
-                "overviewStats.gamesPlayed": admin.firestore.FieldValue.increment(1),
+            await doc.ref.collection("season_stats").doc("season0").update({
+                "gamesPlayed": firestore.FieldValue.increment(1),
             }, { merge: true });
         });
     });
@@ -120,8 +140,8 @@ exports.triggerStatsUpdate = functions.https.onRequest(async (req, res) => {
 
     await db.collection("user_info").get().then(function (querySnapshot) {
         querySnapshot.forEach(async function (doc) {
-            await doc.ref.update({
-                "overviewStats.gamesPlayed": admin.firestore.FieldValue.increment(-1),
+            await doc.ref.collection("season_stats").doc("season0").update({
+                "gamesPlayed": firestore.FieldValue.increment(-1),
             }, { merge: true });
         });
     });
@@ -134,7 +154,7 @@ exports.triggerUserInfoWrite = functions.https.onRequest(async (req, res) => {
     await db.collection("user_info").get().then(function (querySnapshot) {
         querySnapshot.forEach(async function (doc) {
             await doc.ref.update({
-                "random": admin.firestore.FieldValue.increment(1),
+                "random": firestore.FieldValue.increment(1),
             }, { merge: true });
         });
     });

@@ -33,7 +33,9 @@ class UserProfilePane extends HookConsumerWidget {
     final isCurrentUser = currentUser.id == user?.id;
     final isSuperAdmin =
         ref.watch(currentUserInfoProvider).value?.isSuperAdmin ?? false;
-    final userCareerStats = userInfo?.overviewStats;
+    // TODO: Fix how this works
+    const overviewStats = null;
+    // final overviewStats = userInfo?.overviewStats;
     final tabController = useTabController(initialLength: 2);
 
     void _onAddPondoLongPressed() => showDialog(
@@ -207,7 +209,7 @@ class UserProfilePane extends HookConsumerWidget {
                   ),
                 ),
                 Expanded(
-                  child: (userCareerStats == null)
+                  child: (overviewStats == null)
                       ? const Center(child: Text('No stats available'))
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -215,7 +217,7 @@ class UserProfilePane extends HookConsumerWidget {
                             controller: tabController,
                             children: [
                               CareerStatsListPane(
-                                userStats: userCareerStats,
+                                userStats: overviewStats,
                                 utils: utils,
                               ),
                               GameHistoryListPane(

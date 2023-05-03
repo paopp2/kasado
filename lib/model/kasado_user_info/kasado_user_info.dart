@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
-import 'package:kasado/model/overview_stats/overview_stats.dart';
 import 'package:kasado/model/ticket/ticket.dart';
 
 part 'kasado_user_info.freezed.dart';
@@ -14,7 +13,6 @@ class KasadoUserInfo with _$KasadoUserInfo {
   const factory KasadoUserInfo({
     required String id,
     required KasadoUser user,
-    required OverviewStats overviewStats,
     @Default(false) bool isAdmin,
     @Default(false) bool isSuperAdmin,
     @Default(0) double pondo,
@@ -27,7 +25,6 @@ class KasadoUserInfo with _$KasadoUserInfo {
     return KasadoUserInfo(
       id: user.id,
       user: user,
-      overviewStats: OverviewStats(user),
     );
   }
 

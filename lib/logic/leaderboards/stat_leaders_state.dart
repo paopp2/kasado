@@ -2,13 +2,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/enums/stat_type.dart';
 import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
-import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/overview_stats/overview_stats.dart';
 
 final statLeadersStreamProvider = StreamProvider.autoDispose
-    .family<List<KasadoUserInfo>, StatType>((ref, statType) {
+    .family<List<OverviewStats>, StatType>((ref, statType) {
   final statRepo = ref.watch(statRepositoryProvider);
 
-  final Stream<List<KasadoUserInfo>> statLeadersStream;
+  final Stream<List<OverviewStats>> statLeadersStream;
   switch (statType) {
     case StatType.mmr:
       statLeadersStream = statRepo.getMmrLeadersStream();
@@ -46,8 +46,8 @@ final statLeadersStreamProvider = StreamProvider.autoDispose
   }
 
   // Exclude users that opted out of being part of stat leader rankings
-  return statLeadersStream.map((userInfoList) => [...userInfoList]
-      .excludeWhere((uInfo) => uInfo.overviewStats.isHiddenFromRankings));
+  return statLeadersStream.map((overviewStats) =>
+      [...overviewStats].excludeWhere((oStats) => oStats.isHiddenFromRankings));
 });
 
 final rankNumProvider = Provider.autoDispose.family<Map<String, int>, StatType>(
@@ -55,7 +55,7 @@ final rankNumProvider = Provider.autoDispose.family<Map<String, int>, StatType>(
     final statLeadersList =
         ref.watch(statLeadersStreamProvider(statType)).value ?? [];
     final statLeadersValueSet = statLeadersList
-        .map((uInfo) => uInfo.overviewStats.getStatValueAsString(statType))
+        .map((oStats) => oStats.getStatValueAsString(statType))
         .toSet() // Removes duplicates
         .toList() // Allows indexing
         .asMap(); // Sets index as key to corresponding value

@@ -50,18 +50,18 @@ class StatLeadersPane extends HookConsumerWidget {
           child: statLeadersStream.when(
             loading: () => const LoadingWidget(),
             error: (e, _) => Text(e.toString()),
-            data: (userInfoList) {
-              return (userInfoList.isEmpty)
+            data: (overviewStatsList) {
+              return (overviewStatsList.isEmpty)
                   ? const Center(child: Text('No data available'))
                   : Material(
                       child: AnimationLimiter(
                         child: ListView.builder(
-                          itemCount: userInfoList.length,
+                          itemCount: overviewStatsList.length,
                           itemBuilder: (context, i) {
-                            final userInfo = userInfoList[i];
-                            final precedingUserInfo =
-                                (i == 0) ? null : userInfoList[i - 1];
-                            final player = userInfo.user;
+                            final oStats = overviewStatsList[i];
+                            final precedingStats =
+                                (i == 0) ? null : overviewStatsList[i - 1];
+                            final player = oStats.player;
 
                             return StaggerListTileAnimation(
                               index: i,
@@ -74,7 +74,7 @@ class StatLeadersPane extends HookConsumerWidget {
                                         : null,
                                   ),
                                   builder: (context, snapshot) {
-                                    final stats = userInfo.overviewStats;
+                                    final stats = oStats;
 
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -86,9 +86,8 @@ class StatLeadersPane extends HookConsumerWidget {
                                             child: Text(
                                               model.getRankNumAsString(
                                                 statType: statType,
-                                                precedingUserInfo:
-                                                    precedingUserInfo,
-                                                userInfo: userInfo,
+                                                precedingStats: precedingStats,
+                                                overviewStats: oStats,
                                               ),
                                               style: const TextStyle(
                                                 fontSize: 15,
