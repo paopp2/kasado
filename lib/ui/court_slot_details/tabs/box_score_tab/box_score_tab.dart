@@ -14,10 +14,12 @@ class BoxScoreTab extends HookConsumerWidget {
     Key? key,
     required this.constraints,
     required this.courtSlot,
+    this.isAdmin = false,
   }) : super(key: key);
 
   final BoxConstraints constraints;
   final CourtSlot courtSlot;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,6 +47,7 @@ class BoxScoreTab extends HookConsumerWidget {
             constraints: constraints,
             utils: utils,
             gameStats: selectedGameStats,
+            isAdmin: isAdmin,
           ),
         ),
         const Divider(),

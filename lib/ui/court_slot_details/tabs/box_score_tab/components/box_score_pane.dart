@@ -19,6 +19,7 @@ class BoxScorePane extends HookConsumerWidget {
     required this.constraints,
     required this.utils,
     required this.gameStats,
+    this.isAdmin = false,
   }) : super(key: key);
 
   final GameStatController controller;
@@ -26,6 +27,7 @@ class BoxScorePane extends HookConsumerWidget {
   final BoxConstraints constraints;
   final KasadoUtils utils;
   final GameStats? gameStats;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -89,6 +91,18 @@ class BoxScorePane extends HookConsumerWidget {
                             ),
                           ],
                         ),
+                        if (isAdmin)
+                          TextButton(
+                            onPressed: () {},
+                            onLongPress: () {},
+                            child: const Text(
+                              "DELETE",
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),
