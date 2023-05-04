@@ -73,37 +73,48 @@ exports.populateTeams = functions.https.onRequest(async (req, res) => {
 exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}/season_stats/{seasonId}').onUpdate(async (change, context) => {
     const preUserStats = change.before.data();
     const updatedUserStats = change.after.data();
-    if (updatedUserStats && updatedUserStats.hasOwnProperty('gamesPlayed')) {
-        let preGamesPlayed;
+
+    if (updatedUserStats && (updatedUserStats.hasOwnProperty('gamesPlayed') || updatedUserStats.hasOwnProperty('gamesPlayedNoStats'))) {
+        let preTotalGamesPlayed;
         try {
-            preGamesPlayed = preUserStats.gamesPlayed;
+            preTotalGamesPlayed = (preUserStats.gamesPlayed ?? 0) + (preUserStats.gamesPlayedNoStats ?? 0);
         } catch {
-            preGamesPlayed = 0;
+            preTotalGamesPlayed = 0;
         }
 
-        if (preGamesPlayed != updatedUserStats.gamesPlayed) {
+        const updatedTotalGamesPlayed = (updatedUserStats.gamesPlayed ?? 0) + (updatedUserStats.gamesPlayedNoStats ?? 0);
+        if (preTotalGamesPlayed != updatedTotalGamesPlayed) {
             const stats = updatedUserStats;
+
+            const gamesPlayed = stats.gamesPlayed ?? 0;
+            const gamesPlayedNoStats = stats.gamesPlayedNoStats ?? 0;
+
+            const totalGamesPlayed = gamesPlayed + gamesPlayedNoStats
             const totalPoints = (stats.totalThreePM * 3) + (stats.totalTwoPM * 2) + stats.totalFtm;
             const totalAttempts = stats.totalThreePA + stats.totalTwoPA;
             const totalMade = stats.totalThreePM + stats.totalTwoPM;
             const totalRebounds = stats.totalOReb + stats.totalDReb;
+
             const aveFgPercent = (totalMade / totalAttempts) * 100;
             const aveThreePtPercent = (stats.totalThreePM / stats.totalThreePA) * 100;
             const aveFtPercent = (stats.totalFtm / stats.totalFta) * 100;
-            const avePointsPerGame = totalPoints / stats.gamesPlayed;
-            const aveAssistsPerGame = stats.totalAst / stats.gamesPlayed;
-            const aveReboundsPerGame = totalRebounds / stats.gamesPlayed;
-            const aveBlocksPerGame = stats.totalBlk / stats.gamesPlayed;
-            const aveStlPerGame = stats.totalStl / stats.gamesPlayed;
-            const totalLosses = stats.gamesPlayed - stats.totalWins;
-            const winPercent = (stats.totalWins / stats.gamesPlayed) * 100;
+            const avePointsPerGame = totalPoints / gamesPlayed;
+            const aveAssistsPerGame = stats.totalAst / gamesPlayed;
+            const aveReboundsPerGame = totalRebounds / gamesPlayed;
+            const aveBlocksPerGame = stats.totalBlk / gamesPlayed;
+            const aveStlPerGame = stats.totalStl / gamesPlayed;
+            const avePlusMinus = stats.totalPlusMinus / totalGamesPlayed;
+
+            const totalLosses = totalGamesPlayed - stats.totalWins;
+            const winPercent = (stats.totalWins / totalGamesPlayed) * 100;
             const winLossDifference = stats.totalWins - totalLosses;
-            const effRating = (totalPoints + stats.totalAst + totalRebounds + stats.totalStl + stats.totalBlk - (totalAttempts - totalMade) - (stats.totalFta - stats.totalFtm) - stats.totalTO) / stats.gamesPlayed;
+            const effRating = (totalPoints + stats.totalAst + totalRebounds + stats.totalStl + stats.totalBlk - (totalAttempts - totalMade) - (stats.totalFta - stats.totalFtm) - stats.totalTO) / gamesPlayed;
 
             await userInfoRef.doc(stats.player.id)
                 .collection("season_stats")
                 .doc("season0")
                 .set({
+                    "totalGamesPlayed": totalGamesPlayed,
                     "totalPoints": totalPoints,
                     "totalAttempts": totalAttempts,
                     "totalMade": totalMade,
@@ -116,6 +127,7 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}/s
                     "aveReboundsPerGame": aveReboundsPerGame,
                     "aveBlocksPerGame": aveBlocksPerGame,
                     "aveStlPerGame": aveStlPerGame,
+                    "avePlusMinus": avePlusMinus,
                     "totalLosses": totalLosses,
                     "winPercent": winPercent,
                     "winLossDifference": winLossDifference,
