@@ -25,6 +25,8 @@ class LoginErrorDialog extends StatelessWidget {
           SizedBox(height: 20),
           Text("2) Naka-disabled ang popups. Try daw enable pre"),
           SizedBox(height: 20),
+          Text("3) Clear cache/storage ani nga app"),
+          SizedBox(height: 20),
           Text(
             "Og wa jud gani gihapon, PM lang sa \"Kasado\" FB page (black version sa atong logo ang pic)",
           ),
