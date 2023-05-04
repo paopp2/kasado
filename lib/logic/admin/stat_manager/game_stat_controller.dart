@@ -246,6 +246,16 @@ class GameStatController {
     );
   }
 
+  Future<void> deleteGame({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+  }) async {
+    await statRepo.deleteGameStats(
+      courtSlot: courtSlot,
+      gameStats: gameStats,
+    );
+  }
+
   Future<void> initStatsForGame({
     required BuildContext context,
     required CourtSlot courtSlot,

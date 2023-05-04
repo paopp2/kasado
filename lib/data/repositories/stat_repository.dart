@@ -557,12 +557,34 @@ class StatRepository {
       merge: true,
     );
 
-    final gamePlayerIds = [
-      ...gameStats.homeTeamStats.keys,
-      ...gameStats.awayTeamStats.keys,
-    ];
-    // assert(gamePlayerIds.length == 10); // Game players can only be 10
+    final updatedPlayerStats = _getFinalizedPlayerStats(
+      gameStats,
+      savedAt: DateTime.now(),
+    );
 
+    // Update each player's overviewStats based on the updated gameStats
+    await updatePlayersOverviewStats(
+      gameStats: gameStats,
+      gamePlayerStats: updatedPlayerStats,
+    );
+
+    // Save each of the player's stats to their corresponding userInfos
+    await firestoreHelper.setBatchData(
+      baseColPath: FirestorePath.colUserInfos(),
+      endPath: FirestorePath.docPartialUserStats(gameStats.id),
+      dataFromId: (playerId) => updatedPlayerStats[playerId]!.toJson(),
+      queryBuilder: (query) =>
+          query.where('id', whereIn: updatedPlayerStats.keys.toList()),
+    );
+
+    // Reset localStatEntryHistory
+    localStatEntryJsonHistory = [];
+  }
+
+  Map<String, Stats> _getFinalizedPlayerStats(
+    GameStats gameStats, {
+    DateTime? savedAt,
+  }) {
     // For all players in homeTeamStats, set hasWonGame to isHomeWinner
     final Map<String, Stats> updatedHomeTeamStats = gameStats.homeTeamStats.map(
       (playerId, stats) => MapEntry(
@@ -580,46 +602,57 @@ class StatRepository {
     );
 
     // Merge the stats of all game players to a single Map<playerId, Stats>
-    final Map<String, Stats> updatedPlayerStats =
-        {...updatedHomeTeamStats, ...updatedAwayTeamStats}.map(
+    return {...updatedHomeTeamStats, ...updatedAwayTeamStats}.map(
       (playerId, stats) => MapEntry(
         playerId,
         stats.copyWith(
           noStats: gameStats is GameStatsScoreOnly,
-          savedAt: DateTime.now(),
+          savedAt: savedAt,
         ),
       ),
     );
+  }
 
-    // Update each player's overviewStats based on the updated gameStats
+  Future<void> deleteGameStats({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+  }) async {
+    final updatedPlayerStats = _getFinalizedPlayerStats(gameStats);
+
     await updatePlayersOverviewStats(
       gameStats: gameStats,
-      gamePlayerIds: gamePlayerIds,
       gamePlayerStats: updatedPlayerStats,
-      scoreOnly: gameStats is GameStatsScoreOnly,
+      isCancel: true,
     );
 
-    // Save each of the player's stats to their corresponding userInfos
-    await firestoreHelper.setBatchData(
+    await firestoreHelper.batchDelete(
       baseColPath: FirestorePath.colUserInfos(),
       endPath: FirestorePath.docPartialUserStats(gameStats.id),
-      dataFromId: (playerId) => updatedPlayerStats[playerId]!.toJson(),
-      queryBuilder: (query) =>
-          query.where('id', whereIn: updatedPlayerStats.keys.toList()),
     );
 
-    // Reset localStatEntryHistory
-    localStatEntryJsonHistory = [];
+    await firestoreHelper.deleteData(
+      path: FirestorePath.docGameStats(
+        courtSlot.courtId,
+        courtSlot.slotId,
+        gameStats.id,
+      ),
+    );
   }
 
   /// Batch update data to each of the userInfo.overviewStats
+  // ignore: long-method
   Future<void> updatePlayersOverviewStats({
     required GameStats gameStats,
-    required List<String> gamePlayerIds,
     required Map<String, Stats> gamePlayerStats,
-    required bool scoreOnly,
+    bool isCancel = false,
   }) async {
-    final currentSeasonId = (await appMeta)['seasonId'];
+    final scoreOnly = gameStats is GameStatsScoreOnly;
+    final gamePlayerIds = [
+      ...gameStats.homeTeamStats.keys,
+      ...gameStats.awayTeamStats.keys,
+    ];
+    final String currentSeasonId = (await appMeta)['seasonId'];
+
     await firestoreHelper.setBatchData(
       baseColPath: FirestorePath.colUserInfos(),
       endPath: FirestorePath.docPartialUserSeasonStats(currentSeasonId),
@@ -633,24 +666,58 @@ class StatRepository {
             (gameStats.awayScore - gameStats.homeScore).abs();
 
         return {
-          "mmr": FieldValue.increment(mmrIncrement),
-          "totalThreePA": FieldValue.increment(playerStats.threePA),
-          "totalThreePM": FieldValue.increment(playerStats.threePM),
-          "totalTwoPA": FieldValue.increment(playerStats.twoPA),
-          "totalTwoPM": FieldValue.increment(playerStats.twoPM),
-          "totalFta": FieldValue.increment(playerStats.ftA),
-          "totalFtm": FieldValue.increment(playerStats.ftM),
-          "totalOReb": FieldValue.increment(playerStats.oReb),
-          "totalDReb": FieldValue.increment(playerStats.dReb),
-          "totalAst": FieldValue.increment(playerStats.ast),
-          "totalStl": FieldValue.increment(playerStats.stl),
-          "totalBlk": FieldValue.increment(playerStats.blk),
-          "totalTO": FieldValue.increment(playerStats.turnover),
-          "totalWins": FieldValue.increment(playerStats.hasWonGame! ? 1 : 0),
-          "totalPlusMinus": FieldValue.increment(
-            playerStats.hasWonGame! ? scoreDifference : -scoreDifference,
+          "mmr": FieldValue.increment(isCancel ? -mmrIncrement : mmrIncrement),
+          "totalThreePA": FieldValue.increment(
+            isCancel ? -playerStats.threePA : playerStats.threePA,
           ),
-          gamesPlayedField: FieldValue.increment(1),
+          "totalThreePM": FieldValue.increment(
+            isCancel ? -playerStats.threePM : playerStats.threePM,
+          ),
+          "totalTwoPA": FieldValue.increment(
+            isCancel ? -playerStats.twoPA : playerStats.twoPA,
+          ),
+          "totalTwoPM": FieldValue.increment(
+            isCancel ? -playerStats.twoPM : playerStats.twoPM,
+          ),
+          "totalFta": FieldValue.increment(
+            isCancel ? -playerStats.ftA : playerStats.ftA,
+          ),
+          "totalFtm": FieldValue.increment(
+            isCancel ? -playerStats.ftM : playerStats.ftM,
+          ),
+          "totalOReb": FieldValue.increment(
+            isCancel ? -playerStats.oReb : playerStats.oReb,
+          ),
+          "totalDReb": FieldValue.increment(
+            isCancel ? -playerStats.dReb : playerStats.dReb,
+          ),
+          "totalAst": FieldValue.increment(
+            isCancel ? -playerStats.ast : playerStats.ast,
+          ),
+          "totalStl": FieldValue.increment(
+            isCancel ? -playerStats.stl : playerStats.stl,
+          ),
+          "totalBlk": FieldValue.increment(
+            isCancel ? -playerStats.blk : playerStats.blk,
+          ),
+          "totalTO": FieldValue.increment(
+            isCancel ? -playerStats.turnover : playerStats.turnover,
+          ),
+          "totalWins": FieldValue.increment(playerStats.hasWonGame!
+              ? isCancel
+                  ? -1
+                  : 1
+              : 0),
+          "totalPlusMinus": FieldValue.increment(
+            isCancel
+                ? playerStats.hasWonGame!
+                    ? -scoreDifference
+                    : scoreDifference
+                : playerStats.hasWonGame!
+                    ? scoreDifference
+                    : -scoreDifference,
+          ),
+          gamesPlayedField: FieldValue.increment(isCancel ? -1 : 1),
         };
       },
       merge: true,

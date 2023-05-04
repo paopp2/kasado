@@ -93,8 +93,11 @@ class BoxScorePane extends HookConsumerWidget {
                         ),
                         if (isAdmin)
                           TextButton(
-                            onPressed: () {},
-                            onLongPress: () {},
+                            onPressed: () {}, // ignore: no-empty-block
+                            onLongPress: () => controller.deleteGame(
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
                             child: const Text(
                               "DELETE",
                               style: TextStyle(
