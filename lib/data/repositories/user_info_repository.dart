@@ -16,6 +16,7 @@ final userInfoRepositoryProvider = Provider.autoDispose(
   (ref) => UserInfoRepository(
     ref: ref,
     firestoreHelper: FirestoreHelper.instance,
+    appMeta: ref.watch(appMetaFutureProvider.future),
   ),
 );
 
@@ -23,9 +24,11 @@ class UserInfoRepository {
   UserInfoRepository({
     required this.firestoreHelper,
     required this.ref,
+    required this.appMeta,
   });
   final FirestoreHelper firestoreHelper;
   final Ref ref;
+  final Future<Map<String, dynamic>> appMeta;
 
   Future<bool> _userHasInfo(String userId) async {
     return await firestoreHelper.docExists(
@@ -51,11 +54,12 @@ class UserInfoRepository {
       );
     }
 
-    final hasSeasonStats = await _userHasSeasonStats(user.id, "season0");
+    final currentSeasonId = (await appMeta)["seasonId"];
+    final hasSeasonStats = await _userHasSeasonStats(user.id, currentSeasonId);
     if (!hasSeasonStats) {
       await firestoreHelper.setData(
-        path: FirestorePath.docUserSeasonStats(user.id, "season0"),
-        data: OverviewStats(user, "season0").toJson(),
+        path: FirestorePath.docUserSeasonStats(user.id, currentSeasonId),
+        data: OverviewStats(user, currentSeasonId).toJson(),
       );
     }
   }
@@ -211,12 +215,10 @@ class UserInfoRepository {
         userInfoList.map((userInfo) => userInfo.user).toList());
   }
 
-  Stream<OverviewStats?> getUserOverviewStatsStream({
-    required String userId,
-    required String seasonId,
-  }) {
-    return firestoreHelper.documentStream(
-      path: FirestorePath.docUserSeasonStats(userId, "season0"),
+  Stream<OverviewStats?> getUserOverviewStatsStream(String userId) async* {
+    final currentSeasonId = (await appMeta)["seasonId"];
+    yield* firestoreHelper.documentStream(
+      path: FirestorePath.docUserSeasonStats(userId, currentSeasonId),
       builder: (data, _) => OverviewStats.fromJson(data),
     );
   }

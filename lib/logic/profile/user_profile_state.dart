@@ -18,10 +18,7 @@ final userOverviewStatsStreamProvider =
     StreamProvider.autoDispose.family<OverviewStats?, String>((ref, userId) {
   final userInfoRepo = ref.watch(userInfoRepositoryProvider);
 
-  return userInfoRepo.getUserOverviewStatsStream(
-    userId: userId,
-    seasonId: 'season0',
-  );
+  return userInfoRepo.getUserOverviewStatsStream(userId);
 });
 
 final userStatsStreamProvider =

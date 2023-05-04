@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/enums/game_stat_entry_type.dart';
 import 'package:kasado/constants/extensions/iterable_extensions.dart';
+import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
@@ -16,6 +17,7 @@ final statRepositoryProvider = Provider.autoDispose(
   (ref) => StatRepository(
     firestoreHelper: FirestoreHelper.instance,
     courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
+    appMeta: ref.watch(appMetaFutureProvider.future),
   ),
 );
 
@@ -23,10 +25,12 @@ class StatRepository {
   StatRepository({
     required this.firestoreHelper,
     required this.courtSlotRepo,
+    required this.appMeta,
   });
 
   final FirestoreHelper firestoreHelper;
   final CourtSlotRepository courtSlotRepo;
+  final Future<Map<String, dynamic>> appMeta;
   List<Map<String, dynamic>> localStatEntryJsonHistory = [];
 
   Future<void> pushGameStats({
@@ -615,9 +619,10 @@ class StatRepository {
     required Map<String, Stats> gamePlayerStats,
     required bool scoreOnly,
   }) async {
+    final currentSeasonId = (await appMeta)['seasonId'];
     await firestoreHelper.setBatchData(
       baseColPath: FirestorePath.colUserInfos(),
-      endPath: FirestorePath.docPartialUserSeasonStats("season0"),
+      endPath: FirestorePath.docPartialUserSeasonStats(currentSeasonId),
       dataFromId: (playerId) {
         final playerStats = gamePlayerStats[playerId]!;
         final mmrIncrement =
@@ -654,151 +659,122 @@ class StatRepository {
   }
 
   Stream<List<OverviewStats>> getMmrLeadersStream() {
-    return firestoreHelper
-        .collectionStream(
-          path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
-          builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) =>
-              query.orderBy('mmr', descending: true).limit(100),
-        )
-        .map((overviewStats) =>
-            overviewStats.excludeWhere((oStats) => oStats.gamesPlayed == 0));
+    return _getOverviewStats(
+      queryBuilder: (query) => query.orderBy('mmr', descending: true),
+      statToValidate: (stats) => stats.totalGamesPlayed,
+    );
   }
 
   Stream<List<OverviewStats>> getEffRatingLeadersStream() {
-    return firestoreHelper
-        .collectionStream(
-          path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
-          builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) => query
-              .where('seasonId', isEqualTo: "season0")
-              .orderBy('effRating', descending: true)
-              .limit(100),
-        )
-        .map((overviewStats) => overviewStats.excludeWhere(
-              (oStats) => oStats.gamesPlayed == 0,
-            ));
+    return _getOverviewStats(
+      queryBuilder: (query) => query.orderBy('effRating', descending: true),
+      statToValidate: (stats) => stats.totalGamesPlayed,
+    );
   }
 
   Stream<List<OverviewStats>> getStandingLeadersStream() {
-    return firestoreHelper
-        .collectionStream(
-          path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
-          builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) => query
-              .orderBy('winLossDifference', descending: true)
-              .orderBy('winPercent', descending: true)
-              .orderBy('gamesPlayed', descending: true)
-              .limit(100),
-        )
-        .map((overviewStats) =>
-            overviewStats.excludeWhere((oStats) => oStats.gamesPlayed == 0));
+    return _getOverviewStats(
+      queryBuilder: (query) => query
+          .orderBy('winLossDifference', descending: true)
+          .orderBy('winPercent', descending: true)
+          .orderBy('totalGamesPlayed', descending: true),
+      statToValidate: (stats) => stats.totalGamesPlayed,
+    );
   }
 
   Stream<List<OverviewStats>> getPpgLeadersStream() {
-    return firestoreHelper
-        .collectionStream(
-          path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
-          builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) =>
-              query.orderBy('avePointsPerGame', descending: true).limit(100),
-        )
-        .map((overviewStats) => overviewStats.excludeWhere((oStats) =>
-            oStats.avePointsPerGame.isNaN || oStats.avePointsPerGame == 0));
+    return _getOverviewStats(
+      queryBuilder: (query) => query.orderBy(
+        'avePointsPerGame',
+        descending: true,
+      ),
+      statToValidate: (stats) => stats.avePointsPerGame,
+    );
   }
 
   Stream<List<OverviewStats>> getApgLeadersStream() {
-    return firestoreHelper
-        .collectionStream(
-          path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
-          builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) =>
-              query.orderBy('aveAssistsPerGame', descending: true).limit(100),
-        )
-        .map((overviewStats) => overviewStats.excludeWhere((oStats) =>
-            oStats.aveAssistsPerGame.isNaN || oStats.aveAssistsPerGame == 0));
+    return _getOverviewStats(
+      queryBuilder: (query) => query.orderBy(
+        'aveAssistsPerGame',
+        descending: true,
+      ),
+      statToValidate: (stats) => stats.aveAssistsPerGame,
+    );
   }
 
   Stream<List<OverviewStats>> getRpgLeadersStream() {
-    return firestoreHelper
-        .collectionStream(
-          path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
-          builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) =>
-              query.orderBy('aveReboundsPerGame', descending: true).limit(100),
-        )
-        .map((overviewStats) => overviewStats.excludeWhere((oStats) =>
-            oStats.aveReboundsPerGame.isNaN || oStats.aveReboundsPerGame == 0));
+    return _getOverviewStats(
+      queryBuilder: (query) => query.orderBy(
+        'aveReboundsPerGame',
+        descending: true,
+      ),
+      statToValidate: (stats) => stats.aveReboundsPerGame,
+    );
   }
 
   Stream<List<OverviewStats>> getSpgLeadersStream() {
-    return firestoreHelper
-        .collectionStream(
-          path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
-          builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) =>
-              query.orderBy('aveStlPerGame', descending: true).limit(100),
-        )
-        .map((overviewStats) => overviewStats.excludeWhere((oStats) =>
-            oStats.aveStlPerGame.isNaN || oStats.aveStlPerGame == 0));
+    return _getOverviewStats(
+      queryBuilder: (query) => query.orderBy('aveStlPerGame', descending: true),
+      statToValidate: (stats) => stats.aveStlPerGame,
+    );
   }
 
   Stream<List<OverviewStats>> getBpgLeadersStream() {
-    return firestoreHelper
-        .collectionStream(
-          path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
-          builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) =>
-              query.orderBy('aveBlocksPerGame', descending: true).limit(100),
-        )
-        .map((overviewStats) => overviewStats.excludeWhere((oStats) =>
-            oStats.aveBlocksPerGame.isNaN || oStats.aveBlocksPerGame == 0));
+    return _getOverviewStats(
+      queryBuilder: (query) => query.orderBy(
+        'aveBlocksPerGame',
+        descending: true,
+      ),
+      statToValidate: (stats) => stats.aveBlocksPerGame,
+    );
   }
 
   Stream<List<OverviewStats>> getFgPercentLeadersStream() {
-    return firestoreHelper
-        .collectionStream(
-          path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
-          builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) =>
-              query.orderBy('aveFgPercent', descending: true).limit(100),
-        )
-        .map((overviewStats) => overviewStats.excludeWhere(
-            (oStats) => oStats.aveFgPercent.isNaN || oStats.aveFgPercent == 0));
+    return _getOverviewStats(
+      queryBuilder: (query) => query.orderBy('aveFgPercent', descending: true),
+      statToValidate: (stats) => stats.aveFgPercent,
+    );
   }
 
   Stream<List<OverviewStats>> get3ptPercentLeadersStream() {
-    return firestoreHelper
-        .collectionStream(
-          path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
-          builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) =>
-              query.orderBy('aveThreePtPercent', descending: true).limit(100),
-        )
-        .map((overviewStats) => overviewStats.excludeWhere((oStats) =>
-            oStats.aveThreePtPercent.isNaN || oStats.aveThreePtPercent == 0));
+    return _getOverviewStats(
+      queryBuilder: (query) => query.orderBy(
+        'aveThreePtPercent',
+        descending: true,
+      ),
+      statToValidate: (stats) => stats.aveThreePtPercent,
+    );
   }
 
   Stream<List<OverviewStats>> get3ptMadeLeadersStream() {
-    return firestoreHelper
+    return _getOverviewStats(
+      queryBuilder: (query) => query.orderBy('totalThreePM', descending: true),
+      statToValidate: (stats) => stats.totalThreePM,
+    );
+  }
+
+  Stream<List<OverviewStats>> _getOverviewStats({
+    required Query<Object?> Function(Query<Object?>) queryBuilder,
+    required num Function(OverviewStats) statToValidate,
+    int limit = 100,
+  }) async* {
+    final currentSeasonId = (await appMeta)["seasonId"];
+    yield* firestoreHelper
         .collectionStream(
           path: FirestorePath.colGroupUserSeasonStats(),
-          isCollectionGroup: true,
           builder: (data, _) => OverviewStats.fromJson(data),
-          queryBuilder: (query) =>
-              query.orderBy('totalThreePM', descending: true).limit(100),
+          isCollectionGroup: true,
+          queryBuilder: (query) => queryBuilder(
+            query.where('seasonId', isEqualTo: currentSeasonId),
+          ).limit(limit),
         )
-        .map((overviewStats) =>
-            overviewStats.excludeWhere((oStats) => oStats.totalThreePM == 0));
+        .map(
+          (overviewStats) => overviewStats.excludeWhere(
+            (oStats) =>
+                statToValidate(oStats) == 0 ||
+                statToValidate(oStats).isNaN ||
+                statToValidate(oStats).isInfinite,
+          ),
+        );
   }
 }

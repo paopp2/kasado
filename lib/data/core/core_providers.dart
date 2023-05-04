@@ -8,6 +8,15 @@ import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
+final appMetaFutureProvider = FutureProvider((ref) {
+  final firestoreHelper = FirestoreHelper.instance;
+
+  return firestoreHelper.getData(
+    path: FirestorePath.docAppMeta(),
+    builder: (data, docId) => data,
+  );
+});
+
 final appMetaStreamProvider = StreamProvider.autoDispose((ref) {
   final firestoreHelper = FirestoreHelper.instance;
 
