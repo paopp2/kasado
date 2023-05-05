@@ -110,9 +110,11 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}/s
             const winLossDifference = stats.totalWins - totalLosses;
             const effRating = (totalPoints + stats.totalAst + totalRebounds + stats.totalStl + stats.totalBlk - (totalAttempts - totalMade) - (stats.totalFta - stats.totalFtm) - stats.totalTO) / gamesPlayed;
 
+            const appMeta = await appMetaRef.get();
+            const currentSeasonId = appMeta.data().seasonId;
             await userInfoRef.doc(stats.player.id)
                 .collection("season_stats")
-                .doc("season0")
+                .doc(currentSeasonId)
                 .set({
                     "totalGamesPlayed": totalGamesPlayed,
                     "totalPoints": totalPoints,
