@@ -7,7 +7,7 @@ import 'package:kasado/data/helpers/firestore_path.dart';
 import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/kasado_location/kasado_location.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:geoflutterfire2/geoflutterfire2.dart';
 
 final courtRepositoryProvider = Provider.autoDispose(
   (ref) => CourtRepository(
@@ -23,7 +23,7 @@ class CourtRepository {
   final FirestoreHelper firestoreHelper;
 
   Future<void> pushCourt(Court court, {bool isUpdate = false}) async {
-    final geo = Geoflutterfire();
+    final geo = GeoFlutterFire();
     await firestoreHelper.setData(
       path: FirestorePath.docCourt(court.id),
       data: court.toJson()
@@ -72,7 +72,7 @@ class CourtRepository {
     KasadoUser? admin,
     KasadoLocation? centerLoc,
   }) {
-    final geo = Geoflutterfire();
+    final geo = GeoFlutterFire();
     final streamController = StreamController<List<Court>>();
     Query<Map<String, dynamic>> query =
         FirebaseFirestore.instance.collection(FirestorePath.colCourts());
@@ -92,8 +92,10 @@ class CourtRepository {
             field: 'geo',
           )
           .map(
-            (snapList) =>
-                snapList.map((snap) => Court.fromJson(snap.data()!)).toList(),
+            (snapList) => snapList
+                .map((snap) =>
+                    Court.fromJson(snap.data()! as Map<String, dynamic>))
+                .toList(),
           );
       geoRef.listen((courtList) {
         streamController.add(courtList);

@@ -38,7 +38,6 @@ dart_code_metrics:
     - no-equal-then-else
     - prefer-match-file-name
     - prefer-immediate-return
-    - prefer-extracting-callbacks
 
 linter:
   # The lint rules applied to this project can be customized in the

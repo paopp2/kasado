@@ -2,6 +2,7 @@ import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
 import 'package:kasado/data/repositories/stat_repository.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
@@ -15,7 +16,7 @@ import 'package:uuid/uuid.dart';
 
 final gameStatController = Provider.autoDispose(
   (ref) => GameStatController(
-    read: ref.read,
+    ref: ref,
     statRepo: ref.watch(statRepositoryProvider),
     courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
   ),
@@ -23,24 +24,49 @@ final gameStatController = Provider.autoDispose(
 
 class GameStatController {
   GameStatController({
-    required this.read,
+    required this.ref,
     required this.statRepo,
     required this.courtSlotRepo,
   });
-  final Reader read;
+  final Ref ref;
   final StatRepository statRepo;
   final CourtSlotRepository courtSlotRepo;
 
   bool isHomePlayer(KasadoUser player) {
-    return read(homeTeamPlayersProvider).contains(player);
+    return ref.read(homeTeamPlayersProvider).contains(player);
   }
 
   bool isAwayPlayer(KasadoUser player) {
-    return read(awayTeamPlayersProvider).contains(player);
+    return ref.read(awayTeamPlayersProvider).contains(player);
   }
 
   void selectSlotGameStats(GameStats gameStats) {
-    read(selectedGameStatsProvider.notifier).state = gameStats;
+    ref.read(selectedGameStatsProvider.notifier).state = gameStats;
+  }
+
+  Future<void> onUndoLastAction({
+    required CourtSlot courtSlot,
+    required String gameStatsId,
+  }) async {
+    await statRepo.cancelLastStatEntry(
+      courtSlot: courtSlot,
+      gameStatsId: gameStatsId,
+    );
+    Fluttertoast.showToast(msg: "Cancelled last input");
+  }
+
+  Future<void> onTeamShot({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+    required int pts,
+    required bool isHome,
+  }) async {
+    await statRepo.addTeamPoints(
+      pts: pts,
+      isHome: isHome,
+      courtSlot: courtSlot,
+      gameStatsId: gameStats.id,
+    );
   }
 
   Future<void> onPlayerShot({
@@ -49,7 +75,6 @@ class GameStatController {
     required bool wasMade,
     required CourtSlot courtSlot,
     required GameStats gameStats,
-    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -77,7 +102,7 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: _isHomePlayer,
       wasMade: wasMade,
-      isCancel: isCancel,
+      isCancel: false,
     );
   }
 
@@ -86,7 +111,6 @@ class GameStatController {
     required bool wasMade,
     required GameStats gameStats,
     required CourtSlot courtSlot,
-    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -100,7 +124,7 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
       wasMade: wasMade,
-      isCancel: isCancel,
+      isCancel: false,
     );
   }
 
@@ -109,7 +133,6 @@ class GameStatController {
     required bool isDefensive,
     required GameStats gameStats,
     required CourtSlot courtSlot,
-    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -123,7 +146,7 @@ class GameStatController {
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
       isDefensive: isDefensive,
-      isCancel: isCancel,
+      isCancel: false,
     );
   }
 
@@ -131,7 +154,6 @@ class GameStatController {
     required BuildContext context,
     required GameStats gameStats,
     required CourtSlot courtSlot,
-    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -144,7 +166,7 @@ class GameStatController {
       gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
-      isCancel: isCancel,
+      isCancel: false,
     );
   }
 
@@ -152,7 +174,6 @@ class GameStatController {
     required BuildContext context,
     required GameStats gameStats,
     required CourtSlot courtSlot,
-    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -165,7 +186,7 @@ class GameStatController {
       gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
-      isCancel: isCancel,
+      isCancel: false,
     );
   }
 
@@ -173,7 +194,6 @@ class GameStatController {
     required BuildContext context,
     required GameStats gameStats,
     required CourtSlot courtSlot,
-    bool isCancel = false,
   }) async {
     final player = await showDialog(
       context: context,
@@ -186,7 +206,7 @@ class GameStatController {
       gameStatsId: gameStats.id,
       courtSlot: courtSlot,
       isHomePlayer: isHomePlayer(player),
-      isCancel: isCancel,
+      isCancel: false,
     );
   }
 
@@ -199,6 +219,15 @@ class GameStatController {
       gameStatsId: null,
     );
 
+    // Decrement games played by 1 (reset to original)
+    await courtSlotRepo.addGamesPlayedForPlayers(
+      delta: -1,
+      courtSlot: courtSlot,
+      gamePlayerIds: [
+        ...gameStats.awayTeamStats.keys,
+        ...gameStats.homeTeamStats.keys,
+      ],
+    );
     await statRepo.cancelGame(courtSlot: courtSlot, gameStats: gameStats);
   }
 
@@ -217,11 +246,35 @@ class GameStatController {
     );
   }
 
+  Future<void> deleteGame({
+    required CourtSlot courtSlot,
+    required GameStats gameStats,
+  }) async {
+    await statRepo.deleteGameStats(
+      courtSlot: courtSlot,
+      gameStats: gameStats,
+    );
+
+    final homeTeamPlayerIds = gameStats.homeTeamStats.keys.toList();
+    final awayTeamPlayerIds = gameStats.awayTeamStats.keys.toList();
+
+    // Decrement games played by 1
+    await courtSlotRepo.addGamesPlayedForPlayers(
+      courtSlot: courtSlot,
+      gamePlayerIds: [
+        ...homeTeamPlayerIds,
+        ...awayTeamPlayerIds,
+      ],
+      delta: -1,
+    );
+  }
+
   Future<void> initStatsForGame({
     required BuildContext context,
     required CourtSlot courtSlot,
     required List<KasadoUser> homeTeamPlayers,
     required List<KasadoUser> awayTeamPlayers,
+    bool scoreOnly = false,
   }) async {
     if (homeTeamPlayers.length != 5 || awayTeamPlayers.length != 5) {
       Fluttertoast.showToast(msg: "Incorrect number of players");
@@ -230,21 +283,35 @@ class GameStatController {
     }
 
     final gameStatId = const Uuid().v4();
-    final initializedGameStats = GameStats(
-      id: gameStatId,
-      recordedAt: DateTime.now(),
-      homeTeamStats: {
-        for (final player in homeTeamPlayers)
-          player.id: Stats(player: player, courtSlot: courtSlot)
-      },
-      awayTeamStats: {
-        for (final player in awayTeamPlayers)
-          player.id: Stats(player: player, courtSlot: courtSlot)
-      },
-      isLive: true,
-      remainingMsOnPaused: 15.minutes.inMilliseconds,
-      endsAt: DateTime.now() + 15.minutes,
-    );
+    final homeTeamStats = {
+      for (final player in homeTeamPlayers)
+        player.id: Stats(player: player, courtSlot: courtSlot)
+    };
+    final awayTeamStats = {
+      for (final player in awayTeamPlayers)
+        player.id: Stats(player: player, courtSlot: courtSlot)
+    };
+
+    final initializedGameStats = scoreOnly
+        ? GameStats.scoreOnly(
+            id: gameStatId,
+            recordedAt: DateTime.now(),
+            homeTeamStats: homeTeamStats,
+            awayTeamStats: awayTeamStats,
+            isLive: true,
+            remainingMsOnPaused: 15.minutes.inMilliseconds,
+            endsAt: DateTime.now() + 15.minutes,
+          )
+        : GameStats(
+            id: gameStatId,
+            recordedAt: DateTime.now(),
+            homeTeamStats: homeTeamStats,
+            awayTeamStats: awayTeamStats,
+            isLive: true,
+            remainingMsOnPaused: 15.minutes.inMilliseconds,
+            endsAt: DateTime.now() + 15.minutes,
+          );
+
     await statRepo.pushGameStats(
       courtSlot: courtSlot,
       gameStats: initializedGameStats,
@@ -254,6 +321,14 @@ class GameStatController {
     await courtSlotRepo.setCourtSlotLiveGameStatsId(
       courtSlot: courtSlot,
       gameStatsId: gameStatId,
+    );
+
+    await courtSlotRepo.addGamesPlayedForPlayers(
+      courtSlot: courtSlot,
+      gamePlayerIds: [
+        ...homeTeamPlayers,
+        ...awayTeamPlayers,
+      ].map((player) => player.id).toList(),
     );
   }
 
@@ -282,7 +357,7 @@ class GameStatController {
       }
       updatedTeamPlayers = [...currentTeamPlayers, player];
     } else {
-      updatedTeamPlayers = currentTeamPlayers..remove(player);
+      updatedTeamPlayers = currentTeamPlayers.exclude(player);
     }
     await courtSlotRepo.updateStageTeamPlayers(
       courtId: courtSlot.courtId,
@@ -404,10 +479,10 @@ class GameStatController {
   }
 
   void toggleToNextSortState() {
-    final sortState = read(teamsPlayersSetupSortProvider);
-    read(teamsPlayersSetupSortProvider.notifier).update(
-      (s) => (sortState < 3) ? s + 1 : 0,
-    );
+    final sortState = ref.read(teamsPlayersSetupSortProvider);
+    ref.read(teamsPlayersSetupSortProvider.notifier).update(
+          (s) => (sortState < 3) ? s + 1 : 0,
+        );
   }
 
   /// Get players to show when setting up teams for a new game

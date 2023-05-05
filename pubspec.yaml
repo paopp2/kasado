@@ -3,7 +3,7 @@ description: Basketball court booking app
 
 publish_to: 'none'
 
-version: 0.14.0+11
+version: 0.15.0+12
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
@@ -14,32 +14,33 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   # Core (state management, data model generation, etc.)
-  hooks_riverpod: ^1.0.3
-  flutter_hooks: ^0.18.2+1
-  freezed_annotation: ^1.1.0
-  go_router: ^3.0.1
+  hooks_riverpod: ^2.3.6
+  flutter_hooks: ^0.18.6
+  freezed_annotation: ^2.2.0
+  json_annotation: ^4.7.0
+  go_router: ^7.0.0
   # Firebase-related
-  firebase_core: ^1.13.1
-  firebase_auth: ^3.3.9
-  cloud_firestore: ^3.1.10
-  firebase_analytics: ^9.1.2
-  geoflutterfire: ^3.0.3
+  firebase_core: ^2.10.0
+  firebase_auth: ^4.4.2
+  cloud_firestore: ^4.4.4
+  firebase_analytics: ^10.2.1
+  geoflutterfire2: ^2.3.15
   # Google-related
-  google_sign_in: ^5.2.3
-  google_place: ^0.4.7
+  google_sign_in: ^6.1.0
+  flutter_google_places_sdk: ^0.3.2+8
   # Design
-  syncfusion_flutter_calendar: ^19.4.52
-  syncfusion_flutter_datagrid: ^19.4.56
+  syncfusion_flutter_calendar: ^21.1.41
+  syncfusion_flutter_datagrid: ^21.1.41
   sign_button: ^2.0.2
-  google_fonts: ^2.3.1
+  google_fonts: ^4.0.3
   auto_size_text: ^3.0.0
-  font_awesome_flutter: ^9.2.0
-  awesome_dialog: ^2.2.0
+  font_awesome_flutter: ^10.4.0
+  awesome_dialog: ^3.0.2
   salomon_bottom_bar: ^3.3.0
   google_nav_bar: ^5.0.6
   animated_flip_counter: ^0.2.4
   tab_indicator_styler: ^2.0.0
-  lottie: ^1.3.0
+  lottie: ^2.3.2
   flutter_staggered_animations: ^1.0.0
   shimmer: ^2.0.0
   # Utils
@@ -49,16 +50,16 @@ dependencies:
   uuid: ^3.0.5
   universal_platform: ^1.0.0+1
   time: ^2.1.0
-  badges: ^2.0.2
+  badges: ^3.1.1
   timeago: ^3.2.2
   qr_flutter: ^4.0.0
-  mixpanel_flutter: ^1.4.5
+  mixpanel_flutter: ^2.1.1
   pub_semver: ^2.1.1
   url_launcher: ^6.0.20
   time_range_picker: ^2.1.0
-  geolocator: ^8.2.0
-  flutter_typeahead: ^3.2.5
-  mobile_scanner: ^1.0.0
+  geolocator: ^9.0.2
+  flutter_typeahead: ^4.3.7
+  mobile_scanner: ^3.2.0
   algolia: ^1.1.1
   duration_picker: ^1.1.0+1
 
@@ -66,10 +67,19 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
-  freezed: ^1.1.1
-  build_runner: ^2.1.7
-  json_serializable: ^6.1.4
-  dart_code_metrics: ^4.14.0
+  freezed: ^2.3.2
+  build_runner: ^2.3.3
+  json_serializable: ^6.5.4
+  dart_code_metrics: ^5.3.0
+  
+dependency_overrides:
+  # This is a dependency of "flutter_google_places_sdk" above
+  # 
+  # Had to override this since the kotlin_version of this dependency (1.3.72)
+  # is not compatible with the app's Android build gradle plugin, which needs the
+  # dependency to be at least 1.5.0. Should change when author updates it
+  flutter_google_places_sdk_android:
+    path: ../flutter_google_places_sdk/flutter_google_places_sdk_android/
 
 flutter:
   uses-material-design: true

@@ -16,7 +16,7 @@ import 'package:kasado/ui/shared/place_search_field.dart';
 
 final homeViewModel = Provider.autoDispose(
   (ref) => HomeViewModel(
-    read: ref.read,
+    ref: ref,
     authService: ref.watch(authServiceProvider),
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
@@ -26,12 +26,12 @@ final homeViewModel = Provider.autoDispose(
 
 class HomeViewModel extends ViewModel {
   HomeViewModel({
-    required Reader read,
+    required Ref ref,
     required this.authService,
     required this.userInfoRepo,
     required this.currentUser,
     required this.locationService,
-  }) : super(read);
+  }) : super(ref);
 
   final AuthService authService;
   final UserInfoRepository userInfoRepo;
@@ -44,7 +44,7 @@ class HomeViewModel extends ViewModel {
       name: 'home_view',
       parameters: {'user_id': currentUser.toJson().toString()},
     );
-    read(mixpanel)!
+    ref.read(mixpanel)!
       ..identify(currentUser.id)
       ..getPeople().set("\$email", currentUser.email)
       ..getPeople().set("\$name", currentUser.displayName)
@@ -58,29 +58,31 @@ class HomeViewModel extends ViewModel {
     if (isWebDesktop) _showWarningForDesktop(params!);
 
     final getLocAttempt = await locationService.getLocation();
-    read(isLocationRetrievedProvider.notifier).state = true;
+    ref.read(isLocationRetrievedProvider.notifier).state = true;
     getLocAttempt.fold(
       (error) {
-        read(searchTextControllerProvider).text = "";
+        ref.read(searchTextControllerProvider).text = "";
         Fluttertoast.showToast(
           msg: 'Error retrieving current location',
         );
       },
       (currentLoc) {
-        read(searchTextControllerProvider).text = "Current location";
+        ref.read(searchTextControllerProvider).text = "Current location";
 
-        read(
-          selectedCenterLocProvider.notifier,
-        ).state = currentLoc;
+        ref
+            .read(
+              selectedCenterLocProvider.notifier,
+            )
+            .state = currentLoc;
       },
     );
   }
 
   void _showWarningForDesktop(Map<String, Object?> params) {
-    read(mixpanel)!.track("Viewed warning for using app on desktop");
+    ref.read(mixpanel)!.track("Viewed warning for using app on desktop");
     AwesomeDialog(
       context: params['context'] as BuildContext,
-      dialogType: DialogType.WARNING,
+      dialogType: DialogType.warning,
       title: "Web app not yet optimized for desktop",
       desc: "Pasidaan lang pre, bisan tuod mugana ra diri, kiwaw pa gamay "
           "tan-awn sa desktop kay sa mobile pa gifocus ang design. Adjust-on "

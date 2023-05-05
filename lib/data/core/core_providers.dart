@@ -8,6 +8,15 @@ import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
+final appMetaFutureProvider = FutureProvider((ref) {
+  final firestoreHelper = FirestoreHelper.instance;
+
+  return firestoreHelper.getData(
+    path: FirestorePath.docAppMeta(),
+    builder: (data, docId) => data,
+  );
+});
+
 final appMetaStreamProvider = StreamProvider.autoDispose((ref) {
   final firestoreHelper = FirestoreHelper.instance;
 
@@ -60,7 +69,7 @@ final mixpanel = Provider<Mixpanel?>((ref) => null);
 // Algolia instance for search
 final algolia = Provider<Algolia>(
   (ref) => const Algolia.init(
-    applicationId: "RQ51X9HY3C",
-    apiKey: "295776bbbf946adbe75ff6a9c29a7db1",
+    applicationId: "71ZN6T730I",
+    apiKey: "39a1905d60288f2b5d08d7b87fb226e2",
   ),
 );

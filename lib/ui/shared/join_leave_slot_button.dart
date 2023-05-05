@@ -53,7 +53,7 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
 
       return await AwesomeDialog(
         context: context,
-        dialogType: DialogType.NO_HEADER,
+        dialogType: DialogType.noHeader,
         title: (forTeamCaptain)
             ? "Some players at your team doesn't have enough PONDO"
             : "Not enough PONDO",
@@ -66,9 +66,9 @@ class JoinLeaveSlotButton extends HookConsumerWidget {
             "Sa karon pwede pa man sad nuon bisag way Pondo pero mas "
             "may jung atong hinay-hinayan hehe. Gege mao rato dol lamats!",
         autoDismiss: false,
-        onDissmissCallback: (dismissType) => Navigator.pop(
+        onDismissCallback: (dismissType) => Navigator.pop(
           context,
-          dismissType == DismissType.BTN_CANCEL,
+          dismissType == DismissType.btnCancel,
         ),
         padding: const EdgeInsets.all(15.0),
         dialogBorderRadius: BorderRadius.circular(20),

@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -91,9 +92,11 @@ class TeamBuildDialog extends HookConsumerWidget {
                             horizontal: 8.0,
                             vertical: 20.0,
                           ),
-                          child: Badge(
-                            padding: const EdgeInsets.all(2.0),
-                            badgeColor: Colors.grey,
+                          child: badges.Badge(
+                            badgeStyle: const BadgeStyle(
+                              padding: EdgeInsets.all(2.0),
+                              badgeColor: Colors.grey,
+                            ),
                             badgeContent: const Icon(
                               Icons.close,
                               color: Colors.white,

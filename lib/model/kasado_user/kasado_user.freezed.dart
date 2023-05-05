@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'kasado_user.dart';
 
@@ -12,44 +12,11 @@ part of 'kasado_user.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 KasadoUser _$KasadoUserFromJson(Map<String, dynamic> json) {
   return _KasadoUser.fromJson(json);
 }
-
-/// @nodoc
-class _$KasadoUserTearOff {
-  const _$KasadoUserTearOff();
-
-  _KasadoUser call(
-      {required String id,
-      String? displayName,
-      String? email,
-      String? phoneNumber,
-      String? photoUrl,
-      UserBio? userBio,
-      String teamName = '',
-      bool hasPaid = false}) {
-    return _KasadoUser(
-      id: id,
-      displayName: displayName,
-      email: email,
-      phoneNumber: phoneNumber,
-      photoUrl: photoUrl,
-      userBio: userBio,
-      teamName: teamName,
-      hasPaid: hasPaid,
-    );
-  }
-
-  KasadoUser fromJson(Map<String, Object?> json) {
-    return KasadoUser.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $KasadoUser = _$KasadoUserTearOff();
 
 /// @nodoc
 mixin _$KasadoUser {
@@ -72,7 +39,8 @@ mixin _$KasadoUser {
 abstract class $KasadoUserCopyWith<$Res> {
   factory $KasadoUserCopyWith(
           KasadoUser value, $Res Function(KasadoUser) then) =
-      _$KasadoUserCopyWithImpl<$Res>;
+      _$KasadoUserCopyWithImpl<$Res, KasadoUser>;
+  @useResult
   $Res call(
       {String id,
       String? displayName,
@@ -87,78 +55,84 @@ abstract class $KasadoUserCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$KasadoUserCopyWithImpl<$Res> implements $KasadoUserCopyWith<$Res> {
+class _$KasadoUserCopyWithImpl<$Res, $Val extends KasadoUser>
+    implements $KasadoUserCopyWith<$Res> {
   _$KasadoUserCopyWithImpl(this._value, this._then);
 
-  final KasadoUser _value;
   // ignore: unused_field
-  final $Res Function(KasadoUser) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? displayName = freezed,
     Object? email = freezed,
     Object? phoneNumber = freezed,
     Object? photoUrl = freezed,
     Object? userBio = freezed,
-    Object? teamName = freezed,
-    Object? hasPaid = freezed,
+    Object? teamName = null,
+    Object? hasPaid = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      displayName: displayName == freezed
+      displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      phoneNumber: phoneNumber == freezed
+      phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      photoUrl: photoUrl == freezed
+      photoUrl: freezed == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      userBio: userBio == freezed
+      userBio: freezed == userBio
           ? _value.userBio
           : userBio // ignore: cast_nullable_to_non_nullable
               as UserBio?,
-      teamName: teamName == freezed
+      teamName: null == teamName
           ? _value.teamName
           : teamName // ignore: cast_nullable_to_non_nullable
               as String,
-      hasPaid: hasPaid == freezed
+      hasPaid: null == hasPaid
           ? _value.hasPaid
           : hasPaid // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserBioCopyWith<$Res>? get userBio {
     if (_value.userBio == null) {
       return null;
     }
 
     return $UserBioCopyWith<$Res>(_value.userBio!, (value) {
-      return _then(_value.copyWith(userBio: value));
+      return _then(_value.copyWith(userBio: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$KasadoUserCopyWith<$Res> implements $KasadoUserCopyWith<$Res> {
-  factory _$KasadoUserCopyWith(
-          _KasadoUser value, $Res Function(_KasadoUser) then) =
-      __$KasadoUserCopyWithImpl<$Res>;
+abstract class _$$_KasadoUserCopyWith<$Res>
+    implements $KasadoUserCopyWith<$Res> {
+  factory _$$_KasadoUserCopyWith(
+          _$_KasadoUser value, $Res Function(_$_KasadoUser) then) =
+      __$$_KasadoUserCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String? displayName,
@@ -174,56 +148,55 @@ abstract class _$KasadoUserCopyWith<$Res> implements $KasadoUserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$KasadoUserCopyWithImpl<$Res> extends _$KasadoUserCopyWithImpl<$Res>
-    implements _$KasadoUserCopyWith<$Res> {
-  __$KasadoUserCopyWithImpl(
-      _KasadoUser _value, $Res Function(_KasadoUser) _then)
-      : super(_value, (v) => _then(v as _KasadoUser));
+class __$$_KasadoUserCopyWithImpl<$Res>
+    extends _$KasadoUserCopyWithImpl<$Res, _$_KasadoUser>
+    implements _$$_KasadoUserCopyWith<$Res> {
+  __$$_KasadoUserCopyWithImpl(
+      _$_KasadoUser _value, $Res Function(_$_KasadoUser) _then)
+      : super(_value, _then);
 
-  @override
-  _KasadoUser get _value => super._value as _KasadoUser;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? displayName = freezed,
     Object? email = freezed,
     Object? phoneNumber = freezed,
     Object? photoUrl = freezed,
     Object? userBio = freezed,
-    Object? teamName = freezed,
-    Object? hasPaid = freezed,
+    Object? teamName = null,
+    Object? hasPaid = null,
   }) {
-    return _then(_KasadoUser(
-      id: id == freezed
+    return _then(_$_KasadoUser(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      displayName: displayName == freezed
+      displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      phoneNumber: phoneNumber == freezed
+      phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      photoUrl: photoUrl == freezed
+      photoUrl: freezed == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      userBio: userBio == freezed
+      userBio: freezed == userBio
           ? _value.userBio
           : userBio // ignore: cast_nullable_to_non_nullable
               as UserBio?,
-      teamName: teamName == freezed
+      teamName: null == teamName
           ? _value.teamName
           : teamName // ignore: cast_nullable_to_non_nullable
               as String,
-      hasPaid: hasPaid == freezed
+      hasPaid: null == hasPaid
           ? _value.hasPaid
           : hasPaid // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -260,11 +233,11 @@ class _$_KasadoUser extends _KasadoUser with DiagnosticableTreeMixin {
   final String? photoUrl;
   @override
   final UserBio? userBio;
-  @JsonKey()
   @override
+  @JsonKey()
   final String teamName;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool hasPaid;
 
   @override
@@ -291,52 +264,50 @@ class _$_KasadoUser extends _KasadoUser with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _KasadoUser &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.displayName, displayName) &&
-            const DeepCollectionEquality().equals(other.email, email) &&
-            const DeepCollectionEquality()
-                .equals(other.phoneNumber, phoneNumber) &&
-            const DeepCollectionEquality().equals(other.photoUrl, photoUrl) &&
-            const DeepCollectionEquality().equals(other.userBio, userBio) &&
-            const DeepCollectionEquality().equals(other.teamName, teamName) &&
-            const DeepCollectionEquality().equals(other.hasPaid, hasPaid));
+            other is _$_KasadoUser &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.photoUrl, photoUrl) ||
+                other.photoUrl == photoUrl) &&
+            (identical(other.userBio, userBio) || other.userBio == userBio) &&
+            (identical(other.teamName, teamName) ||
+                other.teamName == teamName) &&
+            (identical(other.hasPaid, hasPaid) || other.hasPaid == hasPaid));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(displayName),
-      const DeepCollectionEquality().hash(email),
-      const DeepCollectionEquality().hash(phoneNumber),
-      const DeepCollectionEquality().hash(photoUrl),
-      const DeepCollectionEquality().hash(userBio),
-      const DeepCollectionEquality().hash(teamName),
-      const DeepCollectionEquality().hash(hasPaid));
 
   @JsonKey(ignore: true)
   @override
-  _$KasadoUserCopyWith<_KasadoUser> get copyWith =>
-      __$KasadoUserCopyWithImpl<_KasadoUser>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, id, displayName, email,
+      phoneNumber, photoUrl, userBio, teamName, hasPaid);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_KasadoUserCopyWith<_$_KasadoUser> get copyWith =>
+      __$$_KasadoUserCopyWithImpl<_$_KasadoUser>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_KasadoUserToJson(this);
+    return _$$_KasadoUserToJson(
+      this,
+    );
   }
 }
 
 abstract class _KasadoUser extends KasadoUser {
   const factory _KasadoUser(
-      {required String id,
-      String? displayName,
-      String? email,
-      String? phoneNumber,
-      String? photoUrl,
-      UserBio? userBio,
-      String teamName,
-      bool hasPaid}) = _$_KasadoUser;
+      {required final String id,
+      final String? displayName,
+      final String? email,
+      final String? phoneNumber,
+      final String? photoUrl,
+      final UserBio? userBio,
+      final String teamName,
+      final bool hasPaid}) = _$_KasadoUser;
   const _KasadoUser._() : super._();
 
   factory _KasadoUser.fromJson(Map<String, dynamic> json) =
@@ -360,6 +331,6 @@ abstract class _KasadoUser extends KasadoUser {
   bool get hasPaid;
   @override
   @JsonKey(ignore: true)
-  _$KasadoUserCopyWith<_KasadoUser> get copyWith =>
+  _$$_KasadoUserCopyWith<_$_KasadoUser> get copyWith =>
       throw _privateConstructorUsedError;
 }

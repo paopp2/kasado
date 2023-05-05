@@ -8,16 +8,16 @@ import 'package:kasado/logic/shared/view_model.dart';
 
 final loginViewModel = Provider.autoDispose(
   (ref) => LoginViewModel(
-    read: ref.read,
+    ref: ref,
     authService: ref.watch(authServiceProvider),
   ),
 );
 
 class LoginViewModel extends ViewModel {
   LoginViewModel({
-    required Reader read,
+    required Ref ref,
     required this.authService,
-  }) : super(read);
+  }) : super(ref);
 
   final AuthService authService;
 
@@ -33,7 +33,7 @@ class LoginViewModel extends ViewModel {
     final authCreds = await authService.signInWithGoogle();
     authCreds.fold(
       (error) {
-        read(mixpanel)!.track(
+        ref.read(mixpanel)!.track(
           "Sign in attempt",
           properties: {"success": false, "error": error.toString()},
         );
@@ -41,7 +41,7 @@ class LoginViewModel extends ViewModel {
         return ifError(error);
       },
       (creds) {
-        read(mixpanel)!.track(
+        ref.read(mixpanel)!.track(
           "Sign in attempt",
           properties: {"success": true, "provider": "Google"},
         );
@@ -52,7 +52,7 @@ class LoginViewModel extends ViewModel {
   }
 
   Future<void> signInWithFacebook() async {
-    read(mixpanel)!.track(
+    ref.read(mixpanel)!.track(
       "Sign in attempt",
       properties: {"success": false, "provider": "Facebook"},
     );

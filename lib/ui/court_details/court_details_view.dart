@@ -17,11 +17,9 @@ class CourtDetailsView extends HookConsumerWidget {
   const CourtDetailsView({
     Key? key,
     required this.courtId,
-    required this.isAdmin,
   }) : super(key: key);
 
   final String courtId;
-  final bool isAdmin;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,9 +29,8 @@ class CourtDetailsView extends HookConsumerWidget {
 
     final courtStream = ref.watch(courtStreamProvider(courtId));
     final tabIndex = useState(0);
-    final tabController = useTabController(
-      initialLength: 2,
-    );
+    final tabController = useTabController(initialLength: 2);
+    final isAdminMode = useState(false);
 
     useEffect(() {
       if (courtStream.value != null) {
@@ -44,6 +41,9 @@ class CourtDetailsView extends HookConsumerWidget {
             "courtId": courtStream.value!.id,
           },
         );
+
+        isAdminMode.value =
+            courtDetailsModel.isCurrentUserAdminAt(courtStream.value!);
       }
       courtDetailsModel.initState({'court_id': courtId});
 
@@ -95,6 +95,7 @@ class CourtDetailsView extends HookConsumerWidget {
                             Positioned(
                               bottom: 0,
                               right: 0,
+                              left: 0,
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Column(
@@ -103,6 +104,23 @@ class CourtDetailsView extends HookConsumerWidget {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
+                                        Visibility.maintain(
+                                          visible: courtDetailsModel
+                                              .isCurrentUserAdminAt(court),
+                                          child: TextButton(
+                                            onPressed: () => isAdminMode.value =
+                                                !isAdminMode.value,
+                                            child: const Text(
+                                              'TOGGLE ADMIN',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const Spacer(),
                                         Text(
                                           court.ticketPrice.toStringAsFixed(0),
                                           style: const TextStyle(
@@ -178,7 +196,7 @@ class CourtDetailsView extends HookConsumerWidget {
                         CourtSchedulePanel(
                           constraints: constraints,
                           model: courtSlotDetailsModel,
-                          isAdmin: isAdmin,
+                          isAdmin: isAdminMode.value,
                           court: court,
                         ),
                         CourtAdminsPanel(court: court),
@@ -188,7 +206,7 @@ class CourtDetailsView extends HookConsumerWidget {
                 ],
               ),
               floatingActionButton: Visibility(
-                visible: isAdmin,
+                visible: isAdminMode.value,
                 child: FloatingActionButton.extended(
                   onPressed: (tabIndex.value == 0)
                       ? () => adminController.openCourtInputDialog(
@@ -212,7 +230,7 @@ class CourtDetailsView extends HookConsumerWidget {
                 ),
               ),
               bottomNavigationBar: Visibility(
-                visible: isAdmin,
+                visible: isAdminMode.value,
                 child: BottomNavigationBar(
                   onTap: _onBottomNavBarItemTapped,
                   selectedItemColor: Colors.black,

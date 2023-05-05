@@ -7,37 +7,59 @@ import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/overview_stats/overview_stats.dart';
 import 'package:kasado/model/stats/stats.dart';
 import 'package:kasado/model/ticket/ticket.dart';
 import 'package:kasado/model/user_bio/user_bio.dart';
 
 final userInfoRepositoryProvider = Provider.autoDispose(
   (ref) => UserInfoRepository(
+    ref: ref,
     firestoreHelper: FirestoreHelper.instance,
-    read: ref.read,
+    appMeta: ref.watch(appMetaFutureProvider.future),
   ),
 );
 
 class UserInfoRepository {
   UserInfoRepository({
     required this.firestoreHelper,
-    required this.read,
+    required this.ref,
+    required this.appMeta,
   });
   final FirestoreHelper firestoreHelper;
-  final Reader read;
+  final Ref ref;
+  final Future<Map<String, dynamic>> appMeta;
 
-  Future<bool> userHasInfo(String userId) async {
+  Future<bool> _userHasInfo(String userId) async {
     return await firestoreHelper.docExists(
       path: FirestorePath.docUserInfo(userId),
     );
   }
 
+  Future<bool> _userHasSeasonStats(
+    String userId,
+    String seasonId,
+  ) async {
+    return await firestoreHelper.docExists(
+      path: FirestorePath.docUserSeasonStats(userId, seasonId),
+    );
+  }
+
   Future<void> pushUserInfoIfNonExistent(KasadoUser user) async {
-    final bool userInfoExists = await userHasInfo(user.id);
+    final bool userInfoExists = await _userHasInfo(user.id);
     if (!userInfoExists) {
       await firestoreHelper.setData(
         path: FirestorePath.docUserInfo(user.id),
-        data: KasadoUserInfo(id: user.id, user: user).toJson(),
+        data: KasadoUserInfo.newInstance(user).toJson(),
+      );
+    }
+
+    final currentSeasonId = (await appMeta)["seasonId"];
+    final hasSeasonStats = await _userHasSeasonStats(user.id, currentSeasonId);
+    if (!hasSeasonStats) {
+      await firestoreHelper.setData(
+        path: FirestorePath.docUserSeasonStats(user.id, currentSeasonId),
+        data: OverviewStats(user, currentSeasonId).toJson(),
       );
     }
   }
@@ -92,8 +114,11 @@ class UserInfoRepository {
   Future<List<KasadoUserInfo>> getUserInfoQueryResults([
     String? userEmailQuery,
   ]) async {
-    final query =
-        read(algolia).instance.index('user_info').query(userEmailQuery ?? '');
+    final query = ref
+        .read(algolia)
+        .instance
+        .index('user_info')
+        .query(userEmailQuery ?? '');
     final snap = await query.getObjects();
 
     return snap.hits.map((h) => KasadoUserInfo.fromJson(h.data)).toList();
@@ -190,14 +215,21 @@ class UserInfoRepository {
         userInfoList.map((userInfo) => userInfo.user).toList());
   }
 
+  Stream<OverviewStats?> getUserOverviewStatsStream(String userId) async* {
+    final currentSeasonId = (await appMeta)["seasonId"];
+    yield* firestoreHelper.documentStream(
+      path: FirestorePath.docUserSeasonStats(userId, currentSeasonId),
+      builder: (data, _) => OverviewStats.fromJson(data),
+    );
+  }
+
   Stream<List<Stats>> getUserStatsStream(String userId) {
     return firestoreHelper.collectionStream(
       path: FirestorePath.colUserStats(userId),
       builder: (data, docId) => Stats.fromJson(data).copyWith(id: docId),
-      queryBuilder: (query) => query.orderBy(
-        'courtSlot.timeRange.startsAt',
-        descending: true,
-      ),
+      queryBuilder: (query) => query
+          .orderBy('courtSlot.timeRange.startsAt', descending: true)
+          .orderBy('savedAt', descending: true),
     );
   }
 }

@@ -41,11 +41,8 @@ class AppRouter {
         name: Routes.courtDetailsView,
         path: '/court-details/:courtId',
         builder: (context, state) {
-          final isAdmin = state.extra as bool?;
-
           return CourtDetailsView(
-            courtId: state.params['courtId']!,
-            isAdmin: (isAdmin ?? false),
+            courtId: state.pathParameters['courtId']!,
           );
         },
         routes: [
@@ -53,7 +50,7 @@ class AppRouter {
             name: Routes.courtSlotDetailsView,
             path: 'slot-details',
             builder: (context, state) {
-              final params = state.queryParams;
+              final params = state.queryParameters;
 
               return CourtSlotDetailsView(
                 isAdmin: (state.extra as bool?) ?? false,
@@ -82,7 +79,7 @@ class AppRouter {
         name: Routes.userProfileView,
         path: '/user-profile-view/:uid',
         builder: (context, state) => UserProfileView(
-          userId: state.params['uid']!,
+          userId: state.pathParameters['uid']!,
         ),
       ),
       GoRoute(
@@ -119,9 +116,10 @@ class AppRouter {
         },
       ),
     ],
-    redirect: (state) {
-      final isLoggedIn = fireAuthInstance.currentUser != null;
-      final loggingIn = state.subloc == '/login';
+    redirect: (context, state) async {
+      final currentUser = await fireAuthInstance.authStateChanges().first;
+      final isLoggedIn = currentUser != null;
+      final loggingIn = state.matchedLocation == '/login';
 
       // If the user is not logged in, they must login
       if (!isLoggedIn) return loggingIn ? null : '/login';
@@ -133,9 +131,6 @@ class AppRouter {
       // No need to redirect at all
       return null;
     },
-    refreshListenable: GoRouterRefreshStream(
-      fireAuthInstance.authStateChanges(),
-    ),
   );
 }
 

@@ -6,13 +6,13 @@ class StatButton extends StatelessWidget {
     required this.color,
     required this.content,
     required this.onPressed,
-    required this.onLongPressed,
+    this.onLongPressed,
   }) : super(key: key);
 
   final Color color;
   final String content;
   final VoidCallback onPressed;
-  final VoidCallback onLongPressed;
+  final VoidCallback? onLongPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class StatButton extends StatelessWidget {
         onPressed: onPressed,
         onLongPress: onLongPressed,
         style: ElevatedButton.styleFrom(
-          primary: color,
+          backgroundColor: color,
           fixedSize: const Size(75, 75),
           shape: const CircleBorder(),
         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/app_router.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_controller.dart';
 import 'package:kasado/logic/admin/stat_manager/game_stat_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
@@ -17,6 +19,7 @@ class BoxScorePane extends HookConsumerWidget {
     required this.constraints,
     required this.utils,
     required this.gameStats,
+    this.isAdmin = false,
   }) : super(key: key);
 
   final GameStatController controller;
@@ -24,6 +27,7 @@ class BoxScorePane extends HookConsumerWidget {
   final BoxConstraints constraints;
   final KasadoUtils utils;
   final GameStats? gameStats;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -87,38 +91,131 @@ class BoxScorePane extends HookConsumerWidget {
                             ),
                           ],
                         ),
+                        if (isAdmin)
+                          TextButton(
+                            onPressed: () {}, // ignore: no-empty-block
+                            onLongPress: () => controller.deleteGame(
+                              gameStats: gameStats,
+                              courtSlot: courtSlot,
+                            ),
+                            child: const Text(
+                              "DELETE",
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),
                   Expanded(
-                    child: ListView(
-                      children: [
-                        TeamStatTable(
-                          constraints: constraints,
-                          statsList: gameStats.homeTeamStats.entries
-                              .map((statEntry) => statEntry.value)
-                              .toList()
-                            ..sort((a, b) =>
-                                a.player.displayName!.toLowerCase().compareTo(
-                                      b.player.displayName!.toLowerCase(),
-                                    )),
-                          isHome: true,
-                          utils: utils,
-                        ),
-                        const SizedBox(height: 25),
-                        TeamStatTable(
-                          constraints: constraints,
-                          statsList: gameStats.awayTeamStats.entries
-                              .map((statEntry) => statEntry.value)
-                              .toList()
-                            ..sort((a, b) =>
-                                a.player.displayName!.toLowerCase().compareTo(
-                                      b.player.displayName!.toLowerCase(),
-                                    )),
-                          isHome: false,
-                          utils: utils,
-                        ),
-                      ],
+                    child: gameStats.map(
+                      (_) => ListView(
+                        children: [
+                          TeamStatTable(
+                            constraints: constraints,
+                            statsList: gameStats.homeTeamStats.entries
+                                .map((statEntry) => statEntry.value)
+                                .toList()
+                              ..sort((a, b) =>
+                                  a.player.displayName!.toLowerCase().compareTo(
+                                        b.player.displayName!.toLowerCase(),
+                                      )),
+                            isHome: true,
+                            utils: utils,
+                          ),
+                          const SizedBox(height: 25),
+                          TeamStatTable(
+                            constraints: constraints,
+                            statsList: gameStats.awayTeamStats.entries
+                                .map((statEntry) => statEntry.value)
+                                .toList()
+                              ..sort((a, b) =>
+                                  a.player.displayName!.toLowerCase().compareTo(
+                                        b.player.displayName!.toLowerCase(),
+                                      )),
+                            isHome: false,
+                            utils: utils,
+                          ),
+                        ],
+                      ),
+                      scoreOnly: (_) => Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text("NO STATS AVAILABLE"),
+                          Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: gameStats.homeTeamStats.values
+                                    .map(
+                                      (stats) => GestureDetector(
+                                        child: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                            stats.player.photoUrl!,
+                                          ),
+                                          radius: 30,
+                                        ),
+                                        onTap: () => context.pushNamed(
+                                          Routes.userProfileView,
+                                          pathParameters: {
+                                            'uid': stats.player.id
+                                          },
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  "HOME PLAYERS",
+                                  style: TextStyle(
+                                    color: Colors.blue.shade200,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: gameStats.awayTeamStats.values
+                                    .map(
+                                      (stats) => GestureDetector(
+                                        child: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                            stats.player.photoUrl!,
+                                          ),
+                                          radius: 30,
+                                        ),
+                                        onTap: () => context.pushNamed(
+                                          Routes.userProfileView,
+                                          pathParameters: {
+                                            'uid': stats.player.id
+                                          },
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  "AWAY PLAYERS",
+                                  style: TextStyle(
+                                    color: Colors.red.shade200,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

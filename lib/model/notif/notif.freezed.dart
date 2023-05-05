@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'notif.dart';
 
@@ -12,7 +12,7 @@ part of 'notif.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Notif _$NotifFromJson(Map<String, dynamic> json) {
   switch (json['runtimeType']) {
@@ -28,59 +28,10 @@ Notif _$NotifFromJson(Map<String, dynamic> json) {
 }
 
 /// @nodoc
-class _$NotifTearOff {
-  const _$NotifTearOff();
-
-  NotifObject call(
-      {required String id,
-      String title = '',
-      required String body,
-      KasadoUser? sender,
-      required DateTime sentAt,
-      bool isRead = false,
-      bool? hasLiked = null}) {
-    return NotifObject(
-      id: id,
-      title: title,
-      body: body,
-      sender: sender,
-      sentAt: sentAt,
-      isRead: isRead,
-      hasLiked: hasLiked,
-    );
-  }
-
-  NotifMeta meta(
-      {required String id,
-      String title = '',
-      required DateTime sentAt,
-      int yesCount = 0,
-      int noCount = 0,
-      bool needsFeedback = false}) {
-    return NotifMeta(
-      id: id,
-      title: title,
-      sentAt: sentAt,
-      yesCount: yesCount,
-      noCount: noCount,
-      needsFeedback: needsFeedback,
-    );
-  }
-
-  Notif fromJson(Map<String, Object?> json) {
-    return Notif.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Notif = _$NotifTearOff();
-
-/// @nodoc
 mixin _$Notif {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   DateTime get sentAt => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(String id, String title, String body, KasadoUser? sender,
@@ -93,10 +44,10 @@ mixin _$Notif {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String id, String title, String body, KasadoUser? sender,
+    TResult? Function(String id, String title, String body, KasadoUser? sender,
             DateTime sentAt, bool isRead, bool? hasLiked)?
         $default, {
-    TResult Function(String id, String title, DateTime sentAt, int yesCount,
+    TResult? Function(String id, String title, DateTime sentAt, int yesCount,
             int noCount, bool needsFeedback)?
         meta,
   }) =>
@@ -120,8 +71,8 @@ mixin _$Notif {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(NotifObject value)? $default, {
-    TResult Function(NotifMeta value)? meta,
+    TResult? Function(NotifObject value)? $default, {
+    TResult? Function(NotifMeta value)? meta,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -139,47 +90,52 @@ mixin _$Notif {
 /// @nodoc
 abstract class $NotifCopyWith<$Res> {
   factory $NotifCopyWith(Notif value, $Res Function(Notif) then) =
-      _$NotifCopyWithImpl<$Res>;
+      _$NotifCopyWithImpl<$Res, Notif>;
+  @useResult
   $Res call({String id, String title, DateTime sentAt});
 }
 
 /// @nodoc
-class _$NotifCopyWithImpl<$Res> implements $NotifCopyWith<$Res> {
+class _$NotifCopyWithImpl<$Res, $Val extends Notif>
+    implements $NotifCopyWith<$Res> {
   _$NotifCopyWithImpl(this._value, this._then);
 
-  final Notif _value;
   // ignore: unused_field
-  final $Res Function(Notif) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? title = freezed,
-    Object? sentAt = freezed,
+    Object? id = null,
+    Object? title = null,
+    Object? sentAt = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      sentAt: sentAt == freezed
+      sentAt: null == sentAt
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class $NotifObjectCopyWith<$Res> implements $NotifCopyWith<$Res> {
-  factory $NotifObjectCopyWith(
-          NotifObject value, $Res Function(NotifObject) then) =
-      _$NotifObjectCopyWithImpl<$Res>;
+abstract class _$$NotifObjectCopyWith<$Res> implements $NotifCopyWith<$Res> {
+  factory _$$NotifObjectCopyWith(
+          _$NotifObject value, $Res Function(_$NotifObject) then) =
+      __$$NotifObjectCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String title,
@@ -193,51 +149,50 @@ abstract class $NotifObjectCopyWith<$Res> implements $NotifCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NotifObjectCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
-    implements $NotifObjectCopyWith<$Res> {
-  _$NotifObjectCopyWithImpl(
-      NotifObject _value, $Res Function(NotifObject) _then)
-      : super(_value, (v) => _then(v as NotifObject));
+class __$$NotifObjectCopyWithImpl<$Res>
+    extends _$NotifCopyWithImpl<$Res, _$NotifObject>
+    implements _$$NotifObjectCopyWith<$Res> {
+  __$$NotifObjectCopyWithImpl(
+      _$NotifObject _value, $Res Function(_$NotifObject) _then)
+      : super(_value, _then);
 
-  @override
-  NotifObject get _value => super._value as NotifObject;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? title = freezed,
-    Object? body = freezed,
+    Object? id = null,
+    Object? title = null,
+    Object? body = null,
     Object? sender = freezed,
-    Object? sentAt = freezed,
-    Object? isRead = freezed,
+    Object? sentAt = null,
+    Object? isRead = null,
     Object? hasLiked = freezed,
   }) {
-    return _then(NotifObject(
-      id: id == freezed
+    return _then(_$NotifObject(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      body: body == freezed
+      body: null == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String,
-      sender: sender == freezed
+      sender: freezed == sender
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
               as KasadoUser?,
-      sentAt: sentAt == freezed
+      sentAt: null == sentAt
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      isRead: isRead == freezed
+      isRead: null == isRead
           ? _value.isRead
           : isRead // ignore: cast_nullable_to_non_nullable
               as bool,
-      hasLiked: hasLiked == freezed
+      hasLiked: freezed == hasLiked
           ? _value.hasLiked
           : hasLiked // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -245,6 +200,7 @@ class _$NotifObjectCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $KasadoUserCopyWith<$Res>? get sender {
     if (_value.sender == null) {
       return null;
@@ -267,7 +223,7 @@ class _$NotifObject with DiagnosticableTreeMixin implements NotifObject {
       required this.sentAt,
       this.isRead = false,
       this.hasLiked = null,
-      String? $type})
+      final String? $type})
       : $type = $type ?? 'default';
 
   factory _$NotifObject.fromJson(Map<String, dynamic> json) =>
@@ -275,8 +231,8 @@ class _$NotifObject with DiagnosticableTreeMixin implements NotifObject {
 
   @override
   final String id;
-  @JsonKey()
   @override
+  @JsonKey()
   final String title;
   @override
   final String body;
@@ -284,11 +240,11 @@ class _$NotifObject with DiagnosticableTreeMixin implements NotifObject {
   final KasadoUser? sender;
   @override
   final DateTime sentAt;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool isRead;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool? hasLiked;
 
   @JsonKey(name: 'runtimeType')
@@ -317,31 +273,27 @@ class _$NotifObject with DiagnosticableTreeMixin implements NotifObject {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is NotifObject &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.body, body) &&
-            const DeepCollectionEquality().equals(other.sender, sender) &&
-            const DeepCollectionEquality().equals(other.sentAt, sentAt) &&
-            const DeepCollectionEquality().equals(other.isRead, isRead) &&
-            const DeepCollectionEquality().equals(other.hasLiked, hasLiked));
+            other is _$NotifObject &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.body, body) || other.body == body) &&
+            (identical(other.sender, sender) || other.sender == sender) &&
+            (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
+            (identical(other.isRead, isRead) || other.isRead == isRead) &&
+            (identical(other.hasLiked, hasLiked) ||
+                other.hasLiked == hasLiked));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(body),
-      const DeepCollectionEquality().hash(sender),
-      const DeepCollectionEquality().hash(sentAt),
-      const DeepCollectionEquality().hash(isRead),
-      const DeepCollectionEquality().hash(hasLiked));
 
   @JsonKey(ignore: true)
   @override
-  $NotifObjectCopyWith<NotifObject> get copyWith =>
-      _$NotifObjectCopyWithImpl<NotifObject>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, body, sender, sentAt, isRead, hasLiked);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NotifObjectCopyWith<_$NotifObject> get copyWith =>
+      __$$NotifObjectCopyWithImpl<_$NotifObject>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -359,10 +311,10 @@ class _$NotifObject with DiagnosticableTreeMixin implements NotifObject {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String id, String title, String body, KasadoUser? sender,
+    TResult? Function(String id, String title, String body, KasadoUser? sender,
             DateTime sentAt, bool isRead, bool? hasLiked)?
         $default, {
-    TResult Function(String id, String title, DateTime sentAt, int yesCount,
+    TResult? Function(String id, String title, DateTime sentAt, int yesCount,
             int noCount, bool needsFeedback)?
         meta,
   }) {
@@ -398,8 +350,8 @@ class _$NotifObject with DiagnosticableTreeMixin implements NotifObject {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(NotifObject value)? $default, {
-    TResult Function(NotifMeta value)? meta,
+    TResult? Function(NotifObject value)? $default, {
+    TResult? Function(NotifMeta value)? meta,
   }) {
     return $default?.call(this);
   }
@@ -419,19 +371,21 @@ class _$NotifObject with DiagnosticableTreeMixin implements NotifObject {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$NotifObjectToJson(this);
+    return _$$NotifObjectToJson(
+      this,
+    );
   }
 }
 
 abstract class NotifObject implements Notif {
   const factory NotifObject(
-      {required String id,
-      String title,
-      required String body,
-      KasadoUser? sender,
-      required DateTime sentAt,
-      bool isRead,
-      bool? hasLiked}) = _$NotifObject;
+      {required final String id,
+      final String title,
+      required final String body,
+      final KasadoUser? sender,
+      required final DateTime sentAt,
+      final bool isRead,
+      final bool? hasLiked}) = _$NotifObject;
 
   factory NotifObject.fromJson(Map<String, dynamic> json) =
       _$NotifObject.fromJson;
@@ -448,15 +402,17 @@ abstract class NotifObject implements Notif {
   bool? get hasLiked;
   @override
   @JsonKey(ignore: true)
-  $NotifObjectCopyWith<NotifObject> get copyWith =>
+  _$$NotifObjectCopyWith<_$NotifObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NotifMetaCopyWith<$Res> implements $NotifCopyWith<$Res> {
-  factory $NotifMetaCopyWith(NotifMeta value, $Res Function(NotifMeta) then) =
-      _$NotifMetaCopyWithImpl<$Res>;
+abstract class _$$NotifMetaCopyWith<$Res> implements $NotifCopyWith<$Res> {
+  factory _$$NotifMetaCopyWith(
+          _$NotifMeta value, $Res Function(_$NotifMeta) then) =
+      __$$NotifMetaCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       String title,
@@ -467,45 +423,45 @@ abstract class $NotifMetaCopyWith<$Res> implements $NotifCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$NotifMetaCopyWithImpl<$Res> extends _$NotifCopyWithImpl<$Res>
-    implements $NotifMetaCopyWith<$Res> {
-  _$NotifMetaCopyWithImpl(NotifMeta _value, $Res Function(NotifMeta) _then)
-      : super(_value, (v) => _then(v as NotifMeta));
+class __$$NotifMetaCopyWithImpl<$Res>
+    extends _$NotifCopyWithImpl<$Res, _$NotifMeta>
+    implements _$$NotifMetaCopyWith<$Res> {
+  __$$NotifMetaCopyWithImpl(
+      _$NotifMeta _value, $Res Function(_$NotifMeta) _then)
+      : super(_value, _then);
 
-  @override
-  NotifMeta get _value => super._value as NotifMeta;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? title = freezed,
-    Object? sentAt = freezed,
-    Object? yesCount = freezed,
-    Object? noCount = freezed,
-    Object? needsFeedback = freezed,
+    Object? id = null,
+    Object? title = null,
+    Object? sentAt = null,
+    Object? yesCount = null,
+    Object? noCount = null,
+    Object? needsFeedback = null,
   }) {
-    return _then(NotifMeta(
-      id: id == freezed
+    return _then(_$NotifMeta(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      sentAt: sentAt == freezed
+      sentAt: null == sentAt
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      yesCount: yesCount == freezed
+      yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
               as int,
-      noCount: noCount == freezed
+      noCount: null == noCount
           ? _value.noCount
           : noCount // ignore: cast_nullable_to_non_nullable
               as int,
-      needsFeedback: needsFeedback == freezed
+      needsFeedback: null == needsFeedback
           ? _value.needsFeedback
           : needsFeedback // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -523,7 +479,7 @@ class _$NotifMeta with DiagnosticableTreeMixin implements NotifMeta {
       this.yesCount = 0,
       this.noCount = 0,
       this.needsFeedback = false,
-      String? $type})
+      final String? $type})
       : $type = $type ?? 'meta';
 
   factory _$NotifMeta.fromJson(Map<String, dynamic> json) =>
@@ -531,19 +487,19 @@ class _$NotifMeta with DiagnosticableTreeMixin implements NotifMeta {
 
   @override
   final String id;
-  @JsonKey()
   @override
+  @JsonKey()
   final String title;
   @override
   final DateTime sentAt;
-  @JsonKey()
   @override
+  @JsonKey()
   final int yesCount;
-  @JsonKey()
   @override
+  @JsonKey()
   final int noCount;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool needsFeedback;
 
   @JsonKey(name: 'runtimeType')
@@ -571,30 +527,27 @@ class _$NotifMeta with DiagnosticableTreeMixin implements NotifMeta {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is NotifMeta &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.sentAt, sentAt) &&
-            const DeepCollectionEquality().equals(other.yesCount, yesCount) &&
-            const DeepCollectionEquality().equals(other.noCount, noCount) &&
-            const DeepCollectionEquality()
-                .equals(other.needsFeedback, needsFeedback));
+            other is _$NotifMeta &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
+            (identical(other.yesCount, yesCount) ||
+                other.yesCount == yesCount) &&
+            (identical(other.noCount, noCount) || other.noCount == noCount) &&
+            (identical(other.needsFeedback, needsFeedback) ||
+                other.needsFeedback == needsFeedback));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(sentAt),
-      const DeepCollectionEquality().hash(yesCount),
-      const DeepCollectionEquality().hash(noCount),
-      const DeepCollectionEquality().hash(needsFeedback));
 
   @JsonKey(ignore: true)
   @override
-  $NotifMetaCopyWith<NotifMeta> get copyWith =>
-      _$NotifMetaCopyWithImpl<NotifMeta>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, sentAt, yesCount, noCount, needsFeedback);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NotifMetaCopyWith<_$NotifMeta> get copyWith =>
+      __$$NotifMetaCopyWithImpl<_$NotifMeta>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -612,10 +565,10 @@ class _$NotifMeta with DiagnosticableTreeMixin implements NotifMeta {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult Function(String id, String title, String body, KasadoUser? sender,
+    TResult? Function(String id, String title, String body, KasadoUser? sender,
             DateTime sentAt, bool isRead, bool? hasLiked)?
         $default, {
-    TResult Function(String id, String title, DateTime sentAt, int yesCount,
+    TResult? Function(String id, String title, DateTime sentAt, int yesCount,
             int noCount, bool needsFeedback)?
         meta,
   }) {
@@ -651,8 +604,8 @@ class _$NotifMeta with DiagnosticableTreeMixin implements NotifMeta {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult Function(NotifObject value)? $default, {
-    TResult Function(NotifMeta value)? meta,
+    TResult? Function(NotifObject value)? $default, {
+    TResult? Function(NotifMeta value)? meta,
   }) {
     return meta?.call(this);
   }
@@ -672,18 +625,20 @@ class _$NotifMeta with DiagnosticableTreeMixin implements NotifMeta {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$NotifMetaToJson(this);
+    return _$$NotifMetaToJson(
+      this,
+    );
   }
 }
 
 abstract class NotifMeta implements Notif {
   const factory NotifMeta(
-      {required String id,
-      String title,
-      required DateTime sentAt,
-      int yesCount,
-      int noCount,
-      bool needsFeedback}) = _$NotifMeta;
+      {required final String id,
+      final String title,
+      required final DateTime sentAt,
+      final int yesCount,
+      final int noCount,
+      final bool needsFeedback}) = _$NotifMeta;
 
   factory NotifMeta.fromJson(Map<String, dynamic> json) = _$NotifMeta.fromJson;
 
@@ -698,6 +653,6 @@ abstract class NotifMeta implements Notif {
   bool get needsFeedback;
   @override
   @JsonKey(ignore: true)
-  $NotifMetaCopyWith<NotifMeta> get copyWith =>
+  _$$NotifMetaCopyWith<_$NotifMeta> get copyWith =>
       throw _privateConstructorUsedError;
 }

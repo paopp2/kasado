@@ -10,7 +10,7 @@ import 'package:kasado/ui/shared/loading_widget.dart';
 
 final userInfoQueryResultProvider = FutureProvider.autoDispose
     .family<List<KasadoUserInfo>, String?>((ref, query) {
-  ref.maintainState = true;
+  ref.keepAlive();
   final userInfoRepo = ref.watch(userInfoRepositoryProvider);
   if (query == null) return [];
 

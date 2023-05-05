@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/profile/user_profile_view_model.dart';
-import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 import 'package:kasado/ui/admin/player_manager/pondo_input_dialog.dart';
 import 'package:kasado/ui/home/components/pondo_info_dialog.dart';
@@ -27,13 +26,11 @@ class UserProfilePane extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(userProfileViewModel);
     final currentUser = ref.watch(currentUserProvider)!;
-    final utils = ref.watch(kasadoUtilsProvider);
     final user = userInfo?.user;
     final userBio = userInfo?.user.userBio;
     final isCurrentUser = currentUser.id == user?.id;
     final isSuperAdmin =
         ref.watch(currentUserInfoProvider).value?.isSuperAdmin ?? false;
-    final userCareerStats = userInfo?.overviewStats;
     final tabController = useTabController(initialLength: 2);
 
     void _onAddPondoLongPressed() => showDialog(
@@ -64,7 +61,6 @@ class UserProfilePane extends HookConsumerWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Text("${userCareerStats?.mmr ?? 0} MMR"),
                       ],
                     ),
                     SizedBox(
@@ -208,25 +204,23 @@ class UserProfilePane extends HookConsumerWidget {
                   ),
                 ),
                 Expanded(
-                  child: (userCareerStats == null)
-                      ? const Center(child: Text('No stats available'))
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: TabBarView(
-                            controller: tabController,
-                            children: [
-                              CareerStatsListPane(
-                                userStats: userCareerStats,
-                                utils: utils,
-                              ),
-                              GameHistoryListPane(
-                                model: model,
-                                userId: user.id,
-                                constraints: constraints,
-                              ),
-                            ],
-                          ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TabBarView(
+                      controller: tabController,
+                      children: [
+                        CareerStatsListPane(
+                          userId: user.id,
+                          constraints: constraints,
                         ),
+                        GameHistoryListPane(
+                          model: model,
+                          userId: user.id,
+                          constraints: constraints,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

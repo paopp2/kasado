@@ -31,13 +31,14 @@ class GameTeamsSetupPane extends HookConsumerWidget {
     final awayTeamPlayers = courtSlot.stageAwayTeamPlayers ?? [];
     final isStartingGameState = useState(false);
 
-    Future<void> _onStartGamePressed() async {
+    Future<void> _onStartGamePressed({bool scoreOnly = false}) async {
       isStartingGameState.value = true;
       await controller.initStatsForGame(
         context: context,
         courtSlot: courtSlot,
         awayTeamPlayers: awayTeamPlayers,
         homeTeamPlayers: homeTeamPlayers,
+        scoreOnly: scoreOnly,
       );
       isStartingGameState.value = false;
     }
@@ -120,7 +121,7 @@ class GameTeamsSetupPane extends HookConsumerWidget {
             padding: const EdgeInsets.all(10.0),
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            primary: Colors.blueGrey,
+            foregroundColor: Colors.blueGrey,
           ),
           onPressed: controller.toggleToNextSortState,
         ),
@@ -193,7 +194,7 @@ class GameTeamsSetupPane extends HookConsumerWidget {
               child: const Text('ENLARGE'),
               onPressed: () => context.pushNamed(
                 Routes.scoreBoardView,
-                params: {'courtId': courtSlot.courtId},
+                pathParameters: {'courtId': courtSlot.courtId},
                 extra: courtSlot,
               ),
             ),
@@ -205,12 +206,27 @@ class GameTeamsSetupPane extends HookConsumerWidget {
             ),
             (isStartingGameState.value)
                 ? const LoadingWidget()
-                : TextButton(
-                    child: const Text(
-                      'START GAME',
-                      style: TextStyle(color: Colors.green),
-                    ),
-                    onPressed: _onStartGamePressed,
+                : Row(
+                    children: [
+                      TextButton(
+                        child: const Text(
+                          'WITH\nSTATS',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.green,
+                          ),
+                        ),
+                        onPressed: _onStartGamePressed,
+                      ),
+                      TextButton(
+                        child: const Text(
+                          'WITHOUT\nSTATS',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.green),
+                        ),
+                        onPressed: () => _onStartGamePressed(scoreOnly: true),
+                      ),
+                    ],
                   ),
           ],
         ),

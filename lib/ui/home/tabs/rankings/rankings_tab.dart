@@ -25,8 +25,8 @@ class RankingsTab extends HookConsumerWidget {
     return Scaffold(
       body: StatLeadersPane(
         model: model,
-        statType: StatType.mmr,
-        statDescription: 'MMR Rankings',
+        statType: StatType.standing,
+        statDescription: 'Player Standings',
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,

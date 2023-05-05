@@ -7,11 +7,13 @@ class PlayerStatTile extends StatelessWidget {
     required this.statValue,
     required this.statDescription,
     required this.index,
+    this.trailingTextColor,
   }) : super(key: key);
 
   final String statValue;
   final String statDescription;
   final int index;
+  final Color? trailingTextColor;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +34,10 @@ class PlayerStatTile extends StatelessWidget {
           ),
           trailing: Text(
             statValue,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
+              color: trailingTextColor,
             ),
           ),
         ),

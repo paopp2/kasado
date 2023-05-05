@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
-import 'package:kasado/model/overview_stats/overview_stats.dart';
 import 'package:kasado/model/ticket/ticket.dart';
 
 part 'kasado_user_info.freezed.dart';
@@ -18,10 +17,16 @@ class KasadoUserInfo with _$KasadoUserInfo {
     @Default(false) bool isSuperAdmin,
     @Default(0) double pondo,
     @Default(false) bool isTeamCaptain,
-    @Default(OverviewStats()) OverviewStats overviewStats,
     String? teamId,
     @Default([]) List<Ticket> tickets,
   }) = _KasadoUserInfo;
+
+  static KasadoUserInfo newInstance(KasadoUser user) {
+    return KasadoUserInfo(
+      id: user.id,
+      user: user,
+    );
+  }
 
   bool get hasReserved {
     if (tickets.isEmpty) return false;

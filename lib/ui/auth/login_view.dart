@@ -7,6 +7,8 @@ import 'package:kasado/logic/auth/login_view_model.dart';
 import 'package:kasado/ui/auth/components/login_error_dialog.dart';
 import 'package:kasado/ui/shared/loading_widget.dart';
 import 'package:sign_button/sign_button.dart';
+import 'package:go_router/go_router.dart';
+import 'package:kasado/app_router.dart';
 
 class LoginView extends HookConsumerWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -33,6 +35,7 @@ class LoginView extends HookConsumerWidget {
         ),
         ifSuccess: (creds) {
           if (creds != null) {
+            context.pushReplacementNamed(Routes.homeView);
             Fluttertoast.showToast(
               msg: 'Signed in successfully',
             );

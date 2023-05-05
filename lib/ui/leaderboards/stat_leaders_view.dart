@@ -12,7 +12,7 @@ class StatLeadersView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final model = ref.watch(statLeadersViewModel);
-    final tabController = useTabController(initialLength: 10);
+    final tabController = useTabController(initialLength: 9);
 
     useEffect(() {
       ref.read(mixpanel)!.track("Navigated to StatLeadersView");
@@ -31,7 +31,6 @@ class StatLeadersView extends HookConsumerWidget {
               controller: tabController,
               isScrollable: true,
               tabs: const [
-                Tab(child: Text('W-L')),
                 Tab(child: Text('EFF')),
                 Tab(child: Text('PPG')),
                 Tab(child: Text('RPG')),
@@ -50,11 +49,6 @@ class StatLeadersView extends HookConsumerWidget {
                 child: TabBarView(
                   controller: tabController,
                   children: [
-                    StatLeadersPane(
-                      model: model,
-                      statDescription: "PLAYER STANDINGS",
-                      statType: StatType.standing,
-                    ),
                     StatLeadersPane(
                       model: model,
                       statDescription: "PLAYER EFFICIENCY (EFF)",

@@ -2,12 +2,13 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/logic/shared/view_model.dart';
+import 'package:kasado/model/court/court.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
 
 final courtDetailsViewModel = Provider.autoDispose(
   (ref) => CourtDetailsViewModel(
-    read: ref.read,
+    ref: ref,
     currentUser: ref.watch(currentUserProvider)!,
     currentUserInfo: ref.watch(currentUserInfoProvider).value,
   ),
@@ -15,10 +16,10 @@ final courtDetailsViewModel = Provider.autoDispose(
 
 class CourtDetailsViewModel extends ViewModel {
   CourtDetailsViewModel({
-    required Reader read,
+    required Ref ref,
     required this.currentUser,
     required this.currentUserInfo,
-  }) : super(read);
+  }) : super(ref);
 
   final KasadoUser currentUser;
   final KasadoUserInfo? currentUserInfo;
@@ -33,5 +34,9 @@ class CourtDetailsViewModel extends ViewModel {
         'court_id': params!['court_id'],
       },
     );
+  }
+
+  bool isCurrentUserAdminAt(Court court) {
+    return court.adminIds.contains(currentUser.id);
   }
 }

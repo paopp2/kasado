@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -75,7 +76,7 @@ class SlotPlayerTile extends StatelessWidget {
               tileColor: snapshot.data,
               onTap: () => context.pushNamed(
                 Routes.userProfileView,
-                params: {'uid': player.id},
+                pathParameters: {'uid': player.id},
               ),
               onLongPress: (isSuperAdmin)
                   ? () => showDialog(
@@ -99,14 +100,17 @@ class SlotPlayerTile extends StatelessWidget {
                       style: const TextStyle(fontSize: 10),
                     )
                   : null,
-              leading: Badge(
+              leading: badges.Badge(
                 showBadge: isQueuedAtCourt && !isSlotDone,
                 position: BadgePosition.bottomEnd(bottom: -2, end: -2),
-                badgeColor: Colors.white,
-                elevation: 0,
-                padding: const EdgeInsets.all(2.0),
-                animationType: BadgeAnimationType.fade,
-                animationDuration: const Duration(milliseconds: 100),
+                badgeStyle: const BadgeStyle(
+                  badgeColor: Colors.white,
+                  elevation: 0,
+                  padding: EdgeInsets.all(2.0),
+                ),
+                badgeAnimation: const BadgeAnimation.fade(
+                  animationDuration: Duration(milliseconds: 100),
+                ),
                 badgeContent: const CircleAvatar(
                   backgroundColor: Colors.green,
                   radius: 6,

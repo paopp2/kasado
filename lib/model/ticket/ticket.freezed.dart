@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'ticket.dart';
 
@@ -12,30 +12,11 @@ part of 'ticket.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Ticket _$TicketFromJson(Map<String, dynamic> json) {
   return _Ticket.fromJson(json);
 }
-
-/// @nodoc
-class _$TicketTearOff {
-  const _$TicketTearOff();
-
-  _Ticket call({required String id, required CourtSlot courtSlot}) {
-    return _Ticket(
-      id: id,
-      courtSlot: courtSlot,
-    );
-  }
-
-  Ticket fromJson(Map<String, Object?> json) {
-    return Ticket.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Ticket = _$TicketTearOff();
 
 /// @nodoc
 mixin _$Ticket {
@@ -50,50 +31,56 @@ mixin _$Ticket {
 /// @nodoc
 abstract class $TicketCopyWith<$Res> {
   factory $TicketCopyWith(Ticket value, $Res Function(Ticket) then) =
-      _$TicketCopyWithImpl<$Res>;
+      _$TicketCopyWithImpl<$Res, Ticket>;
+  @useResult
   $Res call({String id, CourtSlot courtSlot});
 
   $CourtSlotCopyWith<$Res> get courtSlot;
 }
 
 /// @nodoc
-class _$TicketCopyWithImpl<$Res> implements $TicketCopyWith<$Res> {
+class _$TicketCopyWithImpl<$Res, $Val extends Ticket>
+    implements $TicketCopyWith<$Res> {
   _$TicketCopyWithImpl(this._value, this._then);
 
-  final Ticket _value;
   // ignore: unused_field
-  final $Res Function(Ticket) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? courtSlot = freezed,
+    Object? id = null,
+    Object? courtSlot = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      courtSlot: courtSlot == freezed
+      courtSlot: null == courtSlot
           ? _value.courtSlot
           : courtSlot // ignore: cast_nullable_to_non_nullable
               as CourtSlot,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CourtSlotCopyWith<$Res> get courtSlot {
     return $CourtSlotCopyWith<$Res>(_value.courtSlot, (value) {
-      return _then(_value.copyWith(courtSlot: value));
+      return _then(_value.copyWith(courtSlot: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$TicketCopyWith<$Res> implements $TicketCopyWith<$Res> {
-  factory _$TicketCopyWith(_Ticket value, $Res Function(_Ticket) then) =
-      __$TicketCopyWithImpl<$Res>;
+abstract class _$$_TicketCopyWith<$Res> implements $TicketCopyWith<$Res> {
+  factory _$$_TicketCopyWith(_$_Ticket value, $Res Function(_$_Ticket) then) =
+      __$$_TicketCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String id, CourtSlot courtSlot});
 
   @override
@@ -101,25 +88,24 @@ abstract class _$TicketCopyWith<$Res> implements $TicketCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$TicketCopyWithImpl<$Res> extends _$TicketCopyWithImpl<$Res>
-    implements _$TicketCopyWith<$Res> {
-  __$TicketCopyWithImpl(_Ticket _value, $Res Function(_Ticket) _then)
-      : super(_value, (v) => _then(v as _Ticket));
+class __$$_TicketCopyWithImpl<$Res>
+    extends _$TicketCopyWithImpl<$Res, _$_Ticket>
+    implements _$$_TicketCopyWith<$Res> {
+  __$$_TicketCopyWithImpl(_$_Ticket _value, $Res Function(_$_Ticket) _then)
+      : super(_value, _then);
 
-  @override
-  _Ticket get _value => super._value as _Ticket;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? courtSlot = freezed,
+    Object? id = null,
+    Object? courtSlot = null,
   }) {
-    return _then(_Ticket(
-      id: id == freezed
+    return _then(_$_Ticket(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      courtSlot: courtSlot == freezed
+      courtSlot: null == courtSlot
           ? _value.courtSlot
           : courtSlot // ignore: cast_nullable_to_non_nullable
               as CourtSlot,
@@ -158,31 +144,34 @@ class _$_Ticket extends _Ticket with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Ticket &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.courtSlot, courtSlot));
+            other is _$_Ticket &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.courtSlot, courtSlot) ||
+                other.courtSlot == courtSlot));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(courtSlot));
 
   @JsonKey(ignore: true)
   @override
-  _$TicketCopyWith<_Ticket> get copyWith =>
-      __$TicketCopyWithImpl<_Ticket>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, id, courtSlot);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TicketCopyWith<_$_Ticket> get copyWith =>
+      __$$_TicketCopyWithImpl<_$_Ticket>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TicketToJson(this);
+    return _$$_TicketToJson(
+      this,
+    );
   }
 }
 
 abstract class _Ticket extends Ticket {
-  const factory _Ticket({required String id, required CourtSlot courtSlot}) =
-      _$_Ticket;
+  const factory _Ticket(
+      {required final String id,
+      required final CourtSlot courtSlot}) = _$_Ticket;
   const _Ticket._() : super._();
 
   factory _Ticket.fromJson(Map<String, dynamic> json) = _$_Ticket.fromJson;
@@ -193,5 +182,6 @@ abstract class _Ticket extends Ticket {
   CourtSlot get courtSlot;
   @override
   @JsonKey(ignore: true)
-  _$TicketCopyWith<_Ticket> get copyWith => throw _privateConstructorUsedError;
+  _$$_TicketCopyWith<_$_Ticket> get copyWith =>
+      throw _privateConstructorUsedError;
 }

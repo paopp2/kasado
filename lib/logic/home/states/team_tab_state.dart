@@ -12,7 +12,7 @@ final teamPlayersListProvider = StateProvider.autoDispose((ref) {
 
 final removedPlayersListProvider =
     StateProvider.autoDispose<List<KasadoUser>>((ref) {
-  ref.maintainState = true;
+  ref.keepAlive();
 
   return [];
 });

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/enums/player_position.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/profile/user_profile_state.dart';
@@ -15,7 +16,7 @@ import 'package:kasado/model/user_bio/user_bio.dart';
 
 final userProfileViewModel = Provider.autoDispose(
   (ref) => UserProfileViewModel(
-    read: ref.read,
+    ref: ref,
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
   ),
@@ -23,10 +24,10 @@ final userProfileViewModel = Provider.autoDispose(
 
 class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
   UserProfileViewModel({
-    required Reader read,
+    required Ref ref,
     required this.userInfoRepo,
     required this.currentUser,
-  }) : super(read);
+  }) : super(ref);
 
   final UserInfoRepository userInfoRepo;
   final KasadoUser currentUser;
@@ -36,7 +37,7 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
     FirebaseAnalytics.instance.logEvent(
       name: 'user_profile_view',
       parameters: {
-        'user_id': read(currentUserProvider)?.toJson().toString(),
+        'user_id': ref.read(currentUserProvider)?.toJson().toString(),
         'viewed_user_id': params!['viewed_user_id'],
       },
     );
@@ -51,8 +52,8 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
       setupUserBioToEdit(
         userBio,
         (birthDate, positions) {
-          read(birthdateProvider.notifier).state = birthDate;
-          read(playerPositionsProvider.notifier).state = positions;
+          ref.read(birthdateProvider.notifier).state = birthDate;
+          ref.read(playerPositionsProvider.notifier).state = positions;
         },
       );
     }
@@ -60,8 +61,8 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
       context: context,
       builder: (_) => dialog,
     ).then((_) {
-      read(birthdateProvider.notifier).state = null;
-      read(playerPositionsProvider.notifier).state = [];
+      ref.read(birthdateProvider.notifier).state = null;
+      ref.read(playerPositionsProvider.notifier).state = [];
       clearAllTecs();
     });
   }
@@ -94,8 +95,8 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
   }
 
   Future<void> setBirthDate(BuildContext context) async {
-    final initialDate = read(birthdateProvider) ?? DateTime.now();
-    read(birthdateProvider.notifier).state = await showDatePicker(
+    final initialDate = ref.read(birthdateProvider) ?? DateTime.now();
+    ref.read(birthdateProvider.notifier).state = await showDatePicker(
       context: context,
       initialDate: initialDate,
       firstDate: DateTime(1980),
@@ -108,7 +109,7 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
     required PlayerPosition position,
     required bool isAdd,
   }) {
-    read(playerPositionsProvider.notifier).update(
+    ref.read(playerPositionsProvider.notifier).update(
       (state) {
         if (state.length == 2 && isAdd) {
           Fluttertoast.showToast(msg: "Maximum of 2 positions only");
@@ -117,7 +118,7 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
         } else if (isAdd) {
           return [...state, position];
         } else {
-          return [...state]..remove(position);
+          return [...state].exclude(position);
         }
       },
     );
@@ -125,13 +126,13 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
 
   Future<void> pushUserBio(BuildContext context) async {
     final userBio = UserBio(
-      birthdate: read(birthdateProvider),
+      birthdate: ref.read(birthdateProvider),
       weight: double.tryParse(tecWeight.text),
       heightFt: double.tryParse(tecHeightFt.text),
       heightIn: double.tryParse(tecHeightIn.text),
-      positions: read(playerPositionsProvider),
+      positions: ref.read(playerPositionsProvider),
     );
-    read(mixpanel)!.track("Pushed UserBio", properties: userBio.toJson());
+    ref.read(mixpanel)!.track("Pushed UserBio", properties: userBio.toJson());
     await userInfoRepo.pushUserBio(userId: currentUser.id, userBio: userBio);
     Navigator.pop(context);
   }

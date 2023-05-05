@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kasado/constants/enums/stat_type.dart';
+import 'package:kasado/model/kasado_user/kasado_user.dart';
 
 part 'overview_stats.freezed.dart';
 part 'overview_stats.g.dart';
@@ -8,7 +9,9 @@ part 'overview_stats.g.dart';
 @freezed
 class OverviewStats with _$OverviewStats {
   const OverviewStats._();
-  const factory OverviewStats({
+  const factory OverviewStats(
+    KasadoUser player,
+    String seasonId, {
     @Default(0) int mmr,
     @Default(0) int totalThreePA,
     @Default(0) int totalThreePM,
@@ -23,7 +26,9 @@ class OverviewStats with _$OverviewStats {
     @Default(0) int totalBlk,
     @Default(0) int totalTO,
     @Default(0) int totalWins,
+    @Default(0) int totalPlusMinus,
     @Default(0) int gamesPlayed,
+    @Default(0) int gamesPlayedNoStats,
     @Default(false) bool isHiddenFromRankings,
   }) = _OverviewStats;
 
@@ -31,6 +36,8 @@ class OverviewStats with _$OverviewStats {
   int get totalAttempts => totalThreePA + totalTwoPA;
   int get totalMade => totalThreePM + totalTwoPM;
   int get totalRebounds => totalOReb + totalDReb;
+  int get totalGamesPlayed => gamesPlayed + gamesPlayedNoStats;
+
   double get aveFgPercent => (totalMade / totalAttempts) * 100;
   double get aveThreePtPercent => (totalThreePM / totalThreePA) * 100;
   double get aveFtPercent => (totalFtm / totalFta) * 100;
@@ -39,8 +46,10 @@ class OverviewStats with _$OverviewStats {
   double get aveReboundsPerGame => totalRebounds / gamesPlayed;
   double get aveBlocksPerGame => totalBlk / gamesPlayed;
   double get aveStlPerGame => totalStl / gamesPlayed;
-  int get totalLosses => gamesPlayed - totalWins;
-  double get winPercent => (totalWins / gamesPlayed) * 100;
+  double get avePlusMinus => totalPlusMinus / totalGamesPlayed;
+
+  int get totalLosses => totalGamesPlayed - totalWins;
+  double get winPercent => (totalWins / totalGamesPlayed) * 100;
   int get winLossDifference => totalWins - totalLosses;
   double get effRating =>
       (totalPoints +

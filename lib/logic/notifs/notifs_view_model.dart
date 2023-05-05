@@ -12,7 +12,7 @@ import 'package:uuid/uuid.dart';
 
 final notifsViewModel = Provider.autoDispose(
   (ref) => NotifsViewModel(
-    read: ref.read,
+    ref: ref,
     currentUser: ref.watch(currentUserProvider)!,
     notifRepo: ref.watch(notifRepositoryProvider),
   ),
@@ -20,10 +20,10 @@ final notifsViewModel = Provider.autoDispose(
 
 class NotifsViewModel extends ViewModel with NotifsTecMixin {
   NotifsViewModel({
-    required Reader read,
+    required Ref ref,
     required this.currentUser,
     required this.notifRepo,
-  }) : super(read);
+  }) : super(ref);
 
   final KasadoUser currentUser;
   final NotifRepository notifRepo;
@@ -100,7 +100,7 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
         : (isLiked)
             ? "Liked"
             : "Disliked";
-    read(mixpanel)!.track(
+    ref.read(mixpanel)!.track(
       "$action notif",
       properties: {
         "notifTitle": notif.title,
@@ -126,7 +126,7 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
   }
 
   void setYesNoFeedbackEnabled(bool isEnabled) {
-    read(isYesNoEnabledProvider.notifier).state = isEnabled;
+    ref.read(isYesNoEnabledProvider.notifier).state = isEnabled;
   }
 
   Future<void> deleteNotif(Notif notif) async {
@@ -142,7 +142,7 @@ class NotifsViewModel extends ViewModel with NotifsTecMixin {
         sentAt: DateTime.now(),
         sender: currentUser,
       ),
-      needsFeedback: read(isYesNoEnabledProvider),
+      needsFeedback: ref.read(isYesNoEnabledProvider),
     );
     Navigator.pop(context);
   }

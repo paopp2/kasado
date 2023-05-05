@@ -8,6 +8,7 @@ import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/model/court_slot/court_slot.dart';
 import 'package:kasado/model/kasado_user/kasado_user.dart';
 import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 
 final courtSlotRepositoryProvider = Provider.autoDispose(
   (ref) => CourtSlotRepository(
@@ -37,17 +38,17 @@ class CourtSlotRepository {
     );
   }
 
-  Future<void> incGamesPlayedForPlayers({
+  Future<void> addGamesPlayedForPlayers({
+    int delta = 1,
     required CourtSlot courtSlot,
-    required List<KasadoUser> gamePlayers,
+    required List<String> gamePlayerIds,
   }) async {
-    final playerIdList = gamePlayers.map((u) => u.id).toList();
     await firestoreHelper.setData(
       path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
       data: {
         "slotInfoPerPlayer": {
-          for (final playerId in playerIdList)
-            playerId: {"timesPlayed": FieldValue.increment(1)}
+          for (final playerId in gamePlayerIds)
+            playerId: {"timesPlayed": FieldValue.increment(delta)}
         },
       },
       merge: true,
@@ -77,7 +78,7 @@ class CourtSlotRepository {
     required CourtSlot courtSlot,
     required String playerId,
   }) async {
-    final newPlayerIdQueue = [...courtSlot.playerIdQueue]..remove(playerId);
+    final newPlayerIdQueue = [...courtSlot.playerIdQueue].exclude(playerId);
     await firestoreHelper.setData(
       path: FirestorePath.docCourtSlot(courtSlot.courtId, courtSlot.slotId),
       data: {"playerIdQueue": newPlayerIdQueue},
@@ -159,7 +160,7 @@ class CourtSlotRepository {
       );
     }
 
-    final updatedPlayerList = courtSlot.players..remove(player);
+    final updatedPlayerList = courtSlot.players.exclude(player);
 
     // Remove user ticket
     await userInfoRepo.removeUserTicket(
@@ -259,7 +260,8 @@ class CourtSlotRepository {
         courtSlot.players.where((p) => _teamPlayerIds.contains(p.id)).toList();
 
     final updatedPlayerList = courtSlot.players
-      ..removeWhere((player) => _teamPlayersFromCourtSlot.contains(player));
+        .where((player) => !_teamPlayersFromCourtSlot.contains(player))
+        .toList();
 
     // Remove this slot's ticket for the team
     await teamRepo.removeTeamTicket(

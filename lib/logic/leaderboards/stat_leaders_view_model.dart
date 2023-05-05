@@ -3,20 +3,20 @@ import 'package:kasado/constants/enums/stat_type.dart';
 import 'package:kasado/logic/leaderboards/stat_leaders_state.dart';
 import 'package:kasado/logic/shared/kasado_utils.dart';
 import 'package:kasado/logic/shared/view_model.dart';
-import 'package:kasado/model/kasado_user_info/kasado_user_info.dart';
+import 'package:kasado/model/overview_stats/overview_stats.dart';
 
 final statLeadersViewModel = Provider.autoDispose(
   (ref) => StatLeadersViewModel(
-    read: ref.read,
+    ref: ref,
     utils: ref.watch(kasadoUtilsProvider),
   ),
 );
 
 class StatLeadersViewModel extends ViewModel {
   StatLeadersViewModel({
-    required Reader read,
+    required Ref ref,
     required this.utils,
-  }) : super(read);
+  }) : super(ref);
 
   final KasadoUtils utils;
 
@@ -24,17 +24,15 @@ class StatLeadersViewModel extends ViewModel {
   /// preceding, rank number is not shown
   String getRankNumAsString({
     required StatType statType,
-    required KasadoUserInfo? precedingUserInfo,
-    required KasadoUserInfo userInfo,
+    required OverviewStats? precedingStats,
+    required OverviewStats overviewStats,
   }) {
-    final precedingStats = precedingUserInfo?.overviewStats;
-    final stats = userInfo.overviewStats;
-    final rankNum =
-        read(rankNumProvider(statType))[stats.getStatValueAsString(statType)];
+    final rankNum = ref.read(rankNumProvider(statType))[
+        overviewStats.getStatValueAsString(statType)];
     final isSameRankWithPreceding = (precedingStats == null)
         ? false
         : rankNum ==
-            read(rankNumProvider(statType))[
+            ref.read(rankNumProvider(statType))[
                 precedingStats.getStatValueAsString(statType)];
 
     return (isSameRankWithPreceding) ? '' : rankNum.toString();

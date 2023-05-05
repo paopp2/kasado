@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/repositories/court_repository.dart';
 import 'package:kasado/data/repositories/court_slot_repository.dart';
@@ -18,7 +19,7 @@ import 'package:uuid/uuid.dart';
 
 final courtAdminController = Provider.autoDispose(
   (ref) => CourtAdminController(
-    read: ref.read,
+    ref: ref,
     courtRepo: ref.watch(courtRepositoryProvider),
     courtSlotRepo: ref.watch(courtSlotRepositoryProvider),
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
@@ -28,14 +29,14 @@ final courtAdminController = Provider.autoDispose(
 
 class CourtAdminController with CourtAdminTecMixin {
   CourtAdminController({
-    required this.read,
+    required this.ref,
     required this.courtRepo,
     required this.courtSlotRepo,
     required this.currentUser,
     required this.userInfoRepo,
   });
 
-  final Reader read;
+  final Ref ref;
   final CourtRepository courtRepo;
   final CourtSlotRepository courtSlotRepo;
   final UserInfoRepository userInfoRepo;
@@ -79,7 +80,7 @@ class CourtAdminController with CourtAdminTecMixin {
   }
 
   void setCourtLocation(KasadoLocation? location) {
-    read(courtLocationProvider.notifier).state = location!;
+    ref.read(courtLocationProvider.notifier).state = location!;
   }
 
   void addToCourtSchedList({
@@ -88,11 +89,11 @@ class CourtAdminController with CourtAdminTecMixin {
   }) {
     final schedListProvider =
         (isSpecial) ? specialCourtSchedListProvider : courtSchedListProvider;
-    read(schedListProvider.notifier).update(
-      (s) => [...s, sched]..sort(
-          (a, b) => b.timeRange.startsAt.compareTo(a.timeRange.startsAt),
-        ),
-    );
+    ref.read(schedListProvider.notifier).update(
+          (s) => [...s, sched]..sort(
+              (a, b) => b.timeRange.startsAt.compareTo(a.timeRange.startsAt),
+            ),
+        );
   }
 
   void removeFromCourtSchedList({
@@ -101,9 +102,9 @@ class CourtAdminController with CourtAdminTecMixin {
   }) {
     final schedListProvider =
         (isSpecial) ? specialCourtSchedListProvider : courtSchedListProvider;
-    read(schedListProvider.notifier).update(
-      (s) => [...s]..remove(sched),
-    );
+    ref.read(schedListProvider.notifier).update(
+          (s) => [...s].exclude(sched),
+        );
   }
 
   /// If (forEdit), courtId must not be null
@@ -117,18 +118,19 @@ class CourtAdminController with CourtAdminTecMixin {
     assert(forEdit == (court != null));
     if (forEdit) {
       setupCourtToEdit(court!, (courtLoc, courtScheds, specialCourtScheds) {
-        read(courtLocationProvider.notifier).state = courtLoc;
-        read(courtSchedListProvider.notifier).state = courtScheds;
-        read(specialCourtSchedListProvider.notifier).state = specialCourtScheds;
+        ref.read(courtLocationProvider.notifier).state = courtLoc;
+        ref.read(courtSchedListProvider.notifier).state = courtScheds;
+        ref.read(specialCourtSchedListProvider.notifier).state =
+            specialCourtScheds;
       });
     }
     showDialog(
       context: context,
       builder: (_) => dialog,
     ).then((_) {
-      read(courtLocationProvider.notifier).state = null;
-      read(courtSchedListProvider.notifier).state = [];
-      read(courtSchedListProvider.notifier).state = [];
+      ref.read(courtLocationProvider.notifier).state = null;
+      ref.read(courtSchedListProvider.notifier).state = [];
+      ref.read(courtSchedListProvider.notifier).state = [];
       clearAllTecs();
     });
   }
@@ -162,11 +164,11 @@ class CourtAdminController with CourtAdminTecMixin {
         id: id,
         name: tecCourtName.text,
         photoUrl: tecCourtPhotoUrl.text,
-        location: read(courtLocationProvider)!,
+        location: ref.read(courtLocationProvider)!,
         ticketPrice: double.parse(tecTicketPrice.text),
         adminIds: baseCourtInfo?.adminIds ?? [currentUser.id],
-        courtScheds: read(courtSchedListProvider),
-        specialCourtScheds: read(specialCourtSchedListProvider),
+        courtScheds: ref.read(courtSchedListProvider),
+        specialCourtScheds: ref.read(specialCourtSchedListProvider),
         maxPerSlot: int.parse(tecMaxPerSlot.text),
         minPerSlot: int.parse(tecMinPerSlot.text),
       ),

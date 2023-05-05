@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'team.dart';
 
@@ -12,36 +12,11 @@ part of 'team.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Team _$TeamFromJson(Map<String, dynamic> json) {
   return _Team.fromJson(json);
 }
-
-/// @nodoc
-class _$TeamTearOff {
-  const _$TeamTearOff();
-
-  _Team call(
-      {required String id,
-      required KasadoUser teamCaptain,
-      String customTeamName = '',
-      List<KasadoUser> players = const []}) {
-    return _Team(
-      id: id,
-      teamCaptain: teamCaptain,
-      customTeamName: customTeamName,
-      players: players,
-    );
-  }
-
-  Team fromJson(Map<String, Object?> json) {
-    return Team.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Team = _$TeamTearOff();
 
 /// @nodoc
 mixin _$Team {
@@ -58,7 +33,8 @@ mixin _$Team {
 /// @nodoc
 abstract class $TeamCopyWith<$Res> {
   factory $TeamCopyWith(Team value, $Res Function(Team) then) =
-      _$TeamCopyWithImpl<$Res>;
+      _$TeamCopyWithImpl<$Res, Team>;
+  @useResult
   $Res call(
       {String id,
       KasadoUser teamCaptain,
@@ -69,53 +45,58 @@ abstract class $TeamCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
+class _$TeamCopyWithImpl<$Res, $Val extends Team>
+    implements $TeamCopyWith<$Res> {
   _$TeamCopyWithImpl(this._value, this._then);
 
-  final Team _value;
   // ignore: unused_field
-  final $Res Function(Team) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? teamCaptain = freezed,
-    Object? customTeamName = freezed,
-    Object? players = freezed,
+    Object? id = null,
+    Object? teamCaptain = null,
+    Object? customTeamName = null,
+    Object? players = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      teamCaptain: teamCaptain == freezed
+      teamCaptain: null == teamCaptain
           ? _value.teamCaptain
           : teamCaptain // ignore: cast_nullable_to_non_nullable
               as KasadoUser,
-      customTeamName: customTeamName == freezed
+      customTeamName: null == customTeamName
           ? _value.customTeamName
           : customTeamName // ignore: cast_nullable_to_non_nullable
               as String,
-      players: players == freezed
+      players: null == players
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $KasadoUserCopyWith<$Res> get teamCaptain {
     return $KasadoUserCopyWith<$Res>(_value.teamCaptain, (value) {
-      return _then(_value.copyWith(teamCaptain: value));
+      return _then(_value.copyWith(teamCaptain: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
-  factory _$TeamCopyWith(_Team value, $Res Function(_Team) then) =
-      __$TeamCopyWithImpl<$Res>;
+abstract class _$$_TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
+  factory _$$_TeamCopyWith(_$_Team value, $Res Function(_$_Team) then) =
+      __$$_TeamCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String id,
       KasadoUser teamCaptain,
@@ -127,36 +108,34 @@ abstract class _$TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
-    implements _$TeamCopyWith<$Res> {
-  __$TeamCopyWithImpl(_Team _value, $Res Function(_Team) _then)
-      : super(_value, (v) => _then(v as _Team));
+class __$$_TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res, _$_Team>
+    implements _$$_TeamCopyWith<$Res> {
+  __$$_TeamCopyWithImpl(_$_Team _value, $Res Function(_$_Team) _then)
+      : super(_value, _then);
 
-  @override
-  _Team get _value => super._value as _Team;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? teamCaptain = freezed,
-    Object? customTeamName = freezed,
-    Object? players = freezed,
+    Object? id = null,
+    Object? teamCaptain = null,
+    Object? customTeamName = null,
+    Object? players = null,
   }) {
-    return _then(_Team(
-      id: id == freezed
+    return _then(_$_Team(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      teamCaptain: teamCaptain == freezed
+      teamCaptain: null == teamCaptain
           ? _value.teamCaptain
           : teamCaptain // ignore: cast_nullable_to_non_nullable
               as KasadoUser,
-      customTeamName: customTeamName == freezed
+      customTeamName: null == customTeamName
           ? _value.customTeamName
           : customTeamName // ignore: cast_nullable_to_non_nullable
               as String,
-      players: players == freezed
-          ? _value.players
+      players: null == players
+          ? _value._players
           : players // ignore: cast_nullable_to_non_nullable
               as List<KasadoUser>,
     ));
@@ -170,8 +149,9 @@ class _$_Team extends _Team with DiagnosticableTreeMixin {
       {required this.id,
       required this.teamCaptain,
       this.customTeamName = '',
-      this.players = const []})
-      : super._();
+      final List<KasadoUser> players = const []})
+      : _players = players,
+        super._();
 
   factory _$_Team.fromJson(Map<String, dynamic> json) => _$$_TeamFromJson(json);
 
@@ -179,12 +159,17 @@ class _$_Team extends _Team with DiagnosticableTreeMixin {
   final String id;
   @override
   final KasadoUser teamCaptain;
-  @JsonKey()
   @override
+  @JsonKey()
   final String customTeamName;
-  @JsonKey()
+  final List<KasadoUser> _players;
   @override
-  final List<KasadoUser> players;
+  @JsonKey()
+  List<KasadoUser> get players {
+    if (_players is EqualUnmodifiableListView) return _players;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_players);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -206,40 +191,40 @@ class _$_Team extends _Team with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Team &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.teamCaptain, teamCaptain) &&
-            const DeepCollectionEquality()
-                .equals(other.customTeamName, customTeamName) &&
-            const DeepCollectionEquality().equals(other.players, players));
+            other is _$_Team &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.teamCaptain, teamCaptain) ||
+                other.teamCaptain == teamCaptain) &&
+            (identical(other.customTeamName, customTeamName) ||
+                other.customTeamName == customTeamName) &&
+            const DeepCollectionEquality().equals(other._players, _players));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(teamCaptain),
-      const DeepCollectionEquality().hash(customTeamName),
-      const DeepCollectionEquality().hash(players));
 
   @JsonKey(ignore: true)
   @override
-  _$TeamCopyWith<_Team> get copyWith =>
-      __$TeamCopyWithImpl<_Team>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, id, teamCaptain, customTeamName,
+      const DeepCollectionEquality().hash(_players));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TeamCopyWith<_$_Team> get copyWith =>
+      __$$_TeamCopyWithImpl<_$_Team>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TeamToJson(this);
+    return _$$_TeamToJson(
+      this,
+    );
   }
 }
 
 abstract class _Team extends Team {
   const factory _Team(
-      {required String id,
-      required KasadoUser teamCaptain,
-      String customTeamName,
-      List<KasadoUser> players}) = _$_Team;
+      {required final String id,
+      required final KasadoUser teamCaptain,
+      final String customTeamName,
+      final List<KasadoUser> players}) = _$_Team;
   const _Team._() : super._();
 
   factory _Team.fromJson(Map<String, dynamic> json) = _$_Team.fromJson;
@@ -254,5 +239,5 @@ abstract class _Team extends Team {
   List<KasadoUser> get players;
   @override
   @JsonKey(ignore: true)
-  _$TeamCopyWith<_Team> get copyWith => throw _privateConstructorUsedError;
+  _$$_TeamCopyWith<_$_Team> get copyWith => throw _privateConstructorUsedError;
 }

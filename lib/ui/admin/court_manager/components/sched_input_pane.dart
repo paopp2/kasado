@@ -33,7 +33,7 @@ class SchedInputPane extends HookConsumerWidget {
               isSpecial: isSpecial,
             ),
           ),
-          style: TextButton.styleFrom(primary: Colors.green),
+          style: TextButton.styleFrom(foregroundColor: Colors.green),
         ),
         Expanded(
           child: ListView.builder(

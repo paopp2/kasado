@@ -6,14 +6,14 @@ import 'package:kasado/data/core/core_providers.dart';
 
 final authServiceProvider = Provider.autoDispose(
   (ref) => AuthService(
-    ref.read,
+    ref,
     GoogleSignIn(),
   ),
 );
 
 class AuthService {
-  AuthService(this.read, this.googleSignIn);
-  final Reader read;
+  AuthService(this.ref, this.googleSignIn);
+  final Ref ref;
   final GoogleSignIn googleSignIn;
 
   Future<Either<Exception, UserCredential?>> signInWithGoogle() async {
@@ -28,8 +28,9 @@ class AuthService {
         accessToken: googleSignInAuth.accessToken,
         idToken: googleSignInAuth.idToken,
       );
-      final signedInUserCreds =
-          await read(fireauthProvider).signInWithCredential(googleAuthCreds);
+      final signedInUserCreds = await ref
+          .read(fireauthProvider)
+          .signInWithCredential(googleAuthCreds);
 
       return Right(signedInUserCreds);
     } catch (e) {
@@ -39,6 +40,6 @@ class AuthService {
 
   Future<void> signOutGoogle() async {
     await googleSignIn.signOut();
-    await read(fireauthProvider).signOut();
+    await ref.read(fireauthProvider).signOut();
   }
 }

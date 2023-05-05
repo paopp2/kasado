@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'slot_player_info.dart';
 
@@ -12,29 +12,11 @@ part of 'slot_player_info.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 SlotPlayerInfo _$SlotPlayerInfoFromJson(Map<String, dynamic> json) {
   return _SlotPlayerInfo.fromJson(json);
 }
-
-/// @nodoc
-class _$SlotPlayerInfoTearOff {
-  const _$SlotPlayerInfoTearOff();
-
-  _SlotPlayerInfo call({int timesPlayed = 0}) {
-    return _SlotPlayerInfo(
-      timesPlayed: timesPlayed,
-    );
-  }
-
-  SlotPlayerInfo fromJson(Map<String, Object?> json) {
-    return SlotPlayerInfo.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $SlotPlayerInfo = _$SlotPlayerInfoTearOff();
 
 /// @nodoc
 mixin _$SlotPlayerInfo {
@@ -50,59 +32,61 @@ mixin _$SlotPlayerInfo {
 abstract class $SlotPlayerInfoCopyWith<$Res> {
   factory $SlotPlayerInfoCopyWith(
           SlotPlayerInfo value, $Res Function(SlotPlayerInfo) then) =
-      _$SlotPlayerInfoCopyWithImpl<$Res>;
+      _$SlotPlayerInfoCopyWithImpl<$Res, SlotPlayerInfo>;
+  @useResult
   $Res call({int timesPlayed});
 }
 
 /// @nodoc
-class _$SlotPlayerInfoCopyWithImpl<$Res>
+class _$SlotPlayerInfoCopyWithImpl<$Res, $Val extends SlotPlayerInfo>
     implements $SlotPlayerInfoCopyWith<$Res> {
   _$SlotPlayerInfoCopyWithImpl(this._value, this._then);
 
-  final SlotPlayerInfo _value;
   // ignore: unused_field
-  final $Res Function(SlotPlayerInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timesPlayed = freezed,
+    Object? timesPlayed = null,
   }) {
     return _then(_value.copyWith(
-      timesPlayed: timesPlayed == freezed
+      timesPlayed: null == timesPlayed
           ? _value.timesPlayed
           : timesPlayed // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$SlotPlayerInfoCopyWith<$Res>
+abstract class _$$_SlotPlayerInfoCopyWith<$Res>
     implements $SlotPlayerInfoCopyWith<$Res> {
-  factory _$SlotPlayerInfoCopyWith(
-          _SlotPlayerInfo value, $Res Function(_SlotPlayerInfo) then) =
-      __$SlotPlayerInfoCopyWithImpl<$Res>;
+  factory _$$_SlotPlayerInfoCopyWith(
+          _$_SlotPlayerInfo value, $Res Function(_$_SlotPlayerInfo) then) =
+      __$$_SlotPlayerInfoCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int timesPlayed});
 }
 
 /// @nodoc
-class __$SlotPlayerInfoCopyWithImpl<$Res>
-    extends _$SlotPlayerInfoCopyWithImpl<$Res>
-    implements _$SlotPlayerInfoCopyWith<$Res> {
-  __$SlotPlayerInfoCopyWithImpl(
-      _SlotPlayerInfo _value, $Res Function(_SlotPlayerInfo) _then)
-      : super(_value, (v) => _then(v as _SlotPlayerInfo));
+class __$$_SlotPlayerInfoCopyWithImpl<$Res>
+    extends _$SlotPlayerInfoCopyWithImpl<$Res, _$_SlotPlayerInfo>
+    implements _$$_SlotPlayerInfoCopyWith<$Res> {
+  __$$_SlotPlayerInfoCopyWithImpl(
+      _$_SlotPlayerInfo _value, $Res Function(_$_SlotPlayerInfo) _then)
+      : super(_value, _then);
 
-  @override
-  _SlotPlayerInfo get _value => super._value as _SlotPlayerInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timesPlayed = freezed,
+    Object? timesPlayed = null,
   }) {
-    return _then(_SlotPlayerInfo(
-      timesPlayed: timesPlayed == freezed
+    return _then(_$_SlotPlayerInfo(
+      timesPlayed: null == timesPlayed
           ? _value.timesPlayed
           : timesPlayed // ignore: cast_nullable_to_non_nullable
               as int,
@@ -118,8 +102,8 @@ class _$_SlotPlayerInfo extends _SlotPlayerInfo with DiagnosticableTreeMixin {
   factory _$_SlotPlayerInfo.fromJson(Map<String, dynamic> json) =>
       _$$_SlotPlayerInfoFromJson(json);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final int timesPlayed;
 
   @override
@@ -139,28 +123,31 @@ class _$_SlotPlayerInfo extends _SlotPlayerInfo with DiagnosticableTreeMixin {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SlotPlayerInfo &&
-            const DeepCollectionEquality()
-                .equals(other.timesPlayed, timesPlayed));
+            other is _$_SlotPlayerInfo &&
+            (identical(other.timesPlayed, timesPlayed) ||
+                other.timesPlayed == timesPlayed));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(timesPlayed));
 
   @JsonKey(ignore: true)
   @override
-  _$SlotPlayerInfoCopyWith<_SlotPlayerInfo> get copyWith =>
-      __$SlotPlayerInfoCopyWithImpl<_SlotPlayerInfo>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, timesPlayed);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SlotPlayerInfoCopyWith<_$_SlotPlayerInfo> get copyWith =>
+      __$$_SlotPlayerInfoCopyWithImpl<_$_SlotPlayerInfo>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SlotPlayerInfoToJson(this);
+    return _$$_SlotPlayerInfoToJson(
+      this,
+    );
   }
 }
 
 abstract class _SlotPlayerInfo extends SlotPlayerInfo {
-  const factory _SlotPlayerInfo({int timesPlayed}) = _$_SlotPlayerInfo;
+  const factory _SlotPlayerInfo({final int timesPlayed}) = _$_SlotPlayerInfo;
   const _SlotPlayerInfo._() : super._();
 
   factory _SlotPlayerInfo.fromJson(Map<String, dynamic> json) =
@@ -170,6 +157,6 @@ abstract class _SlotPlayerInfo extends SlotPlayerInfo {
   int get timesPlayed;
   @override
   @JsonKey(ignore: true)
-  _$SlotPlayerInfoCopyWith<_SlotPlayerInfo> get copyWith =>
+  _$$_SlotPlayerInfoCopyWith<_$_SlotPlayerInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }

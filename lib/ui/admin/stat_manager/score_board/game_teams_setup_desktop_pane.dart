@@ -148,7 +148,7 @@ class GameTeamsSetupDesktopPane extends HookConsumerWidget {
                   ),
                   onPressed: controller.toggleToNextSortState,
                   style: TextButton.styleFrom(
-                    primary: Colors.blue,
+                    foregroundColor: Colors.blue,
                   ),
                 ),
                 Expanded(

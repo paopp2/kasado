@@ -107,6 +107,7 @@ class CourtSlotDetailsView extends HookConsumerWidget {
                           BoxScoreTab(
                             constraints: constraints,
                             courtSlot: baseCourtSlot,
+                            isAdmin: isAdmin,
                           ),
                           if (isAdmin) ...[
                             StatsControllerTab(

@@ -125,9 +125,13 @@ class FirestoreHelper {
     required T Function(Map<String, dynamic> data, String documentID) builder,
     Query Function(Query query)? queryBuilder,
     int Function(T lhs, T rhs)? sort,
+    bool isCollectionGroup = false,
   }) {
     final streamController = StreamController<List<T>>();
-    Query query = FirebaseFirestore.instance.collection(path);
+    final firestore = FirebaseFirestore.instance;
+    Query query = isCollectionGroup
+        ? firestore.collectionGroup(path)
+        : firestore.collection(path);
     if (queryBuilder != null) {
       query = queryBuilder(query);
     }

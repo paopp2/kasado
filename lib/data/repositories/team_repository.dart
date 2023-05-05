@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/core/core_providers.dart';
 import 'package:kasado/data/helpers/firestore_helper.dart';
 import 'package:kasado/data/helpers/firestore_path.dart';
@@ -47,7 +48,7 @@ class TeamRepository {
     required Team team,
     required KasadoUser player,
   }) async {
-    final updatedTeam = team.copyWith(players: team.players..remove(player));
+    final updatedTeam = team.copyWith(players: team.players.exclude(player));
 
     pushTeam(updatedTeam);
 
