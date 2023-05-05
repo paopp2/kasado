@@ -70,7 +70,7 @@ exports.populateTeams = functions.https.onRequest(async (req, res) => {
     res.json({ result: "Populated 'teams'" });
 });
 
-exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}/season_stats/{seasonId}').onUpdate(async (change, context) => {
+exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}/season_stats/{seasonId}').onWrite(async (change, context) => {
     const preUserStats = change.before.data();
     const updatedUserStats = change.after.data();
 
@@ -112,10 +112,18 @@ exports.calcDeriveableStats = functions.firestore.document('user_info/{userId}/s
 
             const appMeta = await appMetaRef.get();
             const currentSeasonId = appMeta.data().seasonId;
-            await userInfoRef.doc(stats.player.id)
+            let player = stats.player;
+            if (!player) {
+                let userInfoObj = await change.after.ref.parent.parent.get();
+                player = userInfoObj.data().user;
+            }
+
+            await userInfoRef.doc(player.id)
                 .collection("season_stats")
                 .doc(currentSeasonId)
                 .set({
+                    "player": player,
+                    "seasonId": currentSeasonId,
                     "totalGamesPlayed": totalGamesPlayed,
                     "totalPoints": totalPoints,
                     "totalAttempts": totalAttempts,
