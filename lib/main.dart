@@ -10,7 +10,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 // TODO: Set to false in production
-const bool inDebugMode = false;
+const bool inDebugMode = true;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
