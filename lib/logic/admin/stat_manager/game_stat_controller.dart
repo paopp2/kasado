@@ -254,6 +254,19 @@ class GameStatController {
       courtSlot: courtSlot,
       gameStats: gameStats,
     );
+
+    final homeTeamPlayerIds = gameStats.homeTeamStats.keys.toList();
+    final awayTeamPlayerIds = gameStats.awayTeamStats.keys.toList();
+
+    // Decrement games played by 1
+    await courtSlotRepo.addGamesPlayedForPlayers(
+      courtSlot: courtSlot,
+      gamePlayerIds: [
+        ...homeTeamPlayerIds,
+        ...awayTeamPlayerIds,
+      ],
+      delta: -1,
+    );
   }
 
   Future<void> initStatsForGame({
