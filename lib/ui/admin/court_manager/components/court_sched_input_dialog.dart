@@ -65,10 +65,12 @@ class CourtSchedInputDialog extends HookConsumerWidget {
         timeStartState.value = timeStartState.value.copyWith(
           month: date.month,
           day: date.day,
+          year: date.year,
         );
         timeEndState.value = timeEndState.value.copyWith(
           month: date.month,
           day: date.day,
+          year: date.year,
         );
       }
     }
