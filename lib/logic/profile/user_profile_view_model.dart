@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kasado/constants/enums/player_position.dart';
 import 'package:kasado/constants/extensions/iterable_extensions.dart';
 import 'package:kasado/data/core/core_providers.dart';
+import 'package:kasado/data/repositories/stat_repository.dart';
 import 'package:kasado/data/repositories/user_info_repository.dart';
 import 'package:kasado/logic/profile/user_profile_state.dart';
 import 'package:kasado/logic/profile/user_profile_tec_mixin.dart';
@@ -18,6 +19,7 @@ final userProfileViewModel = Provider.autoDispose(
   (ref) => UserProfileViewModel(
     ref: ref,
     userInfoRepo: ref.watch(userInfoRepositoryProvider),
+    statRepository: ref.watch(statRepositoryProvider),
     currentUser: ref.watch(currentUserProvider)!,
   ),
 );
@@ -26,10 +28,12 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
   UserProfileViewModel({
     required Ref ref,
     required this.userInfoRepo,
+    required this.statRepository,
     required this.currentUser,
   }) : super(ref);
 
   final UserInfoRepository userInfoRepo;
+  final StatRepository statRepository;
   final KasadoUser currentUser;
 
   @override
@@ -135,5 +139,12 @@ class UserProfileViewModel extends ViewModel with UserProfileTecMixin {
     ref.read(mixpanel)!.track("Pushed UserBio", properties: userBio.toJson());
     await userInfoRepo.pushUserBio(userId: currentUser.id, userBio: userBio);
     Navigator.pop(context);
+  }
+
+  Future<void> deleteUserGameStats(Stats playerStats) async {
+    statRepository.deleteUserGameStats(
+      playerId: playerStats.player.id,
+      playerStats: playerStats,
+    );
   }
 }

@@ -22,23 +22,23 @@ OverviewStats _$OverviewStatsFromJson(Map<String, dynamic> json) {
 mixin _$OverviewStats {
   KasadoUser get player => throw _privateConstructorUsedError;
   String get seasonId => throw _privateConstructorUsedError;
-  int get mmr => throw _privateConstructorUsedError;
-  int get totalThreePA => throw _privateConstructorUsedError;
-  int get totalThreePM => throw _privateConstructorUsedError;
-  int get totalTwoPA => throw _privateConstructorUsedError;
-  int get totalTwoPM => throw _privateConstructorUsedError;
-  int get totalFta => throw _privateConstructorUsedError;
-  int get totalFtm => throw _privateConstructorUsedError;
-  int get totalOReb => throw _privateConstructorUsedError;
-  int get totalDReb => throw _privateConstructorUsedError;
-  int get totalAst => throw _privateConstructorUsedError;
-  int get totalStl => throw _privateConstructorUsedError;
-  int get totalBlk => throw _privateConstructorUsedError;
-  int get totalTO => throw _privateConstructorUsedError;
-  int get totalWins => throw _privateConstructorUsedError;
-  int get totalPlusMinus => throw _privateConstructorUsedError;
-  int get gamesPlayed => throw _privateConstructorUsedError;
-  int get gamesPlayedNoStats => throw _privateConstructorUsedError;
+  num get mmr => throw _privateConstructorUsedError;
+  num get totalThreePA => throw _privateConstructorUsedError;
+  num get totalThreePM => throw _privateConstructorUsedError;
+  num get totalTwoPA => throw _privateConstructorUsedError;
+  num get totalTwoPM => throw _privateConstructorUsedError;
+  num get totalFta => throw _privateConstructorUsedError;
+  num get totalFtm => throw _privateConstructorUsedError;
+  num get totalOReb => throw _privateConstructorUsedError;
+  num get totalDReb => throw _privateConstructorUsedError;
+  num get totalAst => throw _privateConstructorUsedError;
+  num get totalStl => throw _privateConstructorUsedError;
+  num get totalBlk => throw _privateConstructorUsedError;
+  num get totalTO => throw _privateConstructorUsedError;
+  num get totalWins => throw _privateConstructorUsedError;
+  num get totalPlusMinus => throw _privateConstructorUsedError;
+  num get gamesPlayed => throw _privateConstructorUsedError;
+  num get gamesPlayedNoStats => throw _privateConstructorUsedError;
   bool get isHiddenFromRankings => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,23 +56,23 @@ abstract class $OverviewStatsCopyWith<$Res> {
   $Res call(
       {KasadoUser player,
       String seasonId,
-      int mmr,
-      int totalThreePA,
-      int totalThreePM,
-      int totalTwoPA,
-      int totalTwoPM,
-      int totalFta,
-      int totalFtm,
-      int totalOReb,
-      int totalDReb,
-      int totalAst,
-      int totalStl,
-      int totalBlk,
-      int totalTO,
-      int totalWins,
-      int totalPlusMinus,
-      int gamesPlayed,
-      int gamesPlayedNoStats,
+      num mmr,
+      num totalThreePA,
+      num totalThreePM,
+      num totalTwoPA,
+      num totalTwoPM,
+      num totalFta,
+      num totalFtm,
+      num totalOReb,
+      num totalDReb,
+      num totalAst,
+      num totalStl,
+      num totalBlk,
+      num totalTO,
+      num totalWins,
+      num totalPlusMinus,
+      num gamesPlayed,
+      num gamesPlayedNoStats,
       bool isHiddenFromRankings});
 
   $KasadoUserCopyWith<$Res> get player;
@@ -124,71 +124,71 @@ class _$OverviewStatsCopyWithImpl<$Res, $Val extends OverviewStats>
       mmr: null == mmr
           ? _value.mmr
           : mmr // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalThreePA: null == totalThreePA
           ? _value.totalThreePA
           : totalThreePA // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalThreePM: null == totalThreePM
           ? _value.totalThreePM
           : totalThreePM // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalTwoPA: null == totalTwoPA
           ? _value.totalTwoPA
           : totalTwoPA // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalTwoPM: null == totalTwoPM
           ? _value.totalTwoPM
           : totalTwoPM // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalFta: null == totalFta
           ? _value.totalFta
           : totalFta // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalFtm: null == totalFtm
           ? _value.totalFtm
           : totalFtm // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalOReb: null == totalOReb
           ? _value.totalOReb
           : totalOReb // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalDReb: null == totalDReb
           ? _value.totalDReb
           : totalDReb // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalAst: null == totalAst
           ? _value.totalAst
           : totalAst // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalStl: null == totalStl
           ? _value.totalStl
           : totalStl // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalBlk: null == totalBlk
           ? _value.totalBlk
           : totalBlk // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalTO: null == totalTO
           ? _value.totalTO
           : totalTO // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalWins: null == totalWins
           ? _value.totalWins
           : totalWins // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalPlusMinus: null == totalPlusMinus
           ? _value.totalPlusMinus
           : totalPlusMinus // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       gamesPlayed: null == gamesPlayed
           ? _value.gamesPlayed
           : gamesPlayed // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       gamesPlayedNoStats: null == gamesPlayedNoStats
           ? _value.gamesPlayedNoStats
           : gamesPlayedNoStats // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       isHiddenFromRankings: null == isHiddenFromRankings
           ? _value.isHiddenFromRankings
           : isHiddenFromRankings // ignore: cast_nullable_to_non_nullable
@@ -216,23 +216,23 @@ abstract class _$$_OverviewStatsCopyWith<$Res>
   $Res call(
       {KasadoUser player,
       String seasonId,
-      int mmr,
-      int totalThreePA,
-      int totalThreePM,
-      int totalTwoPA,
-      int totalTwoPM,
-      int totalFta,
-      int totalFtm,
-      int totalOReb,
-      int totalDReb,
-      int totalAst,
-      int totalStl,
-      int totalBlk,
-      int totalTO,
-      int totalWins,
-      int totalPlusMinus,
-      int gamesPlayed,
-      int gamesPlayedNoStats,
+      num mmr,
+      num totalThreePA,
+      num totalThreePM,
+      num totalTwoPA,
+      num totalTwoPM,
+      num totalFta,
+      num totalFtm,
+      num totalOReb,
+      num totalDReb,
+      num totalAst,
+      num totalStl,
+      num totalBlk,
+      num totalTO,
+      num totalWins,
+      num totalPlusMinus,
+      num gamesPlayed,
+      num gamesPlayedNoStats,
       bool isHiddenFromRankings});
 
   @override
@@ -283,71 +283,71 @@ class __$$_OverviewStatsCopyWithImpl<$Res>
       mmr: null == mmr
           ? _value.mmr
           : mmr // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalThreePA: null == totalThreePA
           ? _value.totalThreePA
           : totalThreePA // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalThreePM: null == totalThreePM
           ? _value.totalThreePM
           : totalThreePM // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalTwoPA: null == totalTwoPA
           ? _value.totalTwoPA
           : totalTwoPA // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalTwoPM: null == totalTwoPM
           ? _value.totalTwoPM
           : totalTwoPM // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalFta: null == totalFta
           ? _value.totalFta
           : totalFta // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalFtm: null == totalFtm
           ? _value.totalFtm
           : totalFtm // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalOReb: null == totalOReb
           ? _value.totalOReb
           : totalOReb // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalDReb: null == totalDReb
           ? _value.totalDReb
           : totalDReb // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalAst: null == totalAst
           ? _value.totalAst
           : totalAst // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalStl: null == totalStl
           ? _value.totalStl
           : totalStl // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalBlk: null == totalBlk
           ? _value.totalBlk
           : totalBlk // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalTO: null == totalTO
           ? _value.totalTO
           : totalTO // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalWins: null == totalWins
           ? _value.totalWins
           : totalWins // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       totalPlusMinus: null == totalPlusMinus
           ? _value.totalPlusMinus
           : totalPlusMinus // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       gamesPlayed: null == gamesPlayed
           ? _value.gamesPlayed
           : gamesPlayed // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       gamesPlayedNoStats: null == gamesPlayedNoStats
           ? _value.gamesPlayedNoStats
           : gamesPlayedNoStats // ignore: cast_nullable_to_non_nullable
-              as int,
+              as num,
       isHiddenFromRankings: null == isHiddenFromRankings
           ? _value.isHiddenFromRankings
           : isHiddenFromRankings // ignore: cast_nullable_to_non_nullable
@@ -389,55 +389,55 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
   final String seasonId;
   @override
   @JsonKey()
-  final int mmr;
+  final num mmr;
   @override
   @JsonKey()
-  final int totalThreePA;
+  final num totalThreePA;
   @override
   @JsonKey()
-  final int totalThreePM;
+  final num totalThreePM;
   @override
   @JsonKey()
-  final int totalTwoPA;
+  final num totalTwoPA;
   @override
   @JsonKey()
-  final int totalTwoPM;
+  final num totalTwoPM;
   @override
   @JsonKey()
-  final int totalFta;
+  final num totalFta;
   @override
   @JsonKey()
-  final int totalFtm;
+  final num totalFtm;
   @override
   @JsonKey()
-  final int totalOReb;
+  final num totalOReb;
   @override
   @JsonKey()
-  final int totalDReb;
+  final num totalDReb;
   @override
   @JsonKey()
-  final int totalAst;
+  final num totalAst;
   @override
   @JsonKey()
-  final int totalStl;
+  final num totalStl;
   @override
   @JsonKey()
-  final int totalBlk;
+  final num totalBlk;
   @override
   @JsonKey()
-  final int totalTO;
+  final num totalTO;
   @override
   @JsonKey()
-  final int totalWins;
+  final num totalWins;
   @override
   @JsonKey()
-  final int totalPlusMinus;
+  final num totalPlusMinus;
   @override
   @JsonKey()
-  final int gamesPlayed;
+  final num gamesPlayed;
   @override
   @JsonKey()
-  final int gamesPlayedNoStats;
+  final num gamesPlayedNoStats;
   @override
   @JsonKey()
   final bool isHiddenFromRankings;
@@ -560,23 +560,23 @@ class _$_OverviewStats extends _OverviewStats with DiagnosticableTreeMixin {
 
 abstract class _OverviewStats extends OverviewStats {
   const factory _OverviewStats(final KasadoUser player, final String seasonId,
-      {final int mmr,
-      final int totalThreePA,
-      final int totalThreePM,
-      final int totalTwoPA,
-      final int totalTwoPM,
-      final int totalFta,
-      final int totalFtm,
-      final int totalOReb,
-      final int totalDReb,
-      final int totalAst,
-      final int totalStl,
-      final int totalBlk,
-      final int totalTO,
-      final int totalWins,
-      final int totalPlusMinus,
-      final int gamesPlayed,
-      final int gamesPlayedNoStats,
+      {final num mmr,
+      final num totalThreePA,
+      final num totalThreePM,
+      final num totalTwoPA,
+      final num totalTwoPM,
+      final num totalFta,
+      final num totalFtm,
+      final num totalOReb,
+      final num totalDReb,
+      final num totalAst,
+      final num totalStl,
+      final num totalBlk,
+      final num totalTO,
+      final num totalWins,
+      final num totalPlusMinus,
+      final num gamesPlayed,
+      final num gamesPlayedNoStats,
       final bool isHiddenFromRankings}) = _$_OverviewStats;
   const _OverviewStats._() : super._();
 
@@ -588,39 +588,39 @@ abstract class _OverviewStats extends OverviewStats {
   @override
   String get seasonId;
   @override
-  int get mmr;
+  num get mmr;
   @override
-  int get totalThreePA;
+  num get totalThreePA;
   @override
-  int get totalThreePM;
+  num get totalThreePM;
   @override
-  int get totalTwoPA;
+  num get totalTwoPA;
   @override
-  int get totalTwoPM;
+  num get totalTwoPM;
   @override
-  int get totalFta;
+  num get totalFta;
   @override
-  int get totalFtm;
+  num get totalFtm;
   @override
-  int get totalOReb;
+  num get totalOReb;
   @override
-  int get totalDReb;
+  num get totalDReb;
   @override
-  int get totalAst;
+  num get totalAst;
   @override
-  int get totalStl;
+  num get totalStl;
   @override
-  int get totalBlk;
+  num get totalBlk;
   @override
-  int get totalTO;
+  num get totalTO;
   @override
-  int get totalWins;
+  num get totalWins;
   @override
-  int get totalPlusMinus;
+  num get totalPlusMinus;
   @override
-  int get gamesPlayed;
+  num get gamesPlayed;
   @override
-  int get gamesPlayedNoStats;
+  num get gamesPlayedNoStats;
   @override
   bool get isHiddenFromRankings;
   @override

@@ -501,26 +501,42 @@ class GameStatController {
     ];
     final allPlayers = [...courtSlot.players];
 
-    // If sortState == 0, show players added to queue only
-    if (sortState == 0) return queuedPlayers;
-
-    // If sortState == 1, show players staged to home & away teams
-    if (sortState == 1) {
-      return [
-        ...courtSlot.stageHomeTeamPlayers!,
-        ...courtSlot.stageAwayTeamPlayers!,
-      ];
+    switch (sortState) {
+      case 0:
+        return List.from(allPlayers)
+          ..sort((a, b) => a.displayName!
+              .toLowerCase()
+              .compareTo(b.displayName!.toLowerCase()));
+      case 1:
+        return List.from(allPlayers)
+          ..sort(
+            (a, b) => (courtSlot.slotInfoPerPlayer[a.id]?.timesPlayed ?? 0)
+                .compareTo(courtSlot.slotInfoPerPlayer[b.id]?.timesPlayed ?? 0),
+          );
+      case 2:
+        return queuedPlayers;
+      case 3:
+        return [
+          ...courtSlot.stageHomeTeamPlayers!,
+          ...courtSlot.stageAwayTeamPlayers!,
+        ];
+      default:
+        throw "Invalid state";
     }
+  }
 
-    allPlayers.sort((a, b) {
-      return (sortState == 2)
-          // If sortState == 2, show players alphabetically
-          ? a.displayName!.toLowerCase().compareTo(b.displayName!.toLowerCase())
-          // If sortState == 3, show players according to games played
-          : (courtSlot.slotInfoPerPlayer[a.id]?.timesPlayed ?? 0)
-              .compareTo(courtSlot.slotInfoPerPlayer[b.id]?.timesPlayed ?? 0);
-    });
-
-    return allPlayers;
+  String getHeaderAccordingToSortState(int sortState) {
+    switch (sortState) {
+      case 0:
+        return "All Alphabetical";
+      case 1:
+        return "All (According to Games Played)";
+      case 2:
+        return "Queued Only";
+      case 3:
+        return "Added to stage teams";
+      default:
+        throw "Invalid sort state";
+    }
   }
 }
