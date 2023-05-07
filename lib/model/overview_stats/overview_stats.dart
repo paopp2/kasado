@@ -12,31 +12,31 @@ class OverviewStats with _$OverviewStats {
   const factory OverviewStats(
     KasadoUser player,
     String seasonId, {
-    @Default(0) int mmr,
-    @Default(0) int totalThreePA,
-    @Default(0) int totalThreePM,
-    @Default(0) int totalTwoPA,
-    @Default(0) int totalTwoPM,
-    @Default(0) int totalFta,
-    @Default(0) int totalFtm,
-    @Default(0) int totalOReb,
-    @Default(0) int totalDReb,
-    @Default(0) int totalAst,
-    @Default(0) int totalStl,
-    @Default(0) int totalBlk,
-    @Default(0) int totalTO,
-    @Default(0) int totalWins,
-    @Default(0) int totalPlusMinus,
-    @Default(0) int gamesPlayed,
-    @Default(0) int gamesPlayedNoStats,
+    @Default(0) num mmr,
+    @Default(0) num totalThreePA,
+    @Default(0) num totalThreePM,
+    @Default(0) num totalTwoPA,
+    @Default(0) num totalTwoPM,
+    @Default(0) num totalFta,
+    @Default(0) num totalFtm,
+    @Default(0) num totalOReb,
+    @Default(0) num totalDReb,
+    @Default(0) num totalAst,
+    @Default(0) num totalStl,
+    @Default(0) num totalBlk,
+    @Default(0) num totalTO,
+    @Default(0) num totalWins,
+    @Default(0) num totalPlusMinus,
+    @Default(0) num gamesPlayed,
+    @Default(0) num gamesPlayedNoStats,
     @Default(false) bool isHiddenFromRankings,
   }) = _OverviewStats;
 
-  int get totalPoints => (totalThreePM * 3) + (totalTwoPM * 2) + totalFtm;
-  int get totalAttempts => totalThreePA + totalTwoPA;
-  int get totalMade => totalThreePM + totalTwoPM;
-  int get totalRebounds => totalOReb + totalDReb;
-  int get totalGamesPlayed => gamesPlayed + gamesPlayedNoStats;
+  num get totalPoints => (totalThreePM * 3) + (totalTwoPM * 2) + totalFtm;
+  num get totalAttempts => totalThreePA + totalTwoPA;
+  num get totalMade => totalThreePM + totalTwoPM;
+  num get totalRebounds => totalOReb + totalDReb;
+  num get totalGamesPlayed => gamesPlayed + gamesPlayedNoStats;
 
   double get aveFgPercent => (totalMade / totalAttempts) * 100;
   double get aveThreePtPercent => (totalThreePM / totalThreePA) * 100;
@@ -48,9 +48,9 @@ class OverviewStats with _$OverviewStats {
   double get aveStlPerGame => totalStl / gamesPlayed;
   double get avePlusMinus => totalPlusMinus / totalGamesPlayed;
 
-  int get totalLosses => totalGamesPlayed - totalWins;
+  num get totalLosses => totalGamesPlayed - totalWins;
   double get winPercent => (totalWins / totalGamesPlayed) * 100;
-  int get winLossDifference => totalWins - totalLosses;
+  num get winLossDifference => totalWins - totalLosses;
   double get effRating =>
       (totalPoints +
           totalAst +
