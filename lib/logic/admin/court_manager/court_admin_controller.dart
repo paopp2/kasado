@@ -50,7 +50,7 @@ class CourtAdminController with CourtAdminTecMixin {
     final playerIndex = baseCourtSlot.players.indexOf(player);
     await courtSlotRepo.pushCourtSlot(
       courtSlot: baseCourtSlot.copyWith(
-        players: baseCourtSlot.players
+        players: List.from(baseCourtSlot.players)
           ..[playerIndex] = player.copyWith(hasPaid: !player.hasPaid),
       ),
     );
