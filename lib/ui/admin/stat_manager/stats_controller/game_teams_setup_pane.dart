@@ -109,13 +109,7 @@ class GameTeamsSetupPane extends HookConsumerWidget {
         const Divider(),
         TextButton(
           child: Text(
-            (sortState == 0)
-                ? "Queued Only"
-                : (sortState == 1)
-                    ? "Added to stage teams"
-                    : (sortState == 2)
-                        ? "All (Alphabetical)"
-                        : "All (According to Games Played)",
+            controller.getHeaderAccordingToSortState(sortState),
           ),
           style: TextButton.styleFrom(
             padding: const EdgeInsets.all(10.0),
