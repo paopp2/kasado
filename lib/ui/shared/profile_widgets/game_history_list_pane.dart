@@ -16,11 +16,13 @@ class GameHistoryListPane extends HookConsumerWidget {
     required this.model,
     required this.userId,
     required this.constraints,
+    required this.isSuperAdmin,
   }) : super(key: key);
 
   final UserProfileViewModel model;
   final BoxConstraints constraints;
   final String userId;
+  final bool isSuperAdmin;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -100,6 +102,9 @@ class GameHistoryListPane extends HookConsumerWidget {
                               userGameStats: userGameStats,
                             ),
                           ),
+                          onLongPress: () => isSuperAdmin
+                              ? model.deleteUserGameStats(userGameStats)
+                              : null,
                         ),
                       ),
                     );

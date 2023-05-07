@@ -217,6 +217,7 @@ class UserProfilePane extends HookConsumerWidget {
                           model: model,
                           userId: user.id,
                           constraints: constraints,
+                          isSuperAdmin: isSuperAdmin,
                         ),
                       ],
                     ),
