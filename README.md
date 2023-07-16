@@ -1,16 +1,7 @@
-# kasado
+# Kasado
 
-A new Flutter project.
+- Basketball court booking app with player stats and leaderboards
+- At its peak amounted to around **200 players**
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Screenshots:
+![kasado_screenshots](https://github.com/paopp2/kasado/assets/29669631/1dac7634-151b-49e0-bb45-c29852006c86)
