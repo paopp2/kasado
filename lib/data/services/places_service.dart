@@ -1,7 +1,7 @@
 import 'package:kasado/model/kasado_location/kasado_location.dart';
 import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
 
-const googleApiKey = "AIzaSyDN3zQFHS9fHxVZEEO_uDoc-xjw_WuDPXU";
+const googleApiKey = "GOOGLE_API_KEY_HERE";
 
 class PlacesService {
   PlacesService._();

@@ -397,3 +397,7 @@ fabric.properties
 node_modules/
 package-lock.json
 package.json
+
+my_keys.txt
+lib\firebase_options.dart
+web\firebase-messaging-sw.js

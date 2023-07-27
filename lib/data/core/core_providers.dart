@@ -69,7 +69,7 @@ final mixpanel = Provider<Mixpanel?>((ref) => null);
 // Algolia instance for search
 final algolia = Provider<Algolia>(
   (ref) => const Algolia.init(
-    applicationId: "71ZN6T730I",
-    apiKey: "39a1905d60288f2b5d08d7b87fb226e2",
+    applicationId: "APP_ID_HERE",
+    apiKey: "PROVIDE_ALGOLIA_KEY_HERE",
   ),
 );
